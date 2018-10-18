@@ -8,3 +8,8 @@ WalkingAnimation:
     Frame: 40 40 20 20
 EndAnimation
 
+IdleAnimation:
+    Spritesheet: test2.sv
+    Time: 1
+    Frame: 0 0 1024 1024
+EndAnimation
