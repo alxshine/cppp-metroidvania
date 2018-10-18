@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 	Mob mob;
 	in >> mob;
 
-	std::cout << mob.name << " " << mob.health << "\n";
+	std::cout << mob << std::endl;
 
 	return 0;
 }
