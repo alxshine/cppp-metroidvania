@@ -1,0 +1,10 @@
+Name: TestMob
+Health: 9001
+
+WalkingAnimation:
+    Spritesheet: test.png
+    Time: 25
+    Frame: 0 0 20 20
+    Frame: 40 40 20 20
+EndAnimation
+
