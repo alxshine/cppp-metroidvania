@@ -29,7 +29,7 @@ using namespace std::string_literals;
 void testString(const std::string &wanted, const std::string &got)
 {
 	if (wanted != got)
-		throw ParseException("Excpected '" + wanted + "', got: " + got);
+		throw ParseException("Expected '" + wanted + "', got: " + got);
 }
 
 // Use AFTER reading keyword
@@ -190,6 +190,7 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 
 	// Parse all attacks until EndMob
 	while (true) {
+		keyword = "";
 		in >> keyword;
 		if (keyword == "Attack:") {
 			Attack attack;
