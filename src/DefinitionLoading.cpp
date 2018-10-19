@@ -32,8 +32,6 @@ void testString(const std::string &wanted, const std::string &got)
 		throw ParseException("Excpected '" + wanted + "', got: " + got);
 }
 
-// TODO should these be declared in the header?
-
 // Use AFTER reading keyword
 std::istream &game_definitions::operator>>(std::istream &in, Rectangle &rect)
 {
@@ -45,23 +43,26 @@ std::istream &game_definitions::operator>>(std::istream &in, Rectangle &rect)
 	return in;
 }
 
-// Use AFTER reading keyword
+std::istream &game_definitions::operator>>(std::istream &in, SoundEffect &snd)
+{
+	return in >> snd.file >> snd.loops;
+}
+
 std::istream &game_definitions::operator>>(std::istream &in, Animation &anim)
 {
-	std::string spritesheet;
-	in >> spritesheet;
-	testString("Spritesheet:", spritesheet);
+	std::string keyword;
+
+	in >> keyword;
+	testString("Spritesheet:", keyword);
 	in >> anim.spritesheet;
 
-	std::string time;
-	in >> time;
-	testString("Time:", time);
+	in >> keyword;
+	testString("Time:", keyword);
 	int ms;
 	in >> ms;
 	anim.timePerFrame = std::chrono::milliseconds(ms);
 
 	// Parse all frames until EndAnimation
-	std::string keyword;
 	while (true) {
 		in >> keyword;
 		if (keyword == "Frame:") {
@@ -77,28 +78,128 @@ std::istream &game_definitions::operator>>(std::istream &in, Animation &anim)
 	return in;
 }
 
+std::istream &game_definitions::operator>>(std::istream &in, Projectile &proj)
+{
+	std::string keyword;
+
+	in >> keyword;
+	testString("TravelSpeed:", keyword);
+	in >> proj.travelSpeed;
+
+	in >> keyword;
+	testString("ImpactSound:", keyword);
+	in >> proj.impactSound;
+
+	in >> keyword;
+	testString("NoClip:", keyword);
+	std::string noclipValue;
+	in >> noclipValue;
+	proj.noclip = noclipValue == "True" ? true : false;
+
+	in >> keyword;
+	testString("TravelAnimation:", keyword);
+	in >> proj.travelAnimation;
+
+	in >> keyword;
+	testString("ImpactAnimation:", keyword);
+	in >> proj.impactAnimation;
+
+	return in;
+}
+
+std::istream &game_definitions::operator>>(std::istream &in, Attack::Type &type)
+{
+	std::string value;
+	in >> value;
+	if (value == "Melee")
+		type = Attack::Type::Melee;
+	else if (value == "Ranged")
+		type = Attack::Type::Ranged;
+	else
+		throw ParseException("Invalid Attack Type: " + value);
+
+	return in;
+}
+
+std::istream &game_definitions::operator>>(std::istream &in, Attack &attack)
+{
+	std::string keyword;
+
+	in >> attack.name;
+
+	in >> keyword;
+	testString("Type:", keyword);
+	in >> attack.type;
+
+	in >> keyword;
+	testString("SoundEffect:", keyword);
+	in >> attack.soundEffect;
+
+	in >> keyword;
+	testString("HitBox:", keyword);
+	in >> attack.hitbox;
+
+	in >> keyword;
+	testString("Damage:", keyword);
+	in >> attack.damage;
+
+	in >> keyword;
+	testString("Debuff:", keyword);
+	in >> attack.debuff;
+
+	in >> keyword;
+	testString("Animation:", keyword);
+	in >> attack.animation;
+
+	// Melee attacks are finished here
+	if (attack.type == Attack::Type::Melee)
+		return in;
+
+	in >> keyword;
+	testString("Projectile:", keyword);
+	in >> attack.projectile;
+
+	return in;
+}
+
 std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 {
-	std::string name;
-	in >> name;
-	testString("Name:", name);
+	std::string keyword;
+
+	in >> keyword;
+	testString("Name:", keyword);
 	in >> mob.name;
 
-	std::string health;
-	in >> health;
-	testString("Health:", health);
+	in >> keyword;
+	testString("Health:", keyword);
 	in >> mob.health;
 
-	std::string walkingAnimation;
-	in >> walkingAnimation;
-	testString("WalkingAnimation:", walkingAnimation);
+	in >> keyword;
+	testString("Behaviour:", keyword);
+	in >> mob.behaviour;
+
+	in >> keyword;
+	testString("WalkingAnimation:", keyword);
 	in >> mob.walkingAnimation;
 
-	std::string token;
-	in >> token;
-	if (token == "IdleAnimation:")
+	in >> keyword;
+	if (keyword == "IdleAnimation:")
 		in >> mob.idleAnimation;
+	else if (keyword != "NoIdleAnimation")
+		throw new ParseException("Idle Animation not defined or declared empty");
 
-	// TODO handle attacks
+	// Parse all attacks until EndMob
+	while (true) {
+		in >> keyword;
+		if (keyword == "Attack:") {
+			Attack attack;
+			in >> attack;
+			mob.attacks.push_back(attack);
+		} else if (keyword == "EndMob")
+			break;
+		else
+			throw ParseException("Unterminated Mob");
+	}
+
 	return in;
 }

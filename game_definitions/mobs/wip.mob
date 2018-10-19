@@ -1,5 +1,6 @@
 Name: TestMob
 Health: 9001
+Behaviour: Dumb
 
 WalkingAnimation:
     Spritesheet: test.png
@@ -9,7 +10,38 @@ WalkingAnimation:
 EndAnimation
 
 IdleAnimation:
-    Spritesheet: test2.sv
+    Spritesheet: test2.svg
     Time: 1
     Frame: 0 0 1024 1024
 EndAnimation
+
+Attack: Spit
+    Type: Ranged
+    SoundEffect: spit.wav 1
+    HitBox: 0 0 0 0
+    Damage: 9000
+    Debuff: Slow
+
+    Animation:
+        Spritesheet: spit.png
+        Time: 42
+        Frame: 0 0 0 1
+        Frame: 1 0 0 0
+    EndAnimation
+
+    Projectile:
+        TravelSpeed: 10
+        ImpactSound: goo.wav 1
+        NoClip: False
+        TravelAnimation:
+            Spritesheet: spit_flight.png
+            Time: 0
+            Frame: 0 0 0 0
+        EndAnimation
+        ImpactAnimation:
+            Spritesheet: spit_impact.png
+            Time: 10
+            Frame: 0 0 0 0
+            Frame: 10 10 10 10
+        EndAnimation
+EndMob
