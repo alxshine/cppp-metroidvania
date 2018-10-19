@@ -13,7 +13,5 @@ add_subdirectory(src)
 
 add_subdirectory(lib)
 
-# game
-# add_executable(game game.cpp)
-# target_include_directories(game PUBLIC ...)
-# target_link_libraries(game ...)
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY game_definitions DESTINATION ${CMAKE_BINARY_DIR})
