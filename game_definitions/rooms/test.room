@@ -1,0 +1,28 @@
+Name: Spawnpoint
+Background: spawn.png
+Music: area1.ogg
+Location: 0 0
+
+Tileset: area1_tiles.png
+Tiles:
+    | wall      0 0 10 10
+    - platform  11 11 10 10
+    = floor     21 21 10 10
+    . NoTile
+    # pit       0 0 21 21
+EndTiles
+
+Layout:
+    |.........................|
+    |.........................|
+    |..............-..........|
+    |........---........---...|
+    |.......-........==.......|
+    |========###=====##=======|
+EndLayout
+
+Entities:
+    5   5 Mob: TestMob
+    25  5 Mob: TestMob
+    0   0 Item{ DoorLeft 25 25}
+EndEntities

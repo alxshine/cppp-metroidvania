@@ -65,6 +65,18 @@ struct Mob {
 	std::vector<Attack> attacks;
 };
 
+struct Position {
+	int x;
+	int y;
+};
+
+struct Room {
+	std::string name;
+	std::string background;
+	std::string music;
+	Position location;
+};
+
 /*********************
  *  Print operators  *
  *********************/

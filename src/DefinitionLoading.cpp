@@ -204,3 +204,33 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 
 	return in;
 }
+
+std::istream &game_definitions::operator>>(std::istream &in, Position &pos)
+{
+	return in >> pos.x >> pos.y;
+}
+
+std::istream &game_definitions::operator>>(std::istream &in, Room &room)
+{
+	std::string keyword;
+
+	in >> keyword;
+	testString("Name:", keyword);
+	in >> room.name;
+
+	in >> keyword;
+	testString("Background:", keyword);
+	in >> room.background;
+
+	in >> keyword;
+	testString("Music:", keyword);
+	in >> room.music;
+
+	in >> keyword;
+	testString("Location:", keyword);
+	in >> room.location;
+
+	// TODO do the actual hard stuff
+
+	return in;
+}

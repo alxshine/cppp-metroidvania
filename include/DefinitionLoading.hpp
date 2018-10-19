@@ -33,6 +33,10 @@ std::istream &operator>>(std::istream &in, Attack &attack);
 
 std::istream &operator>>(std::istream &in, Mob &mob);
 
+std::istream &operator>>(std::istream &in, Position &pos);
+
+std::istream &operator>>(std::istream &in, Room &room);
+
 } // namespace game_definitions
 
 #endif /* DEFINITIONLOADING_H */
