@@ -1,5 +1,5 @@
-#include "LoadAllDefinitions.hpp"
-#include "DefinitionLoading.hpp"
+#include "gamedef/LoadAllDefinitions.hpp"
+#include "gamedef/DefinitionLoading.hpp"
 
 #include <filesystem>
 #include <fstream>

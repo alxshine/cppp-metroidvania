@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "LoadAllDefinitions.hpp"
+#include "gamedef/LoadAllDefinitions.hpp"
 
 int main(int argc, char *argv[])
 {

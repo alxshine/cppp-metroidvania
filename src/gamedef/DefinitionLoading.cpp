@@ -15,7 +15,7 @@
 #include <regex>
 #include <string>
 
-#include "DefinitionLoading.hpp"
+#include "gamedef/DefinitionLoading.hpp"
 
 using namespace game_definitions;
 using namespace std::string_literals;
@@ -173,6 +173,11 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 	in >> keyword;
 	testString("Health:", keyword);
 	in >> mob.health;
+
+	// TODO uncomment bounding box parsing
+	// in >> keyword;
+	// testString("BoundingBox:", keyword);
+	// in >> mob.boundingBox;
 
 	in >> keyword;
 	testString("Behaviour:", keyword);
