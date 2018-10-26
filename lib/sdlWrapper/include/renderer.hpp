@@ -7,6 +7,7 @@
 #include "rectangle.hpp"
 #include "sprite.hpp"
 #include "texture.hpp"
+#include "sdlException.hpp"
 
 namespace sdl {
 class Renderer {
@@ -24,7 +25,7 @@ public:
   void render(const std::shared_ptr<Texture> texture) const;
   void render(const Sprite &sprite) const;
   void render(const Sprite &sprite, Rectangle targetRect) const;
-  void swap() const;
+  void swapBuffers() const;
   SDL_Renderer *getRawRenderer() const;
 };
 } // namespace sdl

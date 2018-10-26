@@ -7,6 +7,7 @@
 #include <string>
 
 #include "renderer.hpp"
+#include "sdlException.hpp"
 
 namespace sdl {
 class SDL {
@@ -20,6 +21,9 @@ public:
   std::shared_ptr<Renderer> getRenderer();
   std::shared_ptr<Texture> loadTexture(std::string path);
   void delay(std::chrono::milliseconds time);
+
+  SDL(const SDL&) = delete;
+  SDL(const SDL&&) = delete;
   virtual ~SDL();
 };
 } // namespace sdl

@@ -10,11 +10,11 @@ sdl::Renderer::Renderer() {
 		SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED,
 										 SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
 	if (rawWindow == nullptr)
-		throw "Window could not be created!";
+		throw SdlException("Window could not be created!");
 
 	rawRenderer = SDL_CreateRenderer(rawWindow, -1, SDL_RENDERER_ACCELERATED);
 	if (rawRenderer == nullptr)
-		throw "Renderer could not be created";
+		throw SdlException("Renderer could not be created");
 
 //	SDL_SetRenderDrawColor(rawRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 }
@@ -51,6 +51,6 @@ void sdl::Renderer::render(const Sprite& sprite, Rectangle targetRect) const
 }
 
 
-void sdl::Renderer::swap() const {
+void sdl::Renderer::swapBuffers() const {
 	SDL_RenderPresent(rawRenderer);
 }

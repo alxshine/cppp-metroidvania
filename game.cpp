@@ -7,6 +7,7 @@ and may not be redistributed without written permission.*/
 #include <string>
 
 #include "SDL.hpp"
+#include "sdlException.hpp"
 #include "texture.hpp"
 
 using namespace std;
@@ -15,18 +16,18 @@ using namespace sdl;
 int main()
 {
 	try {
-		auto sdl = SDL::getInstance();
+		SDL& sdl = SDL::getInstance();
 		auto texture = sdl.loadTexture("sheet.png");
-		auto sourceRect = Rectangle{0, 0, 122, 110};
-		auto sprite = Sprite{texture, sourceRect};
+		Rectangle sourceRect{0, 0, 122, 110};
+		Sprite sprite{texture, sourceRect};
 		auto renderer = sdl.getRenderer();
 
 		renderer->clear();
 		renderer->render(sprite);
-		renderer->swap();
+		renderer->swapBuffers();
 
 		sdl.delay(2000ms);
-	} catch (std::string &e) {
-		cout << e << endl;
+	} catch (SdlException e) {
+		cout << e.what() << endl;
 	}
 }

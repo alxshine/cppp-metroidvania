@@ -3,7 +3,7 @@
 sdl::SDL::SDL() {
 	// Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-		throw "SDL could not initialize!"; //TODO: throw some exceptions ffs
+		throw SdlException("SDL could not initialize!");
 	// Set texture filtering to linear
 	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
 		printf("Warning: Linear texture filtering not enabled!");
@@ -12,7 +12,7 @@ sdl::SDL::SDL() {
 	// Initialize PNG loading
 	int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags))
-		throw "SDL_image could not initialize!";
+		throw SdlException("SDL_image could not initialize!");
 }
 
 sdl::SDL::~SDL() {
@@ -34,12 +34,12 @@ void sdl::SDL::delay(std::chrono::milliseconds time) {
 std::shared_ptr<sdl::Texture> sdl::SDL::loadTexture(std::string path) {
 	SDL_Surface *tempSurface = IMG_Load(path.c_str());
 	if (tempSurface == nullptr)
-		throw "Could not load texture";
+		throw SdlException("Could not load texture");
 
 	SDL_Texture *rawTexture =
 		SDL_CreateTextureFromSurface(renderer->getRawRenderer(), tempSurface);
 	if (rawTexture == nullptr)
-		throw "Could not create texture";
+		throw SdlException("Could not create texture");
 
 	SDL_FreeSurface(tempSurface);
 	return std::make_shared<Texture>(rawTexture);
