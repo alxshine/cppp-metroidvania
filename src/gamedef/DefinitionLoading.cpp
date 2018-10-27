@@ -210,6 +210,60 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 	return in;
 }
 
+std::istream &game_definitions::operator>>(std::istream &in, Door &door)
+{
+	in >> door.position >> door.name;
+
+	std::string dir;
+	in >> dir;
+	if (dir == "(Left)")
+		door.direction = Direction::Left;
+	else if (dir == "(Down)")
+		door.direction = Direction::Down;
+	else if (dir == "(Right)")
+		door.direction = Direction::Right;
+	else if (dir == "(Up)")
+		door.direction = Direction::Up;
+	else
+		throw ParseException("Unkown direction " + dir);
+
+	in.ignore(3);
+	in >> door.targetDoorName;
+	in.ignore(3);
+	in >> door.targetRoom;
+
+	return in;
+}
+
+std::istream &game_definitions::operator>>(std::istream &in, Item &item)
+{
+	std::string keyword;
+
+	in >> keyword;
+	testString("Name:", keyword);
+	in >> item.name;
+
+	in >> keyword;
+	testString("Behaviour:", keyword);
+	in >> item.behaviour;
+
+	in >> keyword;
+	testString("Animation:", keyword);
+	in >> item.animation;
+
+	return in;
+}
+
+std::istream &game_definitions::operator>>(std::istream &in, MobRef &mobRef)
+{
+	return in >> mobRef.position >> mobRef.id;
+}
+
+std::istream &game_definitions::operator>>(std::istream &in, ItemRef &itemRef)
+{
+	return in >> itemRef.position >> itemRef.id;
+}
+
 std::istream &game_definitions::operator>>(std::istream &in, Position &pos)
 {
 	return in >> pos.x >> pos.y;
@@ -235,7 +289,69 @@ std::istream &game_definitions::operator>>(std::istream &in, Room &room)
 	testString("Location:", keyword);
 	in >> room.location;
 
-	// TODO do the actual hard stuff
+	in >> keyword;
+	testString("Tileset:", keyword);
+	in >> room.tileset;
+
+	// Parse Tiles
+	in >> keyword;
+	testString("Tiles:", keyword);
+	std::map<char, Tile> tileMap;
+
+	while (true) {
+		keyword = "";
+		in >> keyword;
+		if (keyword == "EndTiles")
+			break;
+
+		Tile tile;
+		in >> tile.name;
+		if (tile.name != "empty")
+			in >> tile.rectangle;
+		tileMap.insert({keyword[0], tile});
+	}
+
+	// Parse layout
+	in >> keyword;
+	testString("Layout:", keyword);
+	while (true) {
+		keyword = "";
+		in >> keyword;
+		if (keyword == "EndLayout")
+			break;
+
+		// Process line of room
+		std::vector<Tile> line;
+		for (char t : keyword) {
+			// Add the correct tiles, *hoping that they exist in the map :)*
+			line.push_back(tileMap.find(t)->second);
+		}
+		room.layout.push_back(line);
+	}
+
+	// Parse entities
+	in >> keyword;
+	testString("Entities:", keyword);
+	while (true) {
+		keyword = "";
+		in >> keyword;
+		if (keyword == "Mob:") {
+			MobRef mobRef;
+			in >> mobRef;
+			room.mobs.push_back(mobRef);
+		} else if (keyword == "Item:") {
+			ItemRef itemRef;
+			in >> itemRef;
+			room.items.push_back(itemRef);
+		} else if (keyword == "Door:") {
+			Door door;
+			in >> door;
+			room.doors.push_back(door);
+		} else if (keyword == "EndEntities")
+			break;
+		else
+			throw ParseException("Unterminated Room");
+	}
 
 	return in;
 }

@@ -35,6 +35,14 @@ std::istream &operator>>(std::istream &in, Mob &mob);
 
 std::istream &operator>>(std::istream &in, Position &pos);
 
+std::istream &operator>>(std::istream &in, Door &door);
+
+std::istream &operator>>(std::istream &in, Item &item);
+
+std::istream &operator>>(std::istream &in, MobRef &mobRef);
+
+std::istream &operator>>(std::istream &in, ItemRef &itemRef);
+
 std::istream &operator>>(std::istream &in, Room &room);
 
 } // namespace game_definitions

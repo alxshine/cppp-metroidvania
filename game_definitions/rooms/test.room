@@ -8,7 +8,7 @@ Tiles:
     | wall      0 0 10 10
     - platform  11 11 10 10
     = floor     21 21 10 10
-    . NoTile
+    . empty
     # pit       0 0 21 21
 EndTiles
 
@@ -22,7 +22,8 @@ Layout:
 EndLayout
 
 Entities:
-    5   5 Mob: TestMob
-    25  5 Mob: TestMob
-    0   0 DoorLeft: Door1 R1-1 DoorRight (id, target room, target door id)
+    Mob:    5   5   TestMob
+    Mob:    25  5   TestMob
+    Item:   25  10  Drink
+    Door:   25  10  Door1 (Left) -> DoorRight1 in R1-1
 EndEntities

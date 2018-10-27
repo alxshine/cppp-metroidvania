@@ -44,7 +44,7 @@ struct Projectile {
 
 struct Attack {
 	std::string name;
-	enum class Type {Melee, Ranged} type;
+	enum class Type { Melee, Ranged } type;
 	SoundEffect soundEffect;
 	Rectangle hitbox;
 	Damage damage;
@@ -70,11 +70,48 @@ struct Position {
 	int y;
 };
 
+enum class Direction { Up, Down, Left, Right };
+
+struct Door {
+	Position position;
+	Direction direction;
+	std::string name;
+	std::string targetRoom;
+	std::string targetDoorName;
+};
+
+struct MobRef {
+	Position position;
+	std::string id;
+};
+
+struct Item {
+	std::string name;
+	Animation animation;
+	std::string behaviour;
+};
+
+struct ItemRef {
+	Position position;
+	std::string id;
+};
+
+struct Tile {
+	std::string name;
+	Rectangle rectangle;
+};
+
 struct Room {
 	std::string name;
 	std::string background;
 	std::string music;
 	Position location;
+	std::string tileset;
+	std::vector<std::vector<Tile>> layout;
+
+	std::vector<MobRef> mobs;
+	std::vector<Door> doors;
+	std::vector<ItemRef> items;
 };
 
 /*********************
@@ -116,10 +153,10 @@ inline std::ostream &operator<<(std::ostream &out, const Projectile &proj)
 inline std::ostream &operator<<(std::ostream &out, const Attack::Type &type)
 {
 	switch (type) {
-		case Attack::Type::Melee:
-			return out << "Melee";
-		case Attack::Type::Ranged:
-			return out << "Ranged";
+	case Attack::Type::Melee:
+		return out << "Melee";
+	case Attack::Type::Ranged:
+		return out << "Ranged";
 	}
 	return out;
 }
