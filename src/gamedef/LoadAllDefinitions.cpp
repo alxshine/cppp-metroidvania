@@ -22,6 +22,11 @@ void handle_file(fs::path f)
 			game_definitions::Room room;
 			fin >> room;
 			// std::cout << room; // TODO actually handle the room
+		} else if (ext == ".item") {
+			std::fstream fin(f, std::ios::in);
+			game_definitions::Item item;
+			fin >> item;
+			// std::cout << item; // TODO actually handle the item
 		}
 	} catch (game_definitions::ParseException &e) {
 		std::cerr << "Invalid definition " << f << ": " << e.what() << "\n";
