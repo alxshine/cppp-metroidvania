@@ -1,6 +1,7 @@
 Name: TestMob
 Health: 9001
 Behaviour: Dumb
+BoundingBox: 10 10 10 10
 
 WalkingAnimation:
     Spritesheet: test.png

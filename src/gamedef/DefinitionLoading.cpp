@@ -174,14 +174,13 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 	testString("Health:", keyword);
 	in >> mob.health;
 
-	// TODO uncomment bounding box parsing
-	// in >> keyword;
-	// testString("BoundingBox:", keyword);
-	// in >> mob.boundingBox;
-
 	in >> keyword;
 	testString("Behaviour:", keyword);
 	in >> mob.behaviour;
+
+	in >> keyword;
+	testString("BoundingBox:", keyword);
+	in >> mob.boundingBox;
 
 	in >> keyword;
 	testString("WalkingAnimation:", keyword);
