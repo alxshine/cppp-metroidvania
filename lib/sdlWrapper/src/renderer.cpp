@@ -23,8 +23,19 @@ sdl::Renderer::~Renderer()
 	SDL_DestroyRenderer(rawRenderer);
 }
 
-void sdl::Renderer::clear()
+void sdl::Renderer::drawRectangle(Rectangle rect, Color color, bool fill)
 {
+	SDL_SetRenderDrawColor(rawRenderer, color.r, color.g, color.b, color.a);
+	if (fill)
+		SDL_RenderFillRect(rawRenderer, &rect);
+	else
+		SDL_RenderDrawRect(rawRenderer, &rect);
+	SDL_SetRenderDrawColor(rawRenderer, defaultColor.r, defaultColor.g, defaultColor.b, defaultColor.a);
+}
+
+void sdl::Renderer::clear(Color color)
+{
+	SDL_SetRenderDrawColor(rawRenderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(rawRenderer);
 }
 

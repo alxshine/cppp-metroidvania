@@ -71,14 +71,13 @@ sdl::Text sdl::SDL::generateText(std::shared_ptr<Font> font, std::string text, C
 	SDL_Surface *tempSurface = nullptr;
 	switch (rendering) {
 	case TextRendering::Solid:
-		tempSurface = TTF_RenderText_Solid(font->rawFont, text.c_str(), {color.r, color.g, color.b, color.a});
+		tempSurface = TTF_RenderText_Solid(font->rawFont, text.c_str(), color);
 		break;
 	case TextRendering::Shaded:
-		tempSurface = TTF_RenderText_Shaded(font->rawFont, text.c_str(), {color.r, color.g, color.b, color.a},
-		                                    {bgColor.r, bgColor.g, bgColor.b, bgColor.a});
+		tempSurface = TTF_RenderText_Shaded(font->rawFont, text.c_str(), color, bgColor);
 		break;
 	case TextRendering::Blended:
-		tempSurface = TTF_RenderText_Blended(font.get()->rawFont, text.c_str(), {color.r, color.g, color.b, color.a});
+		tempSurface = TTF_RenderText_Blended(font.get()->rawFont, text.c_str(), color);
 		break;
 	}
 	if (tempSurface == nullptr)

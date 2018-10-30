@@ -27,7 +27,7 @@ int main()
 		auto buttonfont = sdl.loadFont("assets/fonts/Countryside Personal Use.ttf", 30);
 
 		auto title = sdl.generateText(titlefont, "Main Menu");
-		Menu menu{title, {0, 0, 0, 0}, renderer};
+		Menu menu{title, {100, 0, 0, 0}, renderer};
 
 		auto text1 = sdl.generateText(buttonfont, "Button 1");
 		menu.addItem({text1, [] {}});

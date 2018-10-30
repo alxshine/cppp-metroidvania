@@ -14,6 +14,7 @@ class Renderer {
   private:
 	SDL_Renderer *rawRenderer;
 	SDL_Window *rawWindow;
+	static constexpr Color defaultColor = {0, 0, 0, 0};
 
   public:
 	static const int logicalW = 1920;
@@ -22,7 +23,8 @@ class Renderer {
 	Renderer();
 	virtual ~Renderer();
 
-	void clear();
+	void drawRectangle(Rectangle rect, Color color = defaultColor, bool fill = true);
+	void clear(Color color = defaultColor);
 	void render(const std::shared_ptr<Texture> texture, Rectangle sourceRect, Rectangle targetRect) const;
 	void render(const std::shared_ptr<Texture> texture) const;
 	void render(const Sprite &sprite) const;

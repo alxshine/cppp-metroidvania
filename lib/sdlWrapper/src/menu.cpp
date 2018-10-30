@@ -42,7 +42,7 @@ sdl::Menu &sdl::Menu::addItem(MenuItem item)
 
 void sdl::Menu::render() const
 {
-	// TODO use background color
+	renderer->clear(backgroundColor);
 	renderer->render(titleText, titleDrawArea);
 
 	for (auto item : items) {
