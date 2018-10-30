@@ -1,15 +1,16 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
+#include "rectangle.hpp"
+#include "texture.hpp"
+
 #include <memory>
-#include <rectangle.hpp>
-#include <texture.hpp>
 
 namespace sdl {
 struct Sprite {
-public:
-  std::shared_ptr<Texture> texture;
-  Rectangle sourceRectangle;
+  public:
+	std::shared_ptr<Texture> texture;
+	Rectangle sourceRectangle;
 };
 } // namespace sdl
 

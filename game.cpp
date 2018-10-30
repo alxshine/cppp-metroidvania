@@ -17,17 +17,20 @@ int main()
 {
 	try {
 		SDL& sdl = SDL::getInstance();
-		auto texture = sdl.loadTexture("sheet.png");
-		Rectangle sourceRect{0, 0, 122, 110};
-		Sprite sprite{texture, sourceRect};
+		// auto texture = sdl.loadTexture("sheet.png");
+		// Rectangle sourceRect{0, 0, 122, 110};
+		// Sprite sprite{texture, sourceRect};
 		auto renderer = sdl.getRenderer();
 
+		auto font = sdl.loadFont("assets/fonts/Countryside Personal Use.ttf", 60);
+		auto text = sdl.generateText(font, "Hello World!");
+
 		renderer->clear();
-		renderer->render(sprite);
+		renderer->render(text);
 		renderer->swapBuffers();
 
 		sdl.delay(2000ms);
-	} catch (SdlException e) {
+	} catch (SdlException &e) {
 		cout << e.what() << endl;
 	}
 }

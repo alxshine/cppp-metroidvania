@@ -6,11 +6,15 @@
 #include <memory>
 #include <string>
 
+#include "color.hpp"
+
 namespace sdl {
 struct Texture {
 	Texture(SDL_Texture *raw);
 
 	SDL_Texture *rawTexture; //TODO: maybe we can do this better, but SDL_RenderCopy takes a non const SDL_Texture*
+
+	void changeColor(Color color);
 
 	Texture() = delete;
 
@@ -20,6 +24,9 @@ struct Texture {
 
 	virtual ~Texture();
 };
+
+using Text = Texture;
+
 } // namespace sdl
 
 #endif /* TEXTURE_H */

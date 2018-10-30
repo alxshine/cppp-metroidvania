@@ -9,6 +9,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 # add_library(lib src)
 add_subdirectory(lib)
 
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+
 # game
 add_executable(game game.cpp)
 target_include_directories(game PRIVATE lib/sdlWrapper/include)
