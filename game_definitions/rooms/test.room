@@ -1,0 +1,29 @@
+Name: Spawnpoint
+Background: spawn.png
+Music: area1.ogg
+Location: 0 0
+
+Tileset: area1_tiles.png
+Tiles:
+    | wall      0 0 10 10
+    - platform  11 11 10 10
+    = floor     21 21 10 10
+    . empty
+    # pit       0 0 21 21
+EndTiles
+
+Layout:
+    |.........................|
+    |.........................|
+    |..............-..........|
+    |........---........---...|
+    |.......-........==.......|
+    |========###=====##=======|
+EndLayout
+
+Entities:
+    Mob:    5   5   TestMob
+    Mob:    25  5   TestMob
+    Item:   25  10  Drink
+    Door:   25  10  Door1 (Left) -> DoorRight1 in R1-1
+EndEntities

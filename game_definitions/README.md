@@ -20,6 +20,7 @@ Sound effects consist of:
 
 ## Attacks
 attacks consist of:
+- a Name
 - an *animation*
 - a *sound effect*
 - a damage value

@@ -1,0 +1,8 @@
+Name: Drink
+Behaviour: FFSIDONTWANTTODOTHIS
+
+Animation:
+    Spritesheet: drink.svg
+    Time: 1
+    Frame: 10 10 10 10
+EndAnimation

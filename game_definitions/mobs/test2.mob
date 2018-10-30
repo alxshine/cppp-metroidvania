@@ -1,0 +1,33 @@
+Name: TestMob2
+Health: 1
+Behaviour: Dumbest
+BoundingBox: 10 10 10 10
+
+WalkingAnimation:
+    Spritesheet: test.png
+    Time: 25
+    Frame: 0 0 20 20
+    Frame: 40 40 20 20
+EndAnimation
+
+IdleAnimation:
+    Spritesheet: test2.svg
+    Time: 1
+    Frame: 0 0 1024 1024
+EndAnimation
+
+Attack: Selfdestruct
+    Type: Melee
+    SoundEffect: boom.wav 1
+    HitBox: 0 0 0 0
+    Damage: 9000
+    Debuff: Fire
+
+    Animation:
+        Spritesheet: boom.png
+        Time: 42
+        Frame: 0 0 0 1
+        Frame: 1 0 0 0
+    EndAnimation
+
+EndMob
