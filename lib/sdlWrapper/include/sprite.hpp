@@ -12,6 +12,8 @@ struct Sprite {
 	std::shared_ptr<Texture> texture;
 	Rectangle sourceRectangle;
 };
+
+using Text = Sprite;
 } // namespace sdl
 
 #endif /* SPRITE_H */

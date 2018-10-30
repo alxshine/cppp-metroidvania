@@ -65,8 +65,8 @@ std::shared_ptr<sdl::Font> sdl::SDL::loadFont(std::string path, unsigned int siz
 	return std::make_shared<sdl::Font>(font);
 }
 
-std::shared_ptr<sdl::Text> sdl::SDL::generateText(std::shared_ptr<Font> font, std::string text, Color color,
-                                                  TextRendering rendering, Color bgColor)
+sdl::Text sdl::SDL::generateText(std::shared_ptr<Font> font, std::string text, Color color, TextRendering rendering,
+                                 Color bgColor)
 {
 	SDL_Surface *tempSurface = nullptr;
 	switch (rendering) {
@@ -89,5 +89,8 @@ std::shared_ptr<sdl::Text> sdl::SDL::generateText(std::shared_ptr<Font> font, st
 		throw SdlException("Could not create texture");
 
 	SDL_FreeSurface(tempSurface);
-	return std::make_shared<Text>(rawTexture);
+
+	Rectangle sourceRect = {0, 0, 0, 0};
+	SDL_QueryTexture(rawTexture, nullptr, nullptr, &sourceRect.w, &sourceRect.h);
+	return {std::make_shared<Texture>(rawTexture), sourceRect};
 }

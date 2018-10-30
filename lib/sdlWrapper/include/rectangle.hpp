@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 
 namespace sdl {
-typedef SDL_Rect Rectangle;
+	using Rectangle = SDL_Rect;
 }
 
 #endif /* RECTANGLE_H */

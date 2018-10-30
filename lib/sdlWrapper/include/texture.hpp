@@ -25,8 +25,6 @@ struct Texture {
 	virtual ~Texture();
 };
 
-using Text = Texture;
-
 } // namespace sdl
 
 #endif /* TEXTURE_H */

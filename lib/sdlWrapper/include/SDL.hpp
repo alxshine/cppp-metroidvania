@@ -35,7 +35,7 @@ class SDL {
 	std::shared_ptr<Font> loadFont(std::string path, unsigned int size);
 
 	/**
-	 * @brief Draw text to a texture.
+	 * @brief Draw text to a sprite.
 	 *
 	 * @param font The font to use
 	 * @param text The text to draw
@@ -43,9 +43,9 @@ class SDL {
 	 * @param rendering Text rendering method
 	 * @param bgColor The background color, only used for TextRendering::Shaded
 	 *
-	 * @return A shared pointer to the generated texture, ready to be rendered.
+	 * @return The generated sprite, ready to be rendered.
 	 */
-	std::shared_ptr<Text> generateText(std::shared_ptr<Font> font, std::string text,
+	Text generateText(std::shared_ptr<Font> font, std::string text,
 	                                   Color color = {u_char(255), u_char(255), u_char(255), u_char(255)},
 	                                   TextRendering rendering = TextRendering::Blended,
 	                                   Color bgColor = {u_char(0), u_char(0), u_char(0), u_char(0)});
