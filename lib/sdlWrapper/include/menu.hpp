@@ -16,11 +16,11 @@ class MenuItem {
 	friend class Menu;
 
   public:
-	MenuItem(Text buttonText, std::function<void(void)> onClick);
+	MenuItem(Text buttonText, std::function<void(void)> onClick, Color backgroundColor = {0, 0, 0, 0});
 	Text buttonText;
-	std::function<void(void)>
-	    onClick; // TODO we will need to figure out a way to create handle menus in the event loop!
-	             // std::optional<Text> labelText;
+	Color backgroundColor;
+	std::function<void(void)> onClick; // TODO we will need to figure out a way to create handle menus in the event
+	                                   // loop! std::optional<Text> labelText;
 
   private:
 	Rectangle buttonArea;

@@ -5,7 +5,7 @@ constexpr int vpadding = 6;
 constexpr int lmargin = 10;
 constexpr int vmargin = 30;
 
-sdl::MenuItem::MenuItem(Text buttonText, std::function<void(void)> onClick) : buttonText(buttonText), onClick(onClick)
+sdl::MenuItem::MenuItem(Text buttonText, std::function<void(void)> onClick, Color backgroundColor) : buttonText(buttonText), backgroundColor(backgroundColor), onClick(onClick)
 {
 }
 
@@ -46,7 +46,7 @@ void sdl::Menu::render() const
 	renderer->render(titleText, titleDrawArea);
 
 	for (auto item : items) {
+		renderer->drawRectangle(item.buttonArea, item.backgroundColor);
 		renderer->render(item.buttonText, item.buttonTextDrawArea);
-		// TODO render rectangle in buttonArea;
 	}
 }

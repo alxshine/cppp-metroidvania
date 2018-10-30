@@ -30,7 +30,7 @@ int main()
 		Menu menu{title, {100, 0, 0, 0}, renderer};
 
 		auto text1 = sdl.generateText(buttonfont, "Button 1");
-		menu.addItem({text1, [] {}});
+		menu.addItem({text1, [] {}, {100, 100, 100, 0}});
 		auto text2 = sdl.generateText(buttonfont, "Button 2");
 		menu.addItem({text2, [] {}});
 		auto text3 = sdl.generateText(buttonfont, "Button with longer label");
