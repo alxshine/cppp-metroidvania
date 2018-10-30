@@ -4,6 +4,7 @@
 #include <SDL2/SDL_timer.h>
 #include <chrono>
 
+namespace sdl {
 class GameClock {
   public:
 	using duration = std::chrono::milliseconds;
@@ -17,12 +18,14 @@ class GameClock {
 	void resume() noexcept;
 
 	GameClock();
+
   private:
-  	time_point nowRaw() noexcept;
-  	time_point pauseStart;
-  	time_point pauseStartRaw;
-  	duration offset;
-  	bool paused;
+	time_point nowRaw() noexcept;
+	time_point pauseStart;
+	time_point pauseStartRaw;
+	duration offset;
+	bool paused;
 };
+} // namespace sdl
 
 #endif /* GAMECLOCK_H */

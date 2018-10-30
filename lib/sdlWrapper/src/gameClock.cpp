@@ -1,8 +1,8 @@
 #include "gameClock.hpp"
 
-GameClock::GameClock() : offset(std::chrono::milliseconds(SDL_GetTicks())), paused(false) {}
+sdl::GameClock::GameClock() : offset(std::chrono::milliseconds(SDL_GetTicks())), paused(false) {}
 
-GameClock::time_point GameClock::now() noexcept
+sdl::GameClock::time_point sdl::GameClock::now() noexcept
 {
 	if (paused)
 		return pauseStart;
@@ -10,12 +10,12 @@ GameClock::time_point GameClock::now() noexcept
 	return time_point(nowRaw() - offset);
 }
 
-GameClock::time_point GameClock::nowRaw() noexcept
+sdl::GameClock::time_point sdl::GameClock::nowRaw() noexcept
 {
 	return time_point(std::chrono::milliseconds(SDL_GetTicks()));
 }
 
-void GameClock::pause() noexcept
+void sdl::GameClock::pause() noexcept
 {
 	if (!paused) {
 		pauseStart = time_point(nowRaw()-offset);
@@ -25,7 +25,7 @@ void GameClock::pause() noexcept
 	}
 }
 
-void GameClock::resume() noexcept
+void sdl::GameClock::resume() noexcept
 {
 	if (paused) {
 		offset += nowRaw() - pauseStartRaw;

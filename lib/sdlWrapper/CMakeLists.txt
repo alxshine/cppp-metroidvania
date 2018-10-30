@@ -6,5 +6,5 @@ set(CMAKE_BUILD_TYPE RelWithDebInfo)
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 
 include_directories(${SDL_Wrapper_SOURCE_DIR}/include)
-add_library(SDL_Wrapper src/texture.cpp src/renderer.cpp src/SDL.cpp src/font.cpp src/gameClock.cpp)
+add_library(SDL_Wrapper src/texture.cpp src/renderer.cpp src/SDL.cpp src/font.cpp src/gameClock.cpp src/animation.cpp)
 target_link_libraries(SDL_Wrapper SDL2 SDL2_image SDL2_ttf)
