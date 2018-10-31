@@ -15,3 +15,8 @@ add_subdirectory(lib)
 
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY game_definitions DESTINATION ${CMAKE_BINARY_DIR})
+
+# game
+add_executable(game game.cpp)
+target_include_directories(game PRIVATE lib/sdlWrapper/include)
+target_link_libraries(game SDL_Wrapper)
