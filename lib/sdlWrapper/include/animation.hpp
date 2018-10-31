@@ -15,7 +15,6 @@ struct Animation {
 
   public:
 	Animation(std::shared_ptr<Texture> texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
-	virtual ~Animation();
 
 	Sprite getAnimationFrame(GameClock::time_point t);
 };

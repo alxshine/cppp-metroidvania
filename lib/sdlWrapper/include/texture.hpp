@@ -9,7 +9,7 @@
 #include "color.hpp"
 
 namespace sdl {
-struct Texture {
+struct Texture final {
 	Texture(SDL_Texture *raw);
 
 	SDL_Texture *rawTexture; //TODO: maybe we can do this better, but SDL_RenderCopy takes a non const SDL_Texture*
@@ -22,7 +22,7 @@ struct Texture {
 
 	Texture(const Texture &&) = delete;
 
-	virtual ~Texture();
+	~Texture();
 };
 
 } // namespace sdl

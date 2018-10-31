@@ -7,7 +7,4 @@ sdl::Font::~Font()
 		TTF_CloseFont(rawFont);
 }
 
-sdl::Font::Font(TTF_Font *raw)
-{
-	rawFont = raw;
-}
+sdl::Font::Font(TTF_Font *raw) : rawFont(raw) {}

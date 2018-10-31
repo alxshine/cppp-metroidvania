@@ -12,4 +12,3 @@ sdl::Sprite sdl::Animation::getAnimationFrame(sdl::GameClock::time_point t)
 	return Sprite{texture, frames[frameIndex]};
 }
 
-sdl::Animation::~Animation() {}

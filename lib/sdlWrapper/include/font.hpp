@@ -10,7 +10,7 @@
 #include "color.hpp"
 
 namespace sdl {
-struct Font {
+struct Font final {
 	Font(TTF_Font *raw);
 
 	TTF_Font *rawFont;
@@ -19,7 +19,7 @@ struct Font {
 
 	Font(const Font &) = delete;
 
-	virtual ~Font();
+	~Font();
 };
 
 // http://www.libsdl.org/projects/docs/SDL_ttf/SDL_ttf_35.html#SEC35

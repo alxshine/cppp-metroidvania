@@ -7,10 +7,7 @@ sdl::Texture::~Texture()
 		SDL_DestroyTexture(rawTexture);
 }
 
-sdl::Texture::Texture(SDL_Texture *raw)
-{
-	rawTexture = raw;
-}
+sdl::Texture::Texture(SDL_Texture *raw) : rawTexture(raw) {}
 
 void sdl::Texture::changeColor(Color color)
 {

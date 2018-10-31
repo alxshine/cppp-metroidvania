@@ -11,7 +11,7 @@
 #include "sdlException.hpp"
 
 namespace sdl {
-class SDL {
+class SDL final {
   private:
 	static std::shared_ptr<SDL> singleton;
 	std::shared_ptr<Renderer> renderer;
@@ -54,7 +54,7 @@ class SDL {
 
 	SDL(const SDL &) = delete;
 	SDL(const SDL &&) = delete;
-	virtual ~SDL();
+	~SDL();
 };
 } // namespace sdl
 #endif /* SDL_H */
