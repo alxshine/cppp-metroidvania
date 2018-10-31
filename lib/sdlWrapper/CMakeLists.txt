@@ -1,8 +1,9 @@
 cmake_minimum_required (VERSION 2.6)
 project(SDL_Wrapper)
 
-set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -Wextra")
-set(CMAKE_BUILD_TYPE RelWithDebInfo)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(default_build_type "Release")
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 
 include_directories(${SDL_Wrapper_SOURCE_DIR}/include)
