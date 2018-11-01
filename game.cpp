@@ -9,7 +9,7 @@ and may not be redistributed without written permission.*/
 #include "SDL.hpp"
 #include "menu.hpp"
 #include "sdlException.hpp"
-#include "texture.hpp"
+#include "rendering.hpp"
 
 using namespace std;
 using namespace std::chrono_literals;

@@ -4,12 +4,34 @@
 #include <SDL2/SDL.h>
 #include <memory>
 
+#include "color.hpp"
 #include "rectangle.hpp"
 #include "sdlException.hpp"
-#include "sprite.hpp"
-#include "texture.hpp"
 
 namespace sdl {
+struct Texture {
+	Texture(SDL_Texture *raw);
+
+	SDL_Texture *rawTexture; // TODO: maybe we can do this better, but SDL_RenderCopy takes a non const SDL_Texture*
+
+	void changeColor(Color color);
+
+	Texture() = delete;
+
+	Texture(const Texture &) = delete;
+
+	Texture(const Texture &&) = delete;
+
+	virtual ~Texture();
+};
+
+struct Sprite {
+  public:
+	std::shared_ptr<Texture> texture;
+	Rectangle sourceRectangle;
+};
+
+using Text = Sprite;
 class Renderer {
   private:
 	SDL_Renderer *rawRenderer;

@@ -1,7 +1,5 @@
 //
-#include <renderer.hpp>
-
-#include "renderer.hpp"
+#include "rendering.hpp"
 
 sdl::Renderer::Renderer()
 {
@@ -67,4 +65,21 @@ void sdl::Renderer::render(const Sprite &sprite, Rectangle targetRect) const
 void sdl::Renderer::swapBuffers() const
 {
 	SDL_RenderPresent(rawRenderer);
+}
+
+sdl::Texture::~Texture()
+{
+	if (rawTexture != nullptr)
+		SDL_DestroyTexture(rawTexture);
+}
+
+sdl::Texture::Texture(SDL_Texture *raw)
+{
+	rawTexture = raw;
+}
+
+void sdl::Texture::changeColor(Color color)
+{
+	if (SDL_SetTextureColorMod(rawTexture, color.r, color.g, color.b))
+		throw SdlException(SDL_GetError());
 }

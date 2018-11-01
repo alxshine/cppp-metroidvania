@@ -7,8 +7,7 @@
 
 #include "color.hpp"
 #include "rectangle.hpp"
-#include "renderer.hpp"
-#include "texture.hpp"
+#include "rendering.hpp"
 
 namespace sdl {
 
