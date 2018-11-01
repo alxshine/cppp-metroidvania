@@ -3,7 +3,7 @@
 
 #include "gamedef/LoadAllDefinitions.hpp"
 
-int main(int argc, char *argv[])
+int main()
 {
 	using namespace game_definitions;
 	std::ios_base::sync_with_stdio(false);

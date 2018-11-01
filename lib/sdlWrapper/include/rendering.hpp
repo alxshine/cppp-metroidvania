@@ -1,12 +1,14 @@
-#ifndef RENDERER_H
-#define RENDERER_H
+#ifndef RENDERING_H
+#define RENDERING_H
 
 #include <SDL2/SDL.h>
 #include <memory>
+#include <vector>
 
 #include "color.hpp"
 #include "rectangle.hpp"
 #include "sdlException.hpp"
+#include "gameClock.hpp"
 
 namespace sdl {
 struct Texture {
@@ -32,6 +34,17 @@ struct Sprite {
 };
 
 using Text = Sprite;
+struct Animation {
+  private:
+	std::shared_ptr<Texture> texture;
+	std::vector<Rectangle> frames;
+	GameClock::duration timePerFrame;
+
+  public:
+	Animation(std::shared_ptr<Texture> texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
+
+	Sprite getAnimationFrame(GameClock::time_point t);
+};
 class Renderer {
   private:
 	SDL_Renderer *rawRenderer;
@@ -55,4 +68,4 @@ class Renderer {
 	SDL_Renderer *getRawRenderer() const;
 };
 } // namespace sdl
-#endif /* RENDERER_H */
+#endif /* RENDERING_H */

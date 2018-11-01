@@ -4,13 +4,8 @@
 #include <vector>
 
 #include "SDL.hpp"
-<<<<<<< HEAD
-#include "animation.hpp"
 #include "gameClock.hpp"
-||||||| merged common ancestors
-=======
 #include "menu.hpp"
->>>>>>> menu
 #include "sdlException.hpp"
 #include "rendering.hpp"
 

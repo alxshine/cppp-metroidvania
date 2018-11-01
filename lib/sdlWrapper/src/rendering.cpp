@@ -83,3 +83,16 @@ void sdl::Texture::changeColor(Color color)
 	if (SDL_SetTextureColorMod(rawTexture, color.r, color.g, color.b))
 		throw SdlException(SDL_GetError());
 }
+
+sdl::Animation::Animation(std::shared_ptr<Texture> t, std::vector<sdl::Rectangle> f, sdl::GameClock::duration tpf)
+    : texture(t), frames(f), timePerFrame(tpf)
+{
+}
+
+sdl::Sprite sdl::Animation::getAnimationFrame(sdl::GameClock::time_point t)
+{
+	int frameNumber = t.time_since_epoch() / timePerFrame;
+	int frameIndex = frameNumber % frames.size();
+	return Sprite{texture, frames[frameIndex]};
+}
+
