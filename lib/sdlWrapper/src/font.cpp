@@ -8,3 +8,8 @@ sdl::Font::~Font()
 }
 
 sdl::Font::Font(TTF_Font *raw) : rawFont(raw) {}
+
+sdl::Font::Font(Font &&rhs) : rawFont(rhs.rawFont)
+{
+	rhs.rawFont = nullptr;
+};
