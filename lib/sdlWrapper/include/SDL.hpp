@@ -7,7 +7,7 @@
 #include <string>
 
 #include "font.hpp"
-#include "renderer.hpp"
+#include "rendering.hpp"
 #include "sdlException.hpp"
 
 namespace sdl {

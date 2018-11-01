@@ -4,10 +4,15 @@
 #include <vector>
 
 #include "SDL.hpp"
+<<<<<<< HEAD
 #include "animation.hpp"
 #include "gameClock.hpp"
+||||||| merged common ancestors
+=======
+#include "menu.hpp"
+>>>>>>> menu
 #include "sdlException.hpp"
-#include "texture.hpp"
+#include "rendering.hpp"
 
 using namespace std;
 using namespace std::chrono_literals;

@@ -3,7 +3,7 @@ project(metroidvania)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra")
-set(default_build_type "Release")
+set(default_build_type "RelWithDebugInfo")
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 
 INCLUDE(FindPkgConfig)

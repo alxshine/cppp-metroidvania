@@ -1,7 +1,5 @@
 //
-#include <renderer.hpp>
-
-#include "renderer.hpp"
+#include "rendering.hpp"
 
 sdl::Renderer::Renderer()
 {
@@ -23,8 +21,19 @@ sdl::Renderer::~Renderer()
 	SDL_DestroyRenderer(rawRenderer);
 }
 
-void sdl::Renderer::clear()
+void sdl::Renderer::drawRectangle(Rectangle rect, Color color, bool fill)
 {
+	SDL_SetRenderDrawColor(rawRenderer, color.r, color.g, color.b, color.a);
+	if (fill)
+		SDL_RenderFillRect(rawRenderer, &rect);
+	else
+		SDL_RenderDrawRect(rawRenderer, &rect);
+	SDL_SetRenderDrawColor(rawRenderer, defaultColor.r, defaultColor.g, defaultColor.b, defaultColor.a);
+}
+
+void sdl::Renderer::clear(Color color)
+{
+	SDL_SetRenderDrawColor(rawRenderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(rawRenderer);
 }
 
@@ -56,4 +65,21 @@ void sdl::Renderer::render(const Sprite &sprite, Rectangle targetRect) const
 void sdl::Renderer::swapBuffers() const
 {
 	SDL_RenderPresent(rawRenderer);
+}
+
+sdl::Texture::~Texture()
+{
+	if (rawTexture != nullptr)
+		SDL_DestroyTexture(rawTexture);
+}
+
+sdl::Texture::Texture(SDL_Texture *raw)
+{
+	rawTexture = raw;
+}
+
+void sdl::Texture::changeColor(Color color)
+{
+	if (SDL_SetTextureColorMod(rawTexture, color.r, color.g, color.b))
+		throw SdlException(SDL_GetError());
 }
