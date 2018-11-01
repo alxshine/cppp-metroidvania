@@ -19,6 +19,8 @@ struct Font final {
 
 	Font(const Font &) = delete;
 
+	Font(Font &&rhs);
+
 	~Font();
 };
 

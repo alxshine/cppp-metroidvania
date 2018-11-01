@@ -20,7 +20,7 @@ struct Texture final {
 
 	Texture(const Texture &) = delete;
 
-	Texture(const Texture &&) = delete;
+	Texture(Texture &&rhs); // TODO should the move ctor take const?
 
 	~Texture();
 };
