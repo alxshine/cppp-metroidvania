@@ -18,7 +18,7 @@ class Renderable;
 
 class Renderable {
   public:
-	virtual void render(const Renderer &render) const = 0;
+	virtual void render(const Renderer &renderer) const = 0;
 	virtual ~Renderable(){};
 };
 
