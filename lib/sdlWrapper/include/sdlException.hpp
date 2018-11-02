@@ -2,6 +2,7 @@
 #define SDLEXCEPTION_H
 #include <exception>
 #include <string>
+
 class SdlException : public std::exception {
   private:
 	std::string message;

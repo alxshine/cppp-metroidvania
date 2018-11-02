@@ -1,6 +1,6 @@
 #include "gameClock.hpp"
 
-sdl::GameClock::GameClock() : offset(std::chrono::milliseconds(SDL_GetTicks())), paused(false) {}
+sdl::GameClock::GameClock() : offset(std::chrono::milliseconds(SDL_GetTicks())) {}
 
 sdl::GameClock::time_point sdl::GameClock::now() noexcept
 {

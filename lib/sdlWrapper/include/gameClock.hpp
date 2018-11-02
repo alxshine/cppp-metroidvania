@@ -24,7 +24,7 @@ class GameClock {
 	time_point pauseStart;
 	time_point pauseStartRaw;
 	duration offset;
-	bool paused;
+	bool paused = false;
 };
 } // namespace sdl
 
