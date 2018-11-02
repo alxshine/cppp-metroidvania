@@ -35,14 +35,16 @@ class Renderer {
 	Renderer();
 	virtual ~Renderer();
 
-	void drawRectangle(Rectangle rect, Color color = defaultColor, bool fill = true) const;
-	void clear(Color color = defaultColor) const;
 	void render(const Renderable &renderable) const;
 	void render(const std::shared_ptr<Texture> texture, Rectangle sourceRect, Rectangle targetRect) const;
 	void render(const std::shared_ptr<Texture> texture) const;
 	void render(const Sprite &sprite) const;
 	void render(const Sprite &sprite, Rectangle targetRect) const;
+
+	void drawRectangle(Rectangle rect, Color color = defaultColor, bool fill = true) const;
+	void clear(Color color = defaultColor) const;
 	void swapBuffers() const;
+
 	SDL_Renderer *getRawRenderer() const;
 };
 } // namespace sdl
