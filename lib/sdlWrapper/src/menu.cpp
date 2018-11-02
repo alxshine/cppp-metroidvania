@@ -5,13 +5,13 @@ constexpr int vpadding = 6;
 constexpr int lmargin = 10;
 constexpr int vmargin = 30;
 
-sdl::MenuItem::MenuItem(Text buttonText, std::function<void(void)> onClick, Color backgroundColor) : buttonText(buttonText), backgroundColor(backgroundColor), onClick(onClick)
+sdl::MenuItem::MenuItem(Text buttonText, std::function<void(void)> onClick, Color backgroundColor)
+    : buttonText(buttonText), backgroundColor(backgroundColor), onClick(onClick)
 {
 }
 
-sdl::Menu::Menu(Text titleText, Color backgroundColor, std::shared_ptr<Renderer> renderer)
-    : renderer(renderer),
-      titleText(titleText), titleDrawArea{renderer->logicalW / 2 - titleText.sourceRectangle.w / 2, vpadding,
+sdl::Menu::Menu(Text titleText, Color backgroundColor, const std::shared_ptr<Renderer> renderer)
+    : titleText(titleText), titleDrawArea{renderer->logicalW / 2 - titleText.sourceRectangle.w / 2, vpadding,
                                           titleText.sourceRectangle.w, titleText.sourceRectangle.h},
       backgroundColor(backgroundColor)
 {
@@ -40,13 +40,13 @@ sdl::Menu &sdl::Menu::addItem(MenuItem item)
 	return *this;
 }
 
-void sdl::Menu::render() const
+void sdl::Menu::render(const Renderer &renderer) const
 {
-	renderer->clear(backgroundColor);
-	renderer->render(titleText, titleDrawArea);
+	renderer.clear(backgroundColor);
+	renderer.render(titleText, titleDrawArea);
 
 	for (auto item : items) {
-		renderer->drawRectangle(item.buttonArea, item.backgroundColor);
-		renderer->render(item.buttonText, item.buttonTextDrawArea);
+		renderer.drawRectangle(item.buttonArea, item.backgroundColor);
+		renderer.render(item.buttonText, item.buttonTextDrawArea);
 	}
 }

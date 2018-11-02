@@ -23,7 +23,7 @@ sdl::Renderer::~Renderer()
 	// TODO @alex destroy window?
 }
 
-void sdl::Renderer::drawRectangle(Rectangle rect, Color color, bool fill)
+void sdl::Renderer::drawRectangle(Rectangle rect, Color color, bool fill) const
 {
 	SDL_SetRenderDrawColor(rawRenderer, color.r, color.g, color.b, color.a);
 	if (fill)
@@ -33,11 +33,17 @@ void sdl::Renderer::drawRectangle(Rectangle rect, Color color, bool fill)
 	SDL_SetRenderDrawColor(rawRenderer, defaultColor.r, defaultColor.g, defaultColor.b, defaultColor.a);
 }
 
-void sdl::Renderer::clear(Color color)
+void sdl::Renderer::clear(Color color) const
 {
 	SDL_SetRenderDrawColor(rawRenderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(rawRenderer);
 }
+
+void sdl::Renderer::render(const Renderable &renderable) const
+{
+	renderable.render(*this);
+}
+
 
 void sdl::Renderer::render(const std::shared_ptr<Texture> texture, Rectangle sourceRect, Rectangle targetRect) const
 {

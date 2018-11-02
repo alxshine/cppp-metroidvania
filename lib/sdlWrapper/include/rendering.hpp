@@ -11,6 +11,13 @@
 #include "sdlException.hpp"
 
 namespace sdl {
+
+struct Texture;
+struct Sprite;
+struct Animation;
+class Renderer;
+class Renderable;
+
 struct Texture {
 	Texture(SDL_Texture *raw);
 
@@ -47,6 +54,12 @@ struct Animation {
 	Sprite getAnimationFrame(GameClock::time_point t);
 };
 
+class Renderable {
+  public:
+	virtual void render(const Renderer &render) const = 0;
+	virtual ~Renderable() {};
+};
+
 class Renderer {
   private:
 	SDL_Renderer *rawRenderer;
@@ -60,8 +73,9 @@ class Renderer {
 	Renderer();
 	virtual ~Renderer();
 
-	void drawRectangle(Rectangle rect, Color color = defaultColor, bool fill = true);
-	void clear(Color color = defaultColor);
+	void drawRectangle(Rectangle rect, Color color = defaultColor, bool fill = true) const;
+	void clear(Color color = defaultColor) const;
+	void render(const Renderable &renderable) const;
 	void render(const std::shared_ptr<Texture> texture, Rectangle sourceRect, Rectangle targetRect) const;
 	void render(const std::shared_ptr<Texture> texture) const;
 	void render(const Sprite &sprite) const;

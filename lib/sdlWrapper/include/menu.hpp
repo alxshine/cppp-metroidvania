@@ -27,8 +27,7 @@ class MenuItem {
 	// Rectangle labelArea;
 };
 
-class Menu {
-	std::shared_ptr<Renderer> renderer;
+class Menu : public Renderable {
 	Text titleText;
 	Rectangle titleDrawArea;
 	Color backgroundColor;
@@ -36,9 +35,9 @@ class Menu {
 	std::vector<MenuItem> items;
 
   public:
-	Menu(Text titleText, Color backgroundColor, std::shared_ptr<Renderer> renderer);
-	void render() const;
+	Menu(Text titleText, Color backgroundColor, const std::shared_ptr<Renderer> renderer);
 
+	void render(const Renderer &renderer) const;
 	Menu &addItem(MenuItem item);
 	virtual ~Menu();
 };
