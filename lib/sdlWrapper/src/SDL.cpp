@@ -49,10 +49,11 @@ std::shared_ptr<sdl::Texture> sdl::SDL::loadTexture(std::string path)
 		throw SdlException("Could not load texture");
 
 	SDL_Texture *rawTexture = SDL_CreateTextureFromSurface(renderer->getRawRenderer(), tempSurface);
+	SDL_FreeSurface(tempSurface); // Free *before* throwing exception
+
 	if (rawTexture == nullptr)
 		throw SdlException("Could not create texture");
 
-	SDL_FreeSurface(tempSurface);
 	return std::make_shared<Texture>(rawTexture);
 }
 
@@ -77,18 +78,19 @@ sdl::Text sdl::SDL::generateText(std::shared_ptr<Font> font, std::string text, C
 		tempSurface = TTF_RenderText_Shaded(font->rawFont, text.c_str(), color, bgColor);
 		break;
 	case TextRendering::Blended:
-		tempSurface = TTF_RenderText_Blended(font.get()->rawFont, text.c_str(), color);
+		tempSurface = TTF_RenderText_Blended(font->rawFont, text.c_str(), color);
 		break;
 	}
 	if (tempSurface == nullptr)
 		throw SdlException("Could not draw text");
 
 	SDL_Texture *rawTexture = SDL_CreateTextureFromSurface(renderer->getRawRenderer(), tempSurface);
+	SDL_FreeSurface(tempSurface); // Free *before* throwing exception
+
 	if (rawTexture == nullptr)
 		throw SdlException("Could not create texture");
 
-	SDL_FreeSurface(tempSurface);
-
+	// Store text texture in a sprite, including it's size
 	Rectangle sourceRect = {0, 0, 0, 0};
 	SDL_QueryTexture(rawTexture, nullptr, nullptr, &sourceRect.w, &sourceRect.h);
 	return {std::make_shared<Texture>(rawTexture), sourceRect};

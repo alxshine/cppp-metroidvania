@@ -6,9 +6,9 @@
 #include <vector>
 
 #include "color.hpp"
+#include "gameClock.hpp"
 #include "rectangle.hpp"
 #include "sdlException.hpp"
-#include "gameClock.hpp"
 
 namespace sdl {
 struct Texture {
@@ -34,6 +34,7 @@ struct Sprite {
 };
 
 using Text = Sprite;
+
 struct Animation {
   private:
 	std::shared_ptr<Texture> texture;
@@ -45,6 +46,7 @@ struct Animation {
 
 	Sprite getAnimationFrame(GameClock::time_point t);
 };
+
 class Renderer {
   private:
 	SDL_Renderer *rawRenderer;

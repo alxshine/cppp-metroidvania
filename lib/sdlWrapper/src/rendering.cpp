@@ -10,6 +10,7 @@ sdl::Renderer::Renderer()
 
 	rawRenderer = SDL_CreateRenderer(rawWindow, -1, SDL_RENDERER_ACCELERATED);
 	if (rawRenderer == nullptr)
+		// TODO @alex destroy window in case of error?
 		throw SdlException("Renderer could not be created");
 
 	SDL_RenderSetLogicalSize(rawRenderer, logicalW, logicalH);
@@ -19,6 +20,7 @@ sdl::Renderer::Renderer()
 sdl::Renderer::~Renderer()
 {
 	SDL_DestroyRenderer(rawRenderer);
+	// TODO @alex destroy window?
 }
 
 void sdl::Renderer::drawRectangle(Rectangle rect, Color color, bool fill)
@@ -73,10 +75,7 @@ sdl::Texture::~Texture()
 		SDL_DestroyTexture(rawTexture);
 }
 
-sdl::Texture::Texture(SDL_Texture *raw)
-{
-	rawTexture = raw;
-}
+sdl::Texture::Texture(SDL_Texture *raw) : rawTexture(raw) {}
 
 void sdl::Texture::changeColor(Color color)
 {
@@ -95,4 +94,3 @@ sdl::Sprite sdl::Animation::getAnimationFrame(sdl::GameClock::time_point t)
 	int frameIndex = frameNumber % frames.size();
 	return Sprite{texture, frames[frameIndex]};
 }
-

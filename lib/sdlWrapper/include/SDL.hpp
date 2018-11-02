@@ -45,10 +45,8 @@ class SDL final {
 	 *
 	 * @return The generated sprite, ready to be rendered.
 	 */
-	Text generateText(std::shared_ptr<Font> font, std::string text,
-	                                   Color color = {u_char(255), u_char(255), u_char(255), u_char(255)},
-	                                   TextRendering rendering = TextRendering::Blended,
-	                                   Color bgColor = {u_char(0), u_char(0), u_char(0), u_char(0)});
+	Text generateText(std::shared_ptr<Font> font, std::string text, Color color = {255, 255, 255, 255},
+	                  TextRendering rendering = TextRendering::Blended, Color bgColor = {0, 0, 0, 0});
 
 	void delay(std::chrono::milliseconds time);
 
