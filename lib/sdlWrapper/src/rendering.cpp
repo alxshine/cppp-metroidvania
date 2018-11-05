@@ -44,9 +44,9 @@ void sdl::Renderer::render(const Renderable &renderable) const
 	renderable.render(*this);
 }
 
-void sdl::Renderer::render(const std::shared_ptr<Texture> texture, Rectangle sourceRect, Rectangle targetRect) const
+void sdl::Renderer::render(const Texture &texture, Rectangle sourceRect, Rectangle targetRect) const
 {
-	SDL_RenderCopy(rawRenderer, texture->rawTexture, &sourceRect, &targetRect);
+	SDL_RenderCopy(rawRenderer, texture.rawTexture, &sourceRect, &targetRect);
 }
 
 SDL_Renderer *sdl::Renderer::getRawRenderer() const
@@ -54,9 +54,9 @@ SDL_Renderer *sdl::Renderer::getRawRenderer() const
 	return rawRenderer;
 }
 
-void sdl::Renderer::render(const std::shared_ptr<Texture> texture) const
+void sdl::Renderer::render(const Texture &texture) const
 {
-	SDL_RenderCopy(rawRenderer, texture->rawTexture, nullptr, nullptr);
+	SDL_RenderCopy(rawRenderer, texture.rawTexture, nullptr, nullptr);
 }
 
 void sdl::Renderer::render(const Sprite &sprite) const

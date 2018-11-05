@@ -36,12 +36,12 @@ class Renderer {
 	virtual ~Renderer();
 
 	void render(const Renderable &renderable) const;
-	void render(const std::shared_ptr<Texture> texture, Rectangle sourceRect, Rectangle targetRect) const;
-	void render(const std::shared_ptr<Texture> texture) const;
+	void render(const Texture &texture, const Rectangle sourceRect, const Rectangle targetRect) const;
+	void render(const Texture &texture) const;
 	void render(const Sprite &sprite) const;
-	void render(const Sprite &sprite, Rectangle targetRect) const;
+	void render(const Sprite &sprite, const Rectangle targetRect) const;
 
-	void drawRectangle(Rectangle rect, Color color = defaultColor, bool fill = true) const;
+	void drawRectangle(const Rectangle rect, Color color = defaultColor, bool fill = true) const;
 	void clear(Color color = defaultColor) const;
 	void swapBuffers() const;
 

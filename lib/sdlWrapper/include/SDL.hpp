@@ -20,7 +20,7 @@ class SDL final {
   public:
 	static SDL &getInstance();
 	std::shared_ptr<Renderer> getRenderer();
-	std::shared_ptr<Texture> loadTexture(std::string path);
+	std::shared_ptr<Texture> loadTexture(const std::string &path);
 
 	/**
 	 * @brief Load a .ttf font from disk.
@@ -32,7 +32,7 @@ class SDL final {
 	 *
 	 * @return A shared pointer to the generated font.
 	 */
-	std::shared_ptr<Font> loadFont(std::string path, unsigned int size);
+	std::shared_ptr<Font> loadFont(const std::string &path, unsigned int size);
 
 	/**
 	 * @brief Draw text to a sprite.
@@ -45,7 +45,7 @@ class SDL final {
 	 *
 	 * @return The generated sprite, ready to be rendered.
 	 */
-	Text generateText(std::shared_ptr<Font> font, std::string text, Color color = {255, 255, 255, 255},
+	Text generateText(const Font &font, const std::string &text, Color color = {255, 255, 255, 255},
 	                  TextRendering rendering = TextRendering::Blended, Color bgColor = {0, 0, 0, 0});
 
 	void delay(std::chrono::milliseconds time);

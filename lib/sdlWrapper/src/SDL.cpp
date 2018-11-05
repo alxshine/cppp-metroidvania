@@ -42,7 +42,7 @@ void sdl::SDL::delay(std::chrono::milliseconds time)
 	SDL_Delay((unsigned int)time.count());
 }
 
-std::shared_ptr<sdl::Texture> sdl::SDL::loadTexture(std::string path)
+std::shared_ptr<sdl::Texture> sdl::SDL::loadTexture(const std::string &path)
 {
 	SDL_Surface *tempSurface = IMG_Load(path.c_str());
 	if (tempSurface == nullptr)
@@ -57,7 +57,7 @@ std::shared_ptr<sdl::Texture> sdl::SDL::loadTexture(std::string path)
 	return std::make_shared<Texture>(rawTexture);
 }
 
-std::shared_ptr<sdl::Font> sdl::SDL::loadFont(std::string path, unsigned int size)
+std::shared_ptr<sdl::Font> sdl::SDL::loadFont(const std::string &path, unsigned int size)
 {
 	TTF_Font *font = TTF_OpenFont(path.c_str(), size);
 	if (font == nullptr)
@@ -66,19 +66,19 @@ std::shared_ptr<sdl::Font> sdl::SDL::loadFont(std::string path, unsigned int siz
 	return std::make_shared<sdl::Font>(font);
 }
 
-sdl::Text sdl::SDL::generateText(std::shared_ptr<Font> font, std::string text, Color color, TextRendering rendering,
+sdl::Text sdl::SDL::generateText(const Font &font, const std::string &text, Color color, TextRendering rendering,
                                  Color bgColor)
 {
 	SDL_Surface *tempSurface = nullptr;
 	switch (rendering) {
 	case TextRendering::Solid:
-		tempSurface = TTF_RenderText_Solid(font->rawFont, text.c_str(), color);
+		tempSurface = TTF_RenderText_Solid(font.rawFont, text.c_str(), color);
 		break;
 	case TextRendering::Shaded:
-		tempSurface = TTF_RenderText_Shaded(font->rawFont, text.c_str(), color, bgColor);
+		tempSurface = TTF_RenderText_Shaded(font.rawFont, text.c_str(), color, bgColor);
 		break;
 	case TextRendering::Blended:
-		tempSurface = TTF_RenderText_Blended(font->rawFont, text.c_str(), color);
+		tempSurface = TTF_RenderText_Blended(font.rawFont, text.c_str(), color);
 		break;
 	}
 	if (tempSurface == nullptr)

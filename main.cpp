@@ -51,14 +51,14 @@ int main()
 		auto titlefont = sdl.loadFont("assets/fonts/Countryside Personal Use.ttf", 60);
 		auto buttonfont = sdl.loadFont("assets/fonts/Countryside Personal Use.ttf", 30);
 
-		auto title = sdl.generateText(titlefont, "Main Menu");
+		auto title = sdl.generateText(*titlefont, "Main Menu");
 		Menu menu{title, {100, 0, 0, 0}, renderer};
 
-		auto text1 = sdl.generateText(buttonfont, "Button 1");
+		auto text1 = sdl.generateText(*buttonfont, "Button 1");
 		menu.addItem({text1, [] {}, {100, 100, 100, 0}});
-		auto text2 = sdl.generateText(buttonfont, "Button 2");
+		auto text2 = sdl.generateText(*buttonfont, "Button 2");
 		menu.addItem({text2, [] {}});
-		auto text3 = sdl.generateText(buttonfont, "Button with longer label");
+		auto text3 = sdl.generateText(*buttonfont, "Button with longer label");
 		menu.addItem({text3, [] {}});
 
 		renderer->render(menu);
