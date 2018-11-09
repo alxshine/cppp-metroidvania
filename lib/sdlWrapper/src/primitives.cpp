@@ -19,7 +19,7 @@ void sdl::Texture::changeColor(Color color)
 		throw SdlException(SDL_GetError());
 }
 
-sdl::Sprite sdl::Animation::getAnimationFrame(sdl::GameClock::time_point t)
+sdl::Sprite sdl::Animation::getAnimationFrame(sdl::GameClock::time_point t) //TODO: use std::c
 {
 	int frameNumber = t.time_since_epoch() / timePerFrame;
 	int frameIndex = frameNumber % frames.size();
