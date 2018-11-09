@@ -1,4 +1,4 @@
-#ifndef TEXTURE_H
+#ifndef TEXTURE_H // TODO: rename
 #define TEXTURE_H
 
 #include <SDL2/SDL.h>
@@ -8,8 +8,8 @@
 #include <vector>
 
 #include "color.hpp"
-#include "rectangle.hpp"
 #include "gameClock.hpp"
+#include "rectangle.hpp"
 #include "sdlException.hpp"
 
 namespace sdl {
@@ -18,20 +18,18 @@ struct Texture final {
 
 	SDL_Texture *rawTexture; // TODO: maybe we can do this better, but SDL_RenderCopy takes a non const SDL_Texture*
 
-	void changeColor(Color color);
-
 	Texture() = delete;
 
 	Texture(const Texture &) = delete;
 
-	Texture(Texture &&rhs); // TODO should the move ctor take const?
+	Texture(Texture &&rhs);
 
 	~Texture();
 };
 
 struct Sprite final {
   public:
-	std::shared_ptr<Texture> texture;
+	const Texture &texture;
 	Rectangle sourceRectangle;
 };
 
@@ -39,12 +37,12 @@ using Text = Sprite;
 
 struct Animation {
   private:
-	std::shared_ptr<Texture> texture;
+	const Texture &texture;
 	std::vector<Rectangle> frames;
 	GameClock::duration timePerFrame;
 
   public:
-	Animation(std::shared_ptr<Texture> texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
+	Animation(const Texture& texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
 
 	Sprite getAnimationFrame(GameClock::time_point t);
 };
