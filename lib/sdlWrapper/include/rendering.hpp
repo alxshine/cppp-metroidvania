@@ -41,7 +41,7 @@ class Renderer {
 	void render(const Sprite &sprite) const;
 	void render(const Sprite &sprite, const Rectangle targetRect) const;
 
-	void drawRectangle(const Rectangle rect, Color color = defaultColor, bool fill = true) const;
+	void drawRectangle(const Rectangle rect, const Color color = defaultColor, bool fill = true) const;
 	void clear(Color color = defaultColor) const;
 	void swapBuffers() const;
 

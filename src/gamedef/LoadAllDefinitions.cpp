@@ -7,7 +7,7 @@
 
 namespace fs = std::filesystem;
 
-void handle_file(fs::path f)
+void handle_file(fs::path f, game::ResourceManager &res)
 {
 	std::string ext(f.extension());
 
@@ -17,6 +17,8 @@ void handle_file(fs::path f)
 			game_definitions::Mob mob;
 			fin >> mob;
 			// std::cout << mob; // TODO actually handle the mob
+
+			// TODO we might want to parse all mobs before the rooms...
 		} else if (ext == ".room") {
 			std::fstream fin(f, std::ios::in);
 			game_definitions::Room room;
@@ -34,11 +36,11 @@ void handle_file(fs::path f)
 	}
 }
 
-void game_definitions::load_all_definitions(std::string base)
+void game_definitions::load_all_definitions(std::string base, game::ResourceManager &res)
 {
 	for (auto &f : fs::recursive_directory_iterator(base)) {
 		if (!f.is_regular_file())
 			continue;
-		handle_file(f);
+		handle_file(f, res);
 	}
 }
