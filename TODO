@@ -1,0 +1,1 @@
+TODO: remove the shared_ptrs and change the load function in SDL to unique_ptr

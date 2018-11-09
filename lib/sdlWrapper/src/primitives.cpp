@@ -13,12 +13,6 @@ sdl::Texture::Texture(Texture &&rhs) : rawTexture(rhs.rawTexture)
 	rhs.rawTexture = nullptr;
 }
 
-void sdl::Texture::changeColor(Color color)
-{
-	if (SDL_SetTextureColorMod(rawTexture, color.r, color.g, color.b) || SDL_SetTextureAlphaMod(rawTexture, color.a))
-		throw SdlException(SDL_GetError());
-}
-
 sdl::Sprite sdl::Animation::getAnimationFrame(sdl::GameClock::time_point t)
 {
 	int frameNumber = t.time_since_epoch() / timePerFrame;
