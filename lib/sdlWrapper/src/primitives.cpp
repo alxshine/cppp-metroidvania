@@ -20,7 +20,7 @@ sdl::Sprite sdl::Animation::getAnimationFrame(sdl::GameClock::time_point t)
 	return Sprite{texture, frames[frameIndex]};
 }
 
-sdl::Animation::Animation(std::shared_ptr<Texture> t, std::vector<sdl::Rectangle> f, sdl::GameClock::duration tpf)
+sdl::Animation::Animation(const Texture& t, std::vector<sdl::Rectangle> f, sdl::GameClock::duration tpf)
     : texture(t), frames(f), timePerFrame(tpf)
 {
 }

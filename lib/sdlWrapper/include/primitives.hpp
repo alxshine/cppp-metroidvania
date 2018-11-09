@@ -42,7 +42,7 @@ struct Animation {
 	GameClock::duration timePerFrame;
 
   public:
-	Animation(std::shared_ptr<Texture> texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
+	Animation(const Texture& texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
 
 	Sprite getAnimationFrame(GameClock::time_point t);
 };

@@ -13,7 +13,6 @@
 namespace sdl {
 class SDL final {
   private:
-	static std::shared_ptr<SDL> singleton;
 	std::shared_ptr<Renderer> renderer;
 	SDL();
 
@@ -45,8 +44,10 @@ class SDL final {
 	 *
 	 * @return The generated sprite, ready to be rendered.
 	 */
-	Text generateText(const Font &font, const std::string &text, Color color = {255, 255, 255, 255},
-	                  TextRendering rendering = TextRendering::Blended, Color bgColor = {0, 0, 0, 0});
+	/*
+	 *Text generateText(const Font &font, const std::string &text, Color color = {255, 255, 255, 255},
+	 *                  TextRendering rendering = TextRendering::Blended, Color bgColor = {0, 0, 0, 0});
+	 */
 
 	void delay(std::chrono::milliseconds time);
 

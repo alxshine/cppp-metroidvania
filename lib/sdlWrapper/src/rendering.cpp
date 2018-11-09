@@ -61,12 +61,12 @@ void sdl::Renderer::render(const Texture &texture) const
 
 void sdl::Renderer::render(const Sprite &sprite) const
 {
-	SDL_RenderCopy(rawRenderer, sprite.texture->rawTexture, &sprite.sourceRectangle, nullptr);
+	SDL_RenderCopy(rawRenderer, sprite.texture.rawTexture, &sprite.sourceRectangle, nullptr);
 }
 
 void sdl::Renderer::render(const Sprite &sprite, Rectangle targetRect) const
 {
-	SDL_RenderCopy(rawRenderer, sprite.texture->rawTexture, &sprite.sourceRectangle, &targetRect);
+	SDL_RenderCopy(rawRenderer, sprite.texture.rawTexture, &sprite.sourceRectangle, &targetRect);
 }
 
 void sdl::Renderer::swapBuffers() const
