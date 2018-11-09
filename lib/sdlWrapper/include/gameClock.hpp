@@ -5,7 +5,7 @@
 #include <chrono>
 
 namespace sdl {
-class GameClock { //TODO: use std::chrono instead of SDL_GetTicks
+class GameClock { //TODO: use update instead of calleing getTicks() every now() call
   public:
 	using duration = std::chrono::milliseconds;
 	using rep = duration::rep;
