@@ -10,19 +10,18 @@
 #include "Mob.hpp"
 #include "Room.hpp"
 #include "SDL.hpp"
+#include "gamedef/DefinitionLoading.hpp"
 
 namespace game {
 
 class ResourceManager final {
-	friend void parse_definition(std::filesystem::path f, ResourceManager &res);
-
   public:
 	/**
 	 * @brief Load all definitions and assets
 	 *
 	 * @param path_to_definitions path to the game definitions folder
 	 */
-	ResourceManager(const std::string &path_to_definitions);
+	ResourceManager(const std::string &path_to_definitions, const sdl::SDL &sdl);
 
 	Mob getMob(const std::string &name) const;
 	Item getItem(const std::string &name) const;
@@ -30,18 +29,29 @@ class ResourceManager final {
 
   private:
 	/**
-	 * @brief Get a texture or the default if it doesn't exist.
+	 * @brief Get a texture, or try to load it, or return the default if it doesn't exist.
 	 *
 	 * @param id of the texture - we use the relative path
 	 *
 	 * @return a const ref to the texture
 	 */
-	const Sdl::Texture &getTexture(const std::string &id) const;
+	const sdl::Texture &getOrLoadTexture(const std::string &id);
 
-	const std::unordered_map<std::unique_ptr<Mob>> mobs;
-	const std::unordered_map<std::unique_ptr<Item>> items;
-	const std::unordered_map<std::unique_ptr<Room>> rooms;
-	const std::unordered_map<std::unique_ptr<Sdl::Texture>> textures;
+	// Factory methods
+
+	std::unique_ptr<Mob> makeMob(const game_definitions::Mob &mobdef);
+	std::unique_ptr<Item> makeItem(const game_definitions::Item &itemdef);
+	std::unique_ptr<Room> makeRoom(const game_definitions::Room &roomdef);
+
+	void parseDefinition(std::filesystem::path f);
+
+	// Members
+
+	const sdl::SDL &sdl;
+	std::unordered_map<std::string, std::unique_ptr<Mob>> mobs;
+	std::unordered_map<std::string, std::unique_ptr<Item>> items;
+	std::unordered_map<std::string, std::unique_ptr<Room>> rooms;
+	std::unordered_map<std::string, std::unique_ptr<sdl::Texture>> textures;
 };
 } // namespace game
 

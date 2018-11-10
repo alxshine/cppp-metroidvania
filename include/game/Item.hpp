@@ -1,21 +1,22 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "gamedef/EntityDefinitions.hpp"
 #include "game/ResourceManager.hpp"
+#include "gamedef/EntityDefinitions.hpp"
 
 namespace game {
 
-class Item
-{
-public:
-	Item(const game_definitions::Item &itemdef, ResourceManager &res);
+class Item {
+  public:
+	Item();                // TODO ctor
 	Item(const Item &rhs); // TODO set default state in copy ctor
+	Item &operator=(const Item &rhs) = delete;
 	virtual ~Item();
 
-private:
+  private:
+	// TODO members
 };
 
-}
+} // namespace game
 
 #endif /* ITEM_H */

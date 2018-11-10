@@ -1,6 +1,5 @@
 add_library(gamelib
     gamedef/DefinitionLoading.cpp
-    gamedef/LoadAllDefinitions.cpp
     # game/Mixins.cpp
     # game/Mob.cpp
     game/ResourceManager.cpp
