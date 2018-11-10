@@ -1,1 +1,2 @@
 TODO: remove the shared_ptrs and change the load function in SDL to unique_ptr
+TODO: add descriptive message to SDL::loadTexture exceptions, similarly to SDL::loadFont

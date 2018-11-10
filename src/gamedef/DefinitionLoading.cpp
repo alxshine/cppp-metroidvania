@@ -35,10 +35,10 @@ void testString(const std::string &wanted, const std::string &got)
 // Use AFTER reading keyword
 std::istream &game_definitions::operator>>(std::istream &in, Rectangle &rect)
 {
-	in >> rect.topLeft;
-	in >> rect.topRight;
-	in >> rect.bottomLeft;
-	in >> rect.bottomRight;
+	in >> rect.x;
+	in >> rect.y;
+	in >> rect.w;
+	in >> rect.h;
 
 	return in;
 }

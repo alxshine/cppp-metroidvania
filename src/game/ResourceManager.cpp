@@ -8,7 +8,22 @@ using namespace game;
 
 std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobdef)
 {
+	// walking animation
 	const sdl::Texture &walkingAnimationTexture = getOrLoadTexture(mobdef.walkingAnimation.spritesheet);
+	const sdl::Animation walkingAnimation{walkingAnimationTexture, mobdef.walkingAnimation.frames,
+	                                      mobdef.walkingAnimation.timePerFrame};
+
+	// idle animation
+	OptionalAnimation idleAnimation = [&]() {
+		if (mobdef.idleAnimation.spritesheet == "")
+			return OptionalAnimation{};
+		const sdl::Texture &tex = getOrLoadTexture(mobdef.idleAnimation.spritesheet);
+		return std::make_unique<sdl::Animation>(tex, mobdef.idleAnimation.frames, mobdef.idleAnimation.timePerFrame);
+	}();
+
+	// TODO handle health, behaviou, boundingbox, attacks
+
+	return std::make_unique<Mob>(mobdef.name, walkingAnimation, std::move(idleAnimation));
 }
 
 void ResourceManager::parseDefinition(fs::path f)
@@ -80,6 +95,12 @@ const sdl::Texture &ResourceManager::getOrLoadTexture(const std::string &id)
 {
 	if (textures.count(id))
 		return *textures.at(id);
-	// TODO try to load texture
-	// TODO return default texture if loading fails
+
+	try {
+		// textures.emplace(id, sdl.loadTexture(id)); // TODO uncomment once loadTexture returns a unique_ptr
+		return *textures.at(id);
+	} catch (SdlException &e) {
+		std::cerr << e.what() << " - using default texture\n";
+		// TODO return default texture -- where to store it?
+	}
 }

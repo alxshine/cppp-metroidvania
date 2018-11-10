@@ -6,6 +6,8 @@
 #include <ostream>
 #include <vector>
 
+#include "SDL.hpp"
+
 /**********************************************
  *  Classes to parse our config into memory.  *
  **********************************************/
@@ -15,12 +17,7 @@ namespace game_definitions {
 using Health = int;
 using Damage = int;
 
-struct Rectangle {
-	int topLeft;
-	int topRight;
-	int bottomLeft;
-	int bottomRight;
-};
+using Rectangle = sdl::Rectangle;
 
 struct SoundEffect {
 	std::string file;
@@ -121,8 +118,8 @@ struct Room {
 
 inline std::ostream &operator<<(std::ostream &out, const Rectangle &rect)
 {
-	return out << "Rectangle {" << rect.topLeft << "," << rect.topRight << "," << rect.bottomLeft << ","
-	           << rect.bottomRight << "}\n";
+	return out << "Rectangle {" << rect.x << "," << rect.y << "," << rect.w << ","
+	           << rect.h << "}\n";
 }
 
 inline std::ostream &operator<<(std::ostream &out, const SoundEffect &snd)
