@@ -42,9 +42,9 @@ int main()
 		GameClock clock;
 		while (clock.now().time_since_epoch() < 5000ms) {
 			auto sprite = a.getAnimationFrame(clock.now());
-			renderer->clear();
-			renderer->render(sprite);
-			renderer->swapBuffers();
+			renderer.clear();
+			renderer.render(sprite);
+			renderer.swapBuffers();
 		}
 
 		// auto titlefont = sdl.loadFont("assets/fonts/Countryside Personal Use.ttf", 60);
