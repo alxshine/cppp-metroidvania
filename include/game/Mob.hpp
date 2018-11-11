@@ -8,7 +8,7 @@ namespace game {
 
 using OptionalAnimation = std::unique_ptr<sdl::Animation>;
 
-class Mob {
+struct Mob {
   public:
 	Mob(const std::string name, const sdl::Animation walkingAnimation, OptionalAnimation idleAnimation); // TODO finish ctor
 	Mob(const Mob &rhs); // TODO set default state in copy ctor
@@ -16,9 +16,9 @@ class Mob {
 	Mob &operator=(const Mob &rhs) = delete;
 	virtual ~Mob();
 
+	const std::string name;
 	const sdl::Animation walkingAnimation;
 	const OptionalAnimation idleAnimation;
-	const std::string name;
 };
 
 } // namespace game

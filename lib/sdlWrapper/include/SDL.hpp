@@ -19,7 +19,7 @@ class SDL final {
   public:
 	static SDL &getInstance();
 	const Renderer& getRenderer();
-	std::unique_ptr<Texture> loadTexture(const std::string &path);
+	std::unique_ptr<Texture> loadTexture(const std::string &path) const;
 
 	/**
 	 * @brief Load a .ttf font from disk.

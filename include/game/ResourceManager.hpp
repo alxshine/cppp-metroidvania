@@ -21,11 +21,12 @@ class ResourceManager final {
 	 *
 	 * @param path_to_definitions path to the game definitions folder
 	 */
-	ResourceManager(const std::string &path_to_definitions, const sdl::SDL &sdl);
+	ResourceManager(const std::string &path_to_definitions, const std::string &path_to_assets);
 
 	Mob getMob(const std::string &name) const;
 	Item getItem(const std::string &name) const;
 	Room getRoom(const std::string &name) const;
+
 
   private:
 	/**
@@ -35,7 +36,9 @@ class ResourceManager final {
 	 *
 	 * @return a const ref to the texture
 	 */
-	const sdl::Texture &getOrLoadTexture(const std::string &id);
+	const sdl::Texture &getTexture(const std::string &id);
+
+	void loadTexture(const std::string &id, const std::string &path);
 
 	// Factory methods
 

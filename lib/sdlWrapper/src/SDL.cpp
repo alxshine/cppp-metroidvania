@@ -42,7 +42,7 @@ void sdl::SDL::delay(std::chrono::milliseconds time)
 	SDL_Delay((unsigned int)time.count());
 }
 
-std::unique_ptr<sdl::Texture> sdl::SDL::loadTexture(const std::string &path)
+std::unique_ptr<sdl::Texture> sdl::SDL::loadTexture(const std::string &path) const
 {
 	SDL_Surface *tempSurface = IMG_Load(path.c_str());
 	if (tempSurface == nullptr)

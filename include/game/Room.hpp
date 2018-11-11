@@ -1,12 +1,11 @@
 #ifndef ROOM_H
 #define ROOM_H
 
-#include "game/ResourceManager.hpp"
 #include "gamedef/EntityDefinitions.hpp"
 
 namespace game {
 
-class Room {
+struct Room {
   public:
 	Room();                // TODO ctor
 	Room(const Room &rhs); // TODO set default state in copy ctor

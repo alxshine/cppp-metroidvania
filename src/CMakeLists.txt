@@ -3,6 +3,9 @@ add_library(gamelib
     # game/Mixins.cpp
     # game/Mob.cpp
     game/ResourceManager.cpp
+    game/Mob.cpp
+    game/Room.cpp
+    game/Item.cpp
 )
 target_include_directories(gamelib PUBLIC ../include)
 target_link_libraries(gamelib stdc++fs)

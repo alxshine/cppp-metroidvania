@@ -1,7 +1,6 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "game/ResourceManager.hpp"
 #include "gamedef/EntityDefinitions.hpp"
 
 namespace game {

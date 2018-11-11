@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "SDL.hpp"
+#include "game/ResourceManager.hpp"
 #include "gameClock.hpp"
 #include "menu.hpp"
 #include "rendering.hpp"
@@ -12,6 +13,7 @@
 using namespace std;
 using namespace std::chrono_literals;
 using namespace sdl;
+using namespace game;
 
 void printTimePoint(string name, const GameClock::time_point &t)
 {
@@ -22,20 +24,23 @@ int main()
 {
 	try {
 		SDL &sdl = SDL::getInstance();
-		auto texture = sdl.loadTexture("sheet.png");
+		ResourceManager man{"game_definitions", "assets"};
 
-		vector<Rectangle> frames;
-		frames.push_back(Rectangle{0, 0, 122, 110});
-		frames.push_back(Rectangle{122, 0, 122, 110});
-		frames.push_back(Rectangle{244, 0, 122, 110});
-		frames.push_back(Rectangle{366, 0, 122, 110});
-		frames.push_back(Rectangle{0, 110, 122, 110});
-		frames.push_back(Rectangle{122, 110, 122, 110});
-		frames.push_back(Rectangle{244, 110, 122, 110});
-		frames.push_back(Rectangle{366, 110, 122, 110});
-		frames.push_back(Rectangle{0, 110, 122, 110});
+		// vector<Rectangle> frames;
+		// frames.push_back(Rectangle{0, 0, 122, 110});
+		// frames.push_back(Rectangle{122, 0, 122, 110});
+		// frames.push_back(Rectangle{244, 0, 122, 110});
+		// frames.push_back(Rectangle{366, 0, 122, 110});
+		// frames.push_back(Rectangle{0, 110, 122, 110});
+		// frames.push_back(Rectangle{122, 110, 122, 110});
+		// frames.push_back(Rectangle{244, 110, 122, 110});
+		// frames.push_back(Rectangle{366, 110, 122, 110});
+		// frames.push_back(Rectangle{0, 110, 122, 110});
 
-		Animation a{*texture, frames, 50ms};
+		// Animation a{*texture, frames, 50ms};
+
+		auto mage = man.getMob("Mage");
+		auto a = mage.walkingAnimation;
 
 		auto renderer = sdl.getRenderer();
 
@@ -65,6 +70,10 @@ int main()
 		// sdl.delay(2000ms);
 
 	} catch (SdlException &e) {
-		cout << e.what() << endl;
+		cerr << e.what() << endl;
+	} catch (const char *error) {
+		cerr << error << endl;
+	} catch (const string &error) {
+		cerr << error << endl;
 	}
 }

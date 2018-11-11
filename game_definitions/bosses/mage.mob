@@ -1,0 +1,46 @@
+Name: Mage
+Health: 100
+Behaviour: Floating
+BoundingBox: 10 10 10 10
+
+WalkingAnimation:
+    Spritesheet: mage
+    Time: 25
+    Frame: 0 0 85 94
+    Frame: 85 0 85 94
+    Frame: 170 0 85 94
+    Frame: 255 0 85 94
+    Frame: 0 94 85 94
+    Frame: 85 94 85 94
+    Frame: 170 94 85 94
+    Frame: 255 94 85 94
+EndAnimation
+
+IdleAnimation:
+    Spritesheet: mage
+    Time: 25
+    Frame: 0 0 85 94
+    Frame: 85 0 85 94
+    Frame: 170 0 85 94
+    Frame: 255 0 85 94
+    Frame: 0 94 85 94
+    Frame: 85 94 85 94
+    Frame: 170 94 85 94
+    Frame: 255 94 85 94
+EndAnimation
+
+Attack: Selfdestruct
+    Type: Melee
+    SoundEffect: boom.wav 1
+    HitBox: 0 0 0 0
+    Damage: 9000
+    Debuff: Fire
+
+    Animation:
+        Spritesheet: boom.png
+        Time: 42
+        Frame: 0 0 0 1
+        Frame: 1 0 0 0
+    EndAnimation
+
+EndMob
