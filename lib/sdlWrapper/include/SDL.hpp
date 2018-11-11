@@ -18,8 +18,8 @@ class SDL final {
 
   public:
 	static SDL &getInstance();
-	std::shared_ptr<Renderer> getRenderer();
-	std::shared_ptr<Texture> loadTexture(const std::string &path);
+	const Renderer& getRenderer();
+	std::unique_ptr<Texture> loadTexture(const std::string &path);
 
 	/**
 	 * @brief Load a .ttf font from disk.
@@ -31,7 +31,7 @@ class SDL final {
 	 *
 	 * @return A shared pointer to the generated font.
 	 */
-	std::shared_ptr<Font> loadFont(const std::string &path, unsigned int size);
+	std::unique_ptr<Font> loadFont(const std::string &path, unsigned int size);
 
 	/**
 	 * @brief Draw text to a sprite.

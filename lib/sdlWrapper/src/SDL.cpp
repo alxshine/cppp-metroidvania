@@ -32,9 +32,9 @@ sdl::SDL &sdl::SDL::getInstance()
 	return instance; // TODO: release resources?
 }
 
-std::shared_ptr<sdl::Renderer> sdl::SDL::getRenderer()
+const sdl::Renderer& sdl::SDL::getRenderer()
 {
-	return renderer;
+	return *renderer;
 }
 
 void sdl::SDL::delay(std::chrono::milliseconds time)
@@ -42,7 +42,7 @@ void sdl::SDL::delay(std::chrono::milliseconds time)
 	SDL_Delay((unsigned int)time.count());
 }
 
-std::shared_ptr<sdl::Texture> sdl::SDL::loadTexture(const std::string &path)
+std::unique_ptr<sdl::Texture> sdl::SDL::loadTexture(const std::string &path)
 {
 	SDL_Surface *tempSurface = IMG_Load(path.c_str());
 	if (tempSurface == nullptr)
@@ -54,16 +54,16 @@ std::shared_ptr<sdl::Texture> sdl::SDL::loadTexture(const std::string &path)
 	if (rawTexture == nullptr)
 		throw SdlException("Could not create texture");
 
-	return std::make_shared<Texture>(rawTexture);
+	return std::make_unique<Texture>(rawTexture);
 }
 
-std::shared_ptr<sdl::Font> sdl::SDL::loadFont(const std::string &path, unsigned int size)
+std::unique_ptr<sdl::Font> sdl::SDL::loadFont(const std::string &path, unsigned int size)
 {
 	TTF_Font *font = TTF_OpenFont(path.c_str(), size);
 	if (font == nullptr)
 		throw SdlException("Could not load font '" + path + "':" + TTF_GetError());
 
-	return std::make_shared<sdl::Font>(font);
+	return std::make_unique<sdl::Font>(font);
 }
 
 /*
