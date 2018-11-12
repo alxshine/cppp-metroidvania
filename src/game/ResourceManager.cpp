@@ -6,7 +6,7 @@
 namespace fs = std::filesystem;
 using namespace game;
 
-std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobdef)
+std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobdef) const
 {
 	// walking animation
 	const sdl::Texture &walkingAnimationTexture = getTexture(mobdef.walkingAnimation.spritesheet);
@@ -26,12 +26,12 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	return std::make_unique<Mob>(mobdef.name, walkingAnimation, std::move(idleAnimation));
 }
 
-std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &itemdef)
+std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &itemdef) const
 {
 	throw "not implemented";
 }
 
-std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &roomDef)
+std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &roomDef) const
 {
 	throw "not implemented";
 }
@@ -117,7 +117,7 @@ Item ResourceManager::getItem(const std::string &name) const
 	throw "Could not load item " + name + "\n";
 }
 
-const sdl::Texture &ResourceManager::getTexture(const std::string &id)
+const sdl::Texture &ResourceManager::getTexture(const std::string &id) const
 {
 	if (textures.count(id))
 		return *textures.at(id);

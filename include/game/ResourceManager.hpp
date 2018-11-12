@@ -36,15 +36,15 @@ class ResourceManager final {
 	 *
 	 * @return a const ref to the texture
 	 */
-	const sdl::Texture &getTexture(const std::string &id);
+	const sdl::Texture &getTexture(const std::string &id) const;
 
 	void loadTexture(const std::string &id, const std::string &path);
 
 	// Factory methods
 
-	std::unique_ptr<Mob> makeMob(const game_definitions::Mob &mobdef);
-	std::unique_ptr<Item> makeItem(const game_definitions::Item &itemdef);
-	std::unique_ptr<Room> makeRoom(const game_definitions::Room &roomdef);
+	std::unique_ptr<Mob> makeMob(const game_definitions::Mob &mobdef) const;
+	std::unique_ptr<Item> makeItem(const game_definitions::Item &itemdef) const;
+	std::unique_ptr<Room> makeRoom(const game_definitions::Room &roomdef) const;
 
 	void parseDefinition(std::filesystem::path f);
 
