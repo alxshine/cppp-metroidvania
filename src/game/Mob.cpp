@@ -6,7 +6,7 @@ game::Mob::Mob(const Mob &rhs)
 }
 
 game::Mob::Mob(const std::string name, const sdl::Animation walkingAnimation, OptionalAnimation idleAnimation)
-    : name(name), walkingAnimation(walkingAnimation), idleAnimation(std::make_unique<sdl::Animation>(*idleAnimation))
+    : name(name), walkingAnimation(walkingAnimation), idleAnimation(std::move(idleAnimation))
 {
 }
 
