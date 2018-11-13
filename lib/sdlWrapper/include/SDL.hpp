@@ -13,7 +13,7 @@
 namespace sdl {
 class SDL final {
   private:
-	std::shared_ptr<Renderer> renderer;
+	std::unique_ptr<Renderer> renderer;
 	SDL();
 
   public:

@@ -9,7 +9,7 @@ sdl::SDL::SDL()
 	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
 		printf("Warning: Linear texture filtering not enabled!");
 
-	renderer = std::make_shared<Renderer>();
+	renderer = std::make_unique<Renderer>();
 	// Initialize PNG loading
 	int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags))
