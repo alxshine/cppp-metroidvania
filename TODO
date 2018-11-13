@@ -1,1 +1,2 @@
 TODO @alex: add descriptive message to SDL::loadTexture exceptions, similarly to SDL::loadFont
+TODO: decide on Renderable interface -- render using time_point since we use animations a lot? what about Renderer::render(Renderable)?
