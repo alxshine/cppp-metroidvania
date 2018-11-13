@@ -40,15 +40,12 @@ int main()
 		// Animation a{*texture, frames, 50ms};
 
 		auto mage = man.getMob("Mage");
-		auto a = mage.walkingAnimation;
-
 		auto renderer = sdl.getRenderer();
 
 		GameClock clock;
 		while (clock.now().time_since_epoch() < 5000ms) {
-			auto sprite = a.getAnimationFrame(clock.now());
 			renderer.clear();
-			renderer.render(sprite);
+			renderer.render(mage, clock.now());
 			renderer.swapBuffers();
 		}
 

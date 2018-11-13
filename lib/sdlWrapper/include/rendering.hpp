@@ -18,7 +18,8 @@ class Renderable;
 
 class Renderable {
   public:
-	virtual void render(const Renderer &renderer) const = 0;
+	// Non-const render method allows e.g. tracking whether to use idle or default animation
+	virtual void render(const Renderer &renderer, const GameClock::time_point &t) = 0;
 	virtual ~Renderable(){};
 };
 
@@ -29,13 +30,17 @@ class Renderer {
 	static constexpr Color defaultColor = {0, 0, 0, 0};
 
   public:
-	static const int logicalW = 1920;
-	static const int logicalH = 1080;
+	static constexpr int logicalW = 1920;
+	static constexpr int logicalH = 1080;
 
 	Renderer();
 	virtual ~Renderer();
 
-	void render(const Renderable &renderable) const;
+	void render(Renderable &renderable, const GameClock::time_point &t) const
+	{
+		renderable.render(*this, t);
+	};
+	// TODO inline as much as possible here -- or not?
 	void render(const Texture &texture, const Rectangle sourceRect, const Rectangle targetRect) const;
 	void render(const Texture &texture) const;
 	void render(const Sprite &sprite) const;

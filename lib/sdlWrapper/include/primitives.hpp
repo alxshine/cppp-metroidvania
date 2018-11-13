@@ -44,7 +44,7 @@ struct Animation {
   public:
 	Animation(const Texture& texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
 
-	Sprite getAnimationFrame(GameClock::time_point t);
+	Sprite getAnimationFrame(GameClock::time_point t) const;
 };
 
 } // namespace sdl

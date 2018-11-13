@@ -11,3 +11,11 @@ game::Mob::Mob(const std::string name, const sdl::Animation walkingAnimation, Op
 }
 
 game::Mob::~Mob() {}
+
+void game::Mob::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t)
+{
+	// TODO keep track of whether we moved or not in order to choose idle/walking animation
+	// TODO use position for rendering target rectangle
+	renderer.render(walkingAnimation.getAnimationFrame(t));
+}
+

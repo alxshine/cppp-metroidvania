@@ -8,13 +8,15 @@ namespace game {
 
 using OptionalAnimation = std::unique_ptr<sdl::Animation>;
 
-struct Mob {
+class Mob : public sdl::Renderable {
   public:
 	Mob(const std::string name, const sdl::Animation walkingAnimation, OptionalAnimation idleAnimation); // TODO finish ctor
 	Mob(const Mob &rhs); // TODO set default state in copy ctor
 
 	Mob &operator=(const Mob &rhs) = delete;
 	virtual ~Mob();
+
+	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t);
 
 	const std::string name;
 	const sdl::Animation walkingAnimation;

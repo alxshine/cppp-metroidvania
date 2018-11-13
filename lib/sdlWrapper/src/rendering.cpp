@@ -39,11 +39,6 @@ void sdl::Renderer::clear(Color color) const
 	SDL_RenderClear(rawRenderer);
 }
 
-void sdl::Renderer::render(const Renderable &renderable) const
-{
-	renderable.render(*this);
-}
-
 void sdl::Renderer::render(const Texture &texture, Rectangle sourceRect, Rectangle targetRect) const
 {
 	SDL_RenderCopy(rawRenderer, texture.rawTexture, &sourceRect, &targetRect);
