@@ -1,7 +1,5 @@
 #include "game/ResourceManager.hpp"
 
-#include <fstream>
-#include <iostream>
 
 namespace fs = std::filesystem;
 using namespace game;
@@ -76,7 +74,7 @@ ResourceManager::ResourceManager(const std::string &path_to_definitions, const s
 			continue;
 
 		auto &path = f.path();
-		if (path.extension() != ".png")
+		if (path.extension() == ".md")
 			continue;
 
 		loadTexture(path.stem(), path);
