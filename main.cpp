@@ -42,9 +42,16 @@ int main()
 		auto mage = man.getMob("Mage");
 		auto renderer = sdl.getRenderer();
 
+		EventHandler events;
+		events.on(SDLK_SPACE, [](const KeyboardEvent &e) {
+			if (e.state == SDL_PRESSED)
+				cout << "Space Pressed!" << endl;
+		});
+
 		GameClock clock;
 		while (clock.now().time_since_epoch() < 5000ms) {
 			renderer.clear();
+			events.dispatch();
 			renderer.render(mage, clock.now());
 			renderer.swapBuffers();
 		}

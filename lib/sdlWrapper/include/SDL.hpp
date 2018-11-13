@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 
+#include "events.hpp"
 #include "font.hpp"
 #include "rendering.hpp"
 #include "sdlException.hpp"
@@ -18,7 +19,7 @@ class SDL final {
 
   public:
 	static SDL &getInstance();
-	const Renderer& getRenderer();
+	const Renderer &getRenderer();
 	std::unique_ptr<Texture> loadTexture(const std::string &path) const;
 
 	/**

@@ -13,6 +13,7 @@ add_library(SDL_Wrapper
     src/font.cpp
     src/menu.cpp
     src/gameClock.cpp
+    src/events.cpp
 )
 target_include_directories(SDL_Wrapper PUBLIC include)
 target_link_libraries(SDL_Wrapper SDL2 SDL2_image SDL2_ttf)
