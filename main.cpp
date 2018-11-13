@@ -42,13 +42,13 @@ int main()
 		auto mage = man.getMob("Mage");
 		auto renderer = sdl.getRenderer();
 
-		auto sound = sdl.loadSoundEffect("/usr/lib/libreoffice/share/gallery/sounds/ok.wav");
+		auto &sound = man.getSound("hey");
 
 		EventHandler events;
 		events.on(SDLK_SPACE, [&](const KeyboardEvent &e) {
 			if (e.state == SDL_PRESSED) {
 				cout << "Space Pressed!" << endl;
-				play(Channel::background, *sound);
+				play(Channel::background, sound);
 			}
 		});
 

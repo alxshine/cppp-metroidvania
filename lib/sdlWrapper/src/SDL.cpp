@@ -77,7 +77,7 @@ std::unique_ptr<sdl::Font> sdl::SDL::loadFont(const std::string &path, unsigned 
 	return std::make_unique<sdl::Font>(font);
 }
 
-std::unique_ptr<sdl::SoundEffect> sdl::SDL::loadSoundEffect(const std::string &path) const
+std::unique_ptr<sdl::SoundEffect> sdl::SDL::loadSound(const std::string &path) const
 {
 	// LoadWAV can load all supported formats. I know, I know, horrible name!
 	Mix_Chunk *chunk = Mix_LoadWAV(path.c_str());

@@ -1,6 +1,7 @@
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
+#include <algorithm>
 #include <filesystem>
 #include <memory>
 #include <string>
@@ -13,6 +14,8 @@
 #include "gamedef/DefinitionLoading.hpp"
 
 namespace game {
+template <typename T>
+bool contained(std::vector<T> vec, T x);
 
 class ResourceManager final {
   public:
@@ -26,9 +29,12 @@ class ResourceManager final {
 	Mob getMob(const std::string &name) const;
 	Item getItem(const std::string &name) const;
 	Room getRoom(const std::string &name) const;
-
+	const sdl::SoundEffect &getSound(const std::string &name) const;
 
   private:
+	static std::vector<std::string> imageFormats;
+	static std::vector<std::string> soundFormats;
+
 	/**
 	 * @brief Get a texture, or try to load it, or return the default if it doesn't exist.
 	 *
@@ -39,6 +45,7 @@ class ResourceManager final {
 	const sdl::Texture &getTexture(const std::string &id) const;
 
 	void loadTexture(const std::string &id, const std::string &path);
+	void loadSound(const std::string &id, const std::string &path);
 
 	// Factory methods
 
@@ -55,6 +62,7 @@ class ResourceManager final {
 	std::unordered_map<std::string, std::unique_ptr<Item>> items;
 	std::unordered_map<std::string, std::unique_ptr<Room>> rooms;
 	std::unordered_map<std::string, std::unique_ptr<sdl::Texture>> textures;
+	std::unordered_map<std::string, std::unique_ptr<sdl::SoundEffect>> sounds;
 };
 } // namespace game
 

@@ -35,7 +35,7 @@ class SDL final {
 	 */
 	std::unique_ptr<Font> loadFont(const std::string &path, unsigned int size);
 
-	std::unique_ptr<SoundEffect> loadSoundEffect(const std::string &path) const;
+	std::unique_ptr<SoundEffect> loadSound(const std::string &path) const;
 
 	/**
 	 * @brief Draw text to a sprite.

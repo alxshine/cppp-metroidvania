@@ -6,6 +6,15 @@
 namespace fs = std::filesystem;
 using namespace game;
 
+template <typename T>
+bool game::contained(std::vector<T> vec, T x)
+{
+	return std::find(vec.begin(), vec.end(), x) != vec.end();
+}
+
+std::vector<std::string> ResourceManager::imageFormats{".png"};
+std::vector<std::string> ResourceManager::soundFormats{".wav"};
+
 std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobdef) const
 {
 	// walking animation
@@ -28,12 +37,12 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 
 std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &itemdef) const
 {
-	throw "not implemented";
+	throw itemdef.name + " not implemented";
 }
 
 std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &roomDef) const
 {
-	throw "not implemented";
+	throw roomDef.name + " not implemented";
 }
 
 void ResourceManager::parseDefinition(fs::path f)
@@ -76,16 +85,18 @@ ResourceManager::ResourceManager(const std::string &path_to_definitions, const s
 			continue;
 
 		auto &path = f.path();
-		if (path.extension() != ".png")
-			continue;
+		if (contained(imageFormats, static_cast<std::string>(path.extension())))
+			loadTexture(path.stem(), path);
 
-		loadTexture(path.stem(), path);
+		if(contained(soundFormats, static_cast<std::string>(path.extension())))
+			loadSound(path.stem(), path);
 	}
+
 
 	for (auto &f : fs::recursive_directory_iterator(path_to_definitions)) {
 		if (!f.is_regular_file())
 			continue;
-		 parseDefinition(f);
+		parseDefinition(f);
 	}
 }
 
@@ -121,8 +132,14 @@ const sdl::Texture &ResourceManager::getTexture(const std::string &id) const
 {
 	if (textures.count(id))
 		return *textures.at(id);
-	//return *textures.at("default"); //TODO: return default texture
+	// return *textures.at("default"); //TODO: return default texture
 	throw "Could not load texture " + id + "\n";
+}
+
+const sdl::SoundEffect &ResourceManager::getSound(const std::string &id) const{
+	if(sounds.count(id))
+		return *sounds.at(id);
+	throw "Could not load sound " + id + "\n";
 }
 
 void ResourceManager::loadTexture(const std::string &id, const std::string &path)
@@ -130,6 +147,14 @@ void ResourceManager::loadTexture(const std::string &id, const std::string &path
 	try {
 		textures.emplace(id, sdl.loadTexture(path));
 	} catch (SdlException &e) {
+		std::cerr << e.what() << std::endl;
+	}
+}
+
+void ResourceManager::loadSound(const std::string &id, const std::string &path){
+	try{
+		sounds.emplace(id, sdl.loadSound(path));
+	}catch(SdlException &e) {
 		std::cerr << e.what() << std::endl;
 	}
 }
