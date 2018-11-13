@@ -8,6 +8,7 @@
 
 #include "events.hpp"
 #include "font.hpp"
+#include "mixer.hpp"
 #include "rendering.hpp"
 #include "sdlException.hpp"
 
@@ -33,6 +34,8 @@ class SDL final {
 	 * @return A shared pointer to the generated font.
 	 */
 	std::unique_ptr<Font> loadFont(const std::string &path, unsigned int size);
+
+	std::unique_ptr<SoundEffect> loadSoundEffect(const std::string &path) const;
 
 	/**
 	 * @brief Draw text to a sprite.

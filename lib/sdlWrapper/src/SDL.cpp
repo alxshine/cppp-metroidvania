@@ -3,7 +3,7 @@
 sdl::SDL::SDL()
 {
 	// Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 		throw SdlException("SDL could not initialize!");
 	// Set texture filtering to linear
 	if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
@@ -11,16 +11,27 @@ sdl::SDL::SDL()
 
 	renderer = std::make_unique<Renderer>();
 	// Initialize PNG loading
-	int imgFlags = IMG_INIT_PNG;
+	constexpr int imgFlags = IMG_INIT_PNG;
 	if (!(IMG_Init(imgFlags) & imgFlags))
 		throw SdlException("SDL_image could not initialize!");
 
 	if (TTF_Init() < 0)
 		throw SdlException("SDL_ttf could not initialize!");
+
+	int mixFlags = MIX_INIT_OGG | MIX_INIT_MOD | MIX_INIT_MP3;
+	if (!(Mix_Init(mixFlags) & mixFlags))
+		throw SdlException("SDL_mix could not initialize!");
+
+	constexpr int stereo = 2;
+	constexpr int chunksize = 1024;
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, stereo, chunksize))
+		throw SdlException("Could not open audio device!");
 }
 
 sdl::SDL::~SDL()
 {
+	Mix_CloseAudio();
+	Mix_Quit();
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
@@ -61,9 +72,19 @@ std::unique_ptr<sdl::Font> sdl::SDL::loadFont(const std::string &path, unsigned 
 {
 	TTF_Font *font = TTF_OpenFont(path.c_str(), size);
 	if (font == nullptr)
-		throw SdlException("Could not load font '" + path + "':" + TTF_GetError());
+		throw SdlException("Could not load font '" + path + "': " + TTF_GetError());
 
 	return std::make_unique<sdl::Font>(font);
+}
+
+std::unique_ptr<sdl::SoundEffect> sdl::SDL::loadSoundEffect(const std::string &path) const
+{
+	// LoadWAV can load all supported formats. I know, I know, horrible name!
+	Mix_Chunk *chunk = Mix_LoadWAV(path.c_str());
+	if (chunk == nullptr)
+		throw SdlException("Could not load sound effect '" + path + "': " + Mix_GetError());
+
+	return std::make_unique<sdl::SoundEffect>(chunk);
 }
 
 /*
