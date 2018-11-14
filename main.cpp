@@ -40,7 +40,10 @@ int main()
 		// Animation a{*texture, frames, 50ms};
 
 		auto mage = man.getMob("Mage");
-		auto renderer = sdl.getRenderer();
+		auto &renderer = sdl.getRenderer();
+
+		auto &music = man.getMusic("runescape-medieval.ogg");
+		play(music, repeat_forever);
 
 		auto &sound = man.getSound("hey.wav");
 
@@ -48,7 +51,7 @@ int main()
 		events.on(SDLK_SPACE, [&](const KeyboardEvent &e) {
 			if (e.state == SDL_PRESSED) {
 				cout << "Space Pressed!" << endl;
-				play(Channel::background, sound);
+				play(sound);
 			}
 		});
 
@@ -77,6 +80,9 @@ int main()
 		// renderer->render(menu);
 		// renderer->swapBuffers();
 		// sdl.delay(2000ms);
+
+		music::fade_out(1s);
+		music::block_until_stopped();
 
 	} catch (SdlException &e) {
 		cerr << e.what() << endl;

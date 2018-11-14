@@ -13,7 +13,9 @@ bool game::contained(std::vector<T> vec, T x)
 }
 
 std::vector<std::string> ResourceManager::imageFormats{".png"};
+// TODO technically, sounds could also be mp3 etc...
 std::vector<std::string> ResourceManager::soundFormats{".wav"};
+std::vector<std::string> ResourceManager::musicFormats{".mp3", ".ogg", ".flac"};
 
 std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobdef) const
 {
@@ -90,6 +92,9 @@ ResourceManager::ResourceManager(const std::string &path_to_definitions, const s
 
 		if (contained(soundFormats, static_cast<std::string>(path.extension())))
 			loadSound(path.filename(), path);
+
+		if (contained(musicFormats, static_cast<std::string>(path.extension())))
+			loadMusic(path.filename(), path);
 	}
 
 	for (auto &f : fs::recursive_directory_iterator(path_to_definitions)) {
@@ -142,6 +147,13 @@ const sdl::SoundEffect &ResourceManager::getSound(const std::string &id) const
 	throw "Could not load sound " + id + "\n";
 }
 
+const sdl::Music &ResourceManager::getMusic(const std::string &id) const
+{
+	if (music.count(id))
+		return *music.at(id);
+	throw "Could not load music " + id + "\n";
+}
+
 void ResourceManager::loadTexture(const std::string &id, const std::string &path)
 {
 	try {
@@ -155,6 +167,15 @@ void ResourceManager::loadSound(const std::string &id, const std::string &path)
 {
 	try {
 		sounds.emplace(id, sdl.loadSound(path));
+	} catch (SdlException &e) {
+		std::cerr << e.what() << std::endl;
+	}
+}
+
+void ResourceManager::loadMusic(const std::string &id, const std::string &path)
+{
+	try {
+		music.emplace(id, sdl.loadMusic(path));
 	} catch (SdlException &e) {
 		std::cerr << e.what() << std::endl;
 	}

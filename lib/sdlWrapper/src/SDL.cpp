@@ -87,6 +87,15 @@ std::unique_ptr<sdl::SoundEffect> sdl::SDL::loadSound(const std::string &path) c
 	return std::make_unique<sdl::SoundEffect>(chunk);
 }
 
+std::unique_ptr<sdl::Music> sdl::SDL::loadMusic(const std::string &path) const
+{
+	Mix_Music *music = Mix_LoadMUS(path.c_str());
+	if (music == nullptr)
+		throw SdlException("Could not load music '" + path + "': " + Mix_GetError());
+
+	return std::make_unique<sdl::Music>(music);
+}
+
 /*
  *sdl::Text sdl::SDL::generateText(const Font &font, const std::string &text, Color color, TextRendering rendering,
  *                                 Color bgColor)
