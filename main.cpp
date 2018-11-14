@@ -24,7 +24,7 @@ int main()
 {
 	try {
 		SDL &sdl = SDL::getInstance();
-		ResourceManager man{"game_definitions", "assets"};
+		ResourceManager res{"game_definitions", "assets"};
 
 		// vector<Rectangle> frames;
 		// frames.push_back(Rectangle{0, 0, 122, 110});
@@ -39,13 +39,13 @@ int main()
 
 		// Animation a{*texture, frames, 50ms};
 
-		auto mage = man.getMob("Mage");
+		auto mage = res.getMob("Mage");
 		auto &renderer = sdl.getRenderer();
 
-		auto &music = man.getMusic("runescape-medieval.ogg");
+		auto &music = res.getMusic("runescape-medieval.ogg");
 		play(music, repeat_forever);
 
-		auto &sound = man.getSound("hey.wav");
+		auto &sound = res.getSound("hey.wav");
 
 		EventHandler events;
 		events.on(SDLK_SPACE, [&](const KeyboardEvent &e) {
