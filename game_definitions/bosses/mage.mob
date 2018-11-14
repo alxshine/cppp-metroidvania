@@ -4,7 +4,7 @@ Behaviour: Floating
 BoundingBox: 10 10 10 10
 
 WalkingAnimation:
-    Spritesheet: mage
+    Spritesheet: mage.png
     Time: 25
     Frame: 0 0 85 94
     Frame: 85 0 85 94
@@ -17,7 +17,7 @@ WalkingAnimation:
 EndAnimation
 
 IdleAnimation:
-    Spritesheet: mage
+    Spritesheet: mage.png
     Time: 25
     Frame: 0 0 85 94
     Frame: 85 0 85 94

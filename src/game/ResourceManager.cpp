@@ -86,12 +86,11 @@ ResourceManager::ResourceManager(const std::string &path_to_definitions, const s
 
 		auto &path = f.path();
 		if (contained(imageFormats, static_cast<std::string>(path.extension())))
-			loadTexture(path.stem(), path);
+			loadTexture(path.filename(), path);
 
-		if(contained(soundFormats, static_cast<std::string>(path.extension())))
-			loadSound(path.stem(), path);
+		if (contained(soundFormats, static_cast<std::string>(path.extension())))
+			loadSound(path.filename(), path);
 	}
-
 
 	for (auto &f : fs::recursive_directory_iterator(path_to_definitions)) {
 		if (!f.is_regular_file())
@@ -136,8 +135,9 @@ const sdl::Texture &ResourceManager::getTexture(const std::string &id) const
 	throw "Could not load texture " + id + "\n";
 }
 
-const sdl::SoundEffect &ResourceManager::getSound(const std::string &id) const{
-	if(sounds.count(id))
+const sdl::SoundEffect &ResourceManager::getSound(const std::string &id) const
+{
+	if (sounds.count(id))
 		return *sounds.at(id);
 	throw "Could not load sound " + id + "\n";
 }
@@ -151,10 +151,11 @@ void ResourceManager::loadTexture(const std::string &id, const std::string &path
 	}
 }
 
-void ResourceManager::loadSound(const std::string &id, const std::string &path){
-	try{
+void ResourceManager::loadSound(const std::string &id, const std::string &path)
+{
+	try {
 		sounds.emplace(id, sdl.loadSound(path));
-	}catch(SdlException &e) {
+	} catch (SdlException &e) {
 		std::cerr << e.what() << std::endl;
 	}
 }

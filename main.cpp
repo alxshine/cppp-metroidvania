@@ -42,7 +42,7 @@ int main()
 		auto mage = man.getMob("Mage");
 		auto renderer = sdl.getRenderer();
 
-		auto &sound = man.getSound("hey");
+		auto &sound = man.getSound("hey.wav");
 
 		EventHandler events;
 		events.on(SDLK_SPACE, [&](const KeyboardEvent &e) {
