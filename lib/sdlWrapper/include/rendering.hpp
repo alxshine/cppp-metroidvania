@@ -18,8 +18,7 @@ class Renderable;
 
 class Renderable {
   public:
-	// Non-const render method allows e.g. tracking whether to use idle or default animation
-	virtual void render(const Renderer &renderer, const GameClock::time_point &t) = 0;
+	virtual void render(const Renderer &renderer, const GameClock::time_point &t) const = 0;
 	virtual ~Renderable(){};
 };
 
