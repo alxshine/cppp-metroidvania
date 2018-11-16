@@ -14,6 +14,8 @@ add_library(SDL_Wrapper
     src/menu.cpp
     src/gameClock.cpp
     src/events.cpp
+    src/SoundEffect.cpp
+    src/music.cpp
 )
 target_include_directories(SDL_Wrapper PUBLIC include)
-target_link_libraries(SDL_Wrapper SDL2 SDL2_image SDL2_ttf)
+target_link_libraries(SDL_Wrapper SDL2 SDL2_image SDL2_ttf SDL2_mixer)
