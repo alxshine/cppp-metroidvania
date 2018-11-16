@@ -8,11 +8,11 @@
 
 namespace game {
 
-struct Room {
+struct Room : public sdl::Renderable {
   private:
-	struct Tile : public sdl::Renderable {
+	struct Tile {
 		const sdl::Sprite *sprite;
-		void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t) const override;
+		void render(const sdl::Renderer &renderer, const Rectangle targetLocation) const;
 	};
 
   public:
@@ -20,6 +20,8 @@ struct Room {
 	Room(const Room &rhs); // TODO set default state in copy ctor
 	Room &operator=(const Room &rhs) = delete;
 	virtual ~Room();
+
+	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &) const override;
 
 	const std::string name;
 	const sdl::Texture &background;
