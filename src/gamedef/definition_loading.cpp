@@ -15,7 +15,7 @@
 #include <regex>
 #include <string>
 
-#include "gamedef/DefinitionLoading.hpp"
+#include "gamedef/definition_loading.hpp"
 
 using namespace game_definitions;
 using namespace std::string_literals;

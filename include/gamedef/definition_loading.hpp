@@ -4,7 +4,7 @@
 #include <exception>
 #include <istream>
 
-#include "EntityDefinitions.hpp"
+#include "entity_definitions.hpp"
 
 namespace game_definitions {
 

@@ -1,7 +1,7 @@
 #ifndef MOB_H
 #define MOB_H
 
-#include "gamedef/EntityDefinitions.hpp"
+#include "gamedef/entity_definitions.hpp"
 #include "SDL.hpp"
 
 namespace game {

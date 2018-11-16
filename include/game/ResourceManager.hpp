@@ -10,9 +10,9 @@
 #include "Item.hpp"
 #include "Mob.hpp"
 #include "Room.hpp"
-#include "Exceptions.hpp"
+#include "exceptions.hpp"
 #include "SDL.hpp"
-#include "gamedef/DefinitionLoading.hpp"
+#include "gamedef/definition_loading.hpp"
 
 namespace game {
 template <typename T>
