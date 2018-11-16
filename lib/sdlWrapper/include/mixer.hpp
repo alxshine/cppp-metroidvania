@@ -71,9 +71,10 @@ inline void halt()
 	Mix_HaltChannel(any_all_channels);
 };
 
-// TODO define volume type once I figure out how to limit to 128
-inline void set_volume(unsigned int volume)
+template<unsigned int volume>
+inline void set_volume()
 {
+	static_assert(volume <= 128, "volume exceeds maximum value");
 	Mix_Volume(any_all_channels, volume);
 };
 
@@ -105,6 +106,14 @@ inline void fade_out(std::chrono::milliseconds maxDuration)
 {
 	Mix_FadeOutMusic(maxDuration.count());
 }
+
+template<unsigned int volume>
+inline void set_volume()
+{
+	static_assert(volume <= 128, "volume exceeds maximum value");
+	Mix_VolumeMusic(volume);
+};
+
 
 inline bool is_playing()
 {
