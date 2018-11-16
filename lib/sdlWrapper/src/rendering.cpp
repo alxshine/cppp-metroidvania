@@ -9,9 +9,10 @@ sdl::Renderer::Renderer()
 		throw SdlException("Window could not be created!");
 
 	rawRenderer = SDL_CreateRenderer(rawWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if (rawRenderer == nullptr)
-		// TODO @alex destroy window in case of error?
+	if (rawRenderer == nullptr) {
+		SDL_DestroyWindow(rawWindow);
 		throw SdlException("Renderer could not be created");
+	}
 
 	SDL_RenderSetLogicalSize(rawRenderer, logicalW, logicalH);
 	//	SDL_SetRenderDrawColor(rawRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -20,7 +21,7 @@ sdl::Renderer::Renderer()
 sdl::Renderer::~Renderer()
 {
 	SDL_DestroyRenderer(rawRenderer);
-	// TODO @alex destroy window?
+	SDL_DestroyWindow(rawWindow);
 }
 
 void sdl::Renderer::drawRectangle(Rectangle rect, Color color, bool fill) const
