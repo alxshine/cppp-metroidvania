@@ -5,10 +5,6 @@
 
 #include "SDL.hpp"
 #include "game/ResourceManager.hpp"
-#include "gameClock.hpp"
-#include "menu.hpp"
-#include "rendering.hpp"
-#include "sdlException.hpp"
 
 using namespace std;
 using namespace std::chrono_literals;

@@ -1,5 +1,5 @@
-#include "music.hpp"
-#include "sdlException.hpp"
+#include "Music.hpp"
+#include "SdlException.hpp"
 
 using namespace sdl;
 

@@ -7,7 +7,7 @@
 #include <memory>
 #include <string>
 
-#include "color.hpp"
+#include "Color.hpp"
 
 namespace sdl {
 struct Font final {

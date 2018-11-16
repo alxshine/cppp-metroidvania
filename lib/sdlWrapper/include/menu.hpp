@@ -6,8 +6,8 @@
  *#include <memory>
  *#include <vector>
  *
- *#include "color.hpp"
- *#include "rectangle.hpp"
+ *#include "Color.hpp"
+ *#include "Rectangle.hpp"
  *#include "rendering.hpp"
  *
  *namespace sdl {

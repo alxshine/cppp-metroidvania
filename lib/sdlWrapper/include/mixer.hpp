@@ -6,7 +6,7 @@
 #include <chrono>
 
 #include "SoundEffect.hpp"
-#include "music.hpp"
+#include "Music.hpp"
 
 namespace sdl {
 

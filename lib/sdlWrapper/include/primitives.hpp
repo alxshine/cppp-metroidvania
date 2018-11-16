@@ -7,10 +7,10 @@
 #include <string>
 #include <vector>
 
-#include "color.hpp"
-#include "gameClock.hpp"
-#include "rectangle.hpp"
-#include "sdlException.hpp"
+#include "Color.hpp"
+#include "GameClock.hpp"
+#include "Rectangle.hpp"
+#include "SdlException.hpp"
 
 namespace sdl {
 struct Texture final {

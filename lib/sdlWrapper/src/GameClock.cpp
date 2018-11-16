@@ -1,4 +1,4 @@
-#include "gameClock.hpp"
+#include "GameClock.hpp"
 
 sdl::GameClock::GameClock() : offset(std::chrono::milliseconds(SDL_GetTicks())) {}
 

@@ -7,10 +7,10 @@
 #include <string>
 
 #include "events.hpp"
-#include "font.hpp"
+#include "Font.hpp"
 #include "mixer.hpp"
 #include "rendering.hpp"
-#include "sdlException.hpp"
+#include "SdlException.hpp"
 
 namespace sdl {
 class SDL final {

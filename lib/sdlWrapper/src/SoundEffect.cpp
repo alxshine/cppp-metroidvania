@@ -1,5 +1,5 @@
 #include "SoundEffect.hpp"
-#include "sdlException.hpp"
+#include "SdlException.hpp"
 
 using namespace sdl;
 

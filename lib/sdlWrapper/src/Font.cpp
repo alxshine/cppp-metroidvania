@@ -1,5 +1,5 @@
-#include "font.hpp"
-#include "sdlException.hpp"
+#include "Font.hpp"
+#include "SdlException.hpp"
 
 sdl::Font::~Font()
 {

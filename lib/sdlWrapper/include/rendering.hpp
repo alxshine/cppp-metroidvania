@@ -5,11 +5,11 @@
 #include <memory>
 #include <vector>
 
-#include "color.hpp"
-#include "gameClock.hpp"
+#include "Color.hpp"
+#include "GameClock.hpp"
 #include "primitives.hpp"
-#include "rectangle.hpp"
-#include "sdlException.hpp"
+#include "Rectangle.hpp"
+#include "SdlException.hpp"
 
 namespace sdl {
 
