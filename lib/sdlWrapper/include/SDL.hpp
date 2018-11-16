@@ -11,6 +11,7 @@
 #include "mixer.hpp"
 #include "rendering.hpp"
 #include "SdlException.hpp"
+#include "GameClock.hpp"
 
 namespace sdl {
 class SDL final {
