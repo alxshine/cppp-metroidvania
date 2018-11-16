@@ -40,7 +40,7 @@ sdl::SDL::~SDL()
 sdl::SDL &sdl::SDL::getInstance()
 {
 	static SDL instance;
-	return instance; // TODO: release resources?
+	return instance;
 }
 
 const sdl::Renderer& sdl::SDL::getRenderer()
