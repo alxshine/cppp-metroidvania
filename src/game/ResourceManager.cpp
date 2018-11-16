@@ -113,7 +113,7 @@ Mob ResourceManager::getMob(const std::string &name) const
 	if (mobs.count(name))
 		return *mobs.at(name);
 	// TODO return default mob -- should we really, instead of throwing?
-	throw "Could not load mob " + name + "\n";
+	throw ResourceNotFoundException("Could not load mob " + name + "\n");
 }
 
 Room ResourceManager::getRoom(const std::string &name) const
@@ -121,7 +121,7 @@ Room ResourceManager::getRoom(const std::string &name) const
 	if (rooms.count(name))
 		return *rooms.at(name);
 	// TODO return default room -- should we really, instead of throwing?
-	throw "Could not load room " + name + "\n";
+	throw ResourceNotFoundException("Could not load room " + name + "\n");
 }
 
 Item ResourceManager::getItem(const std::string &name) const
@@ -129,7 +129,7 @@ Item ResourceManager::getItem(const std::string &name) const
 	if (items.count(name))
 		return *items.at(name);
 	// TODO return default item -- should we really, instead of throwing?
-	throw "Could not load item " + name + "\n";
+	throw ResourceNotFoundException("Could not load item " + name + "\n");
 }
 
 const sdl::Texture &ResourceManager::getTexture(const std::string &id) const

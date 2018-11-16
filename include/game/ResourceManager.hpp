@@ -10,6 +10,7 @@
 #include "Item.hpp"
 #include "Mob.hpp"
 #include "Room.hpp"
+#include "Exceptions.hpp"
 #include "SDL.hpp"
 #include "gamedef/DefinitionLoading.hpp"
 

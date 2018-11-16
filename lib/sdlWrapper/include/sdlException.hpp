@@ -9,7 +9,7 @@ class SdlException : public std::exception {
 
   public:
 	SdlException(std::string s) : message(s) {}
-	const char *what() const throw()
+	const char *what() const noexcept
 	{
 		return message.c_str();
 	}

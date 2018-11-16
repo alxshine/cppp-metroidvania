@@ -55,7 +55,6 @@ int main()
 			}
 		});
 
-
 		GameClock clock;
 		while (clock.now().time_since_epoch() < 5000ms) {
 			renderer.clear();
@@ -86,9 +85,7 @@ int main()
 
 	} catch (SdlException &e) {
 		cerr << e.what() << endl;
-	} catch (const char *error) {
-		cerr << error << endl;
-	} catch (const string &error) {
-		cerr << error << endl;
+	} catch (GameException &e) {
+		cerr << e.what() << endl;
 	}
 }
