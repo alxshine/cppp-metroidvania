@@ -16,25 +16,16 @@ static constexpr int repeat_forever = -1;
 // Basic
 
 // 0 loops = play once
-inline void play(const SoundEffect &soundEffect, int loops)
+inline void play(const SoundEffect &soundEffect, int loops = 0)
 {
 	Mix_PlayChannel(any_all_channels, soundEffect.rawChunk, loops);
 };
 
-inline void play(const SoundEffect &soundEffect)
-{
-	play(soundEffect, 0);
-}
 
 // 0 loops = play 0 times (I know, this is retarded!)
-inline void play(const Music &music, int loops)
+inline void play(const Music &music, int loops = 1)
 {
 	Mix_PlayMusic(music.rawMusic, loops);
-}
-
-inline void play(const Music &music)
-{
-	Mix_PlayMusic(music.rawMusic, 0);
 }
 
 // Special
