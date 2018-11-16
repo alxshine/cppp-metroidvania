@@ -5,8 +5,7 @@ using namespace sdl;
 
 SoundEffect::~SoundEffect()
 {
-	if (rawChunk != nullptr)
-		Mix_FreeChunk(rawChunk);
+	Mix_FreeChunk(rawChunk);
 }
 
 SoundEffect::SoundEffect(Mix_Chunk *raw) : rawChunk(raw) {}
