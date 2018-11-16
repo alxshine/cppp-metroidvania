@@ -8,7 +8,7 @@ sdl::Renderer::Renderer()
 	if (rawWindow == nullptr)
 		throw SdlException("Window could not be created!");
 
-	rawRenderer = SDL_CreateRenderer(rawWindow, -1, SDL_RENDERER_ACCELERATED);
+	rawRenderer = SDL_CreateRenderer(rawWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (rawRenderer == nullptr)
 		// TODO @alex destroy window in case of error?
 		throw SdlException("Renderer could not be created");
