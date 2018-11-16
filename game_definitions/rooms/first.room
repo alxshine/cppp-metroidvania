@@ -1,0 +1,25 @@
+Name: First
+Background: spawn.png
+Music: area1.ogg
+Location: 9001 9001
+
+Tileset: area1_tiles.png
+Tiles:
+    | wall      0 0 10 10
+    - platform  11 11 10 10
+    = floor     21 21 10 10
+    . empty
+    # pit       0 0 21 21
+EndTiles
+
+Layout:
+    |.........................|
+    |.........................|
+    |..............-..........|
+    |........---........---...|
+    |.......-........==.......|
+    |========###=====##=======|
+EndLayout
+
+Entities:
+EndEntities
