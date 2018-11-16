@@ -16,8 +16,9 @@ struct Room : public sdl::Renderable {
 	};
 
   public:
-	Room(const std::string name, const sdl::Texture& background, const sdl::Music &music, const Position& location, const std::vector<std::vector<Tile>> layout);                // TODO ctor
-	Room(const Room &rhs); // TODO set default state in copy ctor
+	Room(const std::string name, const sdl::Texture &background, const sdl::Music &music, const Position &location,
+	     const std::vector<std::vector<Tile>> layout);
+	Room(const Room &rhs);                             // TODO set default state in copy ctor
 	Room &operator=(const Room &rhs) = delete;
 	virtual ~Room();
 

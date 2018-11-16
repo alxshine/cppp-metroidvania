@@ -1,10 +1,9 @@
 #include "game/Room.hpp"
-void game::Room::Tile::render(const sdl::Renderer& renderer, const game::Rectangle targetLocation) const
+void game::Room::Tile::render(const sdl::Renderer &renderer, const game::Rectangle targetLocation) const
 {
 	if (sprite != nullptr)
 		renderer.render(*sprite, targetLocation);
 }
-
 
 game::Room::Room(const std::string name, const sdl::Texture &background, const sdl::Music &music,
                  const Position &location, const std::vector<std::vector<Tile>> layout)
@@ -17,7 +16,7 @@ game::Room::Room(const Room &rhs)
 {
 }
 
-void game::Room::render(const sdl::Renderer& renderer, const sdl::GameClock::time_point&) const
+void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &) const
 {
 	renderer.render(background); // TODO tell renderer where to render background?
 
@@ -25,6 +24,5 @@ void game::Room::render(const sdl::Renderer& renderer, const sdl::GameClock::tim
 
 	// TODO render entities
 }
-
 
 game::Room::~Room() {}
