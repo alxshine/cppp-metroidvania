@@ -25,6 +25,7 @@ inline void play(const SoundEffect &soundEffect, int loops = 0)
 // 0 loops = play 0 times (I know, this is retarded!)
 inline void play(const Music &music, int loops = 1)
 {
+	// TODO only play if not already playing the same song, to avoid repeating!
 	Mix_PlayMusic(music.rawMusic, loops);
 }
 
@@ -42,6 +43,7 @@ inline void play_fade_in(const SoundEffect &soundEffect, int loops, std::chrono:
 
 inline void play_fade_in(const Music &music, int loops, std::chrono::milliseconds fadeIn)
 {
+	// TODO only play if not already playing the same song, to avoid repeating!
 	Mix_FadeInMusic(music.rawMusic, loops, fadeIn.count());
 }
 
