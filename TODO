@@ -1,2 +1,1 @@
 TODO @alex: add descriptive message to SDL::loadTexture exceptions, similarly to SDL::loadFont
-TODO: figure out whether SDL singleton is properly destructed
