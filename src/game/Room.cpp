@@ -1,8 +1,9 @@
 #include "game/Room.hpp"
-void game::Room::Tile::render(const sdl::Renderer &renderer, const game::Rectangle targetLocation) const
+game::Rectangle game::Room::Tile::render(const sdl::Renderer &renderer, const game::Position targetPosition) const
 {
-	if (sprite != nullptr)
-		renderer.render(*sprite, targetLocation);
+	sdl::Rectangle targetRect{targetPosition.x, targetPosition.y, tileSize.w, tileSize.h};
+	renderer.render(sprite, targetRect);
+	return targetRect;
 }
 
 game::Room::Room(const std::string name, const sdl::Texture &background, const sdl::Music &music,
@@ -21,6 +22,15 @@ void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::tim
 	renderer.render(background); // TODO tell renderer where to render background?
 
 	// TODO render tiles
+	auto locationY = 0;
+	for (auto &row : layout) {
+		auto locationX = 0;
+		for (auto &tile : row) {
+			tile.render(renderer, {locationX, locationY});
+			locationX += tileSize.w;
+		}
+		locationY += tileSize.h;
+	}
 
 	// TODO render entities
 }

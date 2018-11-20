@@ -305,8 +305,7 @@ std::istream &game_definitions::operator>>(std::istream &in, Room &room)
 
 		Tile tile;
 		in >> tile.name;
-		if (tile.name != "empty")
-			in >> tile.rectangle;
+		in >> tile.rectangle;
 		tileMap.insert({keyword[0], tile});
 	}
 

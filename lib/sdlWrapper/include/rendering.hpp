@@ -29,8 +29,8 @@ class Renderer {
 	static constexpr Color defaultColor = {0, 0, 0, 0};
 
   public:
-	static constexpr int logicalW = 1920;
-	static constexpr int logicalH = 1080;
+	static constexpr int logicalW = 320;
+	static constexpr int logicalH = 180;
 
 	Renderer();
 	virtual ~Renderer();

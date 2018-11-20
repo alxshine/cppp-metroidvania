@@ -44,12 +44,25 @@ std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &it
 
 std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &roomDef) const
 {
-	throw roomDef.name + " not implemented";
+	std::vector<std::vector<game::Room::Tile>> layout;
+	for (auto &row : roomDef.layout) {
+		std::vector<game::Room::Tile> newRow;
+		for (auto &tile : row) {
+			sdl::Sprite sprite{getTexture(roomDef.tileset), tile.rectangle};
+			game::Room::Tile newTile{sprite};
+			newRow.emplace_back(newTile);
+		}
+		layout.push_back(newRow);
+	}
+
+	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music), roomDef.location,
+	                 std::move(layout));
 }
 
 void ResourceManager::parseDefinition(fs::path f)
 {
 	std::string ext(f.extension());
+	std::cout << "Parsing " << f << std::endl;
 
 	try {
 		if (ext == ".mob") {
@@ -64,7 +77,7 @@ void ResourceManager::parseDefinition(fs::path f)
 			game_definitions::Room room;
 			fin >> room;
 
-			// rooms.emplace(room.name, makeRoom(room));
+			rooms.emplace(room.name, makeRoom(room));
 		} else if (ext == ".item") {
 			std::fstream fin(f, std::ios::in);
 			game_definitions::Item item;

@@ -9,13 +9,11 @@
 namespace game {
 
 struct Room : public sdl::Renderable {
-  private:
 	struct Tile {
-		const sdl::Sprite *sprite;
-		void render(const sdl::Renderer &renderer, const Rectangle targetLocation) const;
+		const sdl::Sprite sprite;
+		Rectangle render(const sdl::Renderer &renderer, const Position targetPosition) const;
 	};
 
-  public:
 	Room(const std::string name, const sdl::Texture &background, const sdl::Music &music, const Position &location,
 	     const std::vector<std::vector<Tile>> layout);
 	Room(const Room &rhs);                             // TODO set default state in copy ctor
