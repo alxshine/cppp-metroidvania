@@ -318,13 +318,23 @@ std::istream &game_definitions::operator>>(std::istream &in, Room &room)
 		if (keyword == "EndLayout")
 			break;
 
-		// Process line of room
-		std::vector<Tile> line;
-		for (char t : keyword) {
-			// Add the correct tiles, *hoping that they exist in the map :)*
-			line.push_back(tileMap.find(t)->second);
+		testString("Layer:", keyword);
+		std::vector<TileRow> layer;
+		while (true) {
+			keyword = "";
+			in >> keyword;
+			if (keyword == "EndLayer")
+				break;
+
+			// Process line of room
+			TileRow line;
+			for (char t : keyword) {
+				// Add the correct tiles, *hoping that they exist in the map :)*
+				line.push_back(tileMap.find(t)->second);
+			}
+			layer.push_back(line);
 		}
-		room.layout.push_back(line);
+		room.layout.push_back(layer);
 	}
 
 	// Parse entities

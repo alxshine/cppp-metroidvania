@@ -44,19 +44,23 @@ std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &it
 
 std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &roomDef) const
 {
-	std::vector<std::vector<game::Room::Tile>> layout;
-	for (auto &row : roomDef.layout) {
-		std::vector<game::Room::Tile> newRow;
-		for (auto &tile : row) {
-			sdl::Sprite sprite{getTexture(roomDef.tileset), tile.rectangle};
-			game::Room::Tile newTile{sprite};
-			newRow.emplace_back(newTile);
+	Room::Layout layout;
+	for (auto &layer : roomDef.layout) {
+		Room::Layer newLayer;
+		for (auto &row : layer) {
+			Room::Row newRow;
+			for (auto &tile : row) {
+				sdl::Sprite sprite{getTexture(roomDef.tileset), tile.rectangle};
+				Room::Tile newTile{sprite};
+				newRow.emplace_back(newTile);
+			}
+			newLayer.push_back(newRow);
 		}
-		layout.push_back(newRow);
+		layout.push_back(newLayer);
 	}
 
-	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music), roomDef.location,
-	                 std::move(layout));
+	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
+	                                    roomDef.location, std::move(layout));
 }
 
 void ResourceManager::parseDefinition(fs::path f)

@@ -99,13 +99,16 @@ struct Tile {
 	Rectangle rectangle;
 };
 
+using TileRow = std::vector<Tile>;
+using TileLayer = std::vector<TileRow>;
+
 struct Room {
 	std::string name;
 	std::string background;
 	std::string music;
 	Position location;
 	std::string tileset;
-	std::vector<std::vector<Tile>> layout;
+	std::vector<TileLayer> layout;
 
 	std::vector<MobRef> mobs;
 	std::vector<Door> doors;
