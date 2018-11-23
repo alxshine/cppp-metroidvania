@@ -6,6 +6,7 @@
 namespace game {
 using Rectangle = game_definitions::Rectangle;
 using Position = game_definitions::Position;
+using Collision = game_definitions::Collision;
 constexpr Rectangle tileSize{0, 0, 10, 10};
 } // namespace game
 

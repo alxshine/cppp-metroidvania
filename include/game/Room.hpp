@@ -2,6 +2,7 @@
 #define ROOM_H
 
 #include <vector>
+#include <algorithm>
 
 #include "SDL.hpp"
 #include "constants.hpp"
@@ -17,10 +18,11 @@ struct Room : public sdl::Renderable {
 	using Row = std::vector<Tile>;
 	using Layer = std::vector<Row>;
 	using Layout = std::vector<Layer>;
+	using CollisionMap = std::vector<std::vector<Collision>>;
 
 	Room(const std::string name, const sdl::Texture &background, const sdl::Music &music, const Position &location,
-	     const Layout layout);
-	Room(const Room &rhs);                             // TODO set default state in copy ctor
+	     const Layout layout, const CollisionMap collisionMap);
+	Room(const Room &rhs) noexcept;
 	Room &operator=(const Room &rhs) = delete;
 	virtual ~Room();
 
@@ -31,6 +33,7 @@ struct Room : public sdl::Renderable {
 	const sdl::Music &music;
 	const Position location;
 	const Layout layout;
+	const CollisionMap collisionMap;
 };
 
 } // namespace game

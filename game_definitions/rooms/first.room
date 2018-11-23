@@ -5,9 +5,9 @@ Location: 9001 9001
 
 Tileset: awesome.png
 Tiles:
-    . empty     0 0 0 0
-    s solid     166 2 1 1
-    m moss      16 256 15 15
+    . empty     0 0 0 0 None
+    s solid     166 2 1 1 Full
+    m moss      16 256 15 15 None
 EndTiles
 
 Layout:

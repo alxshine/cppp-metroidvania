@@ -55,6 +55,9 @@ void sdl::Renderer::render(const Texture &texture) const
 	SDL_RenderCopy(rawRenderer, texture.rawTexture, nullptr, nullptr);
 }
 
+void sdl::Renderer::render(const Texture &texture, const Rectangle targetRect) const{
+	SDL_RenderCopy(rawRenderer, texture.rawTexture, nullptr, &targetRect);
+}
 void sdl::Renderer::render(const Sprite &sprite) const
 {
 	SDL_RenderCopy(rawRenderer, sprite.texture.rawTexture, &sprite.sourceRectangle, nullptr);

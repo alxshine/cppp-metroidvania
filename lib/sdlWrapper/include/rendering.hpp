@@ -40,8 +40,9 @@ class Renderer {
 		renderable.render(*this, t);
 	};
 	// TODO inline as much as possible here -- or not?
-	void render(const Texture &texture, const Rectangle sourceRect, const Rectangle targetRect) const;
 	void render(const Texture &texture) const;
+	void render(const Texture &texture, const Rectangle targetRect) const;
+	void render(const Texture &texture, const Rectangle sourceRect, const Rectangle targetRect) const;
 	void render(const Sprite &sprite) const;
 	void render(const Sprite &sprite, const Rectangle targetRect) const;
 

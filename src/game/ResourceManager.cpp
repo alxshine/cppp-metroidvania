@@ -45,7 +45,7 @@ std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &it
 std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &roomDef) const
 {
 	Room::Layout layout;
-	for (auto &layer : roomDef.layout) {
+	for (auto &layer : roomDef.layout) { //TODO: we should ensure that all layers have the same size
 		Room::Layer newLayer;
 		for (auto &row : layer) {
 			Room::Row newRow;
@@ -59,8 +59,11 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 		layout.push_back(newLayer);
 	}
 
+	//TODO create collision map
+	Room::CollisionMap collisionMap;
+
 	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
-	                                    roomDef.location, std::move(layout));
+	                                    roomDef.location, std::move(layout), std::move(collisionMap));
 }
 
 void ResourceManager::parseDefinition(fs::path f)

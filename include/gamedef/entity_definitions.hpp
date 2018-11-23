@@ -94,9 +94,12 @@ struct ItemRef {
 	std::string id;
 };
 
+enum class Collision : char { None = 0, TopOnly, Full };
+
 struct Tile {
 	std::string name;
 	Rectangle rectangle;
+	Collision collision;
 };
 
 using TileRow = std::vector<Tile>;
@@ -121,8 +124,7 @@ struct Room {
 
 inline std::ostream &operator<<(std::ostream &out, const Rectangle &rect)
 {
-	return out << "Rectangle {" << rect.x << "," << rect.y << "," << rect.w << ","
-	           << rect.h << "}\n";
+	return out << "Rectangle {" << rect.x << "," << rect.y << "," << rect.w << "," << rect.h << "}\n";
 }
 
 inline std::ostream &operator<<(std::ostream &out, const SoundEffect &snd)

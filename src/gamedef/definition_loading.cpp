@@ -43,6 +43,21 @@ std::istream &game_definitions::operator>>(std::istream &in, Rectangle &rect)
 	return in;
 }
 
+std::istream &game_definitions::operator>>(std::istream &in, Collision &coll){
+	std::string rawValue;
+	in >> rawValue;
+	if(rawValue == "None"){
+		coll = Collision::None;
+	}else if(rawValue == "TopOnly"){
+		coll = Collision::TopOnly;
+	}else if(rawValue == "Full"){
+		coll = Collision::Full;
+	}else{
+		throw "Invalid Collision type " + rawValue;
+	}
+	return in;
+}
+
 std::istream &game_definitions::operator>>(std::istream &in, SoundEffect &snd)
 {
 	return in >> snd.file >> snd.loops;
@@ -306,6 +321,7 @@ std::istream &game_definitions::operator>>(std::istream &in, Room &room)
 		Tile tile;
 		in >> tile.name;
 		in >> tile.rectangle;
+		in >> tile.collision;
 		tileMap.insert({keyword[0], tile});
 	}
 

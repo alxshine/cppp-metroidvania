@@ -5,9 +5,9 @@ Location: 0 0
 
 Tileset: mininicular.png
 Tiles:
-    | wall      0 0 16 16
-    = floor     0 0 16 16
-    . empty     16 0 16 16
+    | wall      0 0 16 16 Full
+    = floor     0 0 16 16 Full
+    . empty     16 0 16 16 None
 EndTiles
 
 Layout:

@@ -21,6 +21,8 @@ class ParseException : public std::exception {
 
 std::istream &operator>>(std::istream &in, Rectangle &rect);
 
+std::istream &operator>>(std::istream &in, Collision &coll);
+
 std::istream &operator>>(std::istream &in, SoundEffect &snd);
 
 std::istream &operator>>(std::istream &in, Animation &anim);
