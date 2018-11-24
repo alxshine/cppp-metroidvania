@@ -66,13 +66,24 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 				Room::Tile newTile{sprite};
 				newRow.emplace_back(newTile);
 			}
-			newLayer.push_back(newRow);
+			newLayer.emplace_back(newRow);
 		}
-		layout.push_back(newLayer);
+		layout.emplace_back(newLayer);
 	}
 
-	// TODO create collision map
+	// TODO the complexitiy of this F*** algorithm is horrifying!
 	Room::CollisionMap collisionMap;
+	for (auto row = 0ul; row < layout[0].size(); row++) {
+		std::vector<Collision> colRow;
+		for (auto tile = 0ul; tile < layout[0][0].size(); tile++) {
+			Collision max =
+			    std::max_element(roomDef.layout.cbegin(), roomDef.layout.cend(), [&](auto &layer1, auto &layer2) {
+				    return layer1[row][tile].collision < layer2[row][tile].collision;
+			    })->at(row).at(tile).collision;
+			colRow.emplace_back(max);
+		}
+		collisionMap.emplace_back(colRow);
+	}
 
 	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
 	                                    roomDef.location, std::move(layout), std::move(collisionMap));
