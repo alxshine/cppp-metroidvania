@@ -1,5 +1,5 @@
-#ifndef TEXTURE_H // TODO: rename
-#define TEXTURE_H
+#ifndef PRIMITIVES_H
+#define PRIMITIVES_H
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -16,7 +16,7 @@ namespace sdl {
 struct Texture final {
 	Texture(SDL_Texture *raw);
 
-	SDL_Texture *rawTexture; // TODO: maybe we can do this better, but SDL_RenderCopy takes a non const SDL_Texture*
+	SDL_Texture *rawTexture;
 
 	Texture() = delete;
 
@@ -49,4 +49,4 @@ struct Animation {
 
 } // namespace sdl
 
-#endif /* TEXTURE_H */
+#endif /* PRIMITIVES_H */

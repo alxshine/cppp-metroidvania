@@ -1,5 +1,6 @@
 #include "game/ResourceManager.hpp"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 
@@ -44,9 +45,20 @@ std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &it
 
 std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &roomDef) const
 {
+	auto all_equal_size = [](auto vec) {
+		return std::all_of(vec.cbegin(), vec.cend(), [&](auto el) { return el.size() == vec.cbegin()->size(); });
+	};
+
+	if (!all_equal_size(roomDef.layout))
+		throw std::runtime_error("Unequal layers in room: " + roomDef.name);
+
+	// transform layout definition to renderable layout
 	Room::Layout layout;
-	for (auto &layer : roomDef.layout) { //TODO: we should ensure that all layers have the same size
+	for (auto &layer : roomDef.layout) {
 		Room::Layer newLayer;
+		// check equal row sizes
+		if (!all_equal_size(layer))
+			throw std::runtime_error("Unequal rows in room: " + roomDef.name);
 		for (auto &row : layer) {
 			Room::Row newRow;
 			for (auto &tile : row) {
@@ -59,7 +71,7 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 		layout.push_back(newLayer);
 	}
 
-	//TODO create collision map
+	// TODO create collision map
 	Room::CollisionMap collisionMap;
 
 	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
