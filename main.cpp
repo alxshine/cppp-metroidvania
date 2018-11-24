@@ -57,10 +57,16 @@ int main()
 			if (e.state == SDL_PRESSED)
 				running = false;
 		});
+
+		sdl::RenderOptions options{true};
+		events.on(SDLK_c, [&](const KeyboardEvent &e) {
+			if (e.state == SDL_PRESSED)
+				options.renderCollisionMap = !options.renderCollisionMap;
+		});
 		while (running) {
 			renderer.clear();
 			events.dispatch();
-			renderer.render(room, clock.now());
+			renderer.render(room, clock.now(), options);
 			renderer.swapBuffers();
 		}
 

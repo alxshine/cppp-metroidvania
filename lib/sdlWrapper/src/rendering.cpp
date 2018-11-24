@@ -15,6 +15,7 @@ sdl::Renderer::Renderer()
 	}
 
 	SDL_RenderSetLogicalSize(rawRenderer, logicalW, logicalH);
+	SDL_SetRenderDrawBlendMode(rawRenderer, SDL_BLENDMODE_BLEND);
 	//	SDL_SetRenderDrawColor(rawRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 }
 

@@ -16,7 +16,7 @@ class Mob : public sdl::Renderable {
 	Mob &operator=(const Mob &rhs) = delete;
 	virtual ~Mob();
 
-	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t) const override;
+	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t, const sdl::RenderOptions &options = {}) const override;
 
 	const std::string name;
 	const sdl::Animation walkingAnimation;

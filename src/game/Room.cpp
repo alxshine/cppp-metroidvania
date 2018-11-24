@@ -2,7 +2,7 @@
 
 game::Rectangle game::Room::Tile::render(const sdl::Renderer &renderer, const game::Position targetPosition) const
 {
-	sdl::Rectangle targetRect{targetPosition.x, targetPosition.y, tileSize.w, tileSize.h};
+	game::Rectangle targetRect{targetPosition.x, targetPosition.y, tileSize.w, tileSize.h};
 	renderer.render(sprite, targetRect);
 	return targetRect;
 }
@@ -14,11 +14,13 @@ game::Room::Room(const std::string name, const sdl::Texture &background, const s
 }
 
 game::Room::Room(const Room &rhs) noexcept
-    : name(rhs.name), background(rhs.background), music(rhs.music), location(rhs.location), layout(rhs.layout), collisionMap(rhs.collisionMap)
+    : name(rhs.name), background(rhs.background), music(rhs.music), location(rhs.location), layout(rhs.layout),
+      collisionMap(rhs.collisionMap)
 {
 }
 
-void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &) const
+void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &,
+                        const sdl::RenderOptions &options) const
 {
 	renderer.render(background,
 	                sdl::Rectangle{0, -10, sdl::Renderer::logicalW,
@@ -29,6 +31,30 @@ void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::tim
 			auto locationX = 0;
 			for (auto &tile : row) {
 				tile.render(renderer, {locationX, locationY});
+				locationX += tileSize.w;
+			}
+			locationY += tileSize.h;
+		}
+	}
+
+	if (options.renderCollisionMap) {
+		auto locationY = 0;
+		for (auto &row : collisionMap) {
+			auto locationX = 0;
+			for (auto &tile : row) {
+				game::Rectangle targetRect{locationX, locationY, game::tileSize.w, game::tileSize.h};
+				sdl::Color color{0, 0, 0, 100};
+				switch (tile) {
+				case Collision::TopOnly:
+					color.g = 255;
+					break;
+				case Collision::Full:
+					color.r = 255;
+					break;
+				case Collision::None:
+					break;
+				}
+				renderer.drawRectangle(targetRect, color);
 				locationX += tileSize.w;
 			}
 			locationY += tileSize.h;

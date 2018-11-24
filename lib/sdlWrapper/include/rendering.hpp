@@ -16,9 +16,13 @@ namespace sdl {
 class Renderer;
 class Renderable;
 
+struct RenderOptions{
+	bool renderCollisionMap;
+};
+
 class Renderable {
   public:
-	virtual void render(const Renderer &renderer, const GameClock::time_point &t) const = 0;
+	virtual void render(const Renderer &renderer, const GameClock::time_point &t, const RenderOptions &options = {}) const = 0;
 	virtual ~Renderable(){};
 };
 
@@ -35,9 +39,9 @@ class Renderer {
 	Renderer();
 	virtual ~Renderer();
 
-	void render(Renderable &renderable, const GameClock::time_point &t) const
+	void render(Renderable &renderable, const GameClock::time_point &t, const RenderOptions &options = {}) const
 	{
-		renderable.render(*this, t);
+		renderable.render(*this, t, options);
 	};
 	// TODO inline as much as possible here -- or not?
 	void render(const Texture &texture) const;

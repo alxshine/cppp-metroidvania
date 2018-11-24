@@ -26,7 +26,7 @@ struct Room : public sdl::Renderable {
 	Room &operator=(const Room &rhs) = delete;
 	virtual ~Room();
 
-	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &) const override;
+	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &, const sdl::RenderOptions &options = {}) const override;
 
 	const std::string name;
 	const sdl::Texture &background;

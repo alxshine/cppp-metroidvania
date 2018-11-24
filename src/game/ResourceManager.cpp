@@ -54,14 +54,24 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 
 	// transform layout definition to renderable layout
 	Room::Layout layout;
+	Room::CollisionMap collisionMap;
 	for (auto &layer : roomDef.layout) {
+		bool firstLayer = layout.size() == 0;
 		Room::Layer newLayer;
 		// check equal row sizes
 		if (!all_equal_size(layer))
 			throw std::runtime_error("Unequal rows in room: " + roomDef.name);
-		for (auto &row : layer) {
+		for (unsigned r = 0; r<layer.size(); r++) {
+			auto &row = layer[r];
+			if (firstLayer)
+				collisionMap.emplace_back(row.size());
+			auto &collRow = collisionMap[r];
+			std::vector<Collision> collisionRow;
 			Room::Row newRow;
-			for (auto &tile : row) {
+			for (unsigned t = 0; t<row.size(); t++) {
+				auto &tile = row[t];
+				auto &collisionTile = collRow[t];
+				collisionTile = std::max(tile.collision, collisionTile);
 				sdl::Sprite sprite{getTexture(roomDef.tileset), tile.rectangle};
 				Room::Tile newTile{sprite};
 				newRow.emplace_back(newTile);
@@ -72,18 +82,18 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 	}
 
 	// TODO the complexitiy of this F*** algorithm is horrifying!
-	Room::CollisionMap collisionMap;
-	for (auto row = 0ul; row < layout[0].size(); row++) {
-		std::vector<Collision> colRow;
-		for (auto tile = 0ul; tile < layout[0][0].size(); tile++) {
-			Collision max =
-			    std::max_element(roomDef.layout.cbegin(), roomDef.layout.cend(), [&](auto &layer1, auto &layer2) {
-				    return layer1[row][tile].collision < layer2[row][tile].collision;
-			    })->at(row).at(tile).collision;
-			colRow.emplace_back(max);
-		}
-		collisionMap.emplace_back(colRow);
-	}
+	// Room::CollisionMap collisionMap;
+	// for (auto row = 0ul; row < layout[0].size(); row++) {
+	// std::vector<Collision> colRow;
+	// for (auto tile = 0ul; tile < layout[0][0].size(); tile++) {
+	// Collision max =
+	// std::max_element(roomDef.layout.cbegin(), roomDef.layout.cend(), [&](auto &layer1, auto &layer2) {
+	// return layer1[row][tile].collision < layer2[row][tile].collision;
+	//})->at(row).at(tile).collision;
+	// colRow.emplace_back(max);
+	//}
+	// collisionMap.emplace_back(colRow);
+	//}
 
 	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
 	                                    roomDef.location, std::move(layout), std::move(collisionMap));
