@@ -35,12 +35,11 @@ int main()
 
 		// Animation a{*texture, frames, 50ms};
 
-		//auto mage = res.getMob("Mage");
+		// auto mage = res.getMob("Mage");
 		auto room = res.getRoom("First");
 		auto &renderer = sdl.getRenderer();
 
-		auto &music = res.getMusic("runescape-medieval.ogg");
-		play(music, repeat_forever);
+		play(room.music, repeat_forever);
 
 		auto &sound = res.getSound("hey.wav");
 
@@ -53,7 +52,12 @@ int main()
 		});
 
 		GameClock clock;
-		while (clock.now().time_since_epoch() < 5000ms) {
+		bool running = true;
+		events.on(SDLK_ESCAPE, [&](const KeyboardEvent &e) {
+			if (e.state == SDL_PRESSED)
+				running = false;
+		});
+		while (running) {
 			renderer.clear();
 			events.dispatch();
 			renderer.render(room, clock.now());
@@ -84,7 +88,7 @@ int main()
 		cerr << e.what() << endl;
 	} catch (GameException &e) {
 		cerr << e.what() << endl;
-	} catch (const string& e) {
+	} catch (const string &e) {
 		cerr << e << endl;
 	}
 }
