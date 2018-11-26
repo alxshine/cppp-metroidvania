@@ -44,25 +44,20 @@ int main()
 		auto &sound = res.getSound("hey.wav");
 
 		EventHandler events;
-		events.on(SDLK_SPACE, [&](const KeyboardEvent &e) {
-			if (e.state == SDL_PRESSED) {
-				cout << "Space Pressed!" << endl;
-				play(sound);
-			}
+		// TODO @bennett handle SIGTERM using it's SDL event
+		events.onKeyDown(SDLK_SPACE, [&](const KeyboardEvent &) {
+			cout << "Space Pressed!" << endl;
+			play(sound);
 		});
 
 		GameClock clock;
 		bool running = true;
-		events.on(SDLK_ESCAPE, [&](const KeyboardEvent &e) {
-			if (e.state == SDL_PRESSED)
-				running = false;
-		});
+		events.onKeyDown(SDLK_ESCAPE, [&](const KeyboardEvent &) { running = false; });
 
 		sdl::RenderOptions options{true};
-		events.on(SDLK_c, [&](const KeyboardEvent &e) {
-			if (e.state == SDL_PRESSED)
-				options.renderCollisionMap = !options.renderCollisionMap;
-		});
+		events.onKeyDown(SDLK_c,
+		                 [&](const KeyboardEvent &) { options.renderCollisionMap = !options.renderCollisionMap; });
+
 		while (running) {
 			renderer.clear();
 			events.dispatch();

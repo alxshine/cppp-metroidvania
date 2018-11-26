@@ -17,11 +17,11 @@ using EventType = SDL_EventType;
 class EventHandler final {
   public:
 	void dispatch() const;
-	void on(Keycode key, std::function<void(const KeyboardEvent &)> callback);
+	void onKeyDown(Keycode key, std::function<void(const KeyboardEvent &)> callback);
 	void on(EventType type, std::function<void(const Event &)> callback);
 
   private:
-	std::unordered_map<Keycode, std::function<void(const KeyboardEvent &)>> keyCallbacks;
+	std::unordered_map<Keycode, std::function<void(const KeyboardEvent &)>> keyDownCallbacks;
 	std::unordered_map<EventType, std::function<void(const Event &)>> generalCallbacks;
 };
 
