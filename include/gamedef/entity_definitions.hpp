@@ -63,10 +63,22 @@ struct Mob {
 	std::vector<Attack> attacks;
 };
 
+// TODO: make position an alias to SDL_POINT?
+// We would need to decide if we want typesafe differenciation between a Tile Coordinate and a Pixel Position.
 struct Position {
 	int x;
 	int y;
 };
+
+inline bool operator==(const Position a, const Position b)
+{
+	return a.x == b.x && a.y == b.y;
+}
+
+inline bool operator!=(const Position a, const Position b)
+{
+	return !(a == b);
+}
 
 enum class Direction { Up, Down, Left, Right };
 

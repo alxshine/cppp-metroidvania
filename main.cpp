@@ -22,65 +22,51 @@ int main()
 		SDL &sdl = SDL::getInstance();
 		ResourceManager res{"game_definitions", "assets"};
 
-		// vector<Rectangle> frames;
-		// frames.push_back(Rectangle{0, 0, 122, 110});
-		// frames.push_back(Rectangle{122, 0, 122, 110});
-		// frames.push_back(Rectangle{244, 0, 122, 110});
-		// frames.push_back(Rectangle{366, 0, 122, 110});
-		// frames.push_back(Rectangle{0, 110, 122, 110});
-		// frames.push_back(Rectangle{122, 110, 122, 110});
-		// frames.push_back(Rectangle{244, 110, 122, 110});
-		// frames.push_back(Rectangle{366, 110, 122, 110});
-		// frames.push_back(Rectangle{0, 110, 122, 110});
-
-		// Animation a{*texture, frames, 50ms};
-
 		// auto mage = res.getMob("Mage");
 		auto room = res.getRoom("First");
+		auto player = res.makePlayer();
+		player->movable.move({5, 17});
 		auto &renderer = sdl.getRenderer();
 
 		play(room.music, repeat_forever);
 
-		auto &sound = res.getSound("hey.wav");
+		// auto &sound = res.getSound("hey.wav");
 
-		EventHandler events;
-		events.onKeyDown(SDLK_SPACE, [&](const KeyboardEvent &) {
-			cout << "Space Pressed!" << endl;
-			play(sound);
-		});
+		{
+			GameClock clock;
+			bool running = true;
+			EventHandler events;
 
-		GameClock clock;
-		bool running = true;
-		events.on(SDL_QUIT, [&](const Event &) { running = false; });
-		events.onKeyDown(SDLK_ESCAPE, [&](const KeyboardEvent &) { running = false; });
+			events.on(SDL_QUIT, [&](const Event &) { running = false; });
+			events.onKeyDown(SDLK_ESCAPE, [&running](const KeyboardEvent &) { running = false; });
 
-		sdl::RenderOptions options{true};
-		events.onKeyDown(SDLK_c,
-		                 [&](const KeyboardEvent &) { options.renderCollisionMap = !options.renderCollisionMap; });
+			sdl::RenderOptions options{true};
+			events.onKeyDown(SDLK_c, [&options](const KeyboardEvent &) {
+				options.renderCollisionMap = !options.renderCollisionMap;
+			});
 
-		while (running) {
-			renderer.clear();
-			events.dispatch();
-			renderer.render(room, clock.now(), options);
-			renderer.swapBuffers();
+			// TODO: make movement speed frame-rate independent
+			// TODO: make movement not be based on tiles. this mostly means changing Player::render().
+			events.onKeyDown(SDLK_d, [&player](const KeyboardEvent &) {
+				player->movable.move({player->movable.getPosition().x + 1, player->movable.getPosition().y});
+			});
+			events.onKeyDown(SDLK_a, [&player](const KeyboardEvent &) {
+				player->movable.move({player->movable.getPosition().x - 1, player->movable.getPosition().y});
+			});
+
+			while (running) {
+				renderer.clear();
+				events.dispatch();
+				auto t = clock.now();
+
+				renderer.render(room, t, options);
+
+				player->movable.update();
+				renderer.render(*player, t, options);
+
+				renderer.swapBuffers();
+			}
 		}
-
-		// auto titlefont = sdl.loadFont("assets/fonts/Countryside Personal Use.ttf", 60);
-		// auto buttonfont = sdl.loadFont("assets/fonts/Countryside Personal Use.ttf", 30);
-
-		// auto title = sdl.generateText(*titlefont, "Main Menu");
-		// Menu menu{title, {100, 0, 0, 0}, renderer};
-
-		// auto text1 = sdl.generateText(*buttonfont, "Button 1");
-		// menu.addItem({text1, [] {}, {100, 100, 100, 0}});
-		// auto text2 = sdl.generateText(*buttonfont, "Button 2");
-		// menu.addItem({text2, [] {}});
-		// auto text3 = sdl.generateText(*buttonfont, "Button with longer label");
-		// menu.addItem({text3, [] {}});
-
-		// renderer->render(menu);
-		// renderer->swapBuffers();
-		// sdl.delay(2000ms);
 
 		music::fade_out(1s);
 		music::block_until_stopped();

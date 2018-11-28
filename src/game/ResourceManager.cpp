@@ -6,6 +6,7 @@
 
 namespace fs = std::filesystem;
 using namespace game;
+using namespace std::chrono_literals;
 
 template <typename T>
 bool game::contained(std::vector<T> vec, T x)
@@ -17,6 +18,34 @@ std::vector<std::string> ResourceManager::imageFormats{".png"};
 // TODO technically, sounds could also be mp3 etc...
 std::vector<std::string> ResourceManager::soundFormats{".wav"};
 std::vector<std::string> ResourceManager::musicFormats{".mp3", ".ogg", ".flac"};
+
+std::unique_ptr<Player> ResourceManager::makePlayer() const
+{
+	const sdl::Texture &spritesheet = getTexture("BlueCleric.png");
+	const sdl::Animation idleAnimation{spritesheet,
+	                                   {{0, 0, 32, 32},
+	                                    {32 * 1, 0, 32, 32},
+	                                    {32 * 2, 0, 32, 32},
+	                                    {32 * 3, 0, 32, 32},
+	                                    {32 * 4, 0, 32, 32},
+	                                    {32 * 5, 0, 32, 32},
+	                                    {32 * 6, 0, 32, 32},
+	                                    {32 * 7, 0, 32, 32}},
+	                                   100ms};
+
+	const sdl::Animation walkingAnimation{spritesheet,
+	                                      {{0, 32 * 2, 32, 32},
+	                                       {32 * 1, 32 * 2, 32, 32},
+	                                       {32 * 2, 32 * 2, 32, 32},
+	                                       {32 * 3, 32 * 2, 32, 32},
+	                                       {32 * 4, 32 * 2, 32, 32},
+	                                       {32 * 5, 32 * 2, 32, 32},
+	                                       {32 * 6, 32 * 2, 32, 32},
+	                                       {32 * 7, 32 * 2, 32, 32}},
+	                                      50ms};
+
+	return std::make_unique<Player>(idleAnimation, walkingAnimation);
+}
 
 std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobdef) const
 {
@@ -61,14 +90,14 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 		// check equal row sizes
 		if (!all_equal_size(layer))
 			throw std::runtime_error("Unequal rows in room: " + roomDef.name);
-		for (unsigned r = 0; r<layer.size(); r++) {
+		for (unsigned r = 0; r < layer.size(); r++) {
 			auto &row = layer[r];
 			if (firstLayer)
 				collisionMap.emplace_back(row.size());
 			auto &collRow = collisionMap[r];
 			std::vector<Collision> collisionRow;
 			Room::Row newRow;
-			for (unsigned t = 0; t<row.size(); t++) {
+			for (unsigned t = 0; t < row.size(); t++) {
 				auto &tile = row[t];
 				auto &collisionTile = collRow[t];
 				collisionTile = std::max(tile.collision, collisionTile);

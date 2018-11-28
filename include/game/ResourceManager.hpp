@@ -9,9 +9,10 @@
 
 #include "Item.hpp"
 #include "Mob.hpp"
+#include "Player.hpp"
 #include "Room.hpp"
-#include "exceptions.hpp"
 #include "SDL.hpp"
+#include "exceptions.hpp"
 #include "gamedef/definition_loading.hpp"
 
 namespace game {
@@ -30,6 +31,7 @@ class ResourceManager final {
 	Mob getMob(const std::string &name) const;
 	Item getItem(const std::string &name) const;
 	Room getRoom(const std::string &name) const;
+	std::unique_ptr<Player> makePlayer() const;
 	const sdl::SoundEffect &getSound(const std::string &name) const;
 	const sdl::Music &getMusic(const std::string &name) const;
 
