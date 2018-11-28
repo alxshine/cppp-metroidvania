@@ -42,7 +42,7 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	                                       {32 * 5, 32 * 2, 32, 32},
 	                                       {32 * 6, 32 * 2, 32, 32},
 	                                       {32 * 7, 32 * 2, 32, 32}},
-	                                      50ms};
+	                                      100ms};
 
 	return std::make_unique<Player>(idleAnimation, walkingAnimation);
 }

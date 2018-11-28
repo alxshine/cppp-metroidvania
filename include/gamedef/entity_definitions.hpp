@@ -70,6 +70,23 @@ struct Position {
 	int y;
 };
 
+inline Position operator*(const Position a, int b)
+{
+	return {a.x * b, a.y * b};
+}
+
+inline Position operator+(const Position a, const Position b)
+{
+	return {a.x + b.x, a.y + b.y};
+}
+
+inline Position &operator+=(Position &a, const Position b)
+{
+	a.x += b.x;
+	a.y += b.y;
+	return a;
+}
+
 inline bool operator==(const Position a, const Position b)
 {
 	return a.x == b.x && a.y == b.y;

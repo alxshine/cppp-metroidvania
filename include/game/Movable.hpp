@@ -12,11 +12,14 @@ class Movable {
 	Direction direction = Direction::Right;
 	bool moved = false;
 
+	int speedPerSecond;
+
   public:
-	Movable(Position pos = {0, 0});
+	Movable(int speedPerSecond, Position pos = {0, 0});
 
 	void update();
-	void move(Position newPosition);
+	void move(Position delta, std::chrono::milliseconds frameDelta);
+	void reposition(Position newPosition);
 
 	bool getMoved() const;
 	Direction getDirection() const;

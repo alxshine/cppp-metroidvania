@@ -3,17 +3,16 @@
 using namespace game;
 
 Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation)
-    : idleAnimation(idleAnimation), walkingAnimation(walkingAnimation)
+    : movable(100), idleAnimation(idleAnimation), walkingAnimation(walkingAnimation)
 {
 }
 
 void Player::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
                     const sdl::RenderOptions &options) const
 {
-	// Calculate position, centering horizontally but not vertically
-	// TODO make position absolute (inside room), only size dependent on tilesize
-	Rectangle destRect{movable.getPosition().x * tileSize.w - tileSize.w,
-	                   movable.getPosition().y * tileSize.h - 2 * tileSize.h, tileSize.w * 2, tileSize.h * 2};
+	// Calculate position, centering horizontally and bottom-aligning vertically
+	Rectangle destRect{movable.getPosition().x - tileSize.w, movable.getPosition().y - 2 * tileSize.h, tileSize.w * 2,
+	                   tileSize.h * 2};
 
 	sdl::Renderer::Flip flip;
 	switch (movable.getDirection()) {

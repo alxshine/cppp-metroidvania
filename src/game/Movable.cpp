@@ -2,23 +2,28 @@
 
 using namespace game;
 
-Movable::Movable(Position pos) : position(pos), lastPosition(pos) {}
+Movable::Movable(int speedPerSecond, Position pos) : position(pos), lastPosition(pos), speedPerSecond(speedPerSecond) {}
 
-void Movable::move(Position newPosition)
+void Movable::move(Position delta, std::chrono::milliseconds frameDelta)
 {
 	lastPosition = position;
-	position = newPosition;
+	position += delta * static_cast<int>(speedPerSecond * frameDelta.count() / 1000);
 
-	if (newPosition.x > lastPosition.x)
+	if (position.x > lastPosition.x)
 		direction = Direction::Right;
-	else if (newPosition.x < lastPosition.x)
+	else if (position.x < lastPosition.x)
 		direction = Direction::Left;
 
 	// NOTE: this reflects top-down coordinates
-	else if (newPosition.y > lastPosition.y)
+	else if (position.y > lastPosition.y)
 		direction = Direction::Down;
-	else if (newPosition.y < lastPosition.y)
+	else if (position.y < lastPosition.y)
 		direction = Direction::Up;
+}
+
+void Movable::reposition(Position newPosition) {
+	position = newPosition;
+	lastPosition = newPosition;
 }
 
 void Movable::update()

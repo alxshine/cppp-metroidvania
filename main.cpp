@@ -25,7 +25,7 @@ int main()
 		// auto mage = res.getMob("Mage");
 		auto room = res.getRoom("First");
 		auto player = res.makePlayer();
-		player->movable.move({5, 17});
+		player->movable.reposition({50, 170});
 		auto &renderer = sdl.getRenderer();
 
 		play(room.music, repeat_forever);
@@ -34,37 +34,47 @@ int main()
 
 		{
 			GameClock clock;
+			GameClock::time_point last_frame_time;
+			std::chrono::milliseconds frame_delta = 0ms;
 			bool running = true;
 			EventHandler events;
-
-			events.on(SDL_QUIT, [&](const Event &) { running = false; });
-			events.onKeyDown(SDLK_ESCAPE, [&running](const KeyboardEvent &) { running = false; });
-
 			sdl::RenderOptions options{true, true, true};
-			events.onKeyDown(SDLK_c, [&options](const KeyboardEvent &) {
-				options.renderCollisionMap = !options.renderCollisionMap;
-			});
 
-			// TODO: base movement on HOLDING key, not pressing - repeat press events are too slow to start for movement I think --> extend EventHandler::whileKeyHeld .
-			// TODO: make movement speed frame-rate independent
-			// TODO: make movement not be based on tiles. this mostly means changing Player::render().
-			events.onKeyDown(SDLK_d, [&player](const KeyboardEvent &) {
-				player->movable.move({player->movable.getPosition().x + 1, player->movable.getPosition().y});
-			});
-			events.onKeyDown(SDLK_a, [&player](const KeyboardEvent &) {
-				player->movable.move({player->movable.getPosition().x - 1, player->movable.getPosition().y});
-			});
+			{
+				events.on(SDL_QUIT, [&](const Event &) { running = false; });
+				events.onKeyDown(SDLK_ESCAPE, [&running](const KeyboardEvent &) { running = false; });
+
+				events.onKeyDown(SDLK_c, [&options](const KeyboardEvent &) {
+					options.renderCollisionMap = !options.renderCollisionMap;
+				});
+
+				// TODO: base movement on HOLDING key, not pressing - repeat press events are too slow to start for
+				// movement I think --> extend EventHandler::whileKeyHeld .
+				events.onKeyDown(SDLK_d, [&player, &frame_delta](const KeyboardEvent &) {
+					player->movable.move({1, 0}, frame_delta);
+				});
+				events.onKeyDown(SDLK_a, [&player, &frame_delta](const KeyboardEvent &) {
+					player->movable.move({-1, 0}, frame_delta);
+				});
+			}
 
 			while (running) {
 				renderer.clear();
+				auto now = clock.now();
+				frame_delta = now - last_frame_time;
+
 				events.dispatch();
-				auto t = clock.now();
 
-				renderer.render(room, t, options);
+				// UI
 
+				// Room
+				renderer.render(room, now, options);
+
+				// Player
 				player->movable.update();
-				renderer.render(*player, t, options);
+				renderer.render(*player, now, options);
 
+				last_frame_time = now;
 				renderer.swapBuffers();
 			}
 		}
