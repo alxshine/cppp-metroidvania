@@ -41,32 +41,34 @@ void sdl::Renderer::clear(Color color) const
 	SDL_RenderClear(rawRenderer);
 }
 
-void sdl::Renderer::render(const Texture &texture, Rectangle sourceRect, Rectangle targetRect) const
+void sdl::Renderer::render(const Texture &texture, Rectangle sourceRect, Rectangle targetRect, Flip flip) const
 {
-	SDL_RenderCopy(rawRenderer, texture.rawTexture, &sourceRect, &targetRect);
+	SDL_RenderCopyEx(rawRenderer, texture.rawTexture, &sourceRect, &targetRect, 0, nullptr, static_cast<SDL_RendererFlip>(flip));
+}
+
+void sdl::Renderer::render(const Texture &texture, Flip flip) const
+{
+	SDL_RenderCopyEx(rawRenderer, texture.rawTexture, nullptr, nullptr, 0, nullptr, static_cast<SDL_RendererFlip>(flip));
+}
+
+void sdl::Renderer::render(const Texture &texture, const Rectangle targetRect, Flip flip) const
+{
+	SDL_RenderCopyEx(rawRenderer, texture.rawTexture, nullptr, &targetRect, 0, nullptr, static_cast<SDL_RendererFlip>(flip));
+}
+
+void sdl::Renderer::render(const Sprite &sprite, Flip flip) const
+{
+	SDL_RenderCopyEx(rawRenderer, sprite.texture.rawTexture, &sprite.sourceRectangle, nullptr, 0, nullptr, static_cast<SDL_RendererFlip>(flip));
+}
+
+void sdl::Renderer::render(const Sprite &sprite, Rectangle targetRect, Flip flip) const
+{
+	SDL_RenderCopyEx(rawRenderer, sprite.texture.rawTexture, &sprite.sourceRectangle, &targetRect, 0, nullptr, static_cast<SDL_RendererFlip>(flip));
 }
 
 SDL_Renderer *sdl::Renderer::getRawRenderer() const
 {
 	return rawRenderer;
-}
-
-void sdl::Renderer::render(const Texture &texture) const
-{
-	SDL_RenderCopy(rawRenderer, texture.rawTexture, nullptr, nullptr);
-}
-
-void sdl::Renderer::render(const Texture &texture, const Rectangle targetRect) const{
-	SDL_RenderCopy(rawRenderer, texture.rawTexture, nullptr, &targetRect);
-}
-void sdl::Renderer::render(const Sprite &sprite) const
-{
-	SDL_RenderCopy(rawRenderer, sprite.texture.rawTexture, &sprite.sourceRectangle, nullptr);
-}
-
-void sdl::Renderer::render(const Sprite &sprite, Rectangle targetRect) const
-{
-	SDL_RenderCopy(rawRenderer, sprite.texture.rawTexture, &sprite.sourceRectangle, &targetRect);
 }
 
 void sdl::Renderer::swapBuffers() const

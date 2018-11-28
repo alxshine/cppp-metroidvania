@@ -40,11 +40,12 @@ int main()
 			events.on(SDL_QUIT, [&](const Event &) { running = false; });
 			events.onKeyDown(SDLK_ESCAPE, [&running](const KeyboardEvent &) { running = false; });
 
-			sdl::RenderOptions options{true};
+			sdl::RenderOptions options{true, true, true};
 			events.onKeyDown(SDLK_c, [&options](const KeyboardEvent &) {
 				options.renderCollisionMap = !options.renderCollisionMap;
 			});
 
+			// TODO: base movement on HOLDING key, not pressing - repeat press events are too slow to start for movement I think --> extend EventHandler::whileKeyHeld .
 			// TODO: make movement speed frame-rate independent
 			// TODO: make movement not be based on tiles. this mostly means changing Player::render().
 			events.onKeyDown(SDLK_d, [&player](const KeyboardEvent &) {

@@ -17,6 +17,7 @@ class Player : public sdl::Renderable {
 	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
 	            const sdl::RenderOptions &options = {}) const override;
 
+	static constexpr Rectangle hitbox{static_cast<int>(tileSize.w / 2), 0, tileSize.w, tileSize.h * 2};
 	Movable movable;
 
   private:

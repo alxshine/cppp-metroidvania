@@ -11,14 +11,34 @@ void Player::render(const sdl::Renderer &renderer, const sdl::GameClock::time_po
                     const sdl::RenderOptions &options) const
 {
 	// Calculate position, centering horizontally but not vertically
+	// TODO make position absolute (inside room), only size dependent on tilesize
 	Rectangle destRect{movable.getPosition().x * tileSize.w - tileSize.w,
 	                   movable.getPosition().y * tileSize.h - 2 * tileSize.h, tileSize.w * 2, tileSize.h * 2};
 
-	// TODO render hitbox using debug option
+	sdl::Renderer::Flip flip;
+	switch (movable.getDirection()) {
+	case Direction::Up:
+		// fallthrough
+	case Direction::Down:
+		// fallthrough
+	case Direction::Right:
+		flip = sdl::Renderer::Flip::None;
+		break;
+	case Direction::Left:
+		flip = sdl::Renderer::Flip::X;
+		break;
+	}
+
 	if (movable.getMoved())
-		// TODO handle position and direction
-		renderer.render(walkingAnimation.getAnimationFrame(t), destRect);
+		renderer.render(walkingAnimation.getAnimationFrame(t), destRect, flip);
 	else
-		// TODO handle position and direction
-		renderer.render(idleAnimation.getAnimationFrame(t), destRect);
+		renderer.render(idleAnimation.getAnimationFrame(t), destRect, flip);
+
+	// draw texture box
+	if (options.renderEntityDrawRectangles)
+		renderer.drawRectangle(destRect, {0, 0, 255, 128}, false);
+	// draw hit/collision box
+	if (options.renderHitBoxes)
+		renderer.drawRectangle({destRect.x + hitbox.x, destRect.y + hitbox.y, hitbox.w, hitbox.h}, {255, 0, 0, 128},
+		                       false);
 }
