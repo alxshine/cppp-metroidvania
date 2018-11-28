@@ -16,6 +16,12 @@ void sdl::EventHandler::dispatch() const
 				generalCallbacks.at(type)(e);
 		}
 	}
+
+	const Uint8 *keysCurrentlyHeld = SDL_GetKeyboardState(nullptr);
+	for (auto [scancode, callback] : keyHeldCallbacks) { // NOTE: I LOVE C++17! (structured binding)
+		if (keysCurrentlyHeld[scancode])
+			callback();
+	}
 }
 
 void sdl::EventHandler::on(EventType type, std::function<void(const Event &)> callback)
@@ -26,4 +32,9 @@ void sdl::EventHandler::on(EventType type, std::function<void(const Event &)> ca
 void sdl::EventHandler::onKeyDown(Keycode key, std::function<void(const KeyboardEvent &)> callback)
 {
 	keyDownCallbacks.emplace(key, callback);
+}
+
+void sdl::EventHandler::whileKeyHeld(Scancode key, std::function<void()> callback)
+{
+	keyHeldCallbacks.emplace(key, callback);
 }

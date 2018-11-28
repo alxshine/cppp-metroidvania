@@ -40,20 +40,18 @@ int main()
 			EventHandler events;
 			sdl::RenderOptions options{true, true, true};
 
+			// Key bindings
 			{
 				events.on(SDL_QUIT, [&](const Event &) { running = false; });
 				events.onKeyDown(SDLK_ESCAPE, [&running](const KeyboardEvent &) { running = false; });
-
 				events.onKeyDown(SDLK_c, [&options](const KeyboardEvent &) {
 					options.renderCollisionMap = !options.renderCollisionMap;
 				});
 
-				// TODO: base movement on HOLDING key, not pressing - repeat press events are too slow to start for
-				// movement I think --> extend EventHandler::whileKeyHeld .
-				events.onKeyDown(SDLK_d, [&player, &frame_delta](const KeyboardEvent &) {
+				events.whileKeyHeld(SDL_SCANCODE_D, [&player, &frame_delta]() {
 					player->movable.move({1, 0}, frame_delta);
 				});
-				events.onKeyDown(SDLK_a, [&player, &frame_delta](const KeyboardEvent &) {
+				events.whileKeyHeld(SDL_SCANCODE_A, [&player, &frame_delta]() {
 					player->movable.move({-1, 0}, frame_delta);
 				});
 			}

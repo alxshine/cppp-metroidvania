@@ -125,7 +125,7 @@ inline bool is_fading()
 
 inline void block_until_stopped()
 {
-	while (is_playing())
+	while (is_playing() && !is_paused())
 		SDL_Delay(50);
 }
 
