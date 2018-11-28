@@ -30,8 +30,10 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	                                    {32 * 4, 0, 32, 32},
 	                                    {32 * 5, 0, 32, 32},
 	                                    {32 * 6, 0, 32, 32},
-	                                    {32 * 7, 0, 32, 32}},
-	                                   100ms};
+	                                    {32 * 7, 0, 32, 32},
+	                                    {32 * 8, 0, 32, 32},
+	                                    {32 * 9, 0, 32, 32}},
+	                                   300ms};
 
 	const sdl::Animation walkingAnimation{spritesheet,
 	                                      {{0, 32 * 2, 32, 32},
@@ -41,8 +43,10 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	                                       {32 * 4, 32 * 2, 32, 32},
 	                                       {32 * 5, 32 * 2, 32, 32},
 	                                       {32 * 6, 32 * 2, 32, 32},
-	                                       {32 * 7, 32 * 2, 32, 32}},
-	                                      100ms};
+	                                       {32 * 7, 32 * 2, 32, 32},
+	                                       {32 * 8, 32 * 2, 32, 32},
+	                                       {32 * 9, 32 * 2, 32, 32}},
+	                                      50ms};
 
 	return std::make_unique<Player>(idleAnimation, walkingAnimation);
 }
