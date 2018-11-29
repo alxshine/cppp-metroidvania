@@ -17,11 +17,11 @@ game::Room::Room(const std::string name, const sdl::Texture &background, const s
 
 game::Room::Room(const Room &rhs) noexcept
     : name(rhs.name), background(rhs.background), music(rhs.music), location(rhs.location), layout(rhs.layout),
-      collisionMap(rhs.collisionMap)
+      collisionMap(rhs.collisionMap), mobs(rhs.mobs)
 {
 }
 
-void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &,
+void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
                         const sdl::RenderOptions &options) const
 {
 	renderer.render(background,
@@ -63,7 +63,8 @@ void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::tim
 		}
 	}
 
-	// TODO render entities
+	for (auto i : mobs)
+		renderer.render(i, t, options);
 }
 
 game::Room::~Room() {}

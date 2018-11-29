@@ -55,4 +55,5 @@ Layout:
 EndLayout
 
 Entities:
+    Mob: 100 170 Mage
 EndEntities
