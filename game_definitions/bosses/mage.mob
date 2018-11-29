@@ -1,5 +1,6 @@
 Name: Mage
 Health: 100
+Speed: 50
 Behaviour: Floating
 BoundingBox: 10 10 10 10
 

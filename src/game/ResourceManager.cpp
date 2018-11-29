@@ -68,7 +68,7 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 
 	// TODO handle health, behaviou, boundingbox, attacks
 
-	return std::make_unique<Mob>(mobdef.name, walkingAnimation, std::move(idleAnimation));
+	return std::make_unique<Mob>(mobdef.name, mobdef.speedPerSecond, walkingAnimation, std::move(idleAnimation));
 }
 
 std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &itemdef) const
@@ -114,7 +114,6 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 		layout.emplace_back(newLayer);
 	}
 
-	// TODO the complexitiy of this F*** algorithm is horrifying!
 	// Room::CollisionMap collisionMap;
 	// for (auto row = 0ul; row < layout[0].size(); row++) {
 	// std::vector<Collision> colRow;
@@ -128,8 +127,20 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 	// collisionMap.emplace_back(colRow);
 	//}
 
+	// Add mobs
+	std::vector<game::Mob> mobs;
+	for (auto m : roomDef.mobs) {
+		game::Mob mob = getMob(m.id);
+		mob.movable.reposition(m.position);
+		mobs.emplace_back(mob);
+	}
+
+	// Add items
+
+	// Add doors
+
 	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
-	                                    roomDef.location, std::move(layout), std::move(collisionMap));
+	                                    roomDef.location, std::move(layout), std::move(collisionMap), std::move(mobs));
 }
 
 void ResourceManager::parseDefinition(fs::path f)

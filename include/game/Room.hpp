@@ -1,9 +1,10 @@
 #ifndef ROOM_H
 #define ROOM_H
 
-#include <vector>
 #include <algorithm>
+#include <vector>
 
+#include "Mob.hpp"
 #include "SDL.hpp"
 #include "constants.hpp"
 
@@ -21,12 +22,13 @@ struct Room : public sdl::Renderable {
 	using CollisionMap = std::vector<std::vector<Collision>>;
 
 	Room(const std::string name, const sdl::Texture &background, const sdl::Music &music, const Position &location,
-	     const Layout layout, const CollisionMap collisionMap);
+	     const Layout layout, const CollisionMap collisionMap, const std::vector<Mob> mobs);
 	Room(const Room &rhs) noexcept;
 	Room &operator=(const Room &rhs) = delete;
 	virtual ~Room();
 
-	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &, const sdl::RenderOptions &options = {}) const override;
+	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &,
+	            const sdl::RenderOptions &options = {}) const override;
 
 	const std::string name;
 	const sdl::Texture &background;
@@ -34,6 +36,7 @@ struct Room : public sdl::Renderable {
 	const Position location;
 	const Layout layout;
 	const CollisionMap collisionMap;
+	const std::vector<Mob> mobs;
 };
 
 } // namespace game

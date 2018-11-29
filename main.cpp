@@ -46,6 +46,8 @@ int main()
 				events.onKeyDown(SDLK_ESCAPE, [&running](const KeyboardEvent &) { running = false; });
 				events.onKeyDown(SDLK_c, [&options](const KeyboardEvent &) {
 					options.renderCollisionMap = !options.renderCollisionMap;
+					options.renderEntityDrawRectangles = !options.renderEntityDrawRectangles;
+					options.renderHitBoxes = !options.renderHitBoxes;
 				});
 
 				events.whileKeyHeld(SDL_SCANCODE_D, [&player, &frame_delta]() {

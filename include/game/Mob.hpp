@@ -1,6 +1,7 @@
 #ifndef MOB_H
 #define MOB_H
 
+#include "Movable.hpp"
 #include "SDL.hpp"
 #include "gamedef/entity_definitions.hpp"
 
@@ -10,7 +11,7 @@ using OptionalAnimation = std::unique_ptr<sdl::Animation>;
 
 class Mob : public sdl::Renderable {
   public:
-	Mob(const std::string name, const sdl::Animation walkingAnimation,
+	Mob(const std::string name, int speedPerSecond, const sdl::Animation walkingAnimation,
 	    OptionalAnimation idleAnimation); // TODO finish ctor
 	Mob(const Mob &rhs);                  // TODO set default state in copy ctor
 
@@ -21,6 +22,7 @@ class Mob : public sdl::Renderable {
 	            const sdl::RenderOptions &options = {}) const override;
 
 	const std::string name;
+	Movable movable;
 	const sdl::Animation walkingAnimation;
 	const OptionalAnimation idleAnimation;
 };
