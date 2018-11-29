@@ -15,7 +15,6 @@ TODO add viewport support to the renderer, which will greatly simplify HUD and m
 
 # Refactoring
 TODO switch the specification of mobs, instead of specifying a protocol for mobs as a whole, specify components, and then add/skip them when needed (e.g. moving, attacking, damage-aura, ...)
-TODO @bennett move Position including operators to $SDL/Rectangle.hpp and base it on SDL_Point. rename header to something else, reflecting the advanced functionality that we will have there.
 
 # Game object
 TODO Save event handler, etc. as fields in game class

@@ -7,7 +7,7 @@
 
 #include "Color.hpp"
 #include "GameClock.hpp"
-#include "Rectangle.hpp"
+#include "geometry.hpp"
 #include "SdlException.hpp"
 #include "primitives.hpp"
 

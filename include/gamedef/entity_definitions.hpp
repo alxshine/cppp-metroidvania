@@ -18,6 +18,7 @@ using Health = int;
 using Damage = int;
 
 using Rectangle = sdl::Rectangle;
+using Position = sdl::Point;
 
 struct SoundEffect {
 	std::string file;
@@ -62,40 +63,6 @@ struct Mob {
 
 	std::vector<Attack> attacks;
 };
-
-// TODO: make position an alias to SDL_POINT?
-// We would need to decide if we want typesafe differenciation between a Tile Coordinate and a Pixel Position.
-struct Position {
-	int x;
-	int y;
-};
-
-inline Position operator*(const Position a, int b)
-{
-	return {a.x * b, a.y * b};
-}
-
-inline Position operator+(const Position a, const Position b)
-{
-	return {a.x + b.x, a.y + b.y};
-}
-
-inline Position &operator+=(Position &a, const Position b)
-{
-	a.x += b.x;
-	a.y += b.y;
-	return a;
-}
-
-inline bool operator==(const Position a, const Position b)
-{
-	return a.x == b.x && a.y == b.y;
-}
-
-inline bool operator!=(const Position a, const Position b)
-{
-	return !(a == b);
-}
 
 enum class Direction { Up, Down, Left, Right };
 
