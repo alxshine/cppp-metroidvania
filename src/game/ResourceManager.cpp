@@ -14,11 +14,6 @@ bool game::contained(std::vector<T> vec, T x)
 	return std::find(vec.begin(), vec.end(), x) != vec.end();
 }
 
-std::vector<std::string> ResourceManager::imageFormats{".png"};
-// TODO technically, sounds could also be mp3 etc...
-std::vector<std::string> ResourceManager::soundFormats{".wav"};
-std::vector<std::string> ResourceManager::musicFormats{".mp3", ".ogg", ".flac"};
-
 std::unique_ptr<Player> ResourceManager::makePlayer() const
 {
 	const sdl::Texture &spritesheet = getTexture("BlueCleric.png");

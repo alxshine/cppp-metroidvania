@@ -36,9 +36,9 @@ class ResourceManager final {
 	const sdl::Music &getMusic(const std::string &name) const;
 
   private:
-	static std::vector<std::string> imageFormats;
-	static std::vector<std::string> soundFormats;
-	static std::vector<std::string> musicFormats;
+	inline static const std::vector<std::string> imageFormats{".png"};
+	inline static const std::vector<std::string> soundFormats{".wav"};
+	inline static const std::vector<std::string> musicFormats{".mp3", ".ogg", ".flac"};
 
 	/**
 	 * @brief Get a texture, or try to load it, or return the default if it doesn't exist.
