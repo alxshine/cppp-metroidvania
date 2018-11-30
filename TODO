@@ -16,13 +16,10 @@ TODO add viewport support to the renderer, which will greatly simplify HUD and m
 TODO switch the specification of mobs, instead of specifying a protocol for mobs as a whole, specify components, and then add/skip them when needed (e.g. moving, attacking, damage-aura, ...)
 TODO decide what to do with the flipped y axis - do we want to flip the axis in the game logic and invert when rendering...? either way will be confusing because the rooms are of varying height.
 
-# Game object
-TODO Save event handler, etc. as fields in game class
-TODO extract keyboard shortcut setting etc. into methods called by game class constructor
-TODO add method to start the main loop
-TODO hold and render currently open room and the player
-TODO keep a stack of menus. Iff empty, render current room
-
-# Physics (depends on Game object)
+# Physics
 TODO collision detection
 TODO gravity
+
+# Game object
+TODO keep a stack of menus. Iff empty, render current room
+

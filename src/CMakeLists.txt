@@ -1,6 +1,7 @@
 add_library(gamelib
     gamedef/definition_loading.cpp
     # game/Mixins.cpp
+    game/Game.cpp
     game/Item.cpp
     game/Mob.cpp
     game/Movable.cpp
