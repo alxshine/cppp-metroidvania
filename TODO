@@ -1,21 +1,22 @@
 # Small fixes
 TODO @alex: add descriptive message to SDL::loadTexture exceptions, similarly to SDL::loadFont
-TODO make animations optionally not repeatable (default param) - very important for attacks, deaths, etc!
 TODO make animations keep state and work using delta time so they always start from the start - very important for attacks, deaths, etc!
+TODO make animations optionally not repeatable (default param) - very important for attacks, deaths, etc!
 
 # Optional features for later
 TODO offset background rendering by the height of the highest row that is completely solid in the collision map (consecutive from the bottom, again calculate at makeRoom time)
 
 # Big features
 --- Mob rendering
-TODO store the dimensions of the render target in mob definition and use it when rendering the mob to enable multiple sizes of mobs
-TODO transform mob position when adding to room to allow using tile coordinates instead of pixels in room definition
+TODO transform mob position when adding to room (in makeRoom) to allow using tile coordinates instead of pixels in room definition
 ---
 TODO add viewport support to the renderer, which will greatly simplify HUD and menus
+TODO implement player teleport ability
 
 
 # Refactoring
 TODO switch the specification of mobs, instead of specifying a protocol for mobs as a whole, specify components, and then add/skip them when needed (e.g. moving, attacking, damage-aura, ...)
+TODO decide what to do with the flipped y axis - do we want to flip the axis in the game logic and invert when rendering...? either way will be confusing because the rooms are of varying height.
 
 # Game object
 TODO Save event handler, etc. as fields in game class

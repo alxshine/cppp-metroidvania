@@ -2,7 +2,8 @@ Name: Mage
 Health: 100
 Speed: 50
 Behaviour: Floating
-BoundingBox: 10 10 10 10
+Hitbox: 3 0 15 20
+DrawSize: 0 0 20 20
 
 WalkingAnimation:
     Spritesheet: mage.png

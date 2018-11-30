@@ -9,6 +9,7 @@ using Collision = game_definitions::Collision;
 using Direction = game_definitions::Direction;
 using Position = game_definitions::Position;
 using Rectangle = game_definitions::Rectangle;
+using Health = game_definitions::Health;
 
 constexpr Rectangle tileSize{0, 0, 10, 10};
 } // namespace game

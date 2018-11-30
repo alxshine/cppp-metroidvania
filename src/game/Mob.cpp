@@ -1,27 +1,38 @@
 #include "game/Mob.hpp"
-// TODO: if we get problems with the vector automatically calling this and resetting values, maybe add a copy ctor with
-// position since we will need to position mobs on spawning anyway
 game::Mob::Mob(const Mob &rhs)
-    : name(rhs.name), movable(rhs.movable), walkingAnimation(rhs.walkingAnimation),
+    : name(rhs.name), maxHealth(rhs.maxHealth), movable(rhs.movable), health(rhs.health), hitbox(rhs.hitbox),
+      renderSize(rhs.renderSize), walkingAnimation(rhs.walkingAnimation),
       idleAnimation(std::make_unique<sdl::Animation>(*rhs.idleAnimation))
 {
 }
 
-game::Mob::Mob(const std::string name, int speedPerSecond, const sdl::Animation walkingAnimation,
-               OptionalAnimation idleAnimation)
-    : name(name), movable(speedPerSecond), walkingAnimation(walkingAnimation), idleAnimation(std::move(idleAnimation))
+game::Mob::Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
+               const sdl::Animation walkingAnimation, OptionalAnimation idleAnimation)
+    : name(name), maxHealth(health), movable(speedPerSecond), health(health), hitbox(hitbox), renderSize(renderSize),
+      walkingAnimation(walkingAnimation), idleAnimation(std::move(idleAnimation))
 {
 }
 
 game::Mob::~Mob() {}
 
+game::Rectangle game::Mob::calcRenderTarget() const
+{
+	// Calculate position, centering horizontally and bottom-aligning vertically
+	return {movable.getPosition().x - static_cast<int>(0.5 * renderSize.w), movable.getPosition().y - renderSize.h,
+	        renderSize.w, renderSize.h};
+}
+
+game::Rectangle game::Mob::calcPositionedHitbox() const
+{
+	Rectangle destRect = calcRenderTarget(); // Inefficient, for Mob::render(), but maybe good enough
+	return {destRect.x + hitbox.x, destRect.y + hitbox.y, hitbox.w, hitbox.h};
+}
+
 void game::Mob::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
                        const sdl::RenderOptions &options) const
 {
-	// Calculate position, centering horizontally and bottom-aligning vertically
-	// TODO: specify number of tiles to use in definition instead of fixed 2x2
-	Rectangle destRect{movable.getPosition().x - tileSize.w, movable.getPosition().y - 2 * tileSize.h, tileSize.w * 2,
-	                   tileSize.h * 2};
+	Rectangle destRect = calcRenderTarget();
+	Rectangle hitbox = calcPositionedHitbox();
 
 	sdl::Renderer::Flip flip;
 	switch (movable.getDirection()) {
@@ -42,9 +53,17 @@ void game::Mob::render(const sdl::Renderer &renderer, const sdl::GameClock::time
 	else
 		renderer.render(idleAnimation->getAnimationFrame(t), destRect, flip);
 
-	// draw texture box
+	// draw health bar
+	// TODO if wanted: if (health < maxHealth)
+	// box (uncomment if wanted)
+	// renderer.drawRectangle({hitbox.x, hitbox.y - 6, hitbox.w, 4}, {255, 0, 0, 255}, false);
+	// filling
+	renderer.drawRectangle({hitbox.x, hitbox.y - 5, static_cast<int>(hitbox.w * ((float)health / maxHealth)), 2},
+	                       {255, 0, 0, 255}, true);
+
+	// draw debug info
 	if (options.renderEntityDrawRectangles)
 		renderer.drawRectangle(destRect, {0, 0, 255, 128}, false);
-
-	// TODO draw hit/collision box once we store it in mob
-}
+	if (options.renderHitBoxes)
+		renderer.drawRectangle(hitbox, {255, 0, 0, 128}, false);
+};

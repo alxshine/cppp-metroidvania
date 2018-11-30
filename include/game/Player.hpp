@@ -20,7 +20,10 @@ class Player : public sdl::Renderable {
 	static constexpr Rectangle hitbox{static_cast<int>(tileSize.w / 2), 0, tileSize.w, tileSize.h * 2};
 	Movable movable;
 
+	Rectangle calcPositionedHitbox() const;
+
   private:
+	Rectangle calcRenderTarget() const;
 	const sdl::Animation idleAnimation;
 	const sdl::Animation walkingAnimation;
 };

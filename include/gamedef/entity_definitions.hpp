@@ -56,7 +56,8 @@ struct Mob {
 	std::string name;
 	std::string behaviour;
 	Health health;
-	Rectangle boundingBox;
+	Rectangle hitbox;
+	Rectangle drawSize;
 	int speedPerSecond;
 
 	Animation walkingAnimation;

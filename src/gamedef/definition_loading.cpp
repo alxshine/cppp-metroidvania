@@ -198,8 +198,12 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 	in >> mob.behaviour;
 
 	in >> keyword;
-	testString("BoundingBox:", keyword);
-	in >> mob.boundingBox;
+	testString("Hitbox:", keyword);
+	in >> mob.hitbox;
+
+	in >> keyword;
+	testString("DrawSize:", keyword);
+	in >> mob.drawSize;
 
 	in >> keyword;
 	testString("WalkingAnimation:", keyword);

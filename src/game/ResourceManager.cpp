@@ -66,9 +66,9 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 		return std::make_unique<sdl::Animation>(tex, mobdef.idleAnimation.frames, mobdef.idleAnimation.timePerFrame);
 	}();
 
-	// TODO handle health, behaviou, boundingbox, attacks
+	// TODO handle behaviour, attacks
 
-	return std::make_unique<Mob>(mobdef.name, mobdef.speedPerSecond, walkingAnimation, std::move(idleAnimation));
+	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize, walkingAnimation, std::move(idleAnimation));
 }
 
 std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &itemdef) const

@@ -7,12 +7,24 @@ Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingA
 {
 }
 
+Rectangle Player::calcPositionedHitbox() const
+{
+	Rectangle destRect = calcRenderTarget();
+	return {destRect.x + hitbox.x, destRect.y + hitbox.y, hitbox.w, hitbox.h};
+}
+
+Rectangle Player::calcRenderTarget() const
+{
+
+	// Calculate position, centering horizontally and bottom-aligning vertically
+	return {movable.getPosition().x - tileSize.w, movable.getPosition().y - 2 * tileSize.h, tileSize.w * 2,
+	        tileSize.h * 2};
+}
+
 void Player::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
                     const sdl::RenderOptions &options) const
 {
-	// Calculate position, centering horizontally and bottom-aligning vertically
-	Rectangle destRect{movable.getPosition().x - tileSize.w, movable.getPosition().y - 2 * tileSize.h, tileSize.w * 2,
-	                   tileSize.h * 2};
+	Rectangle destRect = calcRenderTarget();
 
 	sdl::Renderer::Flip flip;
 	switch (movable.getDirection()) {
@@ -38,6 +50,6 @@ void Player::render(const sdl::Renderer &renderer, const sdl::GameClock::time_po
 		renderer.drawRectangle(destRect, {0, 0, 255, 128}, false);
 	// draw hit/collision box
 	if (options.renderHitBoxes)
-		renderer.drawRectangle({destRect.x + hitbox.x, destRect.y + hitbox.y, hitbox.w, hitbox.h}, {255, 0, 0, 128},
+		renderer.drawRectangle(calcPositionedHitbox(), {255, 0, 0, 128},
 		                       false);
 }
