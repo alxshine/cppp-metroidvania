@@ -50,6 +50,18 @@ int main()
 					options.renderHitBoxes = !options.renderHitBoxes;
 				});
 
+				events.onKeyDown(SDLK_j, [&player](const KeyboardEvent &) {
+					const Uint8 *keyHeld = SDL_GetKeyboardState(nullptr);
+					Position pos = player->movable.getPosition();
+					if (keyHeld[SDL_SCANCODE_W])
+						player->movable.reposition({pos.x, pos.y - 80});
+					if (keyHeld[SDL_SCANCODE_S])
+						player->movable.reposition({pos.x, pos.y + 80});
+					if (keyHeld[SDL_SCANCODE_A])
+						player->movable.reposition({pos.x - 80, pos.y});
+					if (keyHeld[SDL_SCANCODE_D])
+						player->movable.reposition({pos.x + 80, pos.y});
+				});
 				events.whileKeyHeld(SDL_SCANCODE_D, [&player, &frame_delta]() {
 					player->movable.move({1, 0}, frame_delta);
 				});
