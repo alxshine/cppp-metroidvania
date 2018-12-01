@@ -29,6 +29,8 @@ TODO collision detection
 TODO gravity
 TODO add support for movement with a certain speed, whith or without slowing over time. This is needed for jumping, gravity and projectiles.
      (player horizontal: instant reaction; projectiles: never slow; player vertical or diagonal: slowly decrease speed to get a parabola)
+     alex: I would use only speed based movement from now on. All we would have to change for that is instead of moving the character on a pressed (or held) key,
+     we set the speed of the character
 
 # Game object
 TODO keep a stack of menus. Iff empty, render current room
