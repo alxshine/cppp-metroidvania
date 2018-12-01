@@ -10,6 +10,13 @@ TODO offset background rendering by the height of the highest row that is comple
 --- Mob rendering
 TODO transform mob position when adding to room (in makeRoom) to allow using tile coordinates instead of pixels in room definition
 ---
+--- Doors
+TODO create door objects and store them in rooms
+TODO properly render doors
+TODO add interaction method to game::Game and/or game::Room which (takes a player and?) calculates the player's tile and allows it to interact with the frontmost item or door on that tile.
+TODO use interaction system and door objects to properly load the next room AND position the player at the appropriate door in the new room.
+---
+TODO add scrolling support to the renderer -- update scrolling once every frame using player position
 TODO add viewport support to the renderer, which will greatly simplify HUD and menus
 
 # Refactoring
