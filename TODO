@@ -31,6 +31,8 @@ TODO add support for movement with a certain speed, whith or without slowing ove
      (player horizontal: instant reaction; projectiles: never slow; player vertical or diagonal: slowly decrease speed to get a parabola)
      alex: I would use only speed based movement from now on. All we would have to change for that is instead of moving the character on a pressed (or held) key,
      we set the speed of the character
+     bennett: but when do we set the speed back to zero? it would be nice to 1) instantly stop walking when we let go of A or D and 2) be able to jump in a horizontal parabola in addition to straight up.
+     alex: we can do that in the onKeyUp method that we had once. I'll add it tomorrow, just trust me on this for now ;)
 
 # Game object
 TODO keep a stack of menus. Iff empty, render current room
