@@ -18,8 +18,6 @@ TODO use interaction system and door objects to properly load the next room AND 
 ---
 TODO add scrolling support to the renderer -- update scrolling once every frame using player position
 TODO add viewport support to the renderer, which will greatly simplify HUD and menus
-TODO add support for movement with a certain speed, whith or without slowing over time. This is needed for jumping, gravity and projectiles.
-     (player horizontal: instant reaction; projectiles: never slow; player vertical or diagonal: slowly decrease speed to get a parabola)
 
 # Refactoring
 TODO switch the specification of mobs, instead of specifying a protocol for mobs as a whole, specify components, and then add/skip them when needed (e.g. moving, attacking, damage-aura, ...)
@@ -29,6 +27,8 @@ TODO decide what to do with the flipped y axis - do we want to flip the axis in 
 @alex
 TODO collision detection
 TODO gravity
+TODO add support for movement with a certain speed, whith or without slowing over time. This is needed for jumping, gravity and projectiles.
+     (player horizontal: instant reaction; projectiles: never slow; player vertical or diagonal: slowly decrease speed to get a parabola)
 
 # Game object
 TODO keep a stack of menus. Iff empty, render current room
