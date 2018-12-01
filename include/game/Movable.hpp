@@ -11,8 +11,11 @@ class Movable {
 	Position lastPosition; // Probably needed for collision detection...
 	Direction direction = Direction::Right;
 	bool moved = false;
+	bool canMove = true;
 
 	int speedPerSecond;
+
+	friend class Game;
 
   public:
 	Movable(int speedPerSecond, Position pos = {0, 0});
@@ -21,7 +24,6 @@ class Movable {
 	void move(Position delta, std::chrono::milliseconds frameDelta);
 	void reposition(Position newPosition);
 
-	bool movable;
 	bool getMoved() const;
 	Direction getDirection() const;
 	Position getPosition() const;

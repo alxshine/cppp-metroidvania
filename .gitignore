@@ -2,3 +2,4 @@
 Session.vim
 .idea
 cmake-build-debug
+.gdb_history

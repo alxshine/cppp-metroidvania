@@ -12,7 +12,7 @@ using Line = std::tuple<Point, Point>;
 
 inline bool intersects(const Rectangle a, const Rectangle b)
 {
-	return SDL_HasIntersection(&a, &b) == SDL_TRUE ? true : false;
+	return SDL_HasIntersection(&a, &b);
 }
 
 inline bool intersects(const Line a, const Rectangle b) {
@@ -30,14 +30,32 @@ inline Rectangle calc_intersection(const Rectangle a, const Rectangle b)
 	return result;
 }
 
+inline bool intersects_top(const Rectangle r, const Rectangle other){
+	return calc_intersection(r, other).y <= r.y;
+}
+
+inline bool intersects_bottom(const Rectangle r, const Rectangle other){
+	auto intersection = calc_intersection(r, other);
+	return intersection.y + intersection.h >= r.y + r.h;
+}
+
+inline bool intersects_left(const Rectangle r, const Rectangle other){
+	return calc_intersection(r, other).x <= r.x;
+}
+
+inline bool intersects_right(const Rectangle r, const Rectangle other){
+	auto intersection = calc_intersection(r, other);
+	return intersection.x + intersection.w >= r.x + r.w;
+}
+
 inline bool contains(const Rectangle a, const Point b)
 {
-	return SDL_PointInRect(&b, &a) == SDL_TRUE ? true : false;
+	return SDL_PointInRect(&b, &a);
 }
 
 inline bool is_empty(const Rectangle a)
 {
-	return SDL_RectEmpty(&a) == SDL_TRUE ? true : false;
+	return SDL_RectEmpty(&a);
 }
 
 } // namespace sdl
@@ -46,7 +64,7 @@ inline bool is_empty(const Rectangle a)
 
 inline bool operator==(const sdl::Rectangle a, const sdl::Rectangle b)
 {
-	return SDL_RectEquals(&a, &b) == SDL_TRUE ? true : false;
+	return SDL_RectEquals(&a, &b);
 }
 
 inline bool operator!=(const sdl::Rectangle a, const sdl::Rectangle b)

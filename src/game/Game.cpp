@@ -12,6 +12,11 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 	registerGameEvents();
 }
 
+Rectangle tileRectangle(int row, int column)
+{
+	return {column * tileSize.w, row * tileSize.h, tileSize.w, tileSize.h};
+}
+
 void Game::runMainLoop()
 {
 	while (running) {
@@ -33,12 +38,50 @@ void Game::runMainLoop()
 		renderer.render(*player, now, renderOpts);
 
 		// Collision
-		//first resolve collisions with the room
-		auto playerHitBox = player->calcPositionedHitbox();
-		//check if hitbox intersects something for all sides
-		//if it also intersects something on the opposite side, do nothing -> movable = false
-		//if it doesn't, move it until it doesn't intersect anymore
-		//if it starts to intersect something on the other side during movement, stop moving -> movable = false
+		// first resolve collisions with the room
+		if (player->movable.getMoved()) {
+			// check if hitbox intersects something for all sides
+			// if it also intersects something on the opposite side, do nothing -> movable = false
+			// if it doesn't, move it until it doesn't intersect anymore
+			// if it starts to intersect something on the other side during movement, stop moving -> movable = false
+			auto playerHitBox = player->calcPositionedHitbox();
+			// handle left
+			auto collidesLeft = [&]() {
+				auto j = playerHitBox.x / tileSize.w;
+				auto lowestColumnIndex = std::max(playerHitBox.y / tileSize.h, 0);
+				auto highestColumnIndex = std::min((playerHitBox.y + playerHitBox.h) / tileSize.h, (int)currentRoom.collisionMap.size()-1);
+				for (int i = lowestColumnIndex; i < highestColumnIndex; ++i) {
+					if (currentRoom.collisionMap[i][j] == Collision::Full &&
+					    sdl::intersects_left(playerHitBox, tileRectangle(i, j)))
+						return true;
+				}
+				return false;
+			};
+
+			auto collidesRight = [&]() {
+				auto j = (playerHitBox.x + playerHitBox.w) / tileSize.w;
+				auto lowestColumnIndex = std::max(playerHitBox.y / tileSize.h, 0);
+				auto highestColumnIndex = std::min((playerHitBox.y + playerHitBox.h) / tileSize.h, (int)currentRoom.collisionMap.size()-1);
+				for (int i = lowestColumnIndex; i < highestColumnIndex; ++i) {
+					if (currentRoom.collisionMap[i][j] == Collision::Full &&
+					    sdl::intersects_right(playerHitBox, tileRectangle(i, j)))
+						return true;
+				}
+				return false;
+			};
+
+			while (collidesLeft()) {
+				auto newPosition = player->movable.getPosition() + Point{1, 0};
+				player->movable.reposition(newPosition);
+				playerHitBox = player->calcPositionedHitbox();
+			}
+
+			while(collidesRight()){
+				auto newPosition = player->movable.getPosition() + Point{-1,0};
+				player->movable.reposition(newPosition);
+				playerHitBox = player->calcPositionedHitbox();
+			}
+		}
 
 		last_game_frame_time = now;
 		renderer.swapBuffers();
