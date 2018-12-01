@@ -26,6 +26,7 @@ TODO switch the specification of mobs, instead of specifying a protocol for mobs
 TODO decide what to do with the flipped y axis - do we want to flip the axis in the game logic and invert when rendering...? either way will be confusing because the rooms are of varying height.
 
 # Physics
+@alex
 TODO collision detection
 TODO gravity
 

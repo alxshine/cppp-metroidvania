@@ -32,6 +32,14 @@ void Game::runMainLoop()
 		player->movable.update();
 		renderer.render(*player, now, renderOpts);
 
+		// Collision
+		//first resolve collisions with the room
+		auto playerHitBox = player->calcPositionedHitbox();
+		//check if hitbox intersects something for all sides
+		//if it also intersects something on the opposite side, do nothing -> movable = false
+		//if it doesn't, move it until it doesn't intersect anymore
+		//if it starts to intersect something on the other side during movement, stop moving -> movable = false
+
 		last_game_frame_time = now;
 		renderer.swapBuffers();
 	}

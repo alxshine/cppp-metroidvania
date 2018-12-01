@@ -21,6 +21,7 @@ class Movable {
 	void move(Position delta, std::chrono::milliseconds frameDelta);
 	void reposition(Position newPosition);
 
+	bool movable;
 	bool getMoved() const;
 	Direction getDirection() const;
 	Position getPosition() const;

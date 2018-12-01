@@ -6,6 +6,8 @@ Movable::Movable(int speedPerSecond, Position pos) : position(pos), lastPosition
 
 void Movable::move(Position delta, std::chrono::milliseconds frameDelta)
 {
+	if(!movable)
+		return;
 	lastPosition = position;
 	position += delta * static_cast<int>(speedPerSecond * frameDelta.count() / 1000);
 
