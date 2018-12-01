@@ -8,6 +8,7 @@ add_library(gamelib
     game/Player.cpp
     game/ResourceManager.cpp
     game/Room.cpp
+    game/movement.cpp
 )
 target_include_directories(gamelib PUBLIC ../include)
 target_link_libraries(gamelib stdc++fs)
