@@ -85,6 +85,7 @@ void Game::runMainLoop()
 		renderer.render(currentRoom, now, renderOpts);
 
 		// Player
+		player->movable.move(game_frame_delta);
 		player->movable.update();
 		renderer.render(*player, now, renderOpts);
 
@@ -154,6 +155,6 @@ void Game::registerGameEvents()
 		if (keyHeld[SDL_SCANCODE_D])
 			player->movable.reposition({pos.x + 80, pos.y});
 	});
-	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() { player->movable.move({1, 0}, game_frame_delta); });
-	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() { player->movable.move({-1, 0}, game_frame_delta); });
+	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() {player->movable.v.x = player->movable.maxSpeed;});
+	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() {player->movable.v.x = -player->movable.maxSpeed;});
 }

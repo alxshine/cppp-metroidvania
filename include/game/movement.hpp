@@ -1,8 +1,12 @@
 #ifndef MOVEMENT_H
 #define MOVEMENT_H
 
+#include <chrono>
+
 #include <iostream>
 #include <tuple>
+
+#include "constants.hpp"
 
 namespace game {
 struct Speed {
@@ -13,8 +17,8 @@ struct Speed {
 	{
 		return s;
 	}
-	Speed& operator +=(const Speed &rhs);
-	friend Speed operator +(Speed lhs, const Speed &rhs);
+	Speed &operator+=(const Speed &rhs);
+	friend Speed operator+(Speed lhs, const Speed &rhs);
 
   private:
 	int s;
@@ -25,8 +29,9 @@ Speed operator"" _ups(unsigned long long n);
 struct Velocity {
 	Speed x, y;
 
-	Velocity& operator+=(const Velocity& rhs);
-	friend Velocity operator+(Velocity lhs, const Velocity& rhs);
+	Velocity &operator+=(const Velocity &rhs);
+	inline friend Velocity operator+(Velocity lhs, const Velocity &rhs);
+	inline friend Position operator*(const Velocity &lhs, std::chrono::milliseconds rhs);
 };
 } // namespace game
 #endif /* ifndef MOVEMENT_H */
