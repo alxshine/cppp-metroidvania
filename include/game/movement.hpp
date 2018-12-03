@@ -30,8 +30,9 @@ struct Velocity {
 	Speed x, y;
 
 	Velocity &operator+=(const Velocity &rhs);
-	inline friend Velocity operator+(Velocity lhs, const Velocity &rhs);
-	inline friend Position operator*(const Velocity &lhs, std::chrono::milliseconds rhs);
+	friend Velocity operator+(Velocity lhs, const Velocity &rhs);
+	friend Position operator*(const Velocity &lhs, std::chrono::milliseconds rhs);
 };
+
 } // namespace game
 #endif /* ifndef MOVEMENT_H */
