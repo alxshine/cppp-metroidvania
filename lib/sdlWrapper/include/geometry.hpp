@@ -35,6 +35,11 @@ inline bool intersects_top(const Rectangle r, const Rectangle other){
 	return intersection.h > 0 && intersection.y <= r.y;
 }
 
+inline bool touches_bottom(const Rectangle r, const Rectangle other){
+	auto intersection = calc_intersection(r, other);
+	return intersection.h == 0 && intersection.y + intersection.h >= r.y + r.h;
+}
+
 inline bool intersects_bottom(const Rectangle r, const Rectangle other){
 	auto intersection = calc_intersection(r, other);
 	return intersection.h > 0 && intersection.y + intersection.h >= r.y + r.h;

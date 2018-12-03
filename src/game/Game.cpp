@@ -43,8 +43,20 @@ bool collidesRight(Rectangle playerHitBox, Room currentRoom)
 	return false;
 }
 
-bool collidesBottom(Rectangle playerHitBox, Room currentRoom)
+bool collidesTop(Rectangle playerHitBox, Room currentRoom)
 {
+	auto i = playerHitBox.y / tileSize.h;
+	auto lowestColumnIndex = playerHitBox.x / tileSize.w;
+	auto highestColumnIndex = (playerHitBox.x + playerHitBox.w) / tileSize.w;
+	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
+		if (currentRoom.collisionMap[i][j] == Collision::Full && sdl::intersects_top(playerHitBox, tileRectangle(i, j)))
+			return true;
+	}
+	return false;
+}
+
+
+bool collidesBottom(Rectangle playerHitBox, Room currentRoom){
 	auto i = (playerHitBox.y + playerHitBox.h) / tileSize.h;
 	auto lowestColumnIndex = playerHitBox.x / tileSize.w;
 	auto highestColumnIndex = (playerHitBox.x + playerHitBox.w) / tileSize.w;
@@ -56,13 +68,13 @@ bool collidesBottom(Rectangle playerHitBox, Room currentRoom)
 	return false;
 }
 
-bool collidesTop(Rectangle playerHitBox, Room currentRoom)
-{
-	auto i = playerHitBox.y / tileSize.h;
+inline bool isStanding(Rectangle playerHitBox, Room currentRoom){
+	auto i = (playerHitBox.y + playerHitBox.h) / tileSize.h;
 	auto lowestColumnIndex = playerHitBox.x / tileSize.w;
 	auto highestColumnIndex = (playerHitBox.x + playerHitBox.w) / tileSize.w;
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
-		if (currentRoom.collisionMap[i][j] == Collision::Full && sdl::intersects_top(playerHitBox, tileRectangle(i, j)))
+		if (currentRoom.collisionMap[i][j] > Collision::None &&
+		    touches_bottom(playerHitBox, tileRectangle(i, j)))
 			return true;
 	}
 	return false;
@@ -77,6 +89,8 @@ void Game::runMainLoop()
 		game_frame_delta = now - last_game_frame_time;
 
 		player->movable.v.x = 0;
+		if (!player->movable.grounded)
+			player->movable.v.y += 10;
 		gameEvents.dispatch();
 
 		// HUD
@@ -93,6 +107,9 @@ void Game::runMainLoop()
 		// Collision
 		// first resolve collisions with the room
 		auto playerHitBox = player->calcPositionedHitbox();
+
+		if(!isStanding(playerHitBox, currentRoom))
+			player->movable.grounded = false;
 
 		if ((collidesLeft(playerHitBox, currentRoom) && collidesRight(playerHitBox, currentRoom)) ||
 		    (collidesTop(playerHitBox, currentRoom) && collidesBottom(playerHitBox, currentRoom)))
@@ -113,6 +130,8 @@ void Game::runMainLoop()
 			}
 
 			while (collidesBottom(playerHitBox, currentRoom)) {
+				player->movable.grounded = true;
+				player->movable.v.y = 0;
 				auto newPosition = player->movable.getPosition() + Point{0, -1};
 				player->movable.reposition(newPosition);
 				playerHitBox = player->calcPositionedHitbox();
@@ -144,6 +163,13 @@ void Game::registerGameEvents()
 		renderOpts.renderHitBoxes = !renderOpts.renderHitBoxes;
 	});
 
+	gameEvents.onKeyDown(SDLK_SPACE, [this](const KeyboardEvent &) {
+		if (player->movable.grounded) {
+			player->movable.v.y = -player->movable.maxSpeed;
+			player->movable.grounded = false;
+		}
+	});
+
 	gameEvents.onKeyDown(SDLK_j, [this](const KeyboardEvent &) {
 		const Uint8 *keyHeld = SDL_GetKeyboardState(nullptr);
 		Position pos = player->movable.getPosition();
@@ -155,7 +181,9 @@ void Game::registerGameEvents()
 			player->movable.reposition({pos.x - 80, pos.y});
 		if (keyHeld[SDL_SCANCODE_D])
 			player->movable.reposition({pos.x + 80, pos.y});
+
+		player->movable.canMove = true;
 	});
-	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() {player->movable.v.x = player->movable.maxSpeed;});
-	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() {player->movable.v.x = -player->movable.maxSpeed;});
+	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() { player->movable.v.x = player->movable.maxSpeed; });
+	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() { player->movable.v.x = -player->movable.maxSpeed; });
 }

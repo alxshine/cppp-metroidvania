@@ -18,6 +18,7 @@ struct Speed {
 		return s;
 	}
 	Speed &operator+=(const Speed &rhs);
+	Speed &operator-=(const Speed &rhs);
 	friend Speed operator+(Speed lhs, const Speed &rhs);
 
   private:

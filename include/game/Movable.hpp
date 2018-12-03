@@ -21,6 +21,7 @@ class Movable {
   public:
 	Movable(Speed maxSpeed, Position pos = {0, 0});
 	Velocity v;
+	bool grounded;
 
 	void update();
 	void move(std::chrono::milliseconds frameDelta);

@@ -13,6 +13,12 @@ game::Speed &game::Speed::operator+=(const game::Speed &rhs)
 	return *this;
 }
 
+game::Speed &game::Speed::operator-=(const game::Speed &rhs)
+{
+	s -= rhs.s;
+	return *this;
+}
+
 game::Speed operator+(game::Speed lhs, const game::Speed &rhs)
 {
 	lhs += rhs;
