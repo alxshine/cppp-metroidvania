@@ -76,6 +76,7 @@ void Game::runMainLoop()
 		auto now = gameClock.now();
 		game_frame_delta = now - last_game_frame_time;
 
+		player->movable.v.x = 0;
 		gameEvents.dispatch();
 
 		// HUD

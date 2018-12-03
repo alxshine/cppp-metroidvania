@@ -31,21 +31,23 @@ inline Rectangle calc_intersection(const Rectangle a, const Rectangle b)
 }
 
 inline bool intersects_top(const Rectangle r, const Rectangle other){
-	return calc_intersection(r, other).y <= r.y;
+	auto intersection = calc_intersection(r, other);
+	return intersection.h > 0 && intersection.y <= r.y;
 }
 
 inline bool intersects_bottom(const Rectangle r, const Rectangle other){
 	auto intersection = calc_intersection(r, other);
-	return intersection.y + intersection.h >= r.y + r.h;
+	return intersection.h > 0 && intersection.y + intersection.h >= r.y + r.h;
 }
 
 inline bool intersects_left(const Rectangle r, const Rectangle other){
-	return calc_intersection(r, other).x <= r.x;
+	auto intersection = calc_intersection(r, other);
+	return intersection.w > 0 && intersection.x >= r.x;
 }
 
 inline bool intersects_right(const Rectangle r, const Rectangle other){
 	auto intersection = calc_intersection(r, other);
-	return intersection.x + intersection.w >= r.x + r.w;
+	return intersection.w > 0 && intersection.x + intersection.w >= r.x + r.w;
 }
 
 inline bool contains(const Rectangle a, const Point b)
