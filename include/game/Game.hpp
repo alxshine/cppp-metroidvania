@@ -1,6 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <iostream>
+#include <algorithm>
+
 #include "SDL.hpp"
 #include "game/ResourceManager.hpp"
 

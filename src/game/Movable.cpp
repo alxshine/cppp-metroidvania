@@ -2,12 +2,14 @@
 
 using namespace game;
 
-Movable::Movable(int speedPerSecond, Position pos) : position(pos), lastPosition(pos), speedPerSecond(speedPerSecond) {}
+Movable::Movable(Speed maxSpeed, Position pos) : position(pos), lastPosition(pos), maxSpeed(maxSpeed) {}
 
-void Movable::move(Position delta, std::chrono::milliseconds frameDelta)
+void Movable::move(std::chrono::milliseconds frameDelta)
 {
+	if(!canMove)
+		return;
 	lastPosition = position;
-	position += delta * static_cast<int>(speedPerSecond * frameDelta.count() / 1000);
+	position += v * frameDelta;
 
 	if (position.x > lastPosition.x)
 		direction = Direction::Right;

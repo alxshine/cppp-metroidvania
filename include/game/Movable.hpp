@@ -2,6 +2,7 @@
 #define MOVABLE_H
 
 #include "constants.hpp"
+#include "movement.hpp"
 
 namespace game {
 
@@ -11,14 +12,19 @@ class Movable {
 	Position lastPosition; // Probably needed for collision detection...
 	Direction direction = Direction::Right;
 	bool moved = false;
+	bool canMove = true;
 
-	int speedPerSecond;
+	Speed maxSpeed;
+
+	friend class Game;
 
   public:
-	Movable(int speedPerSecond, Position pos = {0, 0});
+	Movable(Speed maxSpeed, Position pos = {0, 0});
+	Velocity v;
+	bool grounded;
 
 	void update();
-	void move(Position delta, std::chrono::milliseconds frameDelta);
+	void move(std::chrono::milliseconds frameDelta);
 	void reposition(Position newPosition);
 
 	bool getMoved() const;
