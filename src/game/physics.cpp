@@ -33,9 +33,9 @@ bool game::collidesRight(Rectangle playerHitBox, Room &currentRoom)
 
 bool game::collidesTop(Rectangle playerHitBox, Room &currentRoom)
 {
-	auto i = playerHitBox.y / tileSize.h;
-	auto lowestColumnIndex = playerHitBox.x / tileSize.w;
-	auto highestColumnIndex = (playerHitBox.x + playerHitBox.w) / tileSize.w;
+	auto i = getTileRow(playerHitBox);
+	auto lowestColumnIndex = getLowestTileColumn(playerHitBox);
+	auto highestColumnIndex = getHighestTileColumn(playerHitBox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
 		if (currentRoom.collisionMap[i][j] == Collision::Full && sdl::intersects_top(playerHitBox, tileRectangle(i, j)))
 			return true;
@@ -45,9 +45,9 @@ bool game::collidesTop(Rectangle playerHitBox, Room &currentRoom)
 
 bool game::collidesBottom(Rectangle playerHitBox, Room &currentRoom)
 {
-	auto i = (playerHitBox.y + playerHitBox.h) / tileSize.h;
-	auto lowestColumnIndex = playerHitBox.x / tileSize.w;
-	auto highestColumnIndex = (playerHitBox.x + playerHitBox.w) / tileSize.w;
+	auto i = getTileRow(playerHitBox);
+	auto lowestColumnIndex = getLowestTileColumn(playerHitBox);
+	auto highestColumnIndex = getHighestTileColumn(playerHitBox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
 		if ((currentRoom.collisionMap[i][j] == Collision::Full ||
 		     currentRoom.collisionMap[i][j] == Collision::TopOnly) &&
@@ -59,9 +59,9 @@ bool game::collidesBottom(Rectangle playerHitBox, Room &currentRoom)
 
 bool game::isStanding(Rectangle playerHitBox, Room &currentRoom)
 {
-	auto i = (playerHitBox.y + playerHitBox.h) / tileSize.h;
-	auto lowestColumnIndex = playerHitBox.x / tileSize.w;
-	auto highestColumnIndex = (playerHitBox.x + playerHitBox.w) / tileSize.w;
+	auto i = getTileRow(playerHitBox);
+	auto lowestColumnIndex = getLowestTileColumn(playerHitBox);
+	auto highestColumnIndex = getHighestTileColumn(playerHitBox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
 		if (currentRoom.collisionMap[i][j] > Collision::None && touches_bottom(playerHitBox, tileRectangle(i, j)))
 			return true;

@@ -17,6 +17,21 @@ bool isStanding(Rectangle playerHitBox, Room &currentRoom);
 
 void resolvePlayerCollision(Player &player, Room &currentRoom);
 
+inline int getTileRow(Rectangle playerHitBox)
+{
+	return (playerHitBox.y + playerHitBox.h) / tileSize.h;
+}
+
+inline int getLowestTileColumn(Rectangle playerHitBox)
+{
+	return playerHitBox.x / tileSize.w;
+}
+
+inline int getHighestTileColumn(Rectangle playerHitBox)
+{
+	return (playerHitBox.x + 2 * playerHitBox.w) / tileSize.w;
+}
+
 } // namespace game
 
 #endif /* PHYSICS_H */

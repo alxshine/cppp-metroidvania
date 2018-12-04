@@ -105,12 +105,15 @@ void Game::registerGameEvents()
 	// jump down from platforms
 	gameEvents.whileKeyHeld(SDL_SCANCODE_S, [this]() {
 		auto hitbox = player->calcPositionedHitbox();
-		auto j = hitbox.x / tileSize.h;
-		auto i = (hitbox.y + hitbox.h) / tileSize.h;
-		if (currentRoom->collisionMap[i][j] == Collision::TopOnly) {
-			player->movable.reposition(player->movable.getPosition() + Point{0, hitbox.h});
-			player->movable.v.y += 10;
-		}
+		auto i = getTileRow(hitbox);
+		auto min_j = getLowestTileColumn(hitbox);
+		auto max_j = getHighestTileColumn(hitbox);
+		for (int j = min_j; j < max_j; ++j)
+			if (currentRoom->collisionMap[i][j] == Collision::TopOnly) {
+				player->movable.reposition(player->movable.getPosition() + Point{0, hitbox.h});
+				player->movable.v.y += 10;
+				return;
+			}
 	});
 	// jump
 	gameEvents.whileKeyHeld(SDL_SCANCODE_SPACE, [this]() {
