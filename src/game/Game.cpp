@@ -62,24 +62,25 @@ void Game::runMainLoop()
 		auto now = gameClock.now();
 		gameFrameDelta = now - lastGameFrameTime;
 
+		// reset player velocity
 		player->movable.v.x = 0;
-		if (!player->movable.grounded)
+		if (!player->movable.grounded) // gravity
 			player->movable.v.y += 10;
+
+		// events
 		gameEvents.dispatch();
 
-		// HUD
-
 		// Room
-		// currentRoom.update()
-		renderer.render(*currentRoom, now, renderOpts);
+		// currentRoom->update()
 
 		// Player
 		player->movable.move(gameFrameDelta);
 		player->movable.update();
-		renderer.render(*player, now, renderOpts);
-
-		// Collision
 		resolvePlayerCollision(*player, *currentRoom);
+
+		// render
+		renderer.render(*currentRoom, now, renderOpts);
+		renderer.render(*player, now, renderOpts);
 
 		lastGameFrameTime = now;
 		renderer.swapBuffers();
@@ -102,7 +103,7 @@ void Game::registerGameEvents()
 	});
 
 	// jump down from platforms
-	gameEvents.onKeyDown(SDLK_s, [this](const KeyboardEvent &) {
+	gameEvents.whileKeyHeld(SDL_SCANCODE_S, [this]() {
 		auto hitbox = player->calcPositionedHitbox();
 		auto j = hitbox.x / tileSize.h;
 		auto i = (hitbox.y + hitbox.h) / tileSize.h;
@@ -112,7 +113,7 @@ void Game::registerGameEvents()
 		}
 	});
 	// jump
-	gameEvents.onKeyDown(SDLK_SPACE, [this](const KeyboardEvent &) {
+	gameEvents.whileKeyHeld(SDL_SCANCODE_SPACE, [this]() {
 		if (player->movable.grounded) {
 			player->movable.v.y = -2 * player->movable.maxSpeed;
 			player->movable.grounded = false;
