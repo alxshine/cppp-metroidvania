@@ -17,6 +17,7 @@ void Item::render(const sdl::Renderer &renderer, const sdl::GameClock::time_poin
                   const sdl::RenderOptions &options) const
 {
 	Rectangle destRect = calcRenderTarget();
+	Rectangle hitbox = calcPositionedHitbox();
 
 	renderer.render(animation.getAnimationFrame(t), destRect);
 
