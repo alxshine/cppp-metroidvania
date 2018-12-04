@@ -26,7 +26,6 @@ struct Room : public sdl::Renderable {
 	     const Layout layout, const CollisionMap collisionMap, const std::vector<Mob> mobs,
 	     const std::vector<Item> items, const std::vector<Door> doors);
 	Room(const Room &rhs) noexcept;
-	Room &operator=(const Room &rhs) = delete;
 	virtual ~Room();
 
 	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &,

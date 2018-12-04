@@ -14,6 +14,7 @@ class Game {
 	     sdl::RenderOptions renderOpts = {false, false, false});
 
 	void runMainLoop();
+	void interact();
 
   private:
 	ResourceManager res;

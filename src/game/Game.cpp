@@ -1,5 +1,8 @@
 #include "game/Game.hpp"
 
+#include <algorithm>
+#include <iostream>
+
 using namespace game;
 using namespace sdl;
 
@@ -10,6 +13,44 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 	player->movable.reposition(player_position);
 	play(currentRoom.music, repeat_forever);
 	registerGameEvents();
+}
+
+void Game::interact()
+{
+	Rectangle playerHitbox = player->calcPositionedHitbox();
+
+	// Find item to interact with
+	for (auto &i : currentRoom.items) {
+		if (intersects(playerHitbox, i.calcPositionedHitbox())) {
+			std::cout << "Player interacted with " << i.name << std::endl;
+			return;
+		}
+	}
+
+	// Find door to interact with
+	for (auto &door : currentRoom.doors) {
+		if (intersects(playerHitbox, door.item.calcPositionedHitbox())) {
+			std::cout << "Player went to " << door.targetRoom << " through " << door.name << std::endl;
+
+			// this conditions allows portals that don't reset room state
+			if (currentRoom.name != door.targetRoom)
+				// currentRoom = res.getRoom(door.targetRoom);
+				; // TODO use pointer to currentRoom here
+
+			auto newDoorIt = std::find_if(currentRoom.doors.cbegin(), currentRoom.doors.cend(),
+			                              [door](Door d) { return d.name == door.targetDoorName; });
+			if (newDoorIt == currentRoom.doors.cend()) {
+				std::cerr << "No door named " << door.targetDoorName << " in room " << door.targetRoom << std::endl;
+			} else {
+				auto newPosition = newDoorIt->item.movable.getPosition();
+				newPosition.x += player->hitbox.w / 2;
+				player->movable.reposition(newPosition);
+				player->movable.setDirection(door.direction);
+			}
+
+			return;
+		}
+	}
 }
 
 void Game::runMainLoop()
@@ -50,6 +91,7 @@ void Game::registerGameEvents()
 		renderOpts.renderEntityDrawRectangles = !renderOpts.renderEntityDrawRectangles;
 		renderOpts.renderHitBoxes = !renderOpts.renderHitBoxes;
 	});
+	gameEvents.onKeyDown(SDLK_e, [this](const KeyboardEvent &) { this->interact(); });
 
 	gameEvents.onKeyDown(SDLK_j, [this](const KeyboardEvent &) {
 		const Uint8 *keyHeld = SDL_GetKeyboardState(nullptr);

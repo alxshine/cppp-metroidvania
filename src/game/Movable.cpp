@@ -21,6 +21,11 @@ void Movable::move(Position delta, std::chrono::milliseconds frameDelta)
 		direction = Direction::Up;
 }
 
+void Movable::setDirection(Direction dir)
+{
+	direction = dir;
+}
+
 void Movable::reposition(Position newPosition) {
 	position = newPosition;
 	lastPosition = newPosition;

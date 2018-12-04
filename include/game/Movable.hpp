@@ -23,6 +23,7 @@ class Movable {
 
 	bool getMoved() const;
 	Direction getDirection() const;
+	void setDirection(Direction dir);
 	Position getPosition() const;
 	Position getLastPosition() const;
 };
