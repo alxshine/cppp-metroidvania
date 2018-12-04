@@ -30,8 +30,8 @@ void Item::render(const sdl::Renderer &renderer, const sdl::GameClock::time_poin
 
 Rectangle game::Item::calcRenderTarget() const
 {
-	// Calculate position, centering horizontally and bottom-aligning vertically
-	return {movable.getPosition().x - static_cast<int>(0.5 * renderSize.w), movable.getPosition().y - renderSize.h,
+	// Calculate position, left-aligning horizontally and bottom-aligning vertically
+	return {movable.getPosition().x, movable.getPosition().y - renderSize.h,
 	        renderSize.w, renderSize.h};
 }
 
