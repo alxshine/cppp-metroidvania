@@ -35,8 +35,10 @@ void Game::interact()
 			std::cout << "Player went to " << door.targetRoom << " through " << door.name << std::endl;
 
 			// this conditions allows portals that don't reset room state
-			if (currentRoom->name != door.targetRoom)
+			if (currentRoom->name != door.targetRoom) {
 				currentRoom = std::make_unique<Room>(res.getRoom(door.targetRoom));
+				play(currentRoom->music, repeat_forever);
+			}
 
 			auto newDoorIt = std::find_if(currentRoom->doors.cbegin(), currentRoom->doors.cend(),
 			                              [door](Door d) { return d.name == door.targetDoorName; });
