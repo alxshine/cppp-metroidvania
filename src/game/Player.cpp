@@ -3,7 +3,7 @@
 using namespace game;
 
 Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation)
-    : movable(200), idleAnimation(idleAnimation), walkingAnimation(walkingAnimation)
+    : movable(100), idleAnimation(idleAnimation), walkingAnimation(walkingAnimation)
 {
 }
 

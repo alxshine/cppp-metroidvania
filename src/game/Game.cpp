@@ -91,23 +91,38 @@ void Game::runMainLoop()
 
 void Game::registerGameEvents()
 {
-
+	// quit
 	gameEvents.on(SDL_QUIT, [this](const Event &) { running = false; });
 	gameEvents.onKeyDown(SDLK_ESCAPE, [this](const KeyboardEvent &) { running = false; });
+	// debug overlay
 	gameEvents.onKeyDown(SDLK_c, [this](const KeyboardEvent &) {
 		renderOpts.renderCollisionMap = !renderOpts.renderCollisionMap;
 		renderOpts.renderEntityDrawRectangles = !renderOpts.renderEntityDrawRectangles;
 		renderOpts.renderHitBoxes = !renderOpts.renderHitBoxes;
 	});
-	gameEvents.onKeyDown(SDLK_e, [this](const KeyboardEvent &) { this->interact(); });
 
+	// jump down from platforms
+	gameEvents.onKeyDown(SDLK_s, [this](const KeyboardEvent &) {
+		auto hitbox = player->calcPositionedHitbox();
+		auto j = hitbox.x / tileSize.h;
+		auto i = (hitbox.y + hitbox.h) / tileSize.h;
+		if (currentRoom->collisionMap[i][j] == Collision::TopOnly) {
+			player->movable.reposition(player->movable.getPosition() + Point{0, hitbox.h});
+			player->movable.v.y += 10;
+		}
+	});
+	// jump
 	gameEvents.onKeyDown(SDLK_SPACE, [this](const KeyboardEvent &) {
 		if (player->movable.grounded) {
-			player->movable.v.y = -player->movable.maxSpeed;
+			player->movable.v.y = -2 * player->movable.maxSpeed;
 			player->movable.grounded = false;
 		}
 	});
 
+	// interaction
+	gameEvents.onKeyDown(SDLK_e, [this](const KeyboardEvent &) { this->interact(); });
+
+	// blink
 	gameEvents.onKeyDown(SDLK_j, [this](const KeyboardEvent &) {
 		const Uint8 *keyHeld = SDL_GetKeyboardState(nullptr);
 		Position pos = player->movable.getPosition();
@@ -122,6 +137,8 @@ void Game::registerGameEvents()
 
 		player->movable.canMove = true;
 	});
+
+	// normal movement
 	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() { player->movable.v.x = player->movable.maxSpeed; });
 	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() { player->movable.v.x = -player->movable.maxSpeed; });
 }
