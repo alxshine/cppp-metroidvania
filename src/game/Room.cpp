@@ -63,12 +63,12 @@ void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::tim
 		}
 	}
 
+	for (auto i : doors)
+		renderer.render(i.item, t, options);
 	for (auto i : mobs)
 		renderer.render(i, t, options);
 	for (auto i : items)
 		renderer.render(i, t, options);
-	for (auto i : doors)
-		renderer.render(i.item, t, options);
 }
 
 game::Room::~Room() {}
