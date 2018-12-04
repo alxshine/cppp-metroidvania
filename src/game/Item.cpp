@@ -39,3 +39,11 @@ Rectangle Item::calcPositionedHitbox() const
 	Rectangle destRect = calcRenderTarget(); // Inefficient, for Mob::render(), but maybe good enough
 	return {destRect.x + hitbox.x, destRect.y + hitbox.y, hitbox.w, hitbox.h};
 }
+
+Door::Door(const std::string name, Item actualDoor, Direction direction, const std::string targetRoom,
+           const std::string targetDoorName)
+    : name(name), item(actualDoor), direction(direction), targetRoom(targetRoom), targetDoorName(targetDoorName)
+{
+}
+
+Door::Door(const Door &rhs) : name(rhs.name), item(rhs.item), direction(rhs.direction), targetRoom(rhs.targetRoom), targetDoorName(rhs.targetDoorName) {}

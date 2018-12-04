@@ -24,7 +24,7 @@ struct Room : public sdl::Renderable {
 
 	Room(const std::string name, const sdl::Texture &background, const sdl::Music &music, const Position &location,
 	     const Layout layout, const CollisionMap collisionMap, const std::vector<Mob> mobs,
-	     const std::vector<Item> items);
+	     const std::vector<Item> items, const std::vector<Door> doors);
 	Room(const Room &rhs) noexcept;
 	Room &operator=(const Room &rhs) = delete;
 	virtual ~Room();
@@ -40,6 +40,7 @@ struct Room : public sdl::Renderable {
 	const CollisionMap collisionMap;
 	const std::vector<Mob> mobs;
 	const std::vector<Item> items;
+	const std::vector<Door> doors;
 };
 
 } // namespace game

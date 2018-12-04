@@ -11,7 +11,6 @@ class Item : public sdl::Renderable {
   public:
 	Item(const std::string name, Rectangle hitbox, Rectangle renderSize, const sdl::Animation animation);
 	Item(const Item &rhs);
-	Item &operator=(const Item &rhs) = delete;
 	virtual ~Item();
 
 	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
@@ -32,10 +31,13 @@ class Item : public sdl::Renderable {
 
 class Door {
   public:
+	Door(const std::string name, Item actualDoor, Direction direction, const std::string targetRoom, const std::string targetDoorName);
+	Door(const Door &rhs);
+
+	const std::string name;
 	Item item;
 
 	const Direction direction;
-	const std::string name;
 	const std::string targetRoom;
 	const std::string targetDoorName;
 };

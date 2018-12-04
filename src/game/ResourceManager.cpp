@@ -56,14 +56,15 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	// idle animation
 	OptionalAnimation idleAnimation = [&]() {
 		if (mobdef.idleAnimation.spritesheet == "")
-				return OptionalAnimation{};
+			return OptionalAnimation{};
 		const sdl::Texture &tex = getTexture(mobdef.idleAnimation.spritesheet);
 		return std::make_unique<sdl::Animation>(tex, mobdef.idleAnimation.frames, mobdef.idleAnimation.timePerFrame);
 	}();
 
 	// TODO handle behaviour, attacks
 
-	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize, walkingAnimation, std::move(idleAnimation));
+	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize,
+	                             walkingAnimation, std::move(idleAnimation));
 }
 
 std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &itemdef) const
@@ -144,9 +145,17 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 	}
 
 	// Add doors
+	std::vector<game::Door> doors;
+	for (auto i : roomDef.doors) {
+		game::Item item = getItem(i.itemId);
+		item.movable.reposition(i.position);
+		game::Door door{i.name, item, i.direction, i.targetRoom, i.targetDoorName};
+		doors.emplace_back(door);
+	}
 
 	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
-	                                    roomDef.location, std::move(layout), std::move(collisionMap), std::move(mobs), std::move(items));
+	                                    roomDef.location, std::move(layout), std::move(collisionMap), std::move(mobs),
+	                                    std::move(items), std::move(doors));
 }
 
 void ResourceManager::parseDefinition(fs::path f)

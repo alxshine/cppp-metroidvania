@@ -9,15 +9,15 @@ game::Rectangle game::Room::Tile::render(const sdl::Renderer &renderer, const ga
 
 game::Room::Room(const std::string name, const sdl::Texture &background, const sdl::Music &music,
                  const Position &location, const game::Room::Layout layout, const game::Room::CollisionMap collisionMap,
-                 const std::vector<game::Mob> mobs, const std::vector<game::Item> items)
+                 const std::vector<game::Mob> mobs, const std::vector<game::Item> items, const std::vector<game::Door> doors)
     : name(name), background(background), music(music), location(location), layout(layout), collisionMap(collisionMap),
-      mobs(mobs), items(items)
+      mobs(mobs), items(items), doors(doors)
 {
 }
 
 game::Room::Room(const Room &rhs) noexcept
     : name(rhs.name), background(rhs.background), music(rhs.music), location(rhs.location), layout(rhs.layout),
-      collisionMap(rhs.collisionMap), mobs(rhs.mobs), items(rhs.items)
+      collisionMap(rhs.collisionMap), mobs(rhs.mobs), items(rhs.items), doors(rhs.doors)
 {
 }
 
@@ -67,6 +67,8 @@ void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::tim
 		renderer.render(i, t, options);
 	for (auto i : items)
 		renderer.render(i, t, options);
+	for (auto i : doors)
+		renderer.render(i.item, t, options);
 }
 
 game::Room::~Room() {}

@@ -59,4 +59,5 @@ Entities:
     Item: 150 120 Pot
     Item: 160 120 Pot
     Item: 170 120 Pot
+    Door: 250 170 OnlyDoor = TestDoor (Left) -> DoorRight1 in R1-1
 EndEntities

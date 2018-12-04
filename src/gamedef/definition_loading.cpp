@@ -235,6 +235,8 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 std::istream &game_definitions::operator>>(std::istream &in, Door &door)
 {
 	in >> door.position >> door.name;
+	in.ignore(2);
+	in >> door.itemId;
 
 	std::string dir;
 	in >> dir;

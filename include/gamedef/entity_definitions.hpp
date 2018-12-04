@@ -72,6 +72,7 @@ struct Door {
 	Position position;
 	Direction direction;
 	std::string name;
+	std::string itemId;
 	std::string targetRoom;
 	std::string targetDoorName;
 };
