@@ -28,8 +28,8 @@ class Game {
 
 	bool running = true;
 	sdl::GameClock gameClock;
-	sdl::GameClock::time_point last_game_frame_time;
-	std::chrono::milliseconds game_frame_delta = 0ms;
+	sdl::GameClock::time_point lastGameFrameTime;
+	std::chrono::milliseconds gameFrameDelta = 0ms;
 	sdl::EventHandler gameEvents;
 
 	void registerGameEvents();

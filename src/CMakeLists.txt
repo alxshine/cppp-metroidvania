@@ -9,6 +9,7 @@ add_library(gamelib
     game/ResourceManager.cpp
     game/Room.cpp
     game/movement.cpp
+    game/physics.cpp
 )
 target_include_directories(gamelib PUBLIC ../include)
 target_link_libraries(gamelib stdc++fs)

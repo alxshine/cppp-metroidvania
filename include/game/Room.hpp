@@ -42,6 +42,11 @@ struct Room : public sdl::Renderable {
 	const std::vector<Door> doors;
 };
 
+inline Rectangle tileRectangle(int row, int column)
+{
+	return {column * tileSize.w, row * tileSize.h, tileSize.w, tileSize.h};
+}
+
 } // namespace game
 
 #endif /* ROOM_H */

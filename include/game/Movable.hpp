@@ -6,6 +6,9 @@
 
 namespace game {
 
+class Player;
+class Room;
+
 class Movable {
   private:
 	Position position;
@@ -17,6 +20,7 @@ class Movable {
 	Speed maxSpeed;
 
 	friend class Game;
+	friend void resolvePlayerCollision(Player &player, Room &currentRoom);
 
   public:
 	Movable(Speed maxSpeed, Position pos = {0, 0});
