@@ -83,6 +83,8 @@ struct MobRef {
 
 struct Item {
 	std::string name;
+	Rectangle hitbox;
+	Rectangle drawSize;
 	Animation animation;
 	std::string behaviour;
 };

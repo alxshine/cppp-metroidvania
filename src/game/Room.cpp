@@ -9,15 +9,15 @@ game::Rectangle game::Room::Tile::render(const sdl::Renderer &renderer, const ga
 
 game::Room::Room(const std::string name, const sdl::Texture &background, const sdl::Music &music,
                  const Position &location, const game::Room::Layout layout, const game::Room::CollisionMap collisionMap,
-                 const std::vector<game::Mob> mobs)
+                 const std::vector<game::Mob> mobs, const std::vector<game::Item> items)
     : name(name), background(background), music(music), location(location), layout(layout), collisionMap(collisionMap),
-      mobs(mobs)
+      mobs(mobs), items(items)
 {
 }
 
 game::Room::Room(const Room &rhs) noexcept
     : name(rhs.name), background(rhs.background), music(rhs.music), location(rhs.location), layout(rhs.layout),
-      collisionMap(rhs.collisionMap), mobs(rhs.mobs)
+      collisionMap(rhs.collisionMap), mobs(rhs.mobs), items(rhs.items)
 {
 }
 
@@ -64,6 +64,8 @@ void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::tim
 	}
 
 	for (auto i : mobs)
+		renderer.render(i, t, options);
+	for (auto i : items)
 		renderer.render(i, t, options);
 }
 

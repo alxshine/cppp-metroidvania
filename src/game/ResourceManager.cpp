@@ -56,7 +56,7 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	// idle animation
 	OptionalAnimation idleAnimation = [&]() {
 		if (mobdef.idleAnimation.spritesheet == "")
-			return OptionalAnimation{};
+				return OptionalAnimation{};
 		const sdl::Texture &tex = getTexture(mobdef.idleAnimation.spritesheet);
 		return std::make_unique<sdl::Animation>(tex, mobdef.idleAnimation.frames, mobdef.idleAnimation.timePerFrame);
 	}();
@@ -68,7 +68,12 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 
 std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &itemdef) const
 {
-	throw itemdef.name + " not implemented";
+	const sdl::Texture &tex = getTexture(itemdef.animation.spritesheet);
+	const sdl::Animation anim{tex, itemdef.animation.frames, itemdef.animation.timePerFrame};
+
+	// TODO behaviour
+
+	return std::make_unique<Item>(itemdef.name, itemdef.hitbox, itemdef.drawSize, anim);
 }
 
 std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &roomDef) const
@@ -131,11 +136,17 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 	}
 
 	// Add items
+	std::vector<game::Item> items;
+	for (auto i : roomDef.items) {
+		game::Item item = getItem(i.id);
+		item.movable.reposition(i.position);
+		items.emplace_back(item);
+	}
 
 	// Add doors
 
 	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
-	                                    roomDef.location, std::move(layout), std::move(collisionMap), std::move(mobs));
+	                                    roomDef.location, std::move(layout), std::move(collisionMap), std::move(mobs), std::move(items));
 }
 
 void ResourceManager::parseDefinition(fs::path f)
@@ -161,8 +172,7 @@ void ResourceManager::parseDefinition(fs::path f)
 			std::fstream fin(f, std::ios::in);
 			game_definitions::Item item;
 			fin >> item;
-
-			// items.emplace(item.name, makeItem(item));
+			items.emplace(item.name, makeItem(item));
 		}
 	} catch (game_definitions::ParseException &e) {
 		std::cerr << "Invalid definition " << f << ": " << e.what() << "\n";

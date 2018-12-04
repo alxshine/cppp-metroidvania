@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "Item.hpp"
 #include "Mob.hpp"
 #include "SDL.hpp"
 #include "constants.hpp"
@@ -22,7 +23,8 @@ struct Room : public sdl::Renderable {
 	using CollisionMap = std::vector<std::vector<Collision>>;
 
 	Room(const std::string name, const sdl::Texture &background, const sdl::Music &music, const Position &location,
-	     const Layout layout, const CollisionMap collisionMap, const std::vector<Mob> mobs);
+	     const Layout layout, const CollisionMap collisionMap, const std::vector<Mob> mobs,
+	     const std::vector<Item> items);
 	Room(const Room &rhs) noexcept;
 	Room &operator=(const Room &rhs) = delete;
 	virtual ~Room();
@@ -37,6 +39,7 @@ struct Room : public sdl::Renderable {
 	const Layout layout;
 	const CollisionMap collisionMap;
 	const std::vector<Mob> mobs;
+	const std::vector<Item> items;
 };
 
 } // namespace game

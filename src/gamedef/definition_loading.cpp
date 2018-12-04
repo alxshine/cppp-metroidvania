@@ -270,6 +270,14 @@ std::istream &game_definitions::operator>>(std::istream &in, Item &item)
 	in >> item.behaviour;
 
 	in >> keyword;
+	testString("Hitbox:", keyword);
+	in >> item.hitbox;
+
+	in >> keyword;
+	testString("DrawSize:", keyword);
+	in >> item.drawSize;
+
+	in >> keyword;
 	testString("Animation:", keyword);
 	in >> item.animation;
 

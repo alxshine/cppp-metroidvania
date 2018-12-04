@@ -1,8 +1,10 @@
-Name: Drink
+Name: Pot
 Behaviour: FFSIDONTWANTTODOTHIS
+Hitbox: 0 0 10 10
+DrawSize: 0 0 10 10
 
 Animation:
-    Spritesheet: drink.svg
+    Spritesheet: awesome.png
     Time: 1
-    Frame: 10 10 10 10
+    Frame: 240 368 16 16
 EndAnimation
