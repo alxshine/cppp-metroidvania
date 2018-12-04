@@ -58,4 +58,5 @@ Entities:
     Door: 20 170 OnlyDoor = TestDoor (Left) -> OnlyDoor in First
     Door: 60 170 PortalA = TestDoor (Right) -> PortalB in Second
     Door: 250 170 PortalB = TestDoor (Left) -> PortalA in Second
+    Door: 280 170 RegionTravel = TestDoor (Right) -> Entrance in Third
 EndEntities

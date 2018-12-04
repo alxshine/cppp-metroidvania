@@ -1,0 +1,28 @@
+Name: Third
+Background: volcano.png
+Music: area1.ogg
+Location: 9001 9001
+
+Tileset: awesome.png
+Tiles:
+    . empty     0 0 0 0 None
+    s solid     166 2 1 1 Full
+    m moss      16 256 15 15 None
+    p platform  48 32 15 15 TopOnly
+EndTiles
+
+Layout:
+    Layer:
+        ...............
+        ...............
+        ...............
+        ...............
+        ...............
+        sssssssssssssss
+    EndLayer
+EndLayout
+
+Entities:
+    Door: 0 50 Entrance = TestDoor (Left) -> RegionTravel in Second
+
+EndEntities
