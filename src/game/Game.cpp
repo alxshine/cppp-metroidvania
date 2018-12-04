@@ -8,10 +8,10 @@ using namespace sdl;
 
 Game::Game(std::string definitions, std::string assets, std::string first_room, Position player_position,
            sdl::RenderOptions renderOpts)
-    : res(definitions, assets), currentRoom(res.getRoom(first_room)), player(res.makePlayer()), renderOpts(renderOpts)
+    : res(definitions, assets), currentRoom(std::make_unique<Room>(res.getRoom(first_room))), player(res.makePlayer()), renderOpts(renderOpts)
 {
 	player->movable.reposition(player_position);
-	play(currentRoom.music, repeat_forever);
+	play(currentRoom->music, repeat_forever);
 	registerGameEvents();
 }
 
@@ -20,7 +20,7 @@ void Game::interact()
 	Rectangle playerHitbox = player->calcPositionedHitbox();
 
 	// Find item to interact with
-	for (auto &i : currentRoom.items) {
+	for (auto &i : currentRoom->items) {
 		if (intersects(playerHitbox, i.calcPositionedHitbox())) {
 			std::cout << "Player interacted with " << i.name << std::endl;
 			return;
@@ -28,18 +28,17 @@ void Game::interact()
 	}
 
 	// Find door to interact with
-	for (auto &door : currentRoom.doors) {
+	for (auto &door : currentRoom->doors) {
 		if (intersects(playerHitbox, door.item.calcPositionedHitbox())) {
 			std::cout << "Player went to " << door.targetRoom << " through " << door.name << std::endl;
 
 			// this conditions allows portals that don't reset room state
-			if (currentRoom.name != door.targetRoom)
-				// currentRoom = res.getRoom(door.targetRoom);
-				; // TODO use pointer to currentRoom here
+			if (currentRoom->name != door.targetRoom)
+				currentRoom = std::make_unique<Room>(res.getRoom(door.targetRoom));
 
-			auto newDoorIt = std::find_if(currentRoom.doors.cbegin(), currentRoom.doors.cend(),
+			auto newDoorIt = std::find_if(currentRoom->doors.cbegin(), currentRoom->doors.cend(),
 			                              [door](Door d) { return d.name == door.targetDoorName; });
-			if (newDoorIt == currentRoom.doors.cend()) {
+			if (newDoorIt == currentRoom->doors.cend()) {
 				std::cerr << "No door named " << door.targetDoorName << " in room " << door.targetRoom << std::endl;
 			} else {
 				auto newPosition = newDoorIt->item.movable.getPosition();
@@ -67,7 +66,7 @@ void Game::runMainLoop()
 
 		// Room
 		// currentRoom.update()
-		renderer.render(currentRoom, now, renderOpts);
+		renderer.render(*currentRoom, now, renderOpts);
 
 		// Player
 		player->movable.update();
