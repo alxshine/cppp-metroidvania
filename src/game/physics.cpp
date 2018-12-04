@@ -13,6 +13,7 @@ bool game::collidesLeft(Rectangle playerHitBox, Room &currentRoom)
 		    sdl::intersects_left(playerHitBox, tileRectangle(i, j)))
 			return true;
 	}
+	// TODO: @alex check against left room border
 	return false;
 }
 
@@ -26,6 +27,7 @@ bool game::collidesRight(Rectangle playerHitBox, Room &currentRoom)
 		    sdl::intersects_right(playerHitBox, tileRectangle(i, j)))
 			return true;
 	}
+	// TODO: @alex check against right room border
 	return false;
 }
 
@@ -69,43 +71,42 @@ bool game::isStanding(Rectangle playerHitBox, Room &currentRoom)
 
 void game::resolvePlayerCollision(Player &player, Room &currentRoom)
 {
-		// first resolve collisions with the room
-		auto playerHitBox = player.calcPositionedHitbox();
+	// first resolve collisions with the room
+	auto playerHitBox = player.calcPositionedHitbox();
 
-		if (!isStanding(playerHitBox, currentRoom))
-			player.movable.grounded = false;
+	if (!isStanding(playerHitBox, currentRoom))
+		player.movable.grounded = false;
 
-		if ((collidesLeft(playerHitBox, currentRoom) && collidesRight(playerHitBox, currentRoom)) ||
-		    (collidesTop(playerHitBox, currentRoom) && collidesBottom(playerHitBox, currentRoom)))
-			player.movable.canMove = false;
+	if ((collidesLeft(playerHitBox, currentRoom) && collidesRight(playerHitBox, currentRoom)) ||
+	    (collidesTop(playerHitBox, currentRoom) && collidesBottom(playerHitBox, currentRoom)))
+		player.movable.canMove = false;
 
-		if (player.movable.canMove && player.movable.getMoved()) {
+	if (player.movable.canMove && player.movable.getMoved()) {
 
-			while (collidesLeft(playerHitBox, currentRoom)) {
-				auto newPosition = player.movable.getPosition() + Point{1, 0};
-				player.movable.reposition(newPosition);
-				playerHitBox = player.calcPositionedHitbox();
-			}
-
-			while (collidesRight(playerHitBox, currentRoom)) {
-				auto newPosition = player.movable.getPosition() + Point{-1, 0};
-				player.movable.reposition(newPosition);
-				playerHitBox = player.calcPositionedHitbox();
-			}
-
-			while (collidesBottom(playerHitBox, currentRoom)) {
-				player.movable.grounded = true;
-				player.movable.v.y = 0;
-				auto newPosition = player.movable.getPosition() + Point{0, -1};
-				player.movable.reposition(newPosition);
-				playerHitBox = player.calcPositionedHitbox();
-			}
-
-			while (collidesTop(playerHitBox, currentRoom)) {
-				auto newPosition = player.movable.getPosition() + Point{0, 1};
-				player.movable.reposition(newPosition);
-				playerHitBox = player.calcPositionedHitbox();
-			}
+		while (collidesLeft(playerHitBox, currentRoom)) {
+			auto newPosition = player.movable.getPosition() + Point{1, 0};
+			player.movable.reposition(newPosition);
+			playerHitBox = player.calcPositionedHitbox();
 		}
-}
 
+		while (collidesRight(playerHitBox, currentRoom)) {
+			auto newPosition = player.movable.getPosition() + Point{-1, 0};
+			player.movable.reposition(newPosition);
+			playerHitBox = player.calcPositionedHitbox();
+		}
+
+		while (collidesBottom(playerHitBox, currentRoom)) {
+			player.movable.grounded = true;
+			player.movable.v.y = 0;
+			auto newPosition = player.movable.getPosition() + Point{0, -1};
+			player.movable.reposition(newPosition);
+			playerHitBox = player.calcPositionedHitbox();
+		}
+
+		while (collidesTop(playerHitBox, currentRoom)) {
+			auto newPosition = player.movable.getPosition() + Point{0, 1};
+			player.movable.reposition(newPosition);
+			playerHitBox = player.calcPositionedHitbox();
+		}
+	}
+}

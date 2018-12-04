@@ -55,7 +55,7 @@ Layout:
 EndLayout
 
 Entities:
-    Mob: 100 170 Mage
+    Mob:  100 170 Mage
     Item: 140 140 Pot
     Item: 150 140 Pot
     Item: 160 140 Pot
