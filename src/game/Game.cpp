@@ -8,7 +8,8 @@ using namespace sdl;
 
 Game::Game(std::string definitions, std::string assets, std::string first_room, Position player_position,
            sdl::RenderOptions renderOpts)
-    : res(definitions, assets), currentRoom(std::make_unique<Room>(res.getRoom(first_room))), player(res.makePlayer()), renderOpts(renderOpts)
+    : res(definitions, assets), currentRoom(std::make_unique<Room>(res.getRoom(first_room))), player(res.makePlayer()),
+      renderOpts(renderOpts)
 {
 	player->movable.reposition(player_position);
 	play(currentRoom->music, repeat_forever);
@@ -51,7 +52,6 @@ void Game::interact()
 		}
 	}
 }
-
 
 Rectangle tileRectangle(int row, int column)
 {
@@ -96,26 +96,27 @@ bool collidesTop(Rectangle playerHitBox, Room currentRoom)
 	return false;
 }
 
-
-bool collidesBottom(Rectangle playerHitBox, Room currentRoom){
+bool collidesBottom(Rectangle playerHitBox, Room currentRoom)
+{
 	auto i = (playerHitBox.y + playerHitBox.h) / tileSize.h;
 	auto lowestColumnIndex = playerHitBox.x / tileSize.w;
 	auto highestColumnIndex = (playerHitBox.x + playerHitBox.w) / tileSize.w;
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
-		if (currentRoom.collisionMap[i][j] == Collision::Full &&
+		if ((currentRoom.collisionMap[i][j] == Collision::Full ||
+		     currentRoom.collisionMap[i][j] == Collision::TopOnly) &&
 		    sdl::intersects_bottom(playerHitBox, tileRectangle(i, j)))
 			return true;
 	}
 	return false;
 }
 
-inline bool isStanding(Rectangle playerHitBox, Room currentRoom){
+inline bool isStanding(Rectangle playerHitBox, Room currentRoom)
+{
 	auto i = (playerHitBox.y + playerHitBox.h) / tileSize.h;
 	auto lowestColumnIndex = playerHitBox.x / tileSize.w;
 	auto highestColumnIndex = (playerHitBox.x + playerHitBox.w) / tileSize.w;
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
-		if (currentRoom.collisionMap[i][j] > Collision::None &&
-		    touches_bottom(playerHitBox, tileRectangle(i, j)))
+		if (currentRoom.collisionMap[i][j] > Collision::None && touches_bottom(playerHitBox, tileRectangle(i, j)))
 			return true;
 	}
 	return false;
@@ -149,7 +150,7 @@ void Game::runMainLoop()
 		// first resolve collisions with the room
 		auto playerHitBox = player->calcPositionedHitbox();
 
-		if(!isStanding(playerHitBox, *currentRoom))
+		if (!isStanding(playerHitBox, *currentRoom))
 			player->movable.grounded = false;
 
 		if ((collidesLeft(playerHitBox, *currentRoom) && collidesRight(playerHitBox, *currentRoom)) ||
