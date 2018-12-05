@@ -25,7 +25,7 @@ void Item::render(const sdl::Renderer &renderer, const sdl::GameClock::time_poin
 	if (options.renderEntityDrawRectangles)
 		renderer.drawRectangle(destRect, {0, 0, 255, 128}, false);
 	if (options.renderHitBoxes)
-		renderer.drawRectangle(hitbox, {255, 0, 0, 128}, false);
+		renderer.drawRectangle(hitbox, {0, 255, 0, 128}, false);
 }
 
 Rectangle game::Item::calcRenderTarget() const
