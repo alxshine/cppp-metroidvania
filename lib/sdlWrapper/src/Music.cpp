@@ -3,6 +3,8 @@
 
 using namespace sdl;
 
+const Music *sdl::currentlyPlaying;
+
 Music::~Music()
 {
 	Mix_FreeMusic(rawMusic);

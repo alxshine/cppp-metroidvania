@@ -19,6 +19,8 @@ struct Music {
 	~Music();
 };
 
+extern const Music *currentlyPlaying;
+
 } // namespace sdl
 
 #endif /* MUSIC_H */
