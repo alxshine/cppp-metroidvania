@@ -27,9 +27,9 @@ game::Room::Room(const Room &rhs) noexcept
 void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
                         const sdl::RenderOptions &options) const
 {
-	renderer.render(background,
-	                sdl::Rectangle{0, -10, sdl::Renderer::logicalW,
-	                               sdl::Renderer::logicalH}); // TODO tell renderer where to render background?
+	// TODO: parallax
+	renderer.render(background);
+
 	for (auto &layer : layout) {
 		auto locationY = 0;
 		for (auto &row : layer) {
