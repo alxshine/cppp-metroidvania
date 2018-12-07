@@ -7,8 +7,8 @@
 
 #include "Color.hpp"
 #include "GameClock.hpp"
-#include "geometry.hpp"
 #include "SdlException.hpp"
+#include "geometry.hpp"
 #include "primitives.hpp"
 
 namespace sdl {
@@ -33,6 +33,7 @@ class Renderer {
   private:
 	SDL_Renderer *rawRenderer;
 	SDL_Window *rawWindow;
+	mutable Point cameraPosition = {0, 0};
 	static constexpr Color defaultColor = {0, 0, 0, 0};
 
   public:
@@ -53,7 +54,7 @@ class Renderer {
 	{
 		renderable.render(*this, t, options);
 	};
-	// TODO inline as much as possible here -- or not?
+	void setCameraPosition(Point point) const;
 	void render(const Texture &texture, Flip = Flip::None) const;
 	void render(const Texture &texture, const Rectangle targetRect, Flip = Flip::None) const;
 	void render(const Texture &texture, const Rectangle sourceRect, const Rectangle targetRect,
