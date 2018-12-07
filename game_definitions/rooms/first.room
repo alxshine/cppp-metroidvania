@@ -57,9 +57,9 @@ Layout:
 EndLayout
 
 Entities:
-    Mob:  100 170 Mage
-    Item: 140 140 Pot
-    Item: 150 140 Pot
-    Item: 160 140 Pot
-    Door: 200 170 OnlyDoor = TestDoor (Right) -> OnlyDoor in Second
+    Mob:  100 180 Mage
+    Item: 140 150 Pot
+    Item: 150 150 Pot
+    Item: 160 150 Pot
+    Door: 200 180 OnlyDoor = TestDoor (Right) -> OnlyDoor in Second
 EndEntities

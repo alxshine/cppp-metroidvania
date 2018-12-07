@@ -19,7 +19,7 @@ void printTimePoint(string name, const GameClock::time_point &t)
 int main()
 {
 	try {
-		Game game("game_definitions", "assets", "First", {50, 170});
+		Game game("game_definitions", "assets", "First", {50, 180});
 		game.runMainLoop();
 
 	} catch (SdlException &e) {
