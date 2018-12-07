@@ -9,15 +9,18 @@ game::Rectangle game::Room::Tile::render(const sdl::Renderer &renderer, const ga
 
 game::Room::Room(const std::string name, const sdl::Texture &background, const sdl::Music &music,
                  const Position &location, const game::Room::Layout layout, const game::Room::CollisionMap collisionMap,
-                 const std::vector<game::Mob> mobs, const std::vector<game::Item> items, const std::vector<game::Door> doors)
-    : name(name), background(background), music(music), location(location), layout(layout), collisionMap(collisionMap),
-      mobs(mobs), items(items), doors(doors)
+                 const std::vector<game::Mob> mobs, const std::vector<game::Item> items,
+                 const std::vector<game::Door> doors)
+    : name(name), background(background), music(music), location(location), layout(layout),
+      sizeInPixels({0, 0, static_cast<int>(layout[0][0].size()) * game::tileSize.w,
+                    static_cast<int>(layout[0].size()) * game::tileSize.h}),
+      collisionMap(collisionMap), mobs(mobs), items(items), doors(doors)
 {
 }
 
 game::Room::Room(const Room &rhs) noexcept
     : name(rhs.name), background(rhs.background), music(rhs.music), location(rhs.location), layout(rhs.layout),
-      collisionMap(rhs.collisionMap), mobs(rhs.mobs), items(rhs.items), doors(rhs.doors)
+      sizeInPixels(rhs.sizeInPixels), collisionMap(rhs.collisionMap), mobs(rhs.mobs), items(rhs.items), doors(rhs.doors)
 {
 }
 

@@ -56,11 +56,28 @@ void Game::interact()
 	}
 }
 
+static Position calcCameraPosition(const Player &player, const Room &room, const Renderer &renderer)
+{
+	const Position p = player.movable.getPosition();
+	const Rectangle rs = room.sizeInPixels;
+	Position camera = {0, std::max(rs.h - renderer.logicalH, 0)};
+
+	// Only scroll when the room is wider/higher than the screen
+	// AND the player is more than half inside it.
+
+	if (rs.w > renderer.logicalW && p.x >= 0.5 * renderer.logicalW)
+		camera.x = std::min(p.x - renderer.logicalW / 2, rs.w - renderer.logicalW);
+	if (rs.h > renderer.logicalH && p.y <= 0.5 * renderer.logicalH)
+		camera.y = std::max(p.y - renderer.logicalH / 2, 0);
+	return camera;
+}
+
 void Game::runMainLoop()
 {
 	while (running) {
 		// will need to decide between game and menu stack main loop here
 		renderer.clear();
+		renderer.setCameraPosition(calcCameraPosition(*player, *currentRoom, renderer));
 		auto now = gameClock.now();
 		gameFrameDelta = now - lastGameFrameTime;
 

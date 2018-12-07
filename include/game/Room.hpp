@@ -36,6 +36,7 @@ struct Room : public sdl::Renderable {
 	const sdl::Music &music;
 	const Position location;
 	const Layout layout;
+	const Rectangle sizeInPixels;
 	const CollisionMap collisionMap;
 	const std::vector<Mob> mobs;
 	const std::vector<Item> items;
