@@ -170,7 +170,6 @@ void ResourceManager::parseDefinition(fs::path f)
 			fin >> mob;
 
 			mobs.emplace(mob.name, makeMob(mob));
-			// TODO we might want to parse all mobs before the rooms...
 		} else if (ext == ".room") {
 			std::fstream fin(f, std::ios::in);
 			game_definitions::Room room;
@@ -181,6 +180,7 @@ void ResourceManager::parseDefinition(fs::path f)
 			std::fstream fin(f, std::ios::in);
 			game_definitions::Item item;
 			fin >> item;
+
 			items.emplace(item.name, makeItem(item));
 		}
 	} catch (game_definitions::ParseException &e) {
