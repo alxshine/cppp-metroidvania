@@ -65,9 +65,9 @@ static Position calcCameraPosition(const Player &player, const Room &room, const
 	// Only scroll when the room is wider/higher than the screen
 	// AND the player is more than half inside it.
 
-	if (rs.w > renderer.logicalW && p.x >= 0.5 * renderer.logicalW)
+	if (p.x >= 0.5 * renderer.logicalW)
 		camera.x = std::min(p.x - renderer.logicalW / 2, rs.w - renderer.logicalW);
-	if (rs.h > renderer.logicalH && p.y <= 0.5 * renderer.logicalH)
+	if (p.y <= 0.5 * renderer.logicalH)
 		camera.y = std::max(p.y - renderer.logicalH / 2, 0);
 	return camera;
 }
