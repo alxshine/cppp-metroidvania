@@ -60,6 +60,7 @@ class ResourceManager final {
 	std::unique_ptr<Room> makeRoom(const game_definitions::Room &roomdef) const;
 
 	void parseDefinition(std::filesystem::path f);
+	void parseDefinitions(std::string definitionPath);
 
 	// Members
 

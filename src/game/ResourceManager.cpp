@@ -158,6 +158,32 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 	                                    std::move(items), std::move(doors));
 }
 
+void ResourceManager::parseDefinitions(std::string definitionPath){
+	std::cout << "Parsing game definitions from: " << definitionPath << std::endl;
+	std::vector<fs::path> roomFiles, mobFiles, itemFiles;
+	for (auto &f : fs::recursive_directory_iterator(definitionPath)) {
+		if (!f.is_regular_file())
+			continue;
+		std::string ext{f.path().extension()};
+		if(ext == ".mob")
+			mobFiles.push_back(f);
+		else if (ext == ".room")
+			roomFiles.push_back(f);
+		else if (ext == ".item")
+			itemFiles.push_back(f);
+	}
+
+	for (auto &f : mobFiles) {
+		parseDefinition(f);
+	}
+	for (auto &f : itemFiles) {
+		parseDefinition(f);
+	}
+	for (auto &f : roomFiles) {
+		parseDefinition(f);
+	}
+}
+
 void ResourceManager::parseDefinition(fs::path f)
 {
 	std::string ext(f.extension());
@@ -208,13 +234,7 @@ ResourceManager::ResourceManager(const std::string &path_to_definitions, const s
 			loadMusic(path.filename(), path);
 	}
 
-	std::cout << "Parsing game definitions from: " << path_to_definitions << std::endl;
-	for (auto &f : fs::recursive_directory_iterator(path_to_definitions)) {
-		std::cout << "Parsing " << f << std::endl;
-		if (!f.is_regular_file())
-			continue;
-		//parseDefinition(f);
-	}
+	parseDefinitions(path_to_definitions);
 }
 
 /*************
