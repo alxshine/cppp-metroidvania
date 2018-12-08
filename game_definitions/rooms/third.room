@@ -7,7 +7,8 @@ Tileset: awesome.png
 Tiles:
     . empty     0 0 0 0 None
     # empty     0 0 0 0 Full
-    s solid     166 2 1 1 Full
+    s solid     176 16 16 16 Full
+    l lava      192 32 16 16 None
     m moss      16 256 15 15 None
     p platform  48 32 15 15 TopOnly
 EndTiles
@@ -19,11 +20,23 @@ Layout:
         ..............#
         ..............#
         ..............#
-        ssssssssssssss#
+        ..............#
+        ..............#
+        ..............#
+        ..............#
+        ..............#
+        ..............#
+        ..............#
+        ..............#
+        ..............#
+        ..............#
+        ..............#
+        ..............#
+        ssssssssslllll#
     EndLayer
 EndLayout
 
 Entities:
-    Door: 0 50 Entrance = TestDoor (Left) -> RegionTravel in Second
+    Door: 0 170 Entrance = TestDoor (Left) -> RegionTravel in Second
 
 EndEntities
