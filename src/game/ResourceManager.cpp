@@ -208,10 +208,12 @@ ResourceManager::ResourceManager(const std::string &path_to_definitions, const s
 			loadMusic(path.filename(), path);
 	}
 
+	std::cout << "Parsing game definitions from: " << path_to_definitions << std::endl;
 	for (auto &f : fs::recursive_directory_iterator(path_to_definitions)) {
+		std::cout << "Parsing " << f << std::endl;
 		if (!f.is_regular_file())
 			continue;
-		parseDefinition(f);
+		//parseDefinition(f);
 	}
 }
 

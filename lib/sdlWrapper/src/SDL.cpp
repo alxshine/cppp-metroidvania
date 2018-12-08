@@ -57,13 +57,13 @@ std::unique_ptr<sdl::Texture> sdl::SDL::loadTexture(const std::string &path) con
 {
 	SDL_Surface *tempSurface = IMG_Load(path.c_str());
 	if (tempSurface == nullptr)
-		throw SdlException("Could not load texture");
+		throw SdlException("Could not load texture '" + path + "': " + SDL_GetError());
 
 	SDL_Texture *rawTexture = SDL_CreateTextureFromSurface(renderer->getRawRenderer(), tempSurface);
 	SDL_FreeSurface(tempSurface); // Free *before* throwing exception
 
 	if (rawTexture == nullptr)
-		throw SdlException("Could not create texture");
+		throw SdlException("Could not load texture '" + path + "': " + SDL_GetError());
 
 	return std::make_unique<Texture>(rawTexture);
 }
