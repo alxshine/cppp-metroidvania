@@ -7,7 +7,7 @@
 namespace game {
 
 class Player;
-class Room;
+struct Room;
 
 class Movable {
   private:
