@@ -1,5 +1,5 @@
 Name: Pot
-Behaviour: FFSIDONTWANTTODOTHIS
+Behaviour: FFSIDONTWANTTHIS
 Hitbox: 0 0 10 10
 DrawSize: 0 0 10 10
 

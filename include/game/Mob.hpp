@@ -13,8 +13,7 @@ using OptionalAnimation = std::unique_ptr<sdl::Animation>;
 class Mob : public sdl::Renderable {
   public:
 	Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-	    const sdl::Animation walkingAnimation,
-	    OptionalAnimation idleAnimation); // TODO finish ctor
+	    const sdl::Animation walkingAnimation, OptionalAnimation idleAnimation);
 	Mob(const Mob &rhs);
 
 	Mob &operator=(const Mob &rhs) = delete;

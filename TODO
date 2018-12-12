@@ -8,9 +8,7 @@ TODO offset background rendering by the height of the highest row that is comple
 # Big features
 --- Mob rendering
 TODO transform mob position when adding to room (in makeRoom) to allow using tile coordinates instead of pixels in room definition
-TODO give the mobs the ability to give target rendering size (this allows us to use smaller sprite sheets for larger enemies or bosses)
 ---
-TODO add scrolling support to the renderer -- update scrolling once every frame using player position
 TODO add viewport support to the renderer, which will greatly simplify HUD and menus
 
 # Refactoring

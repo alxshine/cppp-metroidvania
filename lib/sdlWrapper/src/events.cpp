@@ -4,7 +4,6 @@ void sdl::EventHandler::dispatch() const
 {
 	Event e;
 	while (SDL_PollEvent(&e)) {
-		// TODO if we find out that we only need SDL_PRESSED, filter for that right here!
 		if (e.type == SDL_KEYDOWN) {
 			const auto key = e.key.keysym.sym;
 			if (keyDownCallbacks.count(key))
