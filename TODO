@@ -1,6 +1,7 @@
 # Small fixes
 TODO make animations keep state and work using delta time so they always start from the start - very important for attacks, deaths, etc!
 TODO make animations optionally not repeatable (default param) - very important for attacks, deaths, etc!
+TODO find out why our tiles are rendered with borders
 
 # Optional features for later
 TODO offset background rendering by the height of the highest row that is completely solid in the collision map (consecutive from the bottom, again calculate at makeRoom time)
