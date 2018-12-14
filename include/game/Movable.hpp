@@ -14,8 +14,8 @@ class Movable {
 	Position position;
 	Position lastPosition; // Probably needed for collision detection...
 	Direction direction = {0, 0};
-	bool moved = false;
 	bool canMove = true;
+	bool fallThroughPlatforms = false;
 
 	Speed maxSpeed;
 
@@ -27,8 +27,7 @@ class Movable {
 	Velocity v;
 	bool grounded = false;
 
-	void update();
-	void move(std::chrono::milliseconds frameDelta);
+	void update(std::chrono::milliseconds frameDelta);
 	void reposition(Position newPosition);
 
 	bool getMoved() const;

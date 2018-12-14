@@ -11,7 +11,7 @@ bool collidesRight(Rectangle playerHitBox, Room &currentRoom);
 
 bool collidesTop(Rectangle playerHitBox, Room &currentRoom);
 
-bool collidesBottom(Rectangle playerHitBox, Room &currentRoom);
+bool collidesBottom(Rectangle playerHitBox, Room &currentRoom, Collision testCollision = Collision::Full);
 
 bool isStanding(Rectangle playerHitBox, Room &currentRoom);
 

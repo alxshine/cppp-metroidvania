@@ -83,18 +83,22 @@ void Game::runMainLoop()
 
 		// reset player velocity
 		player->movable.v.x = 0;
-		if (!player->movable.grounded) // gravity
-			player->movable.v.y += 10;
+		player->movable.fallThroughPlatforms = false;
 
 		// events
 		gameEvents.dispatch();
+
+		// gravity
+		if (!player->movable.grounded){
+			player->movable.v.y += 10;
+			player->movable.v.y = std::min(player->movable.v.y, 2*player->movable.maxSpeed);
+		}
 
 		// Room
 		// currentRoom->update()
 
 		// Player
-		player->movable.move(gameFrameDelta);
-		player->movable.update();
+		player->movable.update(gameFrameDelta);
 		resolvePlayerCollision(*player, *currentRoom);
 
 		// render
@@ -123,16 +127,9 @@ void Game::registerGameEvents()
 
 	// jump down from platforms
 	gameEvents.whileKeyHeld(SDL_SCANCODE_S, [this]() {
-		auto hitbox = player->calcPositionedHitbox();
-		auto i = getTileRow(hitbox);
-		auto min_j = getLowestTileColumn(hitbox);
-		auto max_j = getHighestTileColumn(hitbox);
-		for (int j = min_j; j < max_j; ++j)
-			if (currentRoom->collisionMap[i][j] == Collision::TopOnly) {
-				player->movable.reposition(player->movable.getPosition() + Point{0, hitbox.h});
-				player->movable.v.y += 10;
-				return;
-			}
+		player->movable.fallThroughPlatforms = true;
+		player->movable.grounded = false;
+		player->movable.v.y = 2 * player->movable.maxSpeed;
 	});
 	// jump
 	gameEvents.whileKeyHeld(SDL_SCANCODE_SPACE, [this]() {

@@ -9,25 +9,25 @@
 #include "constants.hpp"
 
 namespace game {
-struct Speed {
-	Speed() : s{0} {}
-	Speed(int n) : s{n} {}
-	friend std::ostream &operator<<(std::ostream &out, const Speed &s);
-	operator int() const noexcept
-	{
-		return s;
-	}
-	Speed &operator+=(const Speed &rhs);
-	Speed &operator-=(const Speed &rhs);
-	friend Speed operator+(Speed lhs, const Speed &rhs);
-	friend bool operator<(const Speed &lhs, const Speed &rhs);
-	friend bool operator>(const Speed &lhs, const Speed &rhs);
+	using Speed = int;
+//struct Speed {
+	//Speed() : s{0} {}
+	//Speed(int n) : s{n} {}
+	//friend std::ostream &operator<<(std::ostream &out, const Speed &s);
+	//Speed &operator+=(const Speed &rhs);
+	//Speed &operator-=(const Speed &rhs);
+	//Speed &operator*=(const Speed &rhs);
+	//friend Speed operator+(Speed lhs, const Speed &rhs);
+	//friend Speed operator*(Speed lhs, const Speed &rhs);
+	//friend int operator*(const Speed &lhs, const std::chrono::milliseconds &rhs);
+	//friend bool operator<(const Speed &lhs, const Speed &rhs);
+	//friend bool operator>(const Speed &lhs, const Speed &rhs);
 
-  private:
-	int s;
-};
+  //private:
+	//int s;
+//};
 
-Speed operator"" _ups(unsigned long long n);
+//Speed operator"" _ups(unsigned long long n);
 
 struct Velocity {
 	Speed x, y;

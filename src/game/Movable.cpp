@@ -4,7 +4,7 @@ using namespace game;
 
 Movable::Movable(Speed maxSpeed, Position pos) : position(pos), lastPosition(pos), maxSpeed(maxSpeed) {}
 
-void Movable::move(std::chrono::milliseconds frameDelta)
+void Movable::update(std::chrono::milliseconds frameDelta)
 {
 	if(!canMove)
 		return;
@@ -13,36 +13,26 @@ void Movable::move(std::chrono::milliseconds frameDelta)
 }
 
 void Movable::reposition(Position newPosition) {
-	position = newPosition;
-	lastPosition = newPosition;
-}
-
-void Movable::update()
-{
-	if (position != lastPosition)
-		moved = true;
-	else
-		moved = false;
-
 	lastPosition = position;
+	position = newPosition;
 }
 
 bool Movable::getMoved() const
 {
-	return moved;
+	return canMove && lastPosition != position;
 }
 Direction Movable::getDirection() const
 {
 	int x = 0;
-	if(v.x > 0_ups)
+	if(v.x > 0)
 		x = 1;
-	else if(v.x < 0_ups)
+	else if(v.x < 0)
 		x = -1;
 
 	int y = 0;
-	if(v.y > 0_ups)
+	if(v.y > 0)
 		y = 1;
-	else if(v.y < 0_ups)
+	else if(v.y < 0)
 		y = -1;
 
 	return {x,y};
