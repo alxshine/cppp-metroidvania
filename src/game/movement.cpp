@@ -1,11 +1,11 @@
 #include "game/movement.hpp"
 
+namespace game {
+
 game::Speed operator"" _ups(unsigned long long n)
 {
 	return game::Speed{(int)n};
 }
-
-namespace game {
 
 game::Speed &game::Speed::operator+=(const game::Speed &rhs)
 {
@@ -23,6 +23,14 @@ game::Speed operator+(game::Speed lhs, const game::Speed &rhs)
 {
 	lhs += rhs;
 	return lhs;
+}
+
+bool operator<(const game::Speed &lhs, const game::Speed &rhs){
+	return lhs.s < rhs.s;
+}
+
+bool operator>(const game::Speed &lhs, const game::Speed &rhs){
+	return lhs.s > rhs.s;
 }
 
 game::Velocity &game::Velocity::operator+=(const game::Velocity &rhs)

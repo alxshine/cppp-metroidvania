@@ -10,22 +10,6 @@ void Movable::move(std::chrono::milliseconds frameDelta)
 		return;
 	lastPosition = position;
 	position += v * frameDelta;
-
-	if (position.x > lastPosition.x)
-		direction = Direction::Right;
-	else if (position.x < lastPosition.x)
-		direction = Direction::Left;
-
-	// NOTE: this reflects top-down coordinates
-	else if (position.y > lastPosition.y)
-		direction = Direction::Down;
-	else if (position.y < lastPosition.y)
-		direction = Direction::Up;
-}
-
-void Movable::setDirection(Direction dir)
-{
-	direction = dir;
 }
 
 void Movable::reposition(Position newPosition) {
@@ -49,8 +33,25 @@ bool Movable::getMoved() const
 }
 Direction Movable::getDirection() const
 {
-	return direction;
+	int x = 0;
+	if(v.x > 0_ups)
+		x = 1;
+	else if(v.x < 0_ups)
+		x = -1;
+
+	int y = 0;
+	if(v.y > 0_ups)
+		y = 1;
+	else if(v.y < 0_ups)
+		y = -1;
+
+	return {x,y};
 }
+
+void Movable::setDirection(Direction d){
+	direction = d;
+}
+
 Position Movable::getPosition() const
 {
 	return position;

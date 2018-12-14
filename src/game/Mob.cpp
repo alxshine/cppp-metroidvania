@@ -35,18 +35,11 @@ void game::Mob::render(const sdl::Renderer &renderer, const sdl::GameClock::time
 	Rectangle hitbox = calcPositionedHitbox();
 
 	sdl::Renderer::Flip flip;
-	switch (movable.getDirection()) {
-	case Direction::Up:
-		// fallthrough
-	case Direction::Down:
-		// fallthrough
-	case Direction::Right:
-		flip = sdl::Renderer::Flip::None;
-		break;
-	case Direction::Left:
+	auto dir = movable.getDirection();
+	if(dir.x < 0)
 		flip = sdl::Renderer::Flip::X;
-		break;
-	}
+	else
+		flip = sdl::Renderer::Flip::None;
 
 	if (movable.getMoved() || idleAnimation == nullptr)
 		renderer.render(walkingAnimation.getAnimationFrame(t), destRect, flip);

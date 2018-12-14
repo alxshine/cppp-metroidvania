@@ -53,8 +53,7 @@ bool game::collidesBottom(Rectangle playerHitBox, Room &currentRoom)
 	auto lowestColumnIndex = getLowestTileColumn(playerHitBox);
 	auto highestColumnIndex = getHighestTileColumn(playerHitBox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
-		if ((currentRoom.collisionMap[i][j] == Collision::Full ||
-		     currentRoom.collisionMap[i][j] == Collision::TopOnly) &&
+		if (currentRoom.collisionMap[i][j] == Collision::Full &&
 		    sdl::intersects_bottom(playerHitBox, tileRectangle(i, j)))
 			return true;
 	}
@@ -76,41 +75,42 @@ bool game::isStanding(Rectangle playerHitBox, Room &currentRoom)
 void game::resolvePlayerCollision(Player &player, Room &currentRoom)
 {
 	// first resolve collisions with the room
-	auto playerHitBox = player.calcPositionedHitbox();
+	auto hitBox = player.calcPositionedHitbox();
+	auto moveDirection = player.movable.getDirection();
 
-	if (!isStanding(playerHitBox, currentRoom))
+	if (!isStanding(hitBox, currentRoom))
 		player.movable.grounded = false;
 
-	if ((collidesLeft(playerHitBox, currentRoom) && collidesRight(playerHitBox, currentRoom)) ||
-	    (collidesTop(playerHitBox, currentRoom) && collidesBottom(playerHitBox, currentRoom)))
+	if ((collidesLeft(hitBox, currentRoom) && collidesRight(hitBox, currentRoom)) ||
+	    (collidesTop(hitBox, currentRoom) && collidesBottom(hitBox, currentRoom)))
 		player.movable.canMove = false;
 
 	if (player.movable.canMove && player.movable.getMoved()) {
 
-		while (collidesLeft(playerHitBox, currentRoom)) {
+		while (collidesLeft(hitBox, currentRoom)) {
 			auto newPosition = player.movable.getPosition() + Point{1, 0};
 			player.movable.reposition(newPosition);
-			playerHitBox = player.calcPositionedHitbox();
+			hitBox = player.calcPositionedHitbox();
 		}
 
-		while (collidesRight(playerHitBox, currentRoom)) {
+		while (collidesRight(hitBox, currentRoom)) {
 			auto newPosition = player.movable.getPosition() + Point{-1, 0};
 			player.movable.reposition(newPosition);
-			playerHitBox = player.calcPositionedHitbox();
+			hitBox = player.calcPositionedHitbox();
 		}
 
-		while (collidesBottom(playerHitBox, currentRoom)) {
+		while (moveDirection.y > 0 && collidesBottom(hitBox, currentRoom)) {
 			player.movable.grounded = true;
 			player.movable.v.y = 0;
 			auto newPosition = player.movable.getPosition() + Point{0, -1};
 			player.movable.reposition(newPosition);
-			playerHitBox = player.calcPositionedHitbox();
+			hitBox = player.calcPositionedHitbox();
 		}
 
-		while (collidesTop(playerHitBox, currentRoom)) {
+		while (collidesTop(hitBox, currentRoom)) {
 			auto newPosition = player.movable.getPosition() + Point{0, 1};
 			player.movable.reposition(newPosition);
-			playerHitBox = player.calcPositionedHitbox();
+			hitBox = player.calcPositionedHitbox();
 		}
 	}
 }

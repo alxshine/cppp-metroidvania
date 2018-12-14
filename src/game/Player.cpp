@@ -7,10 +7,19 @@ Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingA
 {
 }
 
+Rectangle adjustByHitBox(Position position)
+{
+	return {position.x - static_cast<int>(tileSize.w / 2), position.y - 2 * tileSize.h, tileSize.w, tileSize.h * 2};
+}
+
 Rectangle Player::calcPositionedHitbox() const
 {
-	Rectangle destRect = calcRenderTarget();
-	return {destRect.x + hitbox.x, destRect.y + hitbox.y, hitbox.w, hitbox.h};
+	return adjustByHitBox(movable.getPosition());
+}
+
+Rectangle Player::calcLastPositionedHitbox() const
+{
+	return adjustByHitBox(movable.getLastPosition());
 }
 
 Rectangle Player::calcRenderTarget() const
@@ -27,18 +36,11 @@ void Player::render(const sdl::Renderer &renderer, const sdl::GameClock::time_po
 	Rectangle destRect = calcRenderTarget();
 
 	sdl::Renderer::Flip flip;
-	switch (movable.getDirection()) {
-	case Direction::Up:
-		// fallthrough
-	case Direction::Down:
-		// fallthrough
-	case Direction::Right:
-		flip = sdl::Renderer::Flip::None;
-		break;
-	case Direction::Left:
+	auto dir = movable.getDirection();
+	if(dir.x < 0)
 		flip = sdl::Renderer::Flip::X;
-		break;
-	}
+	else
+		flip = sdl::Renderer::Flip::None;
 
 	if (movable.getMoved())
 		renderer.render(walkingAnimation.getAnimationFrame(t), destRect, flip);
@@ -50,6 +52,5 @@ void Player::render(const sdl::Renderer &renderer, const sdl::GameClock::time_po
 		renderer.drawRectangle(destRect, {0, 0, 255, 128}, false);
 	// draw hit/collision box
 	if (options.renderHitBoxes)
-		renderer.drawRectangle(calcPositionedHitbox(), {255, 0, 0, 128},
-		                       false);
+		renderer.drawRectangle(calcPositionedHitbox(), {255, 0, 0, 128}, false);
 }

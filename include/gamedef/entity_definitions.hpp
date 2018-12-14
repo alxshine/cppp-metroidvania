@@ -66,7 +66,9 @@ struct Mob {
 	std::vector<Attack> attacks;
 };
 
-enum class Direction { Up, Down, Left, Right };
+struct Direction {
+	int x, y;
+};
 
 struct Door {
 	Position position;

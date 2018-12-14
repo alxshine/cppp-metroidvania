@@ -13,7 +13,7 @@ class Movable {
   private:
 	Position position;
 	Position lastPosition; // Probably needed for collision detection...
-	Direction direction = Direction::Right;
+	Direction direction = {0, 0};
 	bool moved = false;
 	bool canMove = true;
 
@@ -33,7 +33,7 @@ class Movable {
 
 	bool getMoved() const;
 	Direction getDirection() const;
-	void setDirection(Direction dir);
+	void setDirection(Direction d);
 	Position getPosition() const;
 	Position getLastPosition() const;
 };

@@ -20,6 +20,8 @@ struct Speed {
 	Speed &operator+=(const Speed &rhs);
 	Speed &operator-=(const Speed &rhs);
 	friend Speed operator+(Speed lhs, const Speed &rhs);
+	friend bool operator<(const Speed &lhs, const Speed &rhs);
+	friend bool operator>(const Speed &lhs, const Speed &rhs);
 
   private:
 	int s;

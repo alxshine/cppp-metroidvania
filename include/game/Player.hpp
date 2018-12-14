@@ -21,6 +21,7 @@ class Player : public sdl::Renderable {
 	Movable movable;
 
 	Rectangle calcPositionedHitbox() const;
+	Rectangle calcLastPositionedHitbox() const;
 
   private:
 	Rectangle calcRenderTarget() const;

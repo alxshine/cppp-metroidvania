@@ -241,13 +241,13 @@ std::istream &game_definitions::operator>>(std::istream &in, Door &door)
 	std::string dir;
 	in >> dir;
 	if (dir == "(Left)")
-		door.direction = Direction::Left;
+		door.direction = {-1,0};
 	else if (dir == "(Down)")
-		door.direction = Direction::Down;
+		door.direction = {0,1};
 	else if (dir == "(Right)")
-		door.direction = Direction::Right;
+		door.direction = {1,0};
 	else if (dir == "(Up)")
-		door.direction = Direction::Up;
+		door.direction = {0,-1};
 	else
 		throw ParseException("Unkown direction " + dir);
 
