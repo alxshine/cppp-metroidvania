@@ -13,7 +13,9 @@ bool game::collidesLeft(Rectangle playerHitBox, Room &currentRoom)
 		    sdl::intersects_left(playerHitBox, tileRectangle(i, j)))
 			return true;
 	}
-	// TODO: @alex check against left room border
+	// Check against left border
+	if (playerHitBox.x < 0)
+		return true;
 	return false;
 }
 
@@ -27,7 +29,9 @@ bool game::collidesRight(Rectangle playerHitBox, Room &currentRoom)
 		    sdl::intersects_right(playerHitBox, tileRectangle(i, j)))
 			return true;
 	}
-	// TODO: @alex check against right room border
+	// Check against right border
+	if (playerHitBox.x + playerHitBox.w > currentRoom.sizeInPixels.w)
+		return true;
 	return false;
 }
 
