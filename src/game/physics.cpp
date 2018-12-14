@@ -92,14 +92,14 @@ void game::resolvePlayerCollision(Player &player, Room &currentRoom)
 			player.movable.reposition(newPosition);
 			hitBox = player.calcPositionedHitbox();
 		}
-		hitBox = player.calcPositionedHitbox();
+		//hitBox = player.calcPositionedHitbox();
 
 		while (collidesRight(hitBox, currentRoom)) {
 			auto newPosition = player.movable.getPosition() + Point{-1, 0};
 			player.movable.reposition(newPosition);
 			hitBox = player.calcPositionedHitbox();
 		}
-		hitBox = player.calcPositionedHitbox();
+		//hitBox = player.calcPositionedHitbox();
 
 
 		while (moveDirection.y > 0 && collidesBottom(hitBox, currentRoom)) {
@@ -109,7 +109,7 @@ void game::resolvePlayerCollision(Player &player, Room &currentRoom)
 			player.movable.reposition(newPosition);
 			hitBox = player.calcPositionedHitbox();
 		}
-		hitBox = player.calcPositionedHitbox();
+		//hitBox = player.calcPositionedHitbox();
 
 
 		while (collidesTop(hitBox, currentRoom)) {
