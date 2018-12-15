@@ -6,13 +6,19 @@ Movable::Movable(Speed maxSpeed, Position pos) : position(pos), lastPosition(pos
 
 void Movable::update(std::chrono::milliseconds frameDelta)
 {
-	if(!canMove)
+	if (!canMove)
 		return;
 	lastPosition = position;
 	position += v * frameDelta;
+
+	if (lastPosition != position) {
+		direction.x = (v.x > 0) - (v.x < 0);
+		direction.y = (v.y > 0) - (v.y < 0);
+	}
 }
 
-void Movable::reposition(Position newPosition) {
+void Movable::reposition(Position newPosition)
+{
 	lastPosition = position;
 	position = newPosition;
 }
@@ -23,22 +29,11 @@ bool Movable::getMoved() const
 }
 Direction Movable::getDirection() const
 {
-	int x = 0;
-	if(v.x > 0)
-		x = 1;
-	else if(v.x < 0)
-		x = -1;
-
-	int y = 0;
-	if(v.y > 0)
-		y = 1;
-	else if(v.y < 0)
-		y = -1;
-
-	return {x,y};
+	return direction;
 }
 
-void Movable::setDirection(Direction d){
+void Movable::setDirection(Direction d)
+{
 	direction = d;
 }
 
