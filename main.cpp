@@ -20,9 +20,7 @@ int main()
 {
 	try {
 		Game game("game_definitions", "assets", "First", {50, 180});
-		printTimePoint("before init", game.lastGameFrameTime);
 		game.initialize();
-		printTimePoint("after init", game.lastGameFrameTime);
 		game.runMainLoop();
 
 	} catch (SdlException &e) {

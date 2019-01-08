@@ -83,8 +83,7 @@ void Game::runMainLoop()
 		gameFrameDelta = now - lastGameFrameTime;
 
 		// reset player velocity
-		player->movable.v.x = 0;
-		player->movable.fallThroughPlatforms = false;
+		player->movable.mainLoopReset();
 
 		// events
 		gameEvents.dispatch();
@@ -97,7 +96,7 @@ void Game::runMainLoop()
 
 		// Player
 		player->movable.update(gameFrameDelta);
-		resolvePlayerCollision(*player, *currentRoom);
+		resolveRoomCollision(*player, *currentRoom);
 
     // render
 		renderer.render(*currentRoom, now, renderOpts);
@@ -148,6 +147,6 @@ void Game::registerGameEvents()
 	});
 
 	// normal movement
-	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() { player->movable.v.x = player->movable.maxSpeed; });
-	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() { player->movable.v.x = -player->movable.maxSpeed; });
+	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() { player->movable.moveRight(); });
+	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() { player->movable.moveLeft(); });
 }

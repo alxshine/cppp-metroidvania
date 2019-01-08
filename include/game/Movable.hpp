@@ -14,6 +14,8 @@ class Movable {
 	Position position;
 	Position lastPosition; // needed for collision detection...
 	Direction direction = {0, 0};
+  bool moved = false;
+	bool grounded = true;
 
 	Speed maxSpeed;
 
@@ -23,10 +25,10 @@ class Movable {
   public:
 	Movable(Speed maxSpeed, Position pos = {0, 0});
 	Velocity v;
-	bool grounded = true;
 	bool canMove = true;
 	bool fallThroughPlatforms = false;
 
+  void mainLoopReset();
   void moveLeft();
   void moveRight();
   void jump();

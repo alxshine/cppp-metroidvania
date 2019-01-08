@@ -16,32 +16,18 @@ bool game::contained(std::vector<T> vec, T x)
 
 std::unique_ptr<Entity> ResourceManager::makePlayer() const
 {
-	const sdl::Texture &spritesheet = getTexture("BlueCleric.png");
-	const sdl::Animation idleAnimation{spritesheet,
-	                                   {{0, 0, 32, 32},
-	                                    {32 * 1, 0, 32, 32},
-	                                    {32 * 2, 0, 32, 32},
-	                                    {32 * 3, 0, 32, 32},
-	                                    {32 * 4, 0, 32, 32},
-	                                    {32 * 5, 0, 32, 32},
-	                                    {32 * 6, 0, 32, 32},
-	                                    {32 * 7, 0, 32, 32},
-	                                    {32 * 8, 0, 32, 32},
-	                                    {32 * 9, 0, 32, 32}},
-	                                   300ms};
+	const sdl::Texture &spritesheet = getTexture("adventurer.png");
+	const sdl::Animation idleAnimation{
+	    spritesheet, {{0, 0, 50, 36}, {50, 0, 50, 36}, {100, 0, 50, 36}, {150, 0, 50, 36}}, 200ms};
 
 	const sdl::Animation walkingAnimation{spritesheet,
-	                                      {{0, 32 * 2, 32, 32},
-	                                       {32 * 1, 32 * 2, 32, 32},
-	                                       {32 * 2, 32 * 2, 32, 32},
-	                                       {32 * 3, 32 * 2, 32, 32},
-	                                       {32 * 4, 32 * 2, 32, 32},
-	                                       {32 * 5, 32 * 2, 32, 32},
-	                                       {32 * 6, 32 * 2, 32, 32},
-	                                       {32 * 7, 32 * 2, 32, 32},
-	                                       {32 * 8, 32 * 2, 32, 32},
-	                                       {32 * 9, 32 * 2, 32, 32}},
-	                                      50ms};
+	                                      {{50,37,50,36},
+                                         {100,37,50,36},
+                                         {150,37,50,36},
+                                         {200,37,50,36},
+                                         {250,37,50,36},
+                                         {300,37,50,36}},
+	                                      150ms};
 
 	return std::make_unique<Entity>(idleAnimation, walkingAnimation);
 }
@@ -158,14 +144,15 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 	                                    std::move(items), std::move(doors));
 }
 
-void ResourceManager::parseDefinitions(std::string definitionPath){
+void ResourceManager::parseDefinitions(std::string definitionPath)
+{
 	std::cout << "Parsing game definitions from: " << definitionPath << std::endl;
 	std::vector<fs::path> roomFiles, mobFiles, itemFiles;
 	for (auto &f : fs::recursive_directory_iterator(definitionPath)) {
 		if (!f.is_regular_file())
 			continue;
 		std::string ext{f.path().extension()};
-		if(ext == ".mob")
+		if (ext == ".mob")
 			mobFiles.push_back(f);
 		else if (ext == ".room")
 			roomFiles.push_back(f);
