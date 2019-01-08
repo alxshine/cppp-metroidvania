@@ -31,7 +31,7 @@ class ResourceManager final {
 	Mob getMob(const std::string &name) const;
 	Item getItem(const std::string &name) const;
 	Room getRoom(const std::string &name) const;
-	std::unique_ptr<Player> makePlayer() const;
+	std::unique_ptr<Entity> makePlayer() const;
 	const sdl::SoundEffect &getSound(const std::string &name) const;
 	const sdl::Music &getMusic(const std::string &name) const;
 

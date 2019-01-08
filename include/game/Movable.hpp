@@ -6,26 +6,32 @@
 
 namespace game {
 
-class Player;
+class Entity;
 struct Room;
 
 class Movable {
   private:
 	Position position;
-	Position lastPosition; // Probably needed for collision detection...
+	Position lastPosition; // needed for collision detection...
 	Direction direction = {0, 0};
-	bool canMove = true;
-	bool fallThroughPlatforms = false;
 
 	Speed maxSpeed;
 
 	friend class Game;
-	friend void resolvePlayerCollision(Player &player, Room &currentRoom);
+	friend void resolveRoomCollision(Entity &player, Room &currentRoom);
 
   public:
 	Movable(Speed maxSpeed, Position pos = {0, 0});
 	Velocity v;
 	bool grounded = false;
+	bool canMove = true;
+	bool fallThroughPlatforms = false;
+
+  void moveLeft();
+  void moveRight();
+  void jump();
+  void fall();
+  void applyGravity(std::chrono::milliseconds frameDelta);
 
 	void update(std::chrono::milliseconds frameDelta);
 	void reposition(Position newPosition);

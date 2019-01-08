@@ -17,6 +17,30 @@ void Movable::update(std::chrono::milliseconds frameDelta)
 	}
 }
 
+void Movable::moveLeft()
+{
+	v.x -= maxSpeed;
+}
+
+void Movable::moveRight()
+{
+	v.x += maxSpeed;
+}
+
+void Movable::jump()
+{
+	if (grounded) {
+		v.y = -2 * maxSpeed;
+		grounded = false;
+	}
+}
+
+void Movable::fall(){
+  fallThroughPlatforms = true;
+  grounded = false;
+  v.y = 2* maxSpeed;
+}
+
 void Movable::reposition(Position newPosition)
 {
 	lastPosition = position;

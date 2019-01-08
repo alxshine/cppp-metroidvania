@@ -14,7 +14,7 @@ bool game::contained(std::vector<T> vec, T x)
 	return std::find(vec.begin(), vec.end(), x) != vec.end();
 }
 
-std::unique_ptr<Player> ResourceManager::makePlayer() const
+std::unique_ptr<Entity> ResourceManager::makePlayer() const
 {
 	const sdl::Texture &spritesheet = getTexture("BlueCleric.png");
 	const sdl::Animation idleAnimation{spritesheet,
@@ -43,7 +43,7 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	                                       {32 * 9, 32 * 2, 32, 32}},
 	                                      50ms};
 
-	return std::make_unique<Player>(idleAnimation, walkingAnimation);
+	return std::make_unique<Entity>(idleAnimation, walkingAnimation);
 }
 
 std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobdef) const

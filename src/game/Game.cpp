@@ -56,7 +56,7 @@ void Game::interact()
 	}
 }
 
-static Position calcCameraPosition(const Player &player, const Room &room, const Renderer &renderer)
+static Position calcCameraPosition(const Entity &player, const Room &room, const Renderer &renderer)
 {
 	const Position p = player.movable.getPosition();
 	const Rectangle rs = room.sizeInPixels;
@@ -89,9 +89,9 @@ void Game::runMainLoop()
 		gameEvents.dispatch();
 
 		// gravity
-		if (!player->movable.grounded){
+		if (!player->movable.grounded) {
 			player->movable.v.y += 10;
-			player->movable.v.y = std::min(player->movable.v.y, 2*player->movable.maxSpeed);
+			player->movable.v.y = std::min(player->movable.v.y, 2 * player->movable.maxSpeed);
 		}
 
 		// Room
@@ -126,18 +126,9 @@ void Game::registerGameEvents()
 	});
 
 	// jump down from platforms
-	gameEvents.whileKeyHeld(SDL_SCANCODE_S, [this]() {
-		player->movable.fallThroughPlatforms = true;
-		player->movable.grounded = false;
-		player->movable.v.y = 2 * player->movable.maxSpeed;
-	});
+	gameEvents.whileKeyHeld(SDL_SCANCODE_S, [this]() { player->movable.fall(); });
 	// jump
-	gameEvents.whileKeyHeld(SDL_SCANCODE_SPACE, [this]() {
-		if (player->movable.grounded) {
-			player->movable.v.y = -2 * player->movable.maxSpeed;
-			player->movable.grounded = false;
-		}
-	});
+	gameEvents.whileKeyHeld(SDL_SCANCODE_SPACE, [this]() { player->movable.jump(); });
 
 	// interaction
 	gameEvents.onKeyDown(SDLK_e, [this](const KeyboardEvent &) { this->interact(); });

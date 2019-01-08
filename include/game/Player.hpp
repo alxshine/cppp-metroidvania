@@ -6,13 +6,13 @@
 #include "constants.hpp"
 
 namespace game {
-class Player : public sdl::Renderable {
+class Entity : public sdl::Renderable {
   public:
-	Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation);
+	Entity(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation);
 	// virtual ~Player();
 
-	Player &operator=(const Player &rhs) = delete;
-	Player(const Player &rhs) = delete;
+	Entity &operator=(const Entity &rhs) = delete;
+	Entity(const Entity &rhs) = delete;
 
 	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
 	            const sdl::RenderOptions &options = {}) const override;
