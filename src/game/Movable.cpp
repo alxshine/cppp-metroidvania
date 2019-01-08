@@ -2,7 +2,7 @@
 
 using namespace game;
 
-Movable::Movable(Speed maxSpeed, Position pos) : position(pos), lastPosition(pos), maxSpeed(maxSpeed) {}
+Movable::Movable(Speed maxSpeed, Position pos) : position(pos), lastPosition(pos), maxSpeed(maxSpeed), v({0,0}) {}
 
 void Movable::update(std::chrono::milliseconds frameDelta)
 {
@@ -35,10 +35,19 @@ void Movable::jump()
 	}
 }
 
-void Movable::fall(){
-  fallThroughPlatforms = true;
-  grounded = false;
-  v.y = 2* maxSpeed;
+void Movable::fall()
+{
+	fallThroughPlatforms = true;
+	grounded = false;
+	v.y = 2 * maxSpeed;
+}
+
+void Movable::applyGravity(std::chrono::milliseconds frameDelta)
+{
+	if (!grounded) {
+		v.y += 600 * frameDelta.count() / 1000; // the value for gravity was found via trial-and-error
+    v.y = std::min(v.y, 2*maxSpeed);
+	}
 }
 
 void Movable::reposition(Position newPosition)

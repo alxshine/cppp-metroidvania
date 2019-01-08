@@ -1,11 +1,12 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 
 #include "SDL.hpp"
 #include "game/ResourceManager.hpp"
+#include "game/physics.hpp"
 
 using namespace std::chrono_literals;
 
@@ -16,8 +17,10 @@ class Game {
 	Game(std::string definitions, std::string assets, std::string first_room, Position player_position,
 	     sdl::RenderOptions renderOpts = {false, false, false});
 
+	void initialize();
 	void runMainLoop();
 	void interact();
+	sdl::GameClock::time_point lastGameFrameTime;
 
   private:
 	ResourceManager res;
@@ -28,7 +31,6 @@ class Game {
 
 	bool running = true;
 	sdl::GameClock gameClock;
-	sdl::GameClock::time_point lastGameFrameTime;
 	std::chrono::milliseconds gameFrameDelta = 0ms;
 	sdl::EventHandler gameEvents;
 

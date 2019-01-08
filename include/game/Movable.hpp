@@ -23,7 +23,7 @@ class Movable {
   public:
 	Movable(Speed maxSpeed, Position pos = {0, 0});
 	Velocity v;
-	bool grounded = false;
+	bool grounded = true;
 	bool canMove = true;
 	bool fallThroughPlatforms = false;
 

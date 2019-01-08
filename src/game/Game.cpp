@@ -1,8 +1,4 @@
 #include "game/Game.hpp"
-#include "game/physics.hpp"
-
-#include <algorithm>
-#include <iostream>
 
 using namespace game;
 using namespace sdl;
@@ -72,6 +68,11 @@ static Position calcCameraPosition(const Entity &player, const Room &room, const
 	return camera;
 }
 
+void Game::initialize()
+{
+	lastGameFrameTime = gameClock.now();
+}
+
 void Game::runMainLoop()
 {
 	while (running) {
@@ -89,10 +90,7 @@ void Game::runMainLoop()
 		gameEvents.dispatch();
 
 		// gravity
-		if (!player->movable.grounded) {
-			player->movable.v.y += 10;
-			player->movable.v.y = std::min(player->movable.v.y, 2 * player->movable.maxSpeed);
-		}
+		player->movable.applyGravity(gameFrameDelta);
 
 		// Room
 		// currentRoom->update()
@@ -101,7 +99,7 @@ void Game::runMainLoop()
 		player->movable.update(gameFrameDelta);
 		resolvePlayerCollision(*player, *currentRoom);
 
-		// render
+    // render
 		renderer.render(*currentRoom, now, renderOpts);
 		renderer.render(*player, now, renderOpts);
 
