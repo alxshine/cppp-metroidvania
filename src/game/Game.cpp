@@ -16,8 +16,9 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 
 	auto mainMenuItems =
 	    std::initializer_list<RawMenuItem<Game>>{{"New Game", [&](Game &game) { game.menuStack.pop(); }},
-	                                             {"Load Game", [&](Game &game) { /* TODO load game */ }},
+	                                             // {"Load Game", [&](Game &game) { /* TODO load game */ }},
 	                                             {"Exit", [&](Game &game) { game.state = State::exit; }}};
+
 	menuStack.push(std::make_shared<menu::SelectionMenu<Game>>(*this, "Main Menu", mainMenuItems));
 }
 
@@ -141,7 +142,14 @@ void Game::registerGameEvents()
 {
 	// quit
 	gameEvents.on(SDL_QUIT, [this](const Event &) { state = State::exit; });
-	gameEvents.onKeyDown(SDLK_ESCAPE, [this](const KeyboardEvent &) { state = State::exit; });
+	gameEvents.onKeyDown(SDLK_ESCAPE, [this](const KeyboardEvent &) {
+		auto pauseMenuItems = std::initializer_list<RawMenuItem<Game>>{
+		    {"Stats", [&](Game &game) { /* TODO stats menu */ }},
+		    {"Inventory", [&](Game &game) { /* TODO inventory menu */ }},
+		    {"Resume", [&](Game &game) { game.menuStack.pop(); }},
+		    {"Main Menu", [&](Game &game) { /* TODO show main menu once we have game state */ }}};
+		menuStack.push(std::make_shared<menu::SelectionMenu<Game>>(*this, "Pause", pauseMenuItems));
+	});
 	// debug overlay
 	gameEvents.onKeyDown(SDLK_c, [this](const KeyboardEvent &) {
 		renderOpts.renderCollisionMap = !renderOpts.renderCollisionMap;
