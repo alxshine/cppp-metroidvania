@@ -39,7 +39,19 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
                                          {100,111,50,36}},
                                         100ms};
 
-	return std::make_unique<Player>(idleAnimation, walkingAnimation, airUpAnimation, airDownAnimation);
+  const sdl::Animation attackAnim1{spritesheet,
+                               {{0,222,50,36},
+                                {50,222,50,36},
+                                {100,222,50,36},
+                                {150,222,50,36},
+                                {200,222,50,36},
+                                {250,222,50,36},
+                                {300,222,50,36}},
+                               50ms};
+
+  Attack attack1{{0,0,10,10}, attackAnim1};
+  const std::vector<Attack> attacks{attack1};
+	return std::make_unique<Player>(idleAnimation, walkingAnimation, airUpAnimation, airDownAnimation, attacks);
 }
 
 std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobdef) const

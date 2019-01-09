@@ -86,12 +86,15 @@ void Game::runMainLoop()
 		player->movable.mainLoopReset();
 
 		// events
-    playerHasMoved = false;
+		playerHasMoved = false;
 		gameEvents.dispatch();
-    if(playerHasMoved)
-      player->movable.startMoving();
-    else
-      player->movable.stopMoving();
+		if (playerHasMoved)
+			player->movable.startMoving();
+		else
+			player->movable.stopMoving();
+
+    //combat
+    player->attackable.update(gameFrameDelta);
 
 		// gravity
 		player->movable.applyGravity(gameFrameDelta);
@@ -103,7 +106,7 @@ void Game::runMainLoop()
 		player->movable.update(gameFrameDelta);
 		resolveRoomCollision(*player, *currentRoom);
 
-    // render
+		// render
 		renderer.render(*currentRoom, gameFrameDelta, renderOpts);
 		renderer.render(*player, gameFrameDelta, renderOpts);
 
@@ -135,6 +138,9 @@ void Game::registerGameEvents()
 	// interaction
 	gameEvents.onKeyDown(SDLK_e, [this](const KeyboardEvent &) { this->interact(); });
 
+	// attack
+	gameEvents.whileKeyHeld(SDL_SCANCODE_K, [this]() { player->attackable.attack(0); });
+
 	// blink
 	gameEvents.onKeyDown(SDLK_j, [this](const KeyboardEvent &) {
 		const Uint8 *keyHeld = SDL_GetKeyboardState(nullptr);
@@ -152,6 +158,12 @@ void Game::registerGameEvents()
 	});
 
 	// normal movement
-	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() { player->movable.moveRight(); playerHasMoved = true; });
-	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() { player->movable.moveLeft(); playerHasMoved = true;});
+	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() {
+		player->movable.moveRight();
+		playerHasMoved = true;
+	});
+	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() {
+		player->movable.moveLeft();
+		playerHasMoved = true;
+	});
 }

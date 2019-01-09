@@ -2,8 +2,11 @@
 
 using namespace game;
 
-Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation, const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation)
-  : movable(100, walkingAnimation, airUpAnimation, airDownAnimation), idleAnimation(idleAnimation)
+Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation,
+               const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation,
+               const std::vector<Attack> attacks)
+    : movable(100, walkingAnimation, airUpAnimation, airDownAnimation), attackable(100, attacks, *this),
+      idleAnimation(idleAnimation)
 {
 }
 
@@ -31,7 +34,7 @@ Rectangle Player::calcRenderTarget() const
 }
 
 void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
-                    const sdl::RenderOptions &options) 
+                    const sdl::RenderOptions &options)
 {
 	Rectangle destRect = calcRenderTarget();
 
@@ -42,7 +45,9 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	else
 		flip = sdl::Renderer::Flip::None;
 
-	if (movable.hasPlayableAnimation())
+  if(attackable.isAttacking())
+    renderer.render(attackable.getCurrentSprite(), destRect, flip);
+	else if (movable.hasPlayableAnimation())
 		renderer.render(movable.updateAnimation(frameDelta), destRect, flip);
 	else
 		renderer.render(idleAnimation.updateAnimation(frameDelta), destRect, flip);

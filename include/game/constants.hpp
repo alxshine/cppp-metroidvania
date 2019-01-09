@@ -13,6 +13,12 @@ using Health = game_definitions::Health;
 using Line = sdl::Line;
 using OptionalAnimation = std::unique_ptr<sdl::Animation>;
 
+struct Attack {
+	Attack(Rectangle hitBox, const sdl::Animation animation) : hitBox(hitBox), animation(animation) {}
+	Rectangle hitBox;
+	sdl::Animation animation;
+};
+
 constexpr Rectangle tileSize{0, 0, 10, 10};
 } // namespace game
 

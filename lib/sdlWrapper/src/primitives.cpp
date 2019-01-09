@@ -24,6 +24,10 @@ sdl::Sprite sdl::Animation::updateAnimation(sdl::GameClock::duration frameDelta)
 	return Sprite{texture, frames[frameIndex]};
 }
 
+sdl::Sprite sdl::Animation::getCurrentFrame(){
+  return updateAnimation(sdl::GameClock::duration::zero());
+}
+
 sdl::Sprite sdl::Animation::getSprite(int index) const{
   int frameCount = frames.size();
   auto i = std::clamp(index, 0, frameCount-1);

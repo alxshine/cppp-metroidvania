@@ -1,14 +1,17 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <vector>
+
 #include "Movable.hpp"
+#include "Attackable.hpp"
 #include "SDL.hpp"
 #include "constants.hpp"
 
 namespace game {
 class Player : public sdl::Renderable {
   public:
-	Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation, const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation);
+	Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation, const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation, const std::vector<Attack> attacks);
 
 	Player &operator=(const Player &rhs) = delete;
 	Player(const Player &rhs) = delete;
@@ -18,6 +21,7 @@ class Player : public sdl::Renderable {
 
 	static constexpr Rectangle hitbox{static_cast<int>(tileSize.w / 2), 0, tileSize.w, tileSize.h * 2};
 	Movable movable;
+  Attackable<Player> attackable;
 
 	Rectangle calcPositionedHitbox() const;
 	Rectangle calcLastPositionedHitbox() const;

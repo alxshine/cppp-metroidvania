@@ -100,7 +100,7 @@ void Movable::reposition(Position newPosition)
 
 bool Movable::getMoved() const
 {
-	return canMove && moved || lastPosition != position;
+	return canMove && (moved || lastPosition != position);
 }
 Direction Movable::getDirection() const
 {
