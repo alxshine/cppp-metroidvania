@@ -46,7 +46,6 @@ struct Attack {
 	SoundEffect soundEffect;
 	Rectangle hitbox;
 	Damage damage;
-	std::string debuff;
 
 	Animation animation;
 	Projectile projectile;
@@ -173,7 +172,6 @@ inline std::ostream &operator<<(std::ostream &out, const Attack &attack)
 	out << "SoundEffect: " << attack.soundEffect;
 	out << "HitBox: " << attack.hitbox;
 	out << "Damage: " << attack.damage << "\n";
-	out << "Debuff: " << attack.debuff << "\n";
 
 	out << "Animation: " << attack.animation;
 

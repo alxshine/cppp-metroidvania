@@ -36,7 +36,6 @@ Attack: Selfdestruct
     SoundEffect: boom.wav 1
     HitBox: 0 0 0 0
     Damage: 9000
-    Debuff: Fire
 
     Animation:
         Spritesheet: boom.png

@@ -159,10 +159,6 @@ std::istream &game_definitions::operator>>(std::istream &in, Attack &attack)
 	in >> attack.damage;
 
 	in >> keyword;
-	testString("Debuff:", keyword);
-	in >> attack.debuff;
-
-	in >> keyword;
 	testString("Animation:", keyword);
 	in >> attack.animation;
 
