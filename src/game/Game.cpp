@@ -52,7 +52,7 @@ void Game::interact()
 	}
 }
 
-static Position calcCameraPosition(const Entity &player, const Room &room, const Renderer &renderer)
+static Position calcCameraPosition(const Player &player, const Room &room, const Renderer &renderer)
 {
 	const Position p = player.movable.getPosition();
 	const Rectangle rs = room.sizeInPixels;

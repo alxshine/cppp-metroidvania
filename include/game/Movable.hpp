@@ -7,7 +7,7 @@
 
 namespace game {
 
-class Entity;
+class Player;
 struct Room;
 
 class Movable {
@@ -24,7 +24,7 @@ class Movable {
   const OptionalAnimation airDownAnimation;
 
 	friend class Game;
-	friend void resolveRoomCollision(Entity &player, Room &currentRoom);
+	friend void resolveRoomCollision(Player &player, Room &currentRoom);
 
   public:
 	Movable(Speed maxSpeed, sdl::Animation runningAnimation, sdl::Animation airUpAnimation, sdl::Animation airDownAnimation, Position pos = {0, 0});

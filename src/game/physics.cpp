@@ -72,7 +72,7 @@ bool game::isStanding(Rectangle playerHitBox, Room &currentRoom)
 	return false;
 }
 
-void game::resolveRoomCollision(Entity &entity, Room &currentRoom)
+void game::resolveRoomCollision(Player &entity, Room &currentRoom)
 {
 	// first resolve collisions with the room
 	auto hitBox = entity.calcPositionedHitbox();

@@ -9,7 +9,7 @@
 
 #include "Item.hpp"
 #include "Mob.hpp"
-#include "Entity.hpp"
+#include "Player.hpp"
 #include "Room.hpp"
 #include "SDL.hpp"
 #include "exceptions.hpp"
@@ -31,7 +31,7 @@ class ResourceManager final {
 	Mob getMob(const std::string &name) const;
 	Item getItem(const std::string &name) const;
 	Room getRoom(const std::string &name) const;
-	std::unique_ptr<Entity> makePlayer() const;
+	std::unique_ptr<Player> makePlayer() const;
 	const sdl::SoundEffect &getSound(const std::string &name) const;
 	const sdl::Music &getMusic(const std::string &name) const;
 

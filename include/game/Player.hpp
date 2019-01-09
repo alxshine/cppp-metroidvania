@@ -1,17 +1,17 @@
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include "Movable.hpp"
 #include "SDL.hpp"
 #include "constants.hpp"
 
 namespace game {
-class Entity : public sdl::Renderable {
+class Player : public sdl::Renderable {
   public:
-	Entity(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation);
+	Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation, const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation);
 
-	Entity &operator=(const Entity &rhs) = delete;
-	Entity(const Entity &rhs) = delete;
+	Player &operator=(const Player &rhs) = delete;
+	Player(const Player &rhs) = delete;
 
 	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
 	            const sdl::RenderOptions &options = {}) const override;
@@ -28,4 +28,4 @@ class Entity : public sdl::Renderable {
 };
 } // namespace game
 
-#endif /* ENTITY_H */
+#endif /* PLAYER_H */

@@ -132,11 +132,13 @@ sdl::Sprite Movable::getAnimationFrame(sdl::GameClock::time_point t) const
 	if (!grounded) {
 		if (v.y > 0 && airDownAnimation != nullptr) {
 			auto numFrames = airDownAnimation->getFrameCount();
-			int index = numFrames * (float)v.y / (2 * maxSpeed);
+      auto scaledVelocity = (float)v.y / (2 * maxSpeed);
+			int index = numFrames * scaledVelocity;
 			return airDownAnimation->getSprite(index);
 		} else if (airUpAnimation != nullptr) {
 			auto numFrames = airUpAnimation->getFrameCount();
-			int index = numFrames * (1 - ((float)v.y / (2 * maxSpeed)));
+      auto scaledVelocity = (float) -v.y / (2*maxSpeed);
+			int index = numFrames * (1 - scaledVelocity);
 			return airUpAnimation->getSprite(index);
 		}
 	}

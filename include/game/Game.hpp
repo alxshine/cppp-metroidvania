@@ -25,7 +25,7 @@ class Game {
   private:
 	ResourceManager res;
 	std::unique_ptr<Room> currentRoom;
-	std::unique_ptr<Entity> player;
+	std::unique_ptr<Player> player;
 	sdl::RenderOptions renderOpts;
 	const sdl::Renderer &renderer = sdl::SDL::getInstance().getRenderer();
 

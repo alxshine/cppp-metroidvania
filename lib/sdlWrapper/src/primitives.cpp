@@ -21,7 +21,7 @@ sdl::Sprite sdl::Animation::getAnimationFrame(sdl::GameClock::time_point t) cons
 
 sdl::Sprite sdl::Animation::getSprite(int index) const{
   int frameCount = frames.size();
-  auto i = std::clamp(index, 0, frameCount);
+  auto i = std::clamp(index, 0, frameCount-1);
   return Sprite{texture, frames[i]};
 }
 

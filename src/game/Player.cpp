@@ -1,9 +1,9 @@
-#include "game/Entity.hpp"
+#include "game/Player.hpp"
 
 using namespace game;
 
-Entity::Entity(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation)
-    : movable(100, walkingAnimation), idleAnimation(idleAnimation)
+Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation, const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation)
+  : movable(100, walkingAnimation, airUpAnimation, airDownAnimation), idleAnimation(idleAnimation)
 {
 }
 
@@ -12,17 +12,17 @@ Rectangle adjustByHitBox(Position position)
 	return {position.x - static_cast<int>(tileSize.w / 2), position.y - 2 * tileSize.h, tileSize.w, tileSize.h * 2};
 }
 
-Rectangle Entity::calcPositionedHitbox() const
+Rectangle Player::calcPositionedHitbox() const
 {
 	return adjustByHitBox(movable.getPosition());
 }
 
-Rectangle Entity::calcLastPositionedHitbox() const
+Rectangle Player::calcLastPositionedHitbox() const
 {
 	return adjustByHitBox(movable.getLastPosition());
 }
 
-Rectangle Entity::calcRenderTarget() const
+Rectangle Player::calcRenderTarget() const
 {
 
 	// Calculate position, centering horizontally and bottom-aligning vertically
@@ -30,7 +30,7 @@ Rectangle Entity::calcRenderTarget() const
 	        tileSize.h * 2};
 }
 
-void Entity::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
+void Player::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
                     const sdl::RenderOptions &options) const
 {
 	Rectangle destRect = calcRenderTarget();
