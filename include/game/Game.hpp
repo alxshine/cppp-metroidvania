@@ -22,13 +22,20 @@ class Game {
 	     sdl::RenderOptions renderOpts = {false, false, false});
 
 	void initialize();
+	void resetState();
+	void saveState();
+	void loadState(std::string name);
+
 	void runMainLoop();
 	void interact();
 	sdl::GameClock::time_point lastGameFrameTime;
 
   private:
+	std::shared_ptr<menu::Menu<Game>> mainMenu;
 	std::stack<std::shared_ptr<menu::Menu<Game>>> menuStack;
 	ResourceManager res;
+	const std::string firstRoom;
+	const Position initialPosition;
 	std::unique_ptr<Room> currentRoom;
 	std::unique_ptr<Player> player;
 	sdl::RenderOptions renderOpts;

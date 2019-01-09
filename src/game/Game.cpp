@@ -7,19 +7,39 @@ using namespace std::literals;
 
 Game::Game(std::string definitions, std::string assets, std::string first_room, Position player_position,
            sdl::RenderOptions renderOpts)
-    : res(definitions, assets), currentRoom(std::make_unique<Room>(res.getRoom(first_room))), player(res.makePlayer()),
-      renderOpts(renderOpts)
+    : res(definitions, assets), firstRoom(first_room), initialPosition(player_position),
+      currentRoom(std::make_unique<Room>(res.getRoom(first_room))), player(res.makePlayer()), renderOpts(renderOpts)
 {
-	player->movable.reposition(player_position);
-	play(currentRoom->music, repeat_forever);
 	registerGameEvents();
 
 	auto mainMenuItems =
-	    std::initializer_list<RawMenuItem<Game>>{{"New Game", [&](Game &game) { game.menuStack.pop(); }},
-	                                             // {"Load Game", [&](Game &game) { /* TODO load game */ }},
+	    std::initializer_list<RawMenuItem<Game>>{{"New Game",
+	                                              [&](Game &game) {
+		                                              resetState();
+		                                              game.menuStack.pop();
+	                                              }},
+	                                             // {"Load Game", [&](Game &game) { /* TODO add load menu */ }},
 	                                             {"Exit", [&](Game &game) { game.state = State::exit; }}};
+	mainMenu = std::make_shared<menu::SelectionMenu<Game>>(*this, "Main Menu", mainMenuItems);
+	menuStack.push(mainMenu);
+}
 
-	menuStack.push(std::make_shared<menu::SelectionMenu<Game>>(*this, "Main Menu", mainMenuItems));
+void Game::resetState()
+{
+	// TODO add state container for easier (de)serialization, and save default state in var of that type in ctor
+	currentRoom = std::make_unique<Room>(res.getRoom(firstRoom));
+	play(currentRoom->music, repeat_forever);
+	player->movable.reposition(initialPosition);
+}
+
+void Game::saveState()
+{
+	// TODO implement state saving
+}
+
+void Game::loadState(std::string name)
+{
+	// TODO implement state loading
 }
 
 void Game::interact()
@@ -143,11 +163,14 @@ void Game::registerGameEvents()
 	// quit
 	gameEvents.on(SDL_QUIT, [this](const Event &) { state = State::exit; });
 	gameEvents.onKeyDown(SDLK_ESCAPE, [this](const KeyboardEvent &) {
-		auto pauseMenuItems = std::initializer_list<RawMenuItem<Game>>{
-		    {"Stats", [&](Game &game) { /* TODO stats menu */ }},
-		    {"Inventory", [&](Game &game) { /* TODO inventory menu */ }},
-		    {"Resume", [&](Game &game) { game.menuStack.pop(); }},
-		    {"Main Menu", [&](Game &game) { /* TODO show main menu once we have game state */ }}};
+		auto pauseMenuItems =
+		    std::initializer_list<RawMenuItem<Game>>{{"Stats", [&](Game &game) { /* TODO stats menu */ }},
+		                                             {"Inventory", [&](Game &game) { /* TODO inventory menu */ }},
+		                                             {"Resume", [&](Game &game) { game.menuStack.pop(); }},
+		                                             {"Main Menu", [&](Game &game) {
+			                                              game.menuStack.pop();
+			                                              game.menuStack.push(mainMenu);
+		                                              }}};
 		menuStack.push(std::make_shared<menu::SelectionMenu<Game>>(*this, "Pause", pauseMenuItems));
 	});
 	// debug overlay
