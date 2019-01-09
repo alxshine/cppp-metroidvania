@@ -19,6 +19,9 @@ class Player : public sdl::Renderable {
 	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
 	            const sdl::RenderOptions &options = {}) override;
 
+  void attack();
+  void updateCombat(sdl::GameClock::duration frameDelta);
+
 	static constexpr Rectangle hitbox{static_cast<int>(tileSize.w / 2), 0, tileSize.w, tileSize.h * 2};
 	Movable movable;
   Attackable<Player> attackable;
@@ -29,6 +32,9 @@ class Player : public sdl::Renderable {
   private:
 	Rectangle calcRenderTarget() const;
 	sdl::Animation idleAnimation;
+  int comboCount = 0;
+  sdl::GameClock::duration timeSinceLastAttack = sdl::GameClock::duration::zero();
+  const sdl::GameClock::duration comboTimer = sdl::GameClock::duration(50);
 };
 } // namespace game
 

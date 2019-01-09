@@ -47,6 +47,7 @@ void Game::interact()
 				player->movable.setDirection(door.direction);
 			}
 
+      lastGameFrameTime = gameClock.now();
 			return;
 		}
 	}
@@ -66,11 +67,6 @@ static Position calcCameraPosition(const Player &player, const Room &room, const
 	if (p.y <= 0.5 * renderer.logicalH)
 		camera.y = std::max(p.y - renderer.logicalH / 2, 0);
 	return camera;
-}
-
-void Game::initialize()
-{
-	lastGameFrameTime = gameClock.now();
 }
 
 void Game::runMainLoop()
@@ -94,7 +90,7 @@ void Game::runMainLoop()
 			player->movable.stopMoving();
 
     //combat
-    player->attackable.update(gameFrameDelta);
+    player->updateCombat(gameFrameDelta);
 
 		// gravity
 		player->movable.applyGravity(gameFrameDelta);
@@ -139,7 +135,7 @@ void Game::registerGameEvents()
 	gameEvents.onKeyDown(SDLK_e, [this](const KeyboardEvent &) { this->interact(); });
 
 	// attack
-	gameEvents.whileKeyHeld(SDL_SCANCODE_K, [this]() { player->attackable.attack(0); });
+	gameEvents.whileKeyHeld(SDL_SCANCODE_K, [this]() { player->attack(); });
 
 	// blink
 	gameEvents.onKeyDown(SDLK_j, [this](const KeyboardEvent &) {

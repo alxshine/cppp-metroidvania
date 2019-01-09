@@ -21,36 +21,43 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	    spritesheet, {{0, 0, 50, 36}, {50, 0, 50, 36}, {100, 0, 50, 36}, {150, 0, 50, 36}}, 200ms};
 
 	const sdl::Animation walkingAnimation{spritesheet,
-	                                      {{50,37,50,36},
-                                         {100,37,50,36},
-                                         {150,37,50,36},
-                                         {200,37,50,36},
-                                         {250,37,50,36},
-                                         {300,37,50,36}},
+	                                      {{50, 37, 50, 36},
+	                                       {100, 37, 50, 36},
+	                                       {150, 37, 50, 36},
+	                                       {200, 37, 50, 36},
+	                                       {250, 37, 50, 36},
+	                                       {300, 37, 50, 36}},
 	                                      150ms};
 
-  const sdl::Animation airUpAnimation{spritesheet,
-                                      {{100,74,50,36},
-                                       {150,74,50,36},
-                                       {200,74,50,36}},
-                                      100ms};
-  const sdl::Animation airDownAnimation{spritesheet,
-                                        {{50,111,50,36},
-                                         {100,111,50,36}},
-                                        100ms};
+	const sdl::Animation airUpAnimation{spritesheet, {{100, 74, 50, 36}, {150, 74, 50, 36}, {200, 74, 50, 36}}, 100ms};
+	const sdl::Animation airDownAnimation{spritesheet, {{50, 111, 50, 36}, {100, 111, 50, 36}}, 100ms};
 
-  const sdl::Animation attackAnim1{spritesheet,
-                               {{0,222,50,36},
-                                {50,222,50,36},
-                                {100,222,50,36},
-                                {150,222,50,36},
-                                {200,222,50,36},
-                                {250,222,50,36},
-                                {300,222,50,36}},
-                               50ms};
+	const sdl::Animation attackAnim1{spritesheet,
+	                                 {{0, 222, 50, 36},
+	                                  {50, 222, 50, 36},
+	                                  {100, 222, 50, 36},
+	                                  {150, 222, 50, 36},
+	                                  {200, 222, 50, 36},
+	                                  {250, 222, 50, 36},
+	                                  {300, 222, 50, 36}},
+	                                 50ms};
 
-  Attack attack1{{0,0,10,10}, attackAnim1};
-  const std::vector<Attack> attacks{attack1};
+	const sdl::Animation attackAnim2{
+	    spritesheet, {{0, 258, 50, 36}, {50, 258, 50, 36}, {100, 258, 50, 36}, {150, 258, 50, 36}}, 50ms};
+
+	const sdl::Animation attackAnim3{spritesheet,
+	                                 {{200, 258, 50, 36},
+	                                  {250, 258, 50, 36},
+	                                  {300, 258, 50, 36},
+	                                  {0, 295, 50, 36},
+	                                  {50, 295, 50, 36},
+	                                  {100, 295, 50, 36}},
+	                                 60ms};
+
+	Attack attack1{{0, 0, 10, 10}, attackAnim1};
+	Attack attack2{{0, 0, 10, 10}, attackAnim2};
+	Attack attack3{{0, 0, 10, 10}, attackAnim3};
+	const std::vector<Attack> attacks{attack1, attack2, attack3};
 	return std::make_unique<Player>(idleAnimation, walkingAnimation, airUpAnimation, airDownAnimation, attacks);
 }
 

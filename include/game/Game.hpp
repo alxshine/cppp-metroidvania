@@ -17,7 +17,6 @@ class Game {
 	Game(std::string definitions, std::string assets, std::string first_room, Position player_position,
 	     sdl::RenderOptions renderOpts = {false, false, false});
 
-	void initialize();
 	void runMainLoop();
 	void interact();
 	sdl::GameClock::time_point lastGameFrameTime;

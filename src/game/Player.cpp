@@ -45,8 +45,8 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	else
 		flip = sdl::Renderer::Flip::None;
 
-  if(attackable.isAttacking())
-    renderer.render(attackable.getCurrentSprite(), destRect, flip);
+	if (attackable.isAttacking())
+		renderer.render(attackable.getCurrentSprite(), destRect, flip);
 	else if (movable.hasPlayableAnimation())
 		renderer.render(movable.updateAnimation(frameDelta), destRect, flip);
 	else
@@ -58,4 +58,31 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	// draw hit/collision box
 	if (options.renderHitBoxes)
 		renderer.drawRectangle(calcPositionedHitbox(), {255, 0, 0, 128}, false);
+}
+
+void Player::attack()
+{
+	if (attackable.isAttacking())
+		return;
+
+  std::cout << "comboCount: " << comboCount << std::endl;
+	if (timeSinceLastAttack < comboTimer)
+		comboCount++;
+  else
+    comboCount = 0;
+	comboCount %= 3;
+	attackable.attack(comboCount);
+}
+
+void Player::updateCombat(sdl::GameClock::duration frameDelta)
+{
+	if (!attackable.isAttacking()) {
+		timeSinceLastAttack += frameDelta;
+		return;
+	}
+
+	attackable.update(frameDelta);
+	if (!attackable.isAttacking()) {
+		timeSinceLastAttack = sdl::GameClock::duration::zero();
+	}
 }
