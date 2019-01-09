@@ -84,6 +84,24 @@ void sdl::Renderer::render(const Sprite &sprite, Rectangle targetRect, Flip flip
 	                 static_cast<SDL_RendererFlip>(flip));
 }
 
+void sdl::Renderer::render(const Text &text, const Rectangle targetRect) const
+{
+	Rectangle newTarget = targetRect;
+	newTarget.x -= cameraPosition.x;
+	newTarget.y -= cameraPosition.y;
+	SDL_RenderCopy(rawRenderer, text.texture->rawTexture, &text.sourceRectangle, &newTarget);
+}
+
+void sdl::Renderer::render(const Text &text, const Rectangle targetRect, Color color) const
+{
+	Rectangle newTarget = targetRect;
+	newTarget.x -= cameraPosition.x;
+	newTarget.y -= cameraPosition.y;
+	SDL_SetTextureColorMod(text.texture->rawTexture, color.r, color.g, color.b);
+	SDL_RenderCopy(rawRenderer, text.texture->rawTexture, &text.sourceRectangle, &newTarget);
+
+}
+
 SDL_Renderer *sdl::Renderer::getRawRenderer() const
 {
 	return rawRenderer;

@@ -123,5 +123,5 @@ sdl::Text sdl::SDL::generateText(const Font &font, const std::string &text, Colo
 	// Store text texture in a sprite, including it's size
 	Rectangle sourceRect = {0, 0, 0, 0};
 	SDL_QueryTexture(rawTexture, nullptr, nullptr, &sourceRect.w, &sourceRect.h);
-	return {rawTexture, sourceRect};
+	return {std::make_shared<Texture>(rawTexture), sourceRect};
 }

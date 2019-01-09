@@ -61,6 +61,8 @@ class Renderer {
 	            Flip = Flip::None) const;
 	void render(const Sprite &sprite, Flip = Flip::None) const;
 	void render(const Sprite &sprite, const Rectangle targetRect, Flip = Flip::None) const;
+	void render(const Text &text, const Rectangle targetRect) const;
+	void render(const Text &text, const Rectangle targetRect, Color color) const;
 
 	void drawRectangle(const Rectangle rect, const Color color = defaultColor, bool fill = true) const;
 	void clear(Color color = defaultColor) const;

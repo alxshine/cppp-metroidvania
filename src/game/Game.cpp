@@ -14,7 +14,10 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 	play(currentRoom->music, repeat_forever);
 	registerGameEvents();
 
-	auto mainMenuItems = std::initializer_list<RawMenuItem<Game>>{{"New Game", [&](Game &) { /* TODO */ }}};
+	auto mainMenuItems =
+	    std::initializer_list<RawMenuItem<Game>>{{"New Game", [&](Game &game) { game.menuStack.pop(); }},
+	                                             {"Load Game", [&](Game &game) { /* TODO load game */ }},
+	                                             {"Exit", [&](Game &game) { game.state = State::exit; }}};
 	menuStack.push(std::make_shared<menu::SelectionMenu<Game>>(*this, "Main Menu", mainMenuItems));
 }
 

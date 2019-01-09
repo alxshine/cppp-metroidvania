@@ -34,14 +34,18 @@ struct Sprite final {
 	Rectangle sourceRectangle;
 };
 
-using Text = Sprite;
+struct Text final {
+  public:
+	std::shared_ptr<Texture> texture;
+	Rectangle sourceRectangle;
+};
 
 class Animation {
   private:
 	const Texture &texture;
 	std::vector<Rectangle> frames;
 	GameClock::duration timePerFrame;
-  GameClock::duration runDuration;
+	GameClock::duration runDuration;
 
   public:
 	Animation(const Texture &texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
@@ -51,7 +55,7 @@ class Animation {
 	{
 		return frames.size();
 	}
-  void reset();
+	void reset();
 	Sprite updateAnimation(GameClock::duration frameDelta);
 	Sprite getSprite(int index) const;
 };
