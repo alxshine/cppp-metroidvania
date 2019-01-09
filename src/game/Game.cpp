@@ -1,7 +1,9 @@
 #include "game/Game.hpp"
 
 using namespace game;
+using namespace menu;
 using namespace sdl;
+using namespace std::literals;
 
 Game::Game(std::string definitions, std::string assets, std::string first_room, Position player_position,
            sdl::RenderOptions renderOpts)
@@ -11,6 +13,9 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 	player->movable.reposition(player_position);
 	play(currentRoom->music, repeat_forever);
 	registerGameEvents();
+
+	auto mainMenuItems = std::initializer_list<RawMenuItem<Game>>{{"New Game", [&](Game &) { /* TODO */ }}};
+	menuStack.push(std::make_shared<menu::SelectionMenu<Game>>(*this, "Main Menu", mainMenuItems));
 }
 
 void Game::interact()
@@ -75,39 +80,53 @@ void Game::initialize()
 
 void Game::runMainLoop()
 {
-	while (running) {
-		// will need to decide between game and menu stack main loop here
+	while (state == State::running) {
 		renderer.clear();
-		renderer.setCameraPosition(calcCameraPosition(*player, *currentRoom, renderer));
-		auto now = gameClock.now();
-		gameFrameDelta = now - lastGameFrameTime;
 
-		// reset player velocity
-		player->movable.mainLoopReset();
+		// Game
+		if (menuStack.empty()) {
+			gameClock.resume();
 
-		// events
-    playerHasMoved = false;
-		gameEvents.dispatch();
-    if(playerHasMoved)
-      player->movable.startMoving();
-    else
-      player->movable.stopMoving();
+			renderer.setCameraPosition(calcCameraPosition(*player, *currentRoom, renderer));
+			auto now = gameClock.now();
+			gameFrameDelta = now - lastGameFrameTime;
 
-		// gravity
-		player->movable.applyGravity(gameFrameDelta);
+			// reset player velocity
+			player->movable.mainLoopReset();
 
-		// Room
-		// currentRoom->update()
+			// events
+			playerHasMoved = false;
+			gameEvents.dispatch();
+			if (playerHasMoved)
+				player->movable.startMoving();
+			else
+				player->movable.stopMoving();
 
-		// Player
-		player->movable.update(gameFrameDelta);
-		resolveRoomCollision(*player, *currentRoom);
+			// gravity
+			player->movable.applyGravity(gameFrameDelta);
 
-    // render
-		renderer.render(*currentRoom, gameFrameDelta, renderOpts);
-		renderer.render(*player, gameFrameDelta, renderOpts);
+			// Room
+			// currentRoom->update()
 
-		lastGameFrameTime = now;
+			// Player
+			player->movable.update(gameFrameDelta);
+			resolveRoomCollision(*player, *currentRoom);
+
+			// render
+			renderer.render(*currentRoom, gameFrameDelta, renderOpts);
+			renderer.render(*player, gameFrameDelta, renderOpts);
+
+			lastGameFrameTime = now;
+
+			// Menus
+		} else {
+			gameClock.pause();
+
+			auto menu = menuStack.top();
+			menu->dispatch();
+			renderer.render(*menu, GameClock::duration(0), renderOpts);
+		}
+
 		renderer.swapBuffers();
 	}
 
@@ -118,8 +137,8 @@ void Game::runMainLoop()
 void Game::registerGameEvents()
 {
 	// quit
-	gameEvents.on(SDL_QUIT, [this](const Event &) { running = false; });
-	gameEvents.onKeyDown(SDLK_ESCAPE, [this](const KeyboardEvent &) { running = false; });
+	gameEvents.on(SDL_QUIT, [this](const Event &) { state = State::exit; });
+	gameEvents.onKeyDown(SDLK_ESCAPE, [this](const KeyboardEvent &) { state = State::exit; });
 	// debug overlay
 	gameEvents.onKeyDown(SDLK_c, [this](const KeyboardEvent &) {
 		renderOpts.renderCollisionMap = !renderOpts.renderCollisionMap;
@@ -152,6 +171,12 @@ void Game::registerGameEvents()
 	});
 
 	// normal movement
-	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() { player->movable.moveRight(); playerHasMoved = true; });
-	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() { player->movable.moveLeft(); playerHasMoved = true;});
+	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() {
+		player->movable.moveRight();
+		playerHasMoved = true;
+	});
+	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() {
+		player->movable.moveLeft();
+		playerHasMoved = true;
+	});
 }

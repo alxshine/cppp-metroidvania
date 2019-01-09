@@ -43,7 +43,7 @@ sdl::SDL &sdl::SDL::getInstance()
 	return instance;
 }
 
-const sdl::Renderer& sdl::SDL::getRenderer()
+const sdl::Renderer &sdl::SDL::getRenderer()
 {
 	return *renderer;
 }
@@ -96,34 +96,32 @@ std::unique_ptr<sdl::Music> sdl::SDL::loadMusic(const std::string &path) const
 	return std::make_unique<sdl::Music>(music);
 }
 
-/*
- *sdl::Text sdl::SDL::generateText(const Font &font, const std::string &text, Color color, TextRendering rendering,
- *                                 Color bgColor)
- *{
- *    SDL_Surface *tempSurface = nullptr;
- *    switch (rendering) {
- *    case TextRendering::Solid:
- *        tempSurface = TTF_RenderText_Solid(font.rawFont, text.c_str(), color);
- *        break;
- *    case TextRendering::Shaded:
- *        tempSurface = TTF_RenderText_Shaded(font.rawFont, text.c_str(), color, bgColor);
- *        break;
- *    case TextRendering::Blended:
- *        tempSurface = TTF_RenderText_Blended(font.rawFont, text.c_str(), color);
- *        break;
- *    }
- *    if (tempSurface == nullptr)
- *        throw SdlException("Could not draw text");
- *
- *    SDL_Texture *rawTexture = SDL_CreateTextureFromSurface(renderer->getRawRenderer(), tempSurface);
- *    SDL_FreeSurface(tempSurface); // Free *before* throwing exception
- *
- *    if (rawTexture == nullptr)
- *        throw SdlException("Could not create texture");
- *
- *    // Store text texture in a sprite, including it's size
- *    Rectangle sourceRect = {0, 0, 0, 0};
- *    SDL_QueryTexture(rawTexture, nullptr, nullptr, &sourceRect.w, &sourceRect.h);
- *    return {std::make_shared<Texture>(rawTexture), sourceRect};
- *}
- */
+sdl::Text sdl::SDL::generateText(const Font &font, const std::string &text, Color color, TextRendering rendering,
+                                 Color bgColor)
+{
+	SDL_Surface *tempSurface = nullptr;
+	switch (rendering) {
+	case TextRendering::Solid:
+		tempSurface = TTF_RenderText_Solid(font.rawFont, text.c_str(), color);
+		break;
+	case TextRendering::Shaded:
+		tempSurface = TTF_RenderText_Shaded(font.rawFont, text.c_str(), color, bgColor);
+		break;
+	case TextRendering::Blended:
+		tempSurface = TTF_RenderText_Blended(font.rawFont, text.c_str(), color);
+		break;
+	}
+	if (tempSurface == nullptr)
+		throw SdlException("Could not draw text");
+
+	SDL_Texture *rawTexture = SDL_CreateTextureFromSurface(renderer->getRawRenderer(), tempSurface);
+	SDL_FreeSurface(tempSurface); // Free *before* throwing exception
+
+	if (rawTexture == nullptr)
+		throw SdlException("Could not create texture");
+
+	// Store text texture in a sprite, including it's size
+	Rectangle sourceRect = {0, 0, 0, 0};
+	SDL_QueryTexture(rawTexture, nullptr, nullptr, &sourceRect.w, &sourceRect.h);
+	return {rawTexture, sourceRect};
+}

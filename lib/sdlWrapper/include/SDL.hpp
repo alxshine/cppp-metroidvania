@@ -6,12 +6,12 @@
 #include <memory>
 #include <string>
 
-#include "events.hpp"
 #include "Font.hpp"
+#include "GameClock.hpp"
+#include "SdlException.hpp"
+#include "events.hpp"
 #include "mixer.hpp"
 #include "rendering.hpp"
-#include "SdlException.hpp"
-#include "GameClock.hpp"
 
 namespace sdl {
 class SDL final {
@@ -50,10 +50,9 @@ class SDL final {
 	 *
 	 * @return The generated sprite, ready to be rendered.
 	 */
-	/*
-	 *Text generateText(const Font &font, const std::string &text, Color color = {255, 255, 255, 255},
-	 *                  TextRendering rendering = TextRendering::Blended, Color bgColor = {0, 0, 0, 0});
-	 */
+
+	Text generateText(const Font &font, const std::string &text, Color color = {255, 255, 255, 255},
+	                  TextRendering rendering = TextRendering::Blended, Color bgColor = {0, 0, 0, 0});
 
 	void delay(std::chrono::milliseconds time);
 
