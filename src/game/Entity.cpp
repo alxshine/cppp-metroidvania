@@ -1,9 +1,9 @@
-#include "game/Player.hpp"
+#include "game/Entity.hpp"
 
 using namespace game;
 
 Entity::Entity(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation)
-    : movable(100), idleAnimation(idleAnimation), walkingAnimation(walkingAnimation)
+    : movable(100, walkingAnimation), idleAnimation(idleAnimation)
 {
 }
 
@@ -37,13 +37,13 @@ void Entity::render(const sdl::Renderer &renderer, const sdl::GameClock::time_po
 
 	sdl::Renderer::Flip flip;
 	auto dir = movable.getDirection();
-	if(dir.x < 0)
+	if (dir.x < 0)
 		flip = sdl::Renderer::Flip::X;
 	else
 		flip = sdl::Renderer::Flip::None;
 
-	if (movable.getMoved())
-		renderer.render(walkingAnimation.getAnimationFrame(t), destRect, flip);
+	if (movable.hasPlayableAnimation())
+		renderer.render(movable.getAnimationFrame(t), destRect, flip);
 	else
 		renderer.render(idleAnimation.getAnimationFrame(t), destRect, flip);
 

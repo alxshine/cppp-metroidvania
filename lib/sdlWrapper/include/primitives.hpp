@@ -3,14 +3,15 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <vector>
 
 #include "Color.hpp"
 #include "GameClock.hpp"
-#include "geometry.hpp"
 #include "SdlException.hpp"
+#include "geometry.hpp"
 
 namespace sdl {
 struct Texture final {
@@ -42,9 +43,15 @@ struct Animation {
 	GameClock::duration timePerFrame;
 
   public:
-	Animation(const Texture& texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
+	Animation(const Texture &texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
+	const std::vector<Rectangle> &getFrames();
 
+	inline int getFrameCount() const
+	{
+		return frames.size();
+	}
 	Sprite getAnimationFrame(GameClock::time_point t) const;
+	Sprite getSprite(int index) const;
 };
 
 } // namespace sdl

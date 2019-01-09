@@ -11,6 +11,7 @@ using Position = game_definitions::Position;
 using Rectangle = game_definitions::Rectangle;
 using Health = game_definitions::Health;
 using Line = sdl::Line;
+using OptionalAnimation = std::unique_ptr<sdl::Animation>;
 
 constexpr Rectangle tileSize{0, 0, 10, 10};
 } // namespace game

@@ -2,7 +2,38 @@
 
 using namespace game;
 
-Movable::Movable(Speed maxSpeed, Position pos) : position(pos), lastPosition(pos), maxSpeed(maxSpeed), v({0, 0}) {}
+Movable::Movable(Speed maxSpeed, sdl::Animation runningAnimation, sdl::Animation airUpAnimation,
+                 sdl::Animation airDownAnimation, Position pos)
+    : position(pos), lastPosition(pos), maxSpeed(maxSpeed),
+      runningAnimation(std::make_unique<sdl::Animation>(runningAnimation)),
+      airUpAnimation(std::make_unique<sdl::Animation>(airUpAnimation)),
+      airDownAnimation(std::make_unique<sdl::Animation>(airDownAnimation)), v({0, 0})
+{
+}
+
+Movable::Movable(Speed maxSpeed, sdl::Animation runningAnimation, Position pos)
+    : position(pos), lastPosition(pos), maxSpeed(maxSpeed),
+      runningAnimation(std::make_unique<sdl::Animation>(runningAnimation)), airUpAnimation(nullptr),
+      airDownAnimation(nullptr), v({0, 0})
+{
+}
+
+Movable::Movable(Speed maxSpeed, Position pos)
+    : position(pos), lastPosition(pos), maxSpeed(maxSpeed), runningAnimation(nullptr), airUpAnimation(nullptr),
+      airDownAnimation(nullptr)
+{
+}
+
+Movable::Movable(const Movable &rhs)
+    : position(rhs.position), lastPosition(rhs.lastPosition), maxSpeed(rhs.maxSpeed),
+      runningAnimation(rhs.runningAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.runningAnimation)
+                                                       : nullptr),
+      airUpAnimation(rhs.airUpAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.airUpAnimation) : nullptr),
+      airDownAnimation(rhs.airDownAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.airDownAnimation)
+                                                       : nullptr),
+      v({0, 0})
+{
+}
 
 void Movable::update(std::chrono::milliseconds frameDelta)
 {
@@ -88,4 +119,27 @@ Position Movable::getPosition() const
 Position Movable::getLastPosition() const
 {
 	return lastPosition;
+}
+
+bool Movable::hasPlayableAnimation() const
+{
+	return (moved && runningAnimation != nullptr) ||
+	       (!grounded && ((v.y > 0 && airDownAnimation != nullptr) || (v.y <= 0 && airUpAnimation != nullptr)));
+}
+
+sdl::Sprite Movable::getAnimationFrame(sdl::GameClock::time_point t) const
+{
+	if (!grounded) {
+		if (v.y > 0 && airDownAnimation != nullptr) {
+			auto numFrames = airDownAnimation->getFrameCount();
+			int index = numFrames * (float)v.y / (2 * maxSpeed);
+			return airDownAnimation->getSprite(index);
+		} else if (airUpAnimation != nullptr) {
+			auto numFrames = airUpAnimation->getFrameCount();
+			int index = numFrames * (1 - ((float)v.y / (2 * maxSpeed)));
+			return airUpAnimation->getSprite(index);
+		}
+	}
+
+	return runningAnimation->getAnimationFrame(t);
 }

@@ -8,7 +8,7 @@ game::Mob::Mob(const Mob &rhs)
 
 game::Mob::Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
                const sdl::Animation walkingAnimation, OptionalAnimation idleAnimation)
-    : name(name), maxHealth(health), movable(speedPerSecond), health(health), hitbox(hitbox), renderSize(renderSize),
+  : name(name), maxHealth(health), movable(speedPerSecond, walkingAnimation), health(health), hitbox(hitbox), renderSize(renderSize),
       walkingAnimation(walkingAnimation), idleAnimation(std::move(idleAnimation))
 {
 }

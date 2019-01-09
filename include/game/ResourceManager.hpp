@@ -9,7 +9,7 @@
 
 #include "Item.hpp"
 #include "Mob.hpp"
-#include "Player.hpp"
+#include "Entity.hpp"
 #include "Room.hpp"
 #include "SDL.hpp"
 #include "exceptions.hpp"

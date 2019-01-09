@@ -3,6 +3,7 @@
 
 #include "constants.hpp"
 #include "movement.hpp"
+#include "GameClock.hpp"
 
 namespace game {
 
@@ -18,12 +19,18 @@ class Movable {
 	bool grounded = true;
 
 	Speed maxSpeed;
+  const OptionalAnimation runningAnimation;
+  const OptionalAnimation airUpAnimation;
+  const OptionalAnimation airDownAnimation;
 
 	friend class Game;
 	friend void resolveRoomCollision(Entity &player, Room &currentRoom);
 
   public:
-	Movable(Speed maxSpeed, Position pos = {0, 0});
+	Movable(Speed maxSpeed, sdl::Animation runningAnimation, sdl::Animation airUpAnimation, sdl::Animation airDownAnimation, Position pos = {0, 0});
+  Movable(Speed maxSpeed, sdl::Animation runningAnimation, Position pos = {0,0});
+  Movable(Speed maxSpeed, Position pos = {0,0});
+  Movable(const Movable& rhs);
 	Velocity v;
 	bool canMove = true;
 	bool fallThroughPlatforms = false;
@@ -43,6 +50,9 @@ class Movable {
 	void setDirection(Direction d);
 	Position getPosition() const;
 	Position getLastPosition() const;
+
+  bool hasPlayableAnimation() const;
+  sdl::Sprite getAnimationFrame(sdl::GameClock::time_point t) const;
 };
 } // namespace game
 

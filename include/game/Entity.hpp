@@ -1,5 +1,5 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef ENTITY_H
+#define ENTITY_H
 
 #include "Movable.hpp"
 #include "SDL.hpp"
@@ -9,7 +9,6 @@ namespace game {
 class Entity : public sdl::Renderable {
   public:
 	Entity(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation);
-	// virtual ~Player();
 
 	Entity &operator=(const Entity &rhs) = delete;
 	Entity(const Entity &rhs) = delete;
@@ -26,8 +25,7 @@ class Entity : public sdl::Renderable {
   private:
 	Rectangle calcRenderTarget() const;
 	const sdl::Animation idleAnimation;
-	const sdl::Animation walkingAnimation;
 };
 } // namespace game
 
-#endif /* PLAYER_H */
+#endif /* ENTITY_H */

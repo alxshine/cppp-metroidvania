@@ -19,6 +19,12 @@ sdl::Sprite sdl::Animation::getAnimationFrame(sdl::GameClock::time_point t) cons
 	return Sprite{texture, frames[frameIndex]};
 }
 
+sdl::Sprite sdl::Animation::getSprite(int index) const{
+  int frameCount = frames.size();
+  auto i = std::clamp(index, 0, frameCount);
+  return Sprite{texture, frames[i]};
+}
+
 sdl::Animation::Animation(const Texture &t, std::vector<sdl::Rectangle> f, sdl::GameClock::duration tpf)
     : texture(t), frames(f), timePerFrame(tpf)
 {

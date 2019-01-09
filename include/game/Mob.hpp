@@ -8,7 +8,6 @@
 
 namespace game {
 
-using OptionalAnimation = std::unique_ptr<sdl::Animation>;
 
 class Mob : public sdl::Renderable {
   public:
