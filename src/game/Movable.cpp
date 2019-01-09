@@ -100,7 +100,7 @@ void Movable::reposition(Position newPosition)
 
 bool Movable::getMoved() const
 {
-	return canMove && moved | lastPosition != position;
+	return canMove && moved || lastPosition != position;
 }
 Direction Movable::getDirection() const
 {
@@ -143,12 +143,12 @@ sdl::Sprite Movable::updateAnimation(sdl::GameClock::duration frameDelta)
 	if (!grounded) {
 		if (v.y > 0 && airDownAnimation != nullptr) {
 			auto numFrames = airDownAnimation->getFrameCount();
-      auto scaledVelocity = (float)v.y / (2 * maxSpeed);
+			auto scaledVelocity = (float)v.y / (2 * maxSpeed);
 			int index = numFrames * scaledVelocity;
 			return airDownAnimation->getSprite(index);
 		} else if (airUpAnimation != nullptr) {
 			auto numFrames = airUpAnimation->getFrameCount();
-      auto scaledVelocity = (float) -v.y / (2*maxSpeed);
+			auto scaledVelocity = (float)-v.y / (2 * maxSpeed);
 			int index = numFrames * (1 - scaledVelocity);
 			return airUpAnimation->getSprite(index);
 		}
