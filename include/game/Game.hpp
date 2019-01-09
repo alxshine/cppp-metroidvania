@@ -30,6 +30,7 @@ class Game {
 	const sdl::Renderer &renderer = sdl::SDL::getInstance().getRenderer();
 
 	bool running = true;
+  bool playerHasMoved = false;
 	sdl::GameClock gameClock;
 	std::chrono::milliseconds gameFrameDelta = 0ms;
 	sdl::EventHandler gameEvents;

@@ -36,11 +36,12 @@ struct Sprite final {
 
 using Text = Sprite;
 
-struct Animation {
+class Animation {
   private:
 	const Texture &texture;
 	std::vector<Rectangle> frames;
 	GameClock::duration timePerFrame;
+  GameClock::duration runDuration;
 
   public:
 	Animation(const Texture &texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
@@ -50,7 +51,8 @@ struct Animation {
 	{
 		return frames.size();
 	}
-	Sprite getAnimationFrame(GameClock::time_point t) const;
+  void reset();
+	Sprite updateAnimation(GameClock::duration frameDelta);
 	Sprite getSprite(int index) const;
 };
 

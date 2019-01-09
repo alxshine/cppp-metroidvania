@@ -12,14 +12,14 @@ namespace game {
 class Mob : public sdl::Renderable {
   public:
 	Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-	    const sdl::Animation walkingAnimation, OptionalAnimation idleAnimation);
+	    sdl::Animation walkingAnimation, OptionalAnimation idleAnimation);
 	Mob(const Mob &rhs);
 
 	Mob &operator=(const Mob &rhs) = delete;
 	virtual ~Mob();
 
-	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
-	            const sdl::RenderOptions &options = {}) const override;
+	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
+	            const sdl::RenderOptions &options = {}) override;
 	Rectangle calcPositionedHitbox() const;
 
 	const std::string name;
@@ -30,7 +30,7 @@ class Mob : public sdl::Renderable {
 	Health health;
 	const Rectangle hitbox;
 	const Rectangle renderSize;
-	const sdl::Animation walkingAnimation;
+	sdl::Animation walkingAnimation;
 	const OptionalAnimation idleAnimation;
 
 	Rectangle calcRenderTarget() const;

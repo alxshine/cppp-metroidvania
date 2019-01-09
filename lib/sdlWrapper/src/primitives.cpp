@@ -12,9 +12,14 @@ sdl::Texture::Texture(Texture &&rhs) : rawTexture(rhs.rawTexture)
 	rhs.rawTexture = nullptr;
 }
 
-sdl::Sprite sdl::Animation::getAnimationFrame(sdl::GameClock::time_point t) const
+void sdl::Animation::reset(){
+  runDuration = sdl::GameClock::duration::zero();
+}
+
+sdl::Sprite sdl::Animation::updateAnimation(sdl::GameClock::duration frameDelta)
 {
-	int frameNumber = t.time_since_epoch() / timePerFrame;
+  runDuration += frameDelta;
+	int frameNumber = runDuration.count() / timePerFrame.count();
 	int frameIndex = frameNumber % frames.size();
 	return Sprite{texture, frames[frameIndex]};
 }

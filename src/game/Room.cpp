@@ -24,8 +24,8 @@ game::Room::Room(const Room &rhs) noexcept
 {
 }
 
-void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
-                        const sdl::RenderOptions &options) const
+void game::Room::render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
+                        const sdl::RenderOptions &options)
 {
 	// TODO: parallax
 	renderer.render(background);
@@ -67,11 +67,11 @@ void game::Room::render(const sdl::Renderer &renderer, const sdl::GameClock::tim
 	}
 
 	for (auto i : doors)
-		renderer.render(i.item, t, options);
+		renderer.render(i.item, frameDelta, options);
 	for (auto i : mobs)
-		renderer.render(i, t, options);
+		renderer.render(i, frameDelta, options);
 	for (auto i : items)
-		renderer.render(i, t, options);
+		renderer.render(i, frameDelta, options);
 }
 
 game::Room::~Room() {}

@@ -13,8 +13,8 @@ class Item : public sdl::Renderable {
 	Item(const Item &rhs);
 	virtual ~Item();
 
-	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
-	            const sdl::RenderOptions &options = {}) const override;
+	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
+	            const sdl::RenderOptions &options = {})  override;
 	Rectangle calcPositionedHitbox() const;
 
 	const std::string name;
@@ -26,7 +26,7 @@ class Item : public sdl::Renderable {
 
 	const Rectangle hitbox;
 	const Rectangle renderSize;
-	const sdl::Animation animation;
+	sdl::Animation animation;
 };
 
 class Door {

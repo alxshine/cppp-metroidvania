@@ -35,7 +35,7 @@ Movable::Movable(const Movable &rhs)
 {
 }
 
-void Movable::update(std::chrono::milliseconds frameDelta)
+void Movable::update(sdl::GameClock::duration frameDelta)
 {
 	if (!canMove)
 		return;
@@ -121,13 +121,24 @@ Position Movable::getLastPosition() const
 	return lastPosition;
 }
 
+void Movable::startMoving(){
+  if(isMoving)
+    return;
+  isMoving = true;
+  runningAnimation->reset();
+}
+
+void Movable::stopMoving(){
+  isMoving = false;
+}
+
 bool Movable::hasPlayableAnimation() const
 {
 	return (moved && runningAnimation != nullptr) ||
 	       (!grounded && ((v.y > 0 && airDownAnimation != nullptr) || (v.y <= 0 && airUpAnimation != nullptr)));
 }
 
-sdl::Sprite Movable::getAnimationFrame(sdl::GameClock::time_point t) const
+sdl::Sprite Movable::updateAnimation(sdl::GameClock::duration frameDelta)
 {
 	if (!grounded) {
 		if (v.y > 0 && airDownAnimation != nullptr) {
@@ -143,5 +154,5 @@ sdl::Sprite Movable::getAnimationFrame(sdl::GameClock::time_point t) const
 		}
 	}
 
-	return runningAnimation->getAnimationFrame(t);
+	return runningAnimation->updateAnimation(frameDelta);
 }

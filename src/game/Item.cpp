@@ -13,13 +13,13 @@ Item::Item(const Item &rhs)
 
 Item::~Item() {}
 
-void Item::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
-                  const sdl::RenderOptions &options) const
+void Item::render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
+                  const sdl::RenderOptions &options)
 {
 	Rectangle destRect = calcRenderTarget();
 	Rectangle hitbox = calcPositionedHitbox();
 
-	renderer.render(animation.getAnimationFrame(t), destRect);
+	renderer.render(animation.updateAnimation(frameDelta), destRect);
 
 	// draw debug info
 	if (options.renderEntityDrawRectangles)

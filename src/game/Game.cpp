@@ -86,7 +86,12 @@ void Game::runMainLoop()
 		player->movable.mainLoopReset();
 
 		// events
+    playerHasMoved = false;
 		gameEvents.dispatch();
+    if(playerHasMoved)
+      player->movable.startMoving();
+    else
+      player->movable.stopMoving();
 
 		// gravity
 		player->movable.applyGravity(gameFrameDelta);
@@ -99,8 +104,8 @@ void Game::runMainLoop()
 		resolveRoomCollision(*player, *currentRoom);
 
     // render
-		renderer.render(*currentRoom, now, renderOpts);
-		renderer.render(*player, now, renderOpts);
+		renderer.render(*currentRoom, gameFrameDelta, renderOpts);
+		renderer.render(*player, gameFrameDelta, renderOpts);
 
 		lastGameFrameTime = now;
 		renderer.swapBuffers();
@@ -147,6 +152,6 @@ void Game::registerGameEvents()
 	});
 
 	// normal movement
-	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() { player->movable.moveRight(); });
-	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() { player->movable.moveLeft(); });
+	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() { player->movable.moveRight(); playerHasMoved = true; });
+	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() { player->movable.moveLeft(); playerHasMoved = true;});
 }

@@ -28,8 +28,8 @@ struct Room : public sdl::Renderable {
 	Room(const Room &rhs) noexcept;
 	virtual ~Room();
 
-	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &,
-	            const sdl::RenderOptions &options = {}) const override;
+	void render(const sdl::Renderer &renderer, sdl::GameClock::duration,
+	            const sdl::RenderOptions &options = {}) override;
 
 	const std::string name;
 	const sdl::Texture &background;

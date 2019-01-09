@@ -24,8 +24,8 @@ struct RenderOptions {
 
 class Renderable {
   public:
-	virtual void render(const Renderer &renderer, const GameClock::time_point &t,
-	                    const RenderOptions &options = {}) const = 0;
+	virtual void render(const Renderer &renderer, GameClock::duration frameDelta,
+	                    const RenderOptions &options = {}) = 0;
 	virtual ~Renderable(){};
 };
 
@@ -50,9 +50,9 @@ class Renderer {
 	Renderer();
 	virtual ~Renderer();
 
-	void render(Renderable &renderable, const GameClock::time_point &t, const RenderOptions &options = {}) const
+	void render(Renderable &renderable, GameClock::duration frameDelta, const RenderOptions &options = {}) const
 	{
-		renderable.render(*this, t, options);
+		renderable.render(*this, frameDelta, options);
 	};
 	void setCameraPosition(Point point) const;
 	void render(const Texture &texture, Flip = Flip::None) const;

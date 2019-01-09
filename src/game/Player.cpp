@@ -30,8 +30,8 @@ Rectangle Player::calcRenderTarget() const
 	        tileSize.h * 2};
 }
 
-void Player::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
-                    const sdl::RenderOptions &options) const
+void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
+                    const sdl::RenderOptions &options) 
 {
 	Rectangle destRect = calcRenderTarget();
 
@@ -43,9 +43,9 @@ void Player::render(const sdl::Renderer &renderer, const sdl::GameClock::time_po
 		flip = sdl::Renderer::Flip::None;
 
 	if (movable.hasPlayableAnimation())
-		renderer.render(movable.getAnimationFrame(t), destRect, flip);
+		renderer.render(movable.updateAnimation(frameDelta), destRect, flip);
 	else
-		renderer.render(idleAnimation.getAnimationFrame(t), destRect, flip);
+		renderer.render(idleAnimation.updateAnimation(frameDelta), destRect, flip);
 
 	// draw texture box
 	if (options.renderEntityDrawRectangles)

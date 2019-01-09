@@ -13,8 +13,8 @@ class Player : public sdl::Renderable {
 	Player &operator=(const Player &rhs) = delete;
 	Player(const Player &rhs) = delete;
 
-	void render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
-	            const sdl::RenderOptions &options = {}) const override;
+	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
+	            const sdl::RenderOptions &options = {}) override;
 
 	static constexpr Rectangle hitbox{static_cast<int>(tileSize.w / 2), 0, tileSize.w, tileSize.h * 2};
 	Movable movable;
@@ -24,7 +24,7 @@ class Player : public sdl::Renderable {
 
   private:
 	Rectangle calcRenderTarget() const;
-	const sdl::Animation idleAnimation;
+	sdl::Animation idleAnimation;
 };
 } // namespace game
 

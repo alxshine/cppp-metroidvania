@@ -7,7 +7,7 @@ game::Mob::Mob(const Mob &rhs)
 }
 
 game::Mob::Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-               const sdl::Animation walkingAnimation, OptionalAnimation idleAnimation)
+                sdl::Animation walkingAnimation, OptionalAnimation idleAnimation)
   : name(name), maxHealth(health), movable(speedPerSecond, walkingAnimation), health(health), hitbox(hitbox), renderSize(renderSize),
       walkingAnimation(walkingAnimation), idleAnimation(std::move(idleAnimation))
 {
@@ -28,8 +28,8 @@ game::Rectangle game::Mob::calcPositionedHitbox() const
 	return {destRect.x + hitbox.x, destRect.y + hitbox.y, hitbox.w, hitbox.h};
 }
 
-void game::Mob::render(const sdl::Renderer &renderer, const sdl::GameClock::time_point &t,
-                       const sdl::RenderOptions &options) const
+void game::Mob::render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
+                       const sdl::RenderOptions &options)
 {
 	Rectangle destRect = calcRenderTarget();
 	Rectangle hitbox = calcPositionedHitbox();
@@ -42,9 +42,9 @@ void game::Mob::render(const sdl::Renderer &renderer, const sdl::GameClock::time
 		flip = sdl::Renderer::Flip::None;
 
 	if (movable.getMoved() || idleAnimation == nullptr)
-		renderer.render(walkingAnimation.getAnimationFrame(t), destRect, flip);
+		renderer.render(walkingAnimation.updateAnimation(frameDelta), destRect, flip);
 	else
-		renderer.render(idleAnimation->getAnimationFrame(t), destRect, flip);
+		renderer.render(idleAnimation->updateAnimation(frameDelta), destRect, flip);
 
 	// draw health bar
 	// TODO if wanted: if (health < maxHealth)
