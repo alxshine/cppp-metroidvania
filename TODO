@@ -1,7 +1,6 @@
 # Small fixes
-TODO make animations keep state and work using delta time so they always start from the start - very important for attacks, deaths, etc!
-TODO make animations optionally not repeatable (default param) - very important for attacks, deaths, etc!
 TODO find out why our tiles are rendered with borders
+TODO add music support to menus
 
 # Optional features for later
 TODO offset background rendering by the height of the highest row that is completely solid in the collision map (consecutive from the bottom, again calculate at makeRoom time)
@@ -19,5 +18,4 @@ TODO decide what to do with the flipped y axis - do we want to flip the axis in 
 # Physics
 
 # Game object
-TODO keep a stack of menus. Iff empty, render current room
-
+TODO implement state container
