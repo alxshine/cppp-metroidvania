@@ -4,4 +4,5 @@ Session.vim
 cmake-build-debug
 .gdb_history
 **/.cquery_cached_index/*
-**~
+*~
+**/~
