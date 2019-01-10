@@ -31,16 +31,29 @@ class Attackable {
 			return;
 		currentAttack = attackIndex;
 		currentAttackTime = sdl::GameClock::duration::zero();
-    attacks[currentAttack].animation.reset();
+		attacks[currentAttack].animation.reset();
 		owner.movable.canMove = false;
 	};
+
+	Rectangle getHitbox(Position position, bool flip = false)
+	{
+		if (currentAttack < 0)
+			return {0, 0, 0, 0};
+
+		auto currentHitbox = attacks[currentAttack].hitBox;
+		if (flip)
+			return {position.x - currentHitbox.x - currentHitbox.w, position.y + currentHitbox.y, currentHitbox.w,
+			        currentHitbox.h};
+		else
+			return {position.x + currentHitbox.x, position.y + currentHitbox.y, currentHitbox.w, currentHitbox.h};
+	}
 
 	void update(sdl::GameClock::duration frameDelta)
 	{
 		if (!isAttacking())
 			return;
 		currentAttackTime += frameDelta;
-    attacks[currentAttack].animation.updateAnimation(frameDelta);
+		attacks[currentAttack].animation.updateAnimation(frameDelta);
 		if (currentAttackTime > attacks[currentAttack].animation.totalDuration()) {
 			currentAttack = -1;
 			owner.movable.canMove = true;

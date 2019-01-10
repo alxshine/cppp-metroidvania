@@ -56,8 +56,11 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	if (options.renderEntityDrawRectangles)
 		renderer.drawRectangle(destRect, {0, 0, 255, 128}, false);
 	// draw hit/collision box
-	if (options.renderHitBoxes)
+	if (options.renderHitBoxes) {
 		renderer.drawRectangle(calcPositionedHitbox(), {255, 0, 0, 128}, false);
+		renderer.drawRectangle(attackable.getHitbox(movable.getPosition(), movable.getDirection().x < 0),
+		                       {0, 255, 255, 128});
+	}
 }
 
 void Player::attack()
@@ -65,11 +68,10 @@ void Player::attack()
 	if (attackable.isAttacking())
 		return;
 
-  std::cout << "comboCount: " << comboCount << std::endl;
 	if (timeSinceLastAttack < comboTimer)
 		comboCount++;
-  else
-    comboCount = 0;
+	else
+		comboCount = 0;
 	comboCount %= 3;
 	attackable.attack(comboCount);
 }
