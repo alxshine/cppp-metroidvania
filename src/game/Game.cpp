@@ -169,6 +169,7 @@ void Game::registerGameEvents()
 		                                                         {"Main Menu", [&]() {
 			                                                          menuStack.pop();
 			                                                          menuStack.push(mainMenu);
+			                                                          mainMenu->playMusic();
 		                                                          }}};
 		menuStack.push(
 		    std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems, std::nullopt, [&]() { menuStack.pop(); }));

@@ -6,10 +6,9 @@ using namespace sdl;
 SelectionMenu::SelectionMenu(std::string title, std::initializer_list<RawMenuItem> items,
                              std::optional<std::reference_wrapper<const sdl::Music>> music,
                              std::function<void()> escapeCallback)
-    : title(SDL::getInstance().generateText(*titleFont, title))
+    : title(SDL::getInstance().generateText(*titleFont, title)), music(music)
 {
-	if (music)
-		play(*music, repeat_forever);
+	playMusic();
 
 	for (auto i : items) {
 		this->items.emplace_back(SDL::getInstance().generateText(*font, i.first), i.second);
@@ -23,6 +22,12 @@ SelectionMenu::SelectionMenu(std::string title, std::initializer_list<RawMenuIte
 	});
 	eventHandler.onKeyDown(SDLK_RETURN, [&](const KeyboardEvent &) { this->items[selectedItem].second(); });
 	eventHandler.onKeyDown(SDLK_ESCAPE, [=](const KeyboardEvent &) { escapeCallback(); });
+}
+
+void SelectionMenu::playMusic()
+{
+	if (music)
+		play(*music, repeat_forever);
 }
 
 void SelectionMenu::render(const Renderer &renderer, GameClock::duration, const RenderOptions &)
