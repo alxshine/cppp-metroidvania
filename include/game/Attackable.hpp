@@ -1,11 +1,12 @@
 #ifndef _ATTACKABLE_H_
 #define _ATTACKABLE_H_
 
+#include <unordered_set>
 #include <vector>
 
 #include "GameClock.hpp"
-#include "game/constants.hpp"
 #include "game/Movable.hpp"
+#include "game/constants.hpp"
 
 namespace game {
 class Attackable {
@@ -36,9 +37,10 @@ class Attackable {
 	}
 
   private:
-  Movable &movable;
+	Movable &movable;
 	int currentAttack = -1;
 	sdl::GameClock::duration currentAttackTime;
+	std::unordered_set<Attackable *> alreadyHit;
 };
 } // namespace game
 

@@ -14,6 +14,7 @@ void Attackable::attack(int attackIndex)
 	currentAttack = attackIndex;
 	currentAttackTime = sdl::GameClock::duration::zero();
 	attacks[currentAttack].animation.reset();
+  alreadyHit.clear();
 	movable.canMove = false;
 };
 
@@ -31,8 +32,9 @@ Rectangle Attackable::getHitbox(Position position, bool flip)
 }
 void Attackable::hit(Attackable &other)
 {
-	if (isAttacking()) {
+	if (isAttacking() && alreadyHit.find(&other) == alreadyHit.end() ) {
 		other.hp -= attacks[currentAttack].damage;
+    alreadyHit.insert(&other);
 	}
 }
 void Attackable::update(sdl::GameClock::duration frameDelta)
