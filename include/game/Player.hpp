@@ -25,7 +25,7 @@ class Player : public sdl::Renderable {
 
 	static constexpr Rectangle hitbox{static_cast<int>(tileSize.w / 2), 0, tileSize.w, tileSize.h * 2};
 	Movable movable;
-  Attackable<Player> attackable;
+  Attackable attackable;
 
 	Rectangle calcPositionedHitbox() const;
 	Rectangle calcLastPositionedHitbox() const;

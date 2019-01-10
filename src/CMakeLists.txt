@@ -5,6 +5,7 @@ add_library(gamelib
     game/Item.cpp
     game/Mob.cpp
     game/Movable.cpp
+    game/Attackable.cpp
     game/Player.cpp
     game/ResourceManager.cpp
     game/Room.cpp

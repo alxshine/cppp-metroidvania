@@ -8,7 +8,7 @@ game::Mob::Mob(const Mob &rhs)
 
 game::Mob::Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
                sdl::Animation walkingAnimation, OptionalAnimation idleAnimation, std::vector<Attack> attacks)
-  : name(name), movable(speedPerSecond, walkingAnimation), attackable(health, attacks, *this), hitbox(hitbox), renderSize(renderSize),
+  : name(name), movable(speedPerSecond, walkingAnimation), attackable(health, attacks, movable), hitbox(hitbox), renderSize(renderSize),
       walkingAnimation(walkingAnimation), idleAnimation(std::move(idleAnimation))
 {
 }

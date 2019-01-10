@@ -23,7 +23,7 @@ class Mob : public sdl::Renderable {
 
 	const std::string name;
 	Movable movable;
-  Attackable<Mob> attackable;
+  Attackable attackable;
 
   private:
 	const Rectangle hitbox;

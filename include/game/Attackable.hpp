@@ -5,79 +5,38 @@
 
 #include "GameClock.hpp"
 #include "game/constants.hpp"
+#include "game/Movable.hpp"
 
 namespace game {
-template <typename T>
 class Attackable {
   public:
 	const unsigned maxHp;
 	unsigned hp;
 
-	Attackable(unsigned maxHp, const std::vector<Attack> attacks, T &owner)
-	    : maxHp(maxHp), hp(maxHp), attacks(attacks), owner(owner)
-	{
-	}
-
+	Attackable(unsigned maxHp, const std::vector<Attack> attacks, Movable &movable);
 	std::vector<Attack> attacks;
 	int getSuitableAttackIndex(CollisionMap &collisionMap, Rectangle targetHitbox, Position currentPosition);
 	inline bool isDead()
 	{
 		return hp == 0;
 	};
-	void attack(int attackIndex)
-	{
-		if (currentAttack >= 0)
-			return;
-		currentAttack = attackIndex;
-		currentAttackTime = sdl::GameClock::duration::zero();
-		attacks[currentAttack].animation.reset();
-		owner.movable.canMove = false;
-	};
+	void attack(int attackIndex);
 
-	Rectangle getHitbox(Position position, bool flip = false)
-	{
-		if (currentAttack < 0)
-			return {0, 0, 0, 0};
-
-		auto currentHitbox = attacks[currentAttack].hitBox;
-		if (flip)
-			return {position.x - currentHitbox.x - currentHitbox.w, position.y + currentHitbox.y, currentHitbox.w,
-			        currentHitbox.h};
-		else
-			return {position.x + currentHitbox.x, position.y + currentHitbox.y, currentHitbox.w, currentHitbox.h};
-	}
-
-	template <typename U>
-	void hit(Attackable<U> &other)
-	{
-		if (currentAttack >= 0)
-			other.hp -= attacks[currentAttack].damage;
-	}
-
-	void update(sdl::GameClock::duration frameDelta)
-	{
-		if (!isAttacking())
-			return;
-		currentAttackTime += frameDelta;
-		attacks[currentAttack].animation.updateAnimation(frameDelta);
-		if (currentAttackTime > attacks[currentAttack].animation.totalDuration()) {
-			currentAttack = -1;
-			owner.movable.canMove = true;
-		}
-	}
-
+	Rectangle getHitbox(Position position, bool flip = false);
+	void hit(Attackable &other);
+	void update(sdl::GameClock::duration frameDelta);
 	inline bool isAttacking()
 	{
 		return currentAttack >= 0;
 	}
 
-	sdl::Sprite getCurrentSprite()
+	inline sdl::Sprite getCurrentSprite()
 	{
 		return attacks[currentAttack].animation.getCurrentFrame();
 	}
 
   private:
-	T &owner;
+  Movable &movable;
 	int currentAttack = -1;
 	sdl::GameClock::duration currentAttackTime;
 };
