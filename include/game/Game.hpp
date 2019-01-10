@@ -31,8 +31,8 @@ class Game {
 	sdl::GameClock::time_point lastGameFrameTime;
 
   private:
-	std::shared_ptr<menu::Menu<Game>> mainMenu;
-	std::stack<std::shared_ptr<menu::Menu<Game>>> menuStack;
+	std::shared_ptr<menu::Menu> mainMenu;
+	std::stack<std::shared_ptr<menu::Menu>> menuStack;
 	ResourceManager res;
 	const std::string firstRoom;
 	const Position initialPosition;

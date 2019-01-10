@@ -12,15 +12,14 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 {
 	registerGameEvents();
 
-	auto mainMenuItems =
-	    std::initializer_list<RawMenuItem<Game>>{{"New Game",
-	                                              [&](Game &game) {
-		                                              resetState();
-		                                              game.menuStack.pop();
-	                                              }},
-	                                             // {"Load Game", [&](Game &game) { /* TODO add load menu */ }},
-	                                             {"Exit", [&](Game &game) { game.state = State::exit; }}};
-	mainMenu = std::make_shared<menu::SelectionMenu<Game>>(*this, "Main Menu", mainMenuItems);
+	auto mainMenuItems = std::initializer_list<RawMenuItem>{{"New Game",
+	                                                         [&]() {
+		                                                         resetState();
+		                                                         menuStack.pop();
+	                                                         }},
+	                                                        // {"Load Game", [&]() { /* TODO add load menu */ }},
+	                                                        {"Exit", [&]() { state = State::exit; }}};
+	mainMenu = std::make_shared<menu::SelectionMenu>("Main Menu", mainMenuItems);
 	menuStack.push(mainMenu);
 }
 
@@ -163,15 +162,14 @@ void Game::registerGameEvents()
 	// quit
 	gameEvents.on(SDL_QUIT, [this](const Event &) { state = State::exit; });
 	gameEvents.onKeyDown(SDLK_ESCAPE, [this](const KeyboardEvent &) {
-		auto pauseMenuItems =
-		    std::initializer_list<RawMenuItem<Game>>{{"Stats", [&](Game &game) { /* TODO stats menu */ }},
-		                                             {"Inventory", [&](Game &game) { /* TODO inventory menu */ }},
-		                                             {"Resume", [&](Game &game) { game.menuStack.pop(); }},
-		                                             {"Main Menu", [&](Game &game) {
-			                                              game.menuStack.pop();
-			                                              game.menuStack.push(mainMenu);
-		                                              }}};
-		menuStack.push(std::make_shared<menu::SelectionMenu<Game>>(*this, "Pause", pauseMenuItems));
+		auto pauseMenuItems = std::initializer_list<RawMenuItem>{{"Stats", [&]() { /* TODO stats menu */ }},
+		                                                         {"Inventory", [&]() { /* TODO inventory menu */ }},
+		                                                         {"Resume", [&]() { menuStack.pop(); }},
+		                                                         {"Main Menu", [&]() {
+			                                                          menuStack.pop();
+			                                                          menuStack.push(mainMenu);
+		                                                          }}};
+		menuStack.push(std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems));
 	});
 	// debug overlay
 	gameEvents.onKeyDown(SDLK_c, [this](const KeyboardEvent &) {
