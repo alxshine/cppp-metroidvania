@@ -58,8 +58,7 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	// draw hit/collision box
 	if (options.renderHitBoxes) {
 		renderer.drawRectangle(calcPositionedHitbox(), {255, 0, 0, 128}, false);
-		renderer.drawRectangle(attackable.getHitbox(movable.getPosition(), movable.getDirection().x < 0),
-		                       {0, 255, 255, 128});
+		renderer.drawRectangle(getAttackHitbox(), {0, 255, 255, 128});
 	}
 }
 
@@ -87,4 +86,9 @@ void Player::updateCombat(sdl::GameClock::duration frameDelta)
 	if (!attackable.isAttacking()) {
 		timeSinceLastAttack = sdl::GameClock::duration::zero();
 	}
+}
+
+Rectangle Player::getAttackHitbox()
+{
+	return attackable.getHitbox(movable.getPosition(), movable.getDirection().x < 0);
 }

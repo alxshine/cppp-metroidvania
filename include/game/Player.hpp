@@ -21,6 +21,7 @@ class Player : public sdl::Renderable {
 
   void attack();
   void updateCombat(sdl::GameClock::duration frameDelta);
+  Rectangle getAttackHitbox();
 
 	static constexpr Rectangle hitbox{static_cast<int>(tileSize.w / 2), 0, tileSize.w, tileSize.h * 2};
 	Movable movable;

@@ -1,14 +1,14 @@
 #include "game/Mob.hpp"
 game::Mob::Mob(const Mob &rhs)
-    : name(rhs.name), maxHealth(rhs.maxHealth), movable(rhs.movable), health(rhs.health), hitbox(rhs.hitbox),
+  : name(rhs.name), movable(rhs.movable), attackable(rhs.attackable), hitbox(rhs.hitbox),
       renderSize(rhs.renderSize), walkingAnimation(rhs.walkingAnimation),
       idleAnimation(std::make_unique<sdl::Animation>(*rhs.idleAnimation))
 {
 }
 
 game::Mob::Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-                sdl::Animation walkingAnimation, OptionalAnimation idleAnimation)
-  : name(name), maxHealth(health), movable(speedPerSecond, walkingAnimation), health(health), hitbox(hitbox), renderSize(renderSize),
+               sdl::Animation walkingAnimation, OptionalAnimation idleAnimation, std::vector<Attack> attacks)
+  : name(name), movable(speedPerSecond, walkingAnimation), attackable(health, attacks, *this), hitbox(hitbox), renderSize(renderSize),
       walkingAnimation(walkingAnimation), idleAnimation(std::move(idleAnimation))
 {
 }
@@ -51,7 +51,7 @@ void game::Mob::render(const sdl::Renderer &renderer, sdl::GameClock::duration f
 	// box (uncomment if wanted)
 	// renderer.drawRectangle({hitbox.x, hitbox.y - 6, hitbox.w, 4}, {255, 0, 0, 255}, false);
 	// filling
-	renderer.drawRectangle({hitbox.x, hitbox.y - 5, static_cast<int>(hitbox.w * ((float)health / maxHealth)), 2},
+	renderer.drawRectangle({hitbox.x, hitbox.y - 5, static_cast<int>(hitbox.w * ((float)attackable.hp / attackable.maxHp)), 2},
 	                       {255, 0, 0, 255}, true);
 
 	// draw debug info

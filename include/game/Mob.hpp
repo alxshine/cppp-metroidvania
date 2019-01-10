@@ -1,18 +1,17 @@
 #ifndef MOB_H
 #define MOB_H
 
-#include "Movable.hpp"
+#include "game/Movable.hpp"
+#include "game/Attackable.hpp"
 #include "SDL.hpp"
 #include "constants.hpp"
 #include "gamedef/entity_definitions.hpp"
 
 namespace game {
-
-
 class Mob : public sdl::Renderable {
   public:
 	Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-	    sdl::Animation walkingAnimation, OptionalAnimation idleAnimation);
+	    sdl::Animation walkingAnimation, OptionalAnimation idleAnimation, std::vector<Attack> attacks);
 	Mob(const Mob &rhs);
 
 	Mob &operator=(const Mob &rhs) = delete;
@@ -23,11 +22,10 @@ class Mob : public sdl::Renderable {
 	Rectangle calcPositionedHitbox() const;
 
 	const std::string name;
-	const Health maxHealth;
 	Movable movable;
+  Attackable<Mob> attackable;
 
   private:
-	Health health;
 	const Rectangle hitbox;
 	const Rectangle renderSize;
 	sdl::Animation walkingAnimation;

@@ -54,9 +54,9 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	                                  {100, 295, 50, 36}},
 	                                 60ms};
 
-	Attack attack1{{5, -20, 10, 20}, attackAnim1};
-	Attack attack2{{5, -20, 10, 20}, attackAnim2};
-	Attack attack3{{5, -20, 10, 20}, attackAnim3};
+	Attack attack1{{5, -20, 10, 20}, attackAnim1, 1};
+	Attack attack2{{5, -20, 10, 20}, attackAnim2, 2};
+	Attack attack3{{5, -20, 10, 20}, attackAnim3, 3};
 	const std::vector<Attack> attacks{attack1, attack2, attack3};
 	return std::make_unique<Player>(idleAnimation, walkingAnimation, airUpAnimation, airDownAnimation, attacks);
 }
@@ -77,9 +77,10 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	}();
 
 	// TODO handle behaviour, attacks
+  std::vector<game::Attack> attacks{};
 
 	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize,
-	                             walkingAnimation, std::move(idleAnimation));
+	                             walkingAnimation, std::move(idleAnimation), attacks);
 }
 
 std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &itemdef) const
@@ -103,7 +104,7 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 
 	// transform layout definition to renderable layout
 	Room::Layout layout;
-	Room::CollisionMap collisionMap;
+	CollisionMap collisionMap;
 	for (auto &layer : roomDef.layout) {
 		bool firstLayer = layout.size() == 0;
 		Room::Layer newLayer;

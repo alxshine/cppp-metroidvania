@@ -47,7 +47,7 @@ void Game::interact()
 				player->movable.setDirection(door.direction);
 			}
 
-      lastGameFrameTime = gameClock.now();
+			lastGameFrameTime = gameClock.now();
 			return;
 		}
 	}
@@ -89,8 +89,15 @@ void Game::runMainLoop()
 		else
 			player->movable.stopMoving();
 
-    //combat
-    player->updateCombat(gameFrameDelta);
+		// combat
+		player->updateCombat(gameFrameDelta);
+		if (player->attackable.isAttacking()) {
+      auto hitbox = player->getAttackHitbox();
+			for (auto &m : currentRoom->mobs) {
+        if(intersects(hitbox, m.calcPositionedHitbox()))
+           player->attackable.hit(m.attackable);
+			}
+		}
 
 		// gravity
 		player->movable.applyGravity(gameFrameDelta);

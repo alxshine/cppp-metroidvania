@@ -4,14 +4,13 @@
 #include <vector>
 
 #include "GameClock.hpp"
-#include "game/Room.hpp"
 #include "game/constants.hpp"
 
 namespace game {
 template <typename T>
 class Attackable {
   public:
-	unsigned maxHp;
+	const unsigned maxHp;
 	unsigned hp;
 
 	Attackable(unsigned maxHp, const std::vector<Attack> attacks, T &owner)
@@ -20,7 +19,7 @@ class Attackable {
 	}
 
 	std::vector<Attack> attacks;
-	int getSuitableAttackIndex(Room::CollisionMap &collisionMap, Rectangle targetHitbox, Position currentPosition);
+	int getSuitableAttackIndex(CollisionMap &collisionMap, Rectangle targetHitbox, Position currentPosition);
 	inline bool isDead()
 	{
 		return hp == 0;
@@ -46,6 +45,13 @@ class Attackable {
 			        currentHitbox.h};
 		else
 			return {position.x + currentHitbox.x, position.y + currentHitbox.y, currentHitbox.w, currentHitbox.h};
+	}
+
+	template <typename U>
+	void hit(Attackable<U> &other)
+	{
+		if (currentAttack >= 0)
+			other.hp -= attacks[currentAttack].damage;
 	}
 
 	void update(sdl::GameClock::duration frameDelta)

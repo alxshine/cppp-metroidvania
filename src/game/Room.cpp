@@ -8,7 +8,7 @@ game::Rectangle game::Room::Tile::render(const sdl::Renderer &renderer, const ga
 }
 
 game::Room::Room(const std::string name, const sdl::Texture &background, const sdl::Music &music,
-                 const Position &location, const game::Room::Layout layout, const game::Room::CollisionMap collisionMap,
+                 const Position &location, const game::Room::Layout layout, const game::CollisionMap collisionMap,
                  const std::vector<game::Mob> mobs, const std::vector<game::Item> items,
                  const std::vector<game::Door> doors)
     : name(name), background(background), music(music), location(location), layout(layout),
