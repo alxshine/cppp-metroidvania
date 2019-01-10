@@ -1,6 +1,5 @@
 # Small fixes
 TODO find out why our tiles are rendered with borders
-TODO add music support to menus
 
 # Optional features for later
 TODO offset background rendering by the height of the highest row that is completely solid in the collision map (consecutive from the bottom, again calculate at makeRoom time)

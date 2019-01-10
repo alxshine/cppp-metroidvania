@@ -19,7 +19,8 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 	                                                         }},
 	                                                        // {"Load Game", [&]() { /* TODO add load menu */ }},
 	                                                        {"Exit", [&]() { state = State::exit; }}};
-	mainMenu = std::make_shared<menu::SelectionMenu>("Main Menu", mainMenuItems);
+	mainMenu = std::make_shared<menu::SelectionMenu>("Main Menu", mainMenuItems,
+	                                                 std::ref(res.getMusic("waterflame-hexagon-force.ogg")));
 	menuStack.push(mainMenu);
 }
 
@@ -169,7 +170,8 @@ void Game::registerGameEvents()
 			                                                          menuStack.pop();
 			                                                          menuStack.push(mainMenu);
 		                                                          }}};
-		menuStack.push(std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems, [&]() { menuStack.pop(); }));
+		menuStack.push(
+		    std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems, std::nullopt, [&]() { menuStack.pop(); }));
 	});
 	// debug overlay
 	gameEvents.onKeyDown(SDLK_c, [this](const KeyboardEvent &) {

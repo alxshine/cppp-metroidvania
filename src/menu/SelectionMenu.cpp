@@ -4,10 +4,13 @@ using namespace menu;
 using namespace sdl;
 
 SelectionMenu::SelectionMenu(std::string title, std::initializer_list<RawMenuItem> items,
+                             std::optional<std::reference_wrapper<const sdl::Music>> music,
                              std::function<void()> escapeCallback)
     : title(SDL::getInstance().generateText(*titleFont, title))
 {
-	// TODO add optional (std::optional or smart ptr) music?
+	if (music)
+		play(*music, repeat_forever);
+
 	for (auto i : items) {
 		this->items.emplace_back(SDL::getInstance().generateText(*font, i.first), i.second);
 	}
