@@ -169,7 +169,7 @@ void Game::registerGameEvents()
 			                                                          menuStack.pop();
 			                                                          menuStack.push(mainMenu);
 		                                                          }}};
-		menuStack.push(std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems));
+		menuStack.push(std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems, [&]() { menuStack.pop(); }));
 	});
 	// debug overlay
 	gameEvents.onKeyDown(SDLK_c, [this](const KeyboardEvent &) {

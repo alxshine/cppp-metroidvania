@@ -3,7 +3,8 @@
 using namespace menu;
 using namespace sdl;
 
-SelectionMenu::SelectionMenu(std::string title, std::initializer_list<RawMenuItem> items)
+SelectionMenu::SelectionMenu(std::string title, std::initializer_list<RawMenuItem> items,
+                             std::function<void()> escapeCallback)
     : title(SDL::getInstance().generateText(*titleFont, title))
 {
 	// TODO add optional (std::optional or smart ptr) music?
@@ -18,6 +19,7 @@ SelectionMenu::SelectionMenu(std::string title, std::initializer_list<RawMenuIte
 			--selectedItem;
 	});
 	eventHandler.onKeyDown(SDLK_RETURN, [&](const KeyboardEvent &) { this->items[selectedItem].second(); });
+	eventHandler.onKeyDown(SDLK_ESCAPE, [=](const KeyboardEvent &) { escapeCallback(); });
 }
 
 void SelectionMenu::render(const Renderer &renderer, GameClock::duration, const RenderOptions &)
