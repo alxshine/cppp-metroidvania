@@ -3,7 +3,7 @@
 using namespace menu;
 using namespace sdl;
 
-SelectionMenu::SelectionMenu(std::string title, std::initializer_list<RawMenuItem> items,
+SelectionMenu::SelectionMenu(std::string title, std::vector<RawMenuItem> items,
                              std::optional<std::reference_wrapper<const sdl::Music>> music,
                              std::function<void()> escapeCallback)
     : title(SDL::getInstance().generateText(*titleFont, title)), music(music)

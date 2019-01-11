@@ -4,7 +4,6 @@
 #include "menu/Menu.hpp"
 
 #include <functional>
-#include <initializer_list>
 #include <optional>
 #include <utility>
 #include <vector>
@@ -16,7 +15,7 @@ using MenuItem = std::pair<sdl::Text, std::function<void()>>;
 
 class SelectionMenu : public Menu {
   public:
-	SelectionMenu(std::string title, std::initializer_list<RawMenuItem> items,
+	SelectionMenu(std::string title, std::vector<RawMenuItem> items,
 	              std::optional<std::reference_wrapper<const sdl::Music>> music = std::nullopt,
 	              std::function<void()> escapeCallback = []() {});
 	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,

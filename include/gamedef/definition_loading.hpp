@@ -4,6 +4,7 @@
 #include <exception>
 #include <istream>
 
+#include "definition_loading.hpp"
 #include "entity_definitions.hpp"
 
 namespace game_definitions {

@@ -123,6 +123,10 @@ struct Room {
 /*********************
  *  Print operators  *
  *********************/
+inline std::ostream &operator<<(std::ostream &out, const SDL_Point &pos)
+{
+	return out << pos.x << " " << pos.y << "\n";
+}
 
 inline std::ostream &operator<<(std::ostream &out, const Rectangle &rect)
 {
