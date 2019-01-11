@@ -20,6 +20,7 @@ struct RenderOptions {
 	bool renderCollisionMap = false;
 	bool renderHitBoxes = false;
 	bool renderEntityDrawRectangles = false;
+  bool renderHealthBars = false;
 };
 
 class Renderable {

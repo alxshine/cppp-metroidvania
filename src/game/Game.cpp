@@ -89,6 +89,9 @@ void Game::runMainLoop()
 		else
 			player->stopMoving();
 
+    for(auto &m : currentRoom->mobs)
+      m.performAiStep(currentRoom->collisionMap, player->calcPositionedHitbox());
+
 		// combat
 		player->updateCombat(gameFrameDelta);
 		if (player->attackable.isAttacking()) {

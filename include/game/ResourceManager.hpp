@@ -13,6 +13,7 @@
 #include "Room.hpp"
 #include "SDL.hpp"
 #include "exceptions.hpp"
+#include "game/AI.hpp"
 #include "gamedef/definition_loading.hpp"
 
 namespace game {
@@ -63,7 +64,6 @@ class ResourceManager final {
 	void parseDefinitions(std::string definitionPath);
 
 	// Members
-
 	const sdl::SDL &sdl;
 	std::unordered_map<std::string, std::unique_ptr<Mob>> mobs;
 	std::unordered_map<std::string, std::unique_ptr<Item>> items;
@@ -71,6 +71,9 @@ class ResourceManager final {
 	std::unordered_map<std::string, std::unique_ptr<sdl::Texture>> textures;
 	std::unordered_map<std::string, std::unique_ptr<sdl::SoundEffect>> sounds;
 	std::unordered_map<std::string, std::unique_ptr<sdl::Music>> music;
+
+	// AI
+	std::shared_ptr<AI> idleAI;
 };
 } // namespace game
 
