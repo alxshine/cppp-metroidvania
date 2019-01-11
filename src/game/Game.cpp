@@ -1,5 +1,7 @@
 #include "game/Game.hpp"
 
+#include "menu/MessageBox.hpp"
+
 #include <chrono>
 #include <ctime>
 #include <filesystem>
@@ -20,8 +22,8 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 	std::vector<RawMenuItem> mainMenuItems = {{"New Game",
 	                                           [&]() {
 		                                           music::fade_out(500ms);
-		                                           resetState();
 		                                           menuStack.pop();
+		                                           resetState();
 	                                           }},
 	                                          {"Loa Game", [&]() { menuStack.push(createLoadMenu(*this, ".")); }},
 	                                          {"Exit", [&]() { state = State::exit; }}};
@@ -34,6 +36,9 @@ void Game::resetState()
 {
 	static SerializedState defaultState{0, firstRoom, {initialPosition}};
 	loadState(defaultState);
+
+	menuStack.push(std::make_shared<menu::MessageBox>([&]() { menuStack.pop(); }, "Welcome to our Metroidvania-like!",
+	                                                  "Use WASD+SPACE for Movement and K"));
 }
 
 void Game::saveState()
@@ -218,8 +223,8 @@ void Game::registerGameEvents()
 			                                            menuStack.push(mainMenu);
 			                                            mainMenu->playMusic();
 		                                            }}};
-		menuStack.push(
-		    std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems, std::nullopt, [&]() { menuStack.pop(); }, 128));
+		menuStack.push(std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems, std::nullopt,
+		                                                     [&]() { menuStack.pop(); }, 128));
 	});
 	// debug overlay
 	gameEvents.onKeyDown(SDLK_c, [this](const KeyboardEvent &) {

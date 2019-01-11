@@ -2,6 +2,7 @@ add_library(gamelib
     gamedef/definition_loading.cpp
     # game/Mixins.cpp
     menu/SelectionMenu.cpp
+    menu/MessageBox.cpp
     state/SerializedState.cpp
     game/Game.cpp
     game/Item.cpp
