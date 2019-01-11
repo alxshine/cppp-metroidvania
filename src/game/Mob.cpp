@@ -1,15 +1,14 @@
 #include "game/Mob.hpp"
 game::Mob::Mob(const Mob &rhs)
-  : name(rhs.name), movable(rhs.movable), attackable(rhs.attackable), hitbox(rhs.hitbox),
-      renderSize(rhs.renderSize), walkingAnimation(rhs.walkingAnimation),
-      idleAnimation(std::make_unique<sdl::Animation>(*rhs.idleAnimation))
+    : name(rhs.name), movable(rhs.movable), attackable(rhs.attackable), hitbox(rhs.hitbox), renderSize(rhs.renderSize),
+      walkingAnimation(rhs.walkingAnimation), idleAnimation(std::make_unique<sdl::Animation>(*rhs.idleAnimation))
 {
 }
 
 game::Mob::Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
                sdl::Animation walkingAnimation, OptionalAnimation idleAnimation, std::vector<Attack> attacks)
-  : name(name), movable(speedPerSecond, walkingAnimation), attackable(health, attacks, movable), hitbox(hitbox), renderSize(renderSize),
-      walkingAnimation(walkingAnimation), idleAnimation(std::move(idleAnimation))
+    : name(name), movable(speedPerSecond, walkingAnimation), attackable(health, attacks, movable), hitbox(hitbox),
+      renderSize(renderSize), walkingAnimation(walkingAnimation), idleAnimation(std::move(idleAnimation))
 {
 }
 
@@ -36,7 +35,7 @@ void game::Mob::render(const sdl::Renderer &renderer, sdl::GameClock::duration f
 
 	sdl::Renderer::Flip flip;
 	auto dir = movable.getDirection();
-	if(dir.x < 0)
+	if (dir.x < 0)
 		flip = sdl::Renderer::Flip::X;
 	else
 		flip = sdl::Renderer::Flip::None;
@@ -51,8 +50,9 @@ void game::Mob::render(const sdl::Renderer &renderer, sdl::GameClock::duration f
 	// box (uncomment if wanted)
 	// renderer.drawRectangle({hitbox.x, hitbox.y - 6, hitbox.w, 4}, {255, 0, 0, 255}, false);
 	// filling
-	renderer.drawRectangle({hitbox.x, hitbox.y - 5, static_cast<int>(hitbox.w * ((float)attackable.hp / attackable.maxHp)), 2},
-	                       {255, 0, 0, 255}, true);
+	renderer.drawRectangle(
+	    {hitbox.x, hitbox.y - 5, static_cast<int>(hitbox.w * ((float)attackable.hp / attackable.maxHp)), 2},
+	    {255, 0, 0, 255}, true);
 
 	// draw debug info
 	if (options.renderEntityDrawRectangles)

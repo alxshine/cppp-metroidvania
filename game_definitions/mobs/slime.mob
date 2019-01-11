@@ -1,0 +1,45 @@
+Name: Slime
+Health: 10
+Speed: 20
+Behaviour: Stupid
+Hitbox: 0 0 35 25
+DrawSize: 0 0 32 25
+
+WalkingAnimation:
+    Spritesheet: slime.png
+    Time: 100
+    Frame: 128 0 32 25
+    Frame: 160 0 32 25
+    Frame: 192 0 32 25
+    Frame: 224 0 32 25
+EndAnimation
+
+IdleAnimation:
+    Spritesheet: slime.png
+    Time: 100
+    Frame: 0 0 32 25
+    Frame: 32 0 32 25
+    Frame: 64 0 32 25
+    Frame: 96 0 32 25
+EndAnimation
+
+Attack: Bite
+    Type: Melee
+    SoundEffect: hey.wav 1
+    HitBox: 0 0 0 0
+    Damage: 3
+
+    Animation:
+        Spritesheet: slime.png
+        Time: 150
+        Frame: 0 25 32 25
+        Frame: 25 25 32 25
+        Frame: 50 25 32 25
+        Frame: 75 25 32 25
+        Frame: 100 25 32 25
+        Frame: 125 25 32 25
+        Frame: 150 25 32 25
+        Frame: 175 25 32 25
+    EndAnimation
+
+EndMob

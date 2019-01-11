@@ -19,6 +19,9 @@ class Player : public sdl::Renderable {
 	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
 	            const sdl::RenderOptions &options = {}) override;
 
+  void startMoving();
+  void stopMoving();
+  
   void attack();
   void updateCombat(sdl::GameClock::duration frameDelta);
   Rectangle getAttackHitbox();

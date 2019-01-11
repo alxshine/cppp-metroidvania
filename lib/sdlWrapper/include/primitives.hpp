@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "Color.hpp"
 #include "GameClock.hpp"
@@ -41,7 +42,7 @@ class Animation {
 	const Texture &texture;
 	std::vector<Rectangle> frames;
 	GameClock::duration timePerFrame;
-  GameClock::duration runDuration;
+  GameClock::duration runDuration = GameClock::duration::zero();
 
   public:
 	Animation(const Texture &texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);

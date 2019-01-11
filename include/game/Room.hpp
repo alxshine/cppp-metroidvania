@@ -38,8 +38,8 @@ struct Room : public sdl::Renderable {
 	const Rectangle sizeInPixels;
 	const CollisionMap collisionMap;
 	std::vector<Mob> mobs;
-	const std::vector<Item> items;
-	const std::vector<Door> doors;
+	std::vector<Item> items;
+	std::vector<Door> doors;
 };
 
 inline Rectangle tileRectangle(int row, int column)

@@ -85,9 +85,9 @@ void Game::runMainLoop()
 		playerHasMoved = false;
 		gameEvents.dispatch();
 		if (playerHasMoved)
-			player->movable.startMoving();
+			player->startMoving();
 		else
-			player->movable.stopMoving();
+			player->stopMoving();
 
 		// combat
 		player->updateCombat(gameFrameDelta);

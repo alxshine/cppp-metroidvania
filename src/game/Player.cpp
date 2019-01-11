@@ -55,10 +55,24 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	// draw texture box
 	if (options.renderEntityDrawRectangles)
 		renderer.drawRectangle(destRect, {0, 0, 255, 128}, false);
+  
 	// draw hit/collision box
 	if (options.renderHitBoxes) {
 		renderer.drawRectangle(calcPositionedHitbox(), {255, 0, 0, 128}, false);
 		renderer.drawRectangle(getAttackHitbox(), {0, 255, 255, 128});
+	}
+}
+
+void Player::startMoving()
+{
+	movable.startMoving();
+}
+
+void Player::stopMoving()
+{
+	if (movable.getIsMoving()) {
+		idleAnimation.reset();
+		movable.stopMoving();
 	}
 }
 

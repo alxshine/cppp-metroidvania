@@ -102,6 +102,12 @@ bool Movable::getMoved() const
 {
 	return canMove && (moved || lastPosition != position);
 }
+
+bool Movable::getIsMoving() const
+{
+	return isMoving;
+}
+
 Direction Movable::getDirection() const
 {
 	return direction;
@@ -121,15 +127,17 @@ Position Movable::getLastPosition() const
 	return lastPosition;
 }
 
-void Movable::startMoving(){
-  if(isMoving)
-    return;
-  isMoving = true;
-  runningAnimation->reset();
+void Movable::startMoving()
+{
+	if (isMoving)
+		return;
+	isMoving = true;
+	runningAnimation->reset();
 }
 
-void Movable::stopMoving(){
-  isMoving = false;
+void Movable::stopMoving()
+{
+	isMoving = false;
 }
 
 bool Movable::hasPlayableAnimation() const
