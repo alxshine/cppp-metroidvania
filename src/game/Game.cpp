@@ -14,6 +14,7 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 
 	auto mainMenuItems = std::initializer_list<RawMenuItem>{{"New Game",
 	                                                         [&]() {
+		                                                         music::fade_out(500ms);
 		                                                         resetState();
 		                                                         menuStack.pop();
 	                                                         }},
@@ -28,7 +29,7 @@ void Game::resetState()
 {
 	// TODO add state container for easier (de)serialization, and save default state in var of that type in ctor
 	currentRoom = std::make_unique<Room>(res.getRoom(firstRoom));
-	play(currentRoom->music, repeat_forever);
+	play_fade_in(currentRoom->music, repeat_forever, 500ms);
 	player->movable.reposition(initialPosition);
 }
 
