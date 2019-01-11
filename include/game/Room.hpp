@@ -20,7 +20,6 @@ struct Room : public sdl::Renderable {
 	using Row = std::vector<Tile>;
 	using Layer = std::vector<Row>;
 	using Layout = std::vector<Layer>;
-	using CollisionMap = std::vector<std::vector<Collision>>;
 
 	Room(const std::string name, const sdl::Texture &background, const sdl::Music &music, const Position &location,
 	     const Layout layout, const CollisionMap collisionMap, const std::vector<Mob> mobs,
@@ -38,9 +37,9 @@ struct Room : public sdl::Renderable {
 	const Layout layout;
 	const Rectangle sizeInPixels;
 	const CollisionMap collisionMap;
-	const std::vector<Mob> mobs;
-	const std::vector<Item> items;
-	const std::vector<Door> doors;
+	std::vector<Mob> mobs;
+	std::vector<Item> items;
+	std::vector<Door> doors;
 };
 
 inline Rectangle tileRectangle(int row, int column)

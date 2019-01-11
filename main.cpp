@@ -20,7 +20,6 @@ int main()
 {
 	try {
 		Game game("game_definitions", "assets", "First", {50, 180});
-		game.initialize();
 		game.runMainLoop();
 
 	} catch (SdlException &e) {

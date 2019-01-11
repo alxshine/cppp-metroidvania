@@ -77,6 +77,7 @@ void Game::interact()
 				player->movable.setDirection(door.direction);
 			}
 
+			lastGameFrameTime = gameClock.now();
 			return;
 		}
 	}
@@ -98,11 +99,6 @@ static Position calcCameraPosition(const Player &player, const Room &room, const
 	return camera;
 }
 
-void Game::initialize()
-{
-	lastGameFrameTime = gameClock.now();
-}
-
 void Game::runMainLoop()
 {
 	while (state == State::running) {
@@ -111,11 +107,11 @@ void Game::runMainLoop()
 		// Game
 		if (menuStack.empty()) {
 			gameClock.resume();
-
 			renderer.setCameraPosition(calcCameraPosition(*player, *currentRoom, renderer));
 			auto now = gameClock.now();
 			gameFrameDelta = now - lastGameFrameTime;
 
+			// **************** HANDLE THE PLAYER ****************
 			// reset player velocity
 			player->movable.mainLoopReset();
 
@@ -123,35 +119,59 @@ void Game::runMainLoop()
 			playerHasMoved = false;
 			gameEvents.dispatch();
 			if (playerHasMoved)
-				player->movable.startMoving();
+				player->startMoving();
 			else
-				player->movable.stopMoving();
+				player->stopMoving();
 
 			// gravity
 			player->movable.applyGravity(gameFrameDelta);
 
-			// Room
-			// currentRoom->update()
-
-			// Player
+			// Updates and collision
 			player->movable.update(gameFrameDelta);
 			resolveRoomCollision(*player, *currentRoom);
 
-			// render
+			// combat
+			player->updateCombat(gameFrameDelta);
+			if (player->attackable.isAttacking()) {
+				auto hitbox = player->getAttackHitbox();
+				for (auto &m : currentRoom->mobs) {
+					if (intersects(hitbox, m.calcPositionedHitbox()))
+						player->attackable.hit(m.attackable);
+				}
+			}
+
+			// Room
+			// currentRoom->update()
+
+			// ******************* HANDLE THE MOBS ***************
+			for (auto &m : currentRoom->mobs) {
+				if (!m.isNeededOnScreen())
+					continue;
+
+				// AI
+				m.performAiStep(currentRoom->collisionMap, player->calcPositionedHitbox());
+
+				// gravity
+				// TODO
+
+				// combat
+				// TODO
+			}
+
+			// ******************* RENDERING *****************
 			renderer.render(*currentRoom, gameFrameDelta, renderOpts);
 			renderer.render(*player, gameFrameDelta, renderOpts);
 
 			lastGameFrameTime = now;
 
-			// Menus
 		} else {
+			// Menus
 			gameClock.pause();
 
 			auto menu = menuStack.top();
 			menu->dispatch();
 			renderer.render(*menu, GameClock::duration(0), renderOpts);
 		}
-
 		renderer.swapBuffers();
 	}
 
@@ -180,6 +200,7 @@ void Game::registerGameEvents()
 		renderOpts.renderCollisionMap = !renderOpts.renderCollisionMap;
 		renderOpts.renderEntityDrawRectangles = !renderOpts.renderEntityDrawRectangles;
 		renderOpts.renderHitBoxes = !renderOpts.renderHitBoxes;
+		renderOpts.renderHealthBars = !renderOpts.renderHealthBars;
 	});
 
 	// jump down from platforms
@@ -189,6 +210,9 @@ void Game::registerGameEvents()
 
 	// interaction
 	gameEvents.onKeyDown(SDLK_e, [this](const KeyboardEvent &) { this->interact(); });
+
+	// attack
+	gameEvents.whileKeyHeld(SDL_SCANCODE_K, [this]() { player->attack(); });
 
 	// blink
 	gameEvents.onKeyDown(SDLK_j, [this](const KeyboardEvent &) {

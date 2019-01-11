@@ -48,6 +48,7 @@ class Movable {
 	void reposition(Position newPosition);
 
 	bool getMoved() const;
+  bool getIsMoving() const;
 	Direction getDirection() const;
 	void setDirection(Direction d);
 	Position getPosition() const;

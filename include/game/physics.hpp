@@ -5,6 +5,11 @@
 
 namespace game {
 
+inline bool intersects(Rectangle lhs, Rectangle rhs)
+{
+	return sdl::intersects(lhs, rhs);
+}
+
 bool collidesLeft(Rectangle playerHitBox, Room &currentRoom);
 
 bool collidesRight(Rectangle playerHitBox, Room &currentRoom);
@@ -15,7 +20,7 @@ bool collidesBottom(Rectangle playerHitBox, Room &currentRoom, Collision testCol
 
 bool isStanding(Rectangle playerHitBox, Room &currentRoom);
 
-void resolveRoomCollision(Player &player, Room &currentRoom);
+void resolveRoomCollision(Player &player, Room &currentRoom); // TODO make this take a Movable
 
 inline int getTileRow(Rectangle playerHitBox)
 {

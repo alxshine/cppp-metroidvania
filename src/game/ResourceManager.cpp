@@ -21,25 +21,44 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	    spritesheet, {{0, 0, 50, 36}, {50, 0, 50, 36}, {100, 0, 50, 36}, {150, 0, 50, 36}}, 200ms};
 
 	const sdl::Animation walkingAnimation{spritesheet,
-	                                      {{50,37,50,36},
-                                         {100,37,50,36},
-                                         {150,37,50,36},
-                                         {200,37,50,36},
-                                         {250,37,50,36},
-                                         {300,37,50,36}},
+	                                      {{50, 37, 50, 36},
+	                                       {100, 37, 50, 36},
+	                                       {150, 37, 50, 36},
+	                                       {200, 37, 50, 36},
+	                                       {250, 37, 50, 36},
+	                                       {300, 37, 50, 36}},
 	                                      150ms};
 
-  const sdl::Animation airUpAnimation{spritesheet,
-                                      {{100,74,50,36},
-                                       {150,74,50,36},
-                                       {200,74,50,36}},
-                                      100ms};
-  const sdl::Animation airDownAnimation{spritesheet,
-                                        {{50,111,50,36},
-                                         {100,111,50,36}},
-                                        100ms};
+	const sdl::Animation airUpAnimation{spritesheet, {{100, 74, 50, 36}, {150, 74, 50, 36}, {200, 74, 50, 36}}, 100ms};
+	const sdl::Animation airDownAnimation{spritesheet, {{50, 111, 50, 36}, {100, 111, 50, 36}}, 100ms};
 
-	return std::make_unique<Player>(idleAnimation, walkingAnimation, airUpAnimation, airDownAnimation);
+	const sdl::Animation attackAnim1{spritesheet,
+	                                 {{0, 222, 50, 36},
+	                                  {50, 222, 50, 36},
+	                                  {100, 222, 50, 36},
+	                                  {150, 222, 50, 36},
+	                                  {200, 222, 50, 36},
+	                                  {250, 222, 50, 36},
+	                                  {300, 222, 50, 36}},
+	                                 50ms};
+
+	const sdl::Animation attackAnim2{
+	    spritesheet, {{0, 258, 50, 36}, {50, 258, 50, 36}, {100, 258, 50, 36}, {150, 258, 50, 36}}, 50ms};
+
+	const sdl::Animation attackAnim3{spritesheet,
+	                                 {{200, 258, 50, 36},
+	                                  {250, 258, 50, 36},
+	                                  {300, 258, 50, 36},
+	                                  {0, 295, 50, 36},
+	                                  {50, 295, 50, 36},
+	                                  {100, 295, 50, 36}},
+	                                 60ms};
+
+	Attack attack1{{5, -20, 10, 20}, attackAnim1, 1};
+	Attack attack2{{5, -20, 10, 20}, attackAnim2, 2};
+	Attack attack3{{5, -20, 10, 20}, attackAnim3, 3};
+	const std::vector<Attack> attacks{attack1, attack2, attack3};
+	return std::make_unique<Player>(idleAnimation, walkingAnimation, airUpAnimation, airDownAnimation, attacks);
 }
 
 std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobdef) const
@@ -48,7 +67,9 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	const sdl::Texture &walkingAnimationTexture = getTexture(mobdef.walkingAnimation.spritesheet);
 	const sdl::Animation walkingAnimation{walkingAnimationTexture, mobdef.walkingAnimation.frames,
 	                                      mobdef.walkingAnimation.timePerFrame};
-
+	const sdl::Texture &deathAnimationTexture = getTexture(mobdef.deathAnimation.spritesheet);
+	const sdl::Animation deathAnimation{deathAnimationTexture, mobdef.deathAnimation.frames,
+	                                    mobdef.deathAnimation.timePerFrame};
 	// idle animation
 	OptionalAnimation idleAnimation = [&]() {
 		if (mobdef.idleAnimation.spritesheet == "")
@@ -58,9 +79,11 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	}();
 
 	// TODO handle behaviour, attacks
+	std::vector<game::Attack> attacks{};
 
 	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize,
-	                             walkingAnimation, std::move(idleAnimation));
+	                             walkingAnimation, deathAnimation, std::move(idleAnimation), attacks, idleAI)
+    ;
 }
 
 std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &itemdef) const
@@ -84,7 +107,7 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 
 	// transform layout definition to renderable layout
 	Room::Layout layout;
-	Room::CollisionMap collisionMap;
+	CollisionMap collisionMap;
 	for (auto &layer : roomDef.layout) {
 		bool firstLayer = layout.size() == 0;
 		Room::Layer newLayer;
@@ -213,7 +236,7 @@ void ResourceManager::parseDefinition(fs::path f)
 }
 
 ResourceManager::ResourceManager(const std::string &path_to_definitions, const std::string &path_to_assets)
-    : sdl(sdl::SDL::getInstance())
+    : sdl(sdl::SDL::getInstance()), idleAI(std::make_shared<IdleAI>())
 {
 
 	for (auto &f : fs::recursive_directory_iterator(path_to_assets)) {

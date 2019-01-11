@@ -2,8 +2,11 @@
 
 using namespace game;
 
-Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation, const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation)
-  : movable(100, walkingAnimation, airUpAnimation, airDownAnimation), idleAnimation(idleAnimation)
+Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation,
+               const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation,
+               const std::vector<Attack> attacks)
+    : movable(100, walkingAnimation, airUpAnimation, airDownAnimation), attackable(100, attacks, movable),
+      idleAnimation(idleAnimation)
 {
 }
 
@@ -31,7 +34,7 @@ Rectangle Player::calcRenderTarget() const
 }
 
 void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
-                    const sdl::RenderOptions &options) 
+                    const sdl::RenderOptions &options)
 {
 	Rectangle destRect = calcRenderTarget();
 
@@ -42,7 +45,9 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	else
 		flip = sdl::Renderer::Flip::None;
 
-	if (movable.hasPlayableAnimation())
+	if (attackable.isAttacking())
+		renderer.render(attackable.getCurrentSprite(), destRect, flip);
+	else if (movable.hasPlayableAnimation())
 		renderer.render(movable.updateAnimation(frameDelta), destRect, flip);
 	else
 		renderer.render(idleAnimation.updateAnimation(frameDelta), destRect, flip);
@@ -50,7 +55,54 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	// draw texture box
 	if (options.renderEntityDrawRectangles)
 		renderer.drawRectangle(destRect, {0, 0, 255, 128}, false);
+  
 	// draw hit/collision box
-	if (options.renderHitBoxes)
+	if (options.renderHitBoxes) {
 		renderer.drawRectangle(calcPositionedHitbox(), {255, 0, 0, 128}, false);
+		renderer.drawRectangle(getAttackHitbox(), {0, 255, 255, 128});
+	}
+}
+
+void Player::startMoving()
+{
+	movable.startMoving();
+}
+
+void Player::stopMoving()
+{
+	if (movable.getIsMoving()) {
+		idleAnimation.reset();
+		movable.stopMoving();
+	}
+}
+
+void Player::attack()
+{
+	if (attackable.isAttacking())
+		return;
+
+	if (timeSinceLastAttack < comboTimer)
+		comboCount++;
+	else
+		comboCount = 0;
+	comboCount %= 3;
+	attackable.attack(comboCount);
+}
+
+void Player::updateCombat(sdl::GameClock::duration frameDelta)
+{
+	if (!attackable.isAttacking()) {
+		timeSinceLastAttack += frameDelta;
+		return;
+	}
+
+	attackable.update(frameDelta);
+	if (!attackable.isAttacking()) {
+		timeSinceLastAttack = sdl::GameClock::duration::zero();
+	}
+}
+
+Rectangle Player::getAttackHitbox()
+{
+	return attackable.getHitbox(movable.getPosition(), movable.getDirection().x < 0);
 }
