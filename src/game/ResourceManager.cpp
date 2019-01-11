@@ -67,7 +67,9 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	const sdl::Texture &walkingAnimationTexture = getTexture(mobdef.walkingAnimation.spritesheet);
 	const sdl::Animation walkingAnimation{walkingAnimationTexture, mobdef.walkingAnimation.frames,
 	                                      mobdef.walkingAnimation.timePerFrame};
-
+	const sdl::Texture &deathAnimationTexture = getTexture(mobdef.deathAnimation.spritesheet);
+	const sdl::Animation deathAnimation{deathAnimationTexture, mobdef.deathAnimation.frames,
+	                                    mobdef.deathAnimation.timePerFrame};
 	// idle animation
 	OptionalAnimation idleAnimation = [&]() {
 		if (mobdef.idleAnimation.spritesheet == "")
@@ -80,7 +82,8 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	std::vector<game::Attack> attacks{};
 
 	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize,
-	                             walkingAnimation, std::move(idleAnimation), attacks, idleAI);
+	                             walkingAnimation, deathAnimation, std::move(idleAnimation), attacks, idleAI)
+    ;
 }
 
 std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &itemdef) const

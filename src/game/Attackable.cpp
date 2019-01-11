@@ -2,7 +2,7 @@
 
 using namespace game;
 
-Attackable::Attackable(unsigned maxHp, const std::vector<Attack> attacks, Movable &movable)
+Attackable::Attackable(int maxHp, const std::vector<Attack> attacks, Movable &movable)
     : maxHp(maxHp), hp(maxHp), attacks(attacks), movable(movable)
 {
 }

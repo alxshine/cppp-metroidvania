@@ -11,10 +11,10 @@
 namespace game {
 class Attackable {
   public:
-	const unsigned maxHp;
-	unsigned hp;
+	const int maxHp;
+	int hp;
 
-	Attackable(unsigned maxHp, const std::vector<Attack> attacks, Movable &movable);
+	Attackable(int maxHp, const std::vector<Attack> attacks, Movable &movable);
 	std::vector<Attack> attacks;
 	int getSuitableAttackIndex(CollisionMap &collisionMap, Rectangle targetHitbox, Position currentPosition);
 	inline bool isDead()

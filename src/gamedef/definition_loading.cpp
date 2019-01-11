@@ -205,6 +205,10 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 	testString("WalkingAnimation:", keyword);
 	in >> mob.walkingAnimation;
 
+  in >> keyword;
+  testString("DeathAnimation:", keyword);
+  in >> mob.deathAnimation;
+
 	in >> keyword;
 	if (keyword == "IdleAnimation:")
 		in >> mob.idleAnimation;

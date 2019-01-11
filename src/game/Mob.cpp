@@ -1,16 +1,17 @@
 #include "game/Mob.hpp"
 game::Mob::Mob(const Mob &rhs)
     : name(rhs.name), movable(rhs.movable), attackable(rhs.attackable), hitbox(rhs.hitbox), renderSize(rhs.renderSize),
-      walkingAnimation(rhs.walkingAnimation), idleAnimation(std::make_unique<sdl::Animation>(*rhs.idleAnimation)),
-      ai(rhs.ai)
+      walkingAnimation(rhs.walkingAnimation), deathAnimation(rhs.deathAnimation),
+      idleAnimation(std::make_unique<sdl::Animation>(*rhs.idleAnimation)), ai(rhs.ai)
 {
 }
 
 game::Mob::Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-               sdl::Animation walkingAnimation, OptionalAnimation idleAnimation, std::vector<Attack> attacks,
-               std::shared_ptr<AI> ai)
+               sdl::Animation walkingAnimation, sdl::Animation deathAnimation, OptionalAnimation idleAnimation,
+               std::vector<Attack> attacks, std::shared_ptr<AI> ai)
     : name(name), movable(speedPerSecond, walkingAnimation), attackable(health, attacks, movable), hitbox(hitbox),
-      renderSize(renderSize), walkingAnimation(walkingAnimation), idleAnimation(std::move(idleAnimation)), ai(ai)
+      renderSize(renderSize), walkingAnimation(std::move(walkingAnimation)), deathAnimation(std::move(deathAnimation)),
+      idleAnimation(std::move(idleAnimation)), ai(ai)
 {
 }
 
@@ -31,7 +32,13 @@ game::Rectangle game::Mob::calcPositionedHitbox() const
 
 void game::Mob::performAiStep(const CollisionMap &collisionMap, Rectangle playerHitBox)
 {
-	ai->controlEntity(movable, attackable, collisionMap, playerHitBox);
+	if (attackable.hp > 0)
+		ai->controlEntity(movable, attackable, collisionMap, playerHitBox);
+}
+
+bool game::Mob::isNeededOnScreen()
+{
+	return attackable.hp > 0 || deathAnimation.getLoopCount() == 0;
 }
 
 void game::Mob::render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
@@ -47,7 +54,9 @@ void game::Mob::render(const sdl::Renderer &renderer, sdl::GameClock::duration f
 	else
 		flip = sdl::Renderer::Flip::None;
 
-	if (movable.hasPlayableAnimation() || idleAnimation == nullptr)
+	if (attackable.hp <= 0)
+		renderer.render(deathAnimation.updateAnimation(frameDelta), destRect, flip);
+	else if (movable.hasPlayableAnimation() || idleAnimation == nullptr)
 		renderer.render(walkingAnimation.updateAnimation(frameDelta), destRect, flip);
 	else
 		renderer.render(idleAnimation->updateAnimation(frameDelta), destRect, flip);

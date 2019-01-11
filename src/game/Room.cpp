@@ -69,7 +69,8 @@ void game::Room::render(const sdl::Renderer &renderer, sdl::GameClock::duration 
 	for (auto i : doors)
 		renderer.render(i.item, frameDelta, options);
 	for (auto &i : mobs)
-		renderer.render(i, frameDelta, options);
+		if (i.isNeededOnScreen())
+			renderer.render(i, frameDelta, options);
 	for (auto &i : items)
 		renderer.render(i, frameDelta, options);
 }

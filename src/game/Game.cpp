@@ -78,6 +78,7 @@ void Game::runMainLoop()
 		auto now = gameClock.now();
 		gameFrameDelta = now - lastGameFrameTime;
 
+		// **************** HANDLE THE PLAYER ****************
 		// reset player velocity
 		player->movable.mainLoopReset();
 
@@ -89,30 +90,42 @@ void Game::runMainLoop()
 		else
 			player->stopMoving();
 
-    for(auto &m : currentRoom->mobs)
-      m.performAiStep(currentRoom->collisionMap, player->calcPositionedHitbox());
+		// gravity
+		player->movable.applyGravity(gameFrameDelta);
+
+		// Updates and collision
+		player->movable.update(gameFrameDelta);
+		resolveRoomCollision(*player, *currentRoom);
 
 		// combat
 		player->updateCombat(gameFrameDelta);
 		if (player->attackable.isAttacking()) {
-      auto hitbox = player->getAttackHitbox();
+			auto hitbox = player->getAttackHitbox();
 			for (auto &m : currentRoom->mobs) {
-        if(intersects(hitbox, m.calcPositionedHitbox()))
-           player->attackable.hit(m.attackable);
+				if (intersects(hitbox, m.calcPositionedHitbox()))
+					player->attackable.hit(m.attackable);
 			}
 		}
-
-		// gravity
-		player->movable.applyGravity(gameFrameDelta);
 
 		// Room
 		// currentRoom->update()
 
-		// Player
-		player->movable.update(gameFrameDelta);
-		resolveRoomCollision(*player, *currentRoom);
+		// ******************* HANDLE THE MOBS ***************
+		for (auto &m : currentRoom->mobs) {
+			if (!m.isNeededOnScreen())
+				continue;
 
-		// render
+			// AI
+			m.performAiStep(currentRoom->collisionMap, player->calcPositionedHitbox());
+
+			// gravity
+			// TODO
+
+			// combat
+			// TODO
+		}
+
+		// ******************* RENDERING *****************
 		renderer.render(*currentRoom, gameFrameDelta, renderOpts);
 		renderer.render(*player, gameFrameDelta, renderOpts);
 
@@ -134,6 +147,7 @@ void Game::registerGameEvents()
 		renderOpts.renderCollisionMap = !renderOpts.renderCollisionMap;
 		renderOpts.renderEntityDrawRectangles = !renderOpts.renderEntityDrawRectangles;
 		renderOpts.renderHitBoxes = !renderOpts.renderHitBoxes;
+    renderOpts.renderHealthBars = !renderOpts.renderHealthBars;
 	});
 
 	// jump down from platforms

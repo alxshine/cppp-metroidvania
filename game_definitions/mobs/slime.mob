@@ -14,6 +14,16 @@ WalkingAnimation:
     Frame: 224 0 32 25
 EndAnimation
 
+DeathAnimation:
+    Spritesheet: slime.png
+    Time: 150
+    Frame: 0 50 32 25
+    Frame: 32 50 32 25
+    Frame: 64 50 32 25
+    Frame: 96 50 32 25
+EndAnimation
+  
+
 IdleAnimation:
     Spritesheet: slime.png
     Time: 140

@@ -12,7 +12,7 @@ namespace game {
 class Mob : public sdl::Renderable {
   public:
 	Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-	    sdl::Animation walkingAnimation, OptionalAnimation idleAnimation, std::vector<Attack> attacks,
+	    sdl::Animation walkingAnimation, sdl::Animation deathAnimation, OptionalAnimation idleAnimation, std::vector<Attack> attacks,
 	    std::shared_ptr<AI> ai);
 	Mob(const Mob &rhs);
 
@@ -23,6 +23,7 @@ class Mob : public sdl::Renderable {
 	            const sdl::RenderOptions &options = {}) override;
 	Rectangle calcPositionedHitbox() const;
   void performAiStep(const CollisionMap &collisionMap , Rectangle playerHitBox);
+  bool isNeededOnScreen();
 
 	const std::string name;
 	Movable movable;
@@ -32,6 +33,7 @@ class Mob : public sdl::Renderable {
 	const Rectangle hitbox;
 	const Rectangle renderSize;
 	sdl::Animation walkingAnimation;
+  sdl::Animation deathAnimation;
 	const OptionalAnimation idleAnimation;
 	std::shared_ptr<AI> ai;
 

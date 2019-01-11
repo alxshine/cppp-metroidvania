@@ -4,10 +4,10 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <algorithm>
+#include <iostream>
 #include <memory>
 #include <string>
 #include <vector>
-#include <iostream>
 
 #include "Color.hpp"
 #include "GameClock.hpp"
@@ -42,7 +42,8 @@ class Animation {
 	const Texture &texture;
 	std::vector<Rectangle> frames;
 	GameClock::duration timePerFrame;
-  GameClock::duration runDuration = GameClock::duration::zero();
+	GameClock::duration runDuration = GameClock::duration::zero();
+	int loopCount = 0;
 
   public:
 	Animation(const Texture &texture, std::vector<Rectangle> frames, GameClock::duration timePerFrame);
@@ -52,13 +53,18 @@ class Animation {
 	{
 		return frames.size();
 	}
-  inline GameClock::duration totalDuration(){
-    return frames.size() * timePerFrame;
-  }
-  void reset();
+	inline GameClock::duration totalDuration()
+	{
+		return frames.size() * timePerFrame;
+	}
+	void reset();
 	Sprite updateAnimation(GameClock::duration frameDelta);
-  Sprite getCurrentFrame();
+	Sprite getCurrentFrame();
 	Sprite getSprite(int index) const;
+	inline int getLoopCount()
+	{
+		return loopCount;
+	}
 };
 
 } // namespace sdl
