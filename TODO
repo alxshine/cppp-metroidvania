@@ -1,6 +1,7 @@
 # Small fixes
 TODO find out why our tiles are rendered with borders
 TODO replace OptionalAnimation type with std::optional<std::reference_wrapper<Animation>>?
+TODO handle SelectionMenu without items --> don't segfault on RETURN
 
 # Optional features for later
 TODO offset background rendering by the height of the highest row that is completely solid in the collision map (consecutive from the bottom, again calculate at makeRoom time)

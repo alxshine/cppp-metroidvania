@@ -1,9 +1,14 @@
 #include "game/Game.hpp"
 
+#include <chrono>
+#include <ctime>
+#include <filesystem>
+
 using namespace game;
 using namespace menu;
 using namespace sdl;
 using namespace std::literals;
+namespace fs = std::filesystem;
 
 Game::Game(std::string definitions, std::string assets, std::string first_room, Position player_position,
            sdl::RenderOptions renderOpts)
@@ -12,14 +17,14 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 {
 	registerGameEvents();
 
-	auto mainMenuItems = std::initializer_list<RawMenuItem>{{"New Game",
-	                                                         [&]() {
-		                                                         music::fade_out(500ms);
-		                                                         resetState();
-		                                                         menuStack.pop();
-	                                                         }},
-	                                                        // {"Load Game", [&]() { /* TODO add load menu */ }},
-	                                                        {"Exit", [&]() { state = State::exit; }}};
+	std::vector<RawMenuItem> mainMenuItems = {{"New Game",
+	                                           [&]() {
+		                                           music::fade_out(500ms);
+		                                           resetState();
+		                                           menuStack.pop();
+	                                           }},
+	                                          {"Loa Game", [&]() { menuStack.push(createLoadMenu(*this, ".")); }},
+	                                          {"Exit", [&]() { state = State::exit; }}};
 	mainMenu = std::make_shared<menu::SelectionMenu>("Main Menu", mainMenuItems,
 	                                                 std::ref(res.getMusic("waterflame-hexagon-force.ogg")));
 	menuStack.push(mainMenu);
@@ -27,20 +32,29 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 
 void Game::resetState()
 {
-	// TODO add state container for easier (de)serialization, and save default state in var of that type in ctor
-	currentRoom = std::make_unique<Room>(res.getRoom(firstRoom));
-	play_fade_in(currentRoom->music, repeat_forever, 500ms);
-	player->movable.reposition(initialPosition);
+	static SerializedState defaultState{0, firstRoom, {initialPosition}};
+	loadState(defaultState);
 }
 
 void Game::saveState()
 {
-	// TODO implement state saving
+	SerializedState state{unlockedAreas, currentRoom->name, {player->movable.position}};
+
+	// std::time_t now = time(nullptr);
+	// char nowstr[100];
+	// std::strftime(nowstr, sizeof(nowstr), "%d-%m-%y %H:%M:%S", std::localtime(&now));
+	std::ofstream fout(std::string("Savegame.save") + std::to_string(SerializedState::compatibleVersion));
+	if (!fout.is_open())
+		std::cerr << "could not open save file" << std::endl;
+	fout << state;
 }
 
-void Game::loadState(std::string name)
+void Game::loadState(SerializedState state)
 {
-	// TODO implement state loading
+	currentRoom = std::make_unique<Room>(res.getRoom(state.currentRoomName));
+	play_fade_in(currentRoom->music, repeat_forever, 500ms);
+	player->movable.reposition(state.playerState.position);
+	unlockedAreas = state.unlockedAreas;
 }
 
 void Game::interact()
@@ -184,14 +198,19 @@ void Game::registerGameEvents()
 	// quit
 	gameEvents.on(SDL_QUIT, [this](const Event &) { state = State::exit; });
 	gameEvents.onKeyDown(SDLK_ESCAPE, [this](const KeyboardEvent &) {
-		auto pauseMenuItems = std::initializer_list<RawMenuItem>{{"Stats", [&]() { /* TODO stats menu */ }},
-		                                                         {"Inventory", [&]() { /* TODO inventory menu */ }},
-		                                                         {"Resume", [&]() { menuStack.pop(); }},
-		                                                         {"Main Menu", [&]() {
-			                                                          menuStack.pop();
-			                                                          menuStack.push(mainMenu);
-			                                                          mainMenu->playMusic();
-		                                                          }}};
+		std::vector<RawMenuItem> pauseMenuItems = {{"Stats", [&]() { /* TODO stats menu */ }},
+		                                           {"Inventory", [&]() { /* TODO inventory menu */ }},
+		                                           {"Resume", [&]() { menuStack.pop(); }},
+		                                           {"Save",
+		                                            [&]() {
+			                                            saveState();
+			                                            menuStack.pop();
+		                                            }},
+		                                           {"Main Menu", [&]() {
+			                                            menuStack.pop();
+			                                            menuStack.push(mainMenu);
+			                                            mainMenu->playMusic();
+		                                            }}};
 		menuStack.push(
 		    std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems, std::nullopt, [&]() { menuStack.pop(); }));
 	});

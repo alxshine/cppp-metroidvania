@@ -9,6 +9,7 @@
 #include "game/ResourceManager.hpp"
 #include "game/physics.hpp"
 #include "menu/SelectionMenu.hpp"
+#include "state/LoadMenu.hpp"
 
 using namespace std::chrono_literals;
 
@@ -23,15 +24,16 @@ class Game {
 
 	void resetState();
 	void saveState();
-	void loadState(std::string name);
+	void loadState(SerializedState state);
 
 	void runMainLoop();
 	void interact();
 	sdl::GameClock::time_point lastGameFrameTime;
+	std::stack<std::shared_ptr<menu::Menu>> menuStack;
 
   private:
+	unsigned int unlockedAreas = 0;
 	std::shared_ptr<menu::Menu> mainMenu;
-	std::stack<std::shared_ptr<menu::Menu>> menuStack;
 	ResourceManager res;
 	const std::string firstRoom;
 	const Position initialPosition;
