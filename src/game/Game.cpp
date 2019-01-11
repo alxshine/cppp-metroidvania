@@ -40,10 +40,10 @@ void Game::saveState()
 {
 	SerializedState state{unlockedAreas, currentRoom->name, {player->movable.position}};
 
-	std::time_t now = time(nullptr);
-	char nowstr[100];
-	std::strftime(nowstr, sizeof(nowstr), "%d-%m-%y %H:%M:%S", std::localtime(&now));
-	std::ofstream fout(nowstr + std::string(".save") + std::to_string(SerializedState::compatibleVersion));
+	// std::time_t now = time(nullptr);
+	// char nowstr[100];
+	// std::strftime(nowstr, sizeof(nowstr), "%d-%m-%y %H:%M:%S", std::localtime(&now));
+	std::ofstream fout(std::string("Savegame.save") + std::to_string(SerializedState::compatibleVersion));
 	if (!fout.is_open())
 		std::cerr << "could not open save file" << std::endl;
 	fout << state;
