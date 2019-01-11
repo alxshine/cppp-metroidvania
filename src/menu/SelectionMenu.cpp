@@ -5,8 +5,8 @@ using namespace sdl;
 
 SelectionMenu::SelectionMenu(std::string title, std::vector<RawMenuItem> items,
                              std::optional<std::reference_wrapper<const sdl::Music>> music,
-                             std::function<void()> escapeCallback)
-    : title(SDL::getInstance().generateText(*titleFont, title)), music(music)
+                             std::function<void()> escapeCallback, int opacity)
+    : title(SDL::getInstance().generateText(*titleFont, title)), music(music), opacity(opacity)
 {
 	playMusic();
 
@@ -36,6 +36,10 @@ void SelectionMenu::render(const Renderer &renderer, GameClock::duration, const 
 	const int padding_y = 10;
 	int y = 30;
 
+	// render background
+	renderer.drawRectangle({0, 0, renderer.logicalW, renderer.logicalH},
+	                       {0, 0, 0, static_cast<unsigned char>(opacity)});
+
 	// render title
 	auto target = title.sourceRectangle;
 	target.x = margin_x;
@@ -48,7 +52,7 @@ void SelectionMenu::render(const Renderer &renderer, GameClock::duration, const 
 		auto currentItem = items[i].first;
 
 		auto fg = selectedItem == i ? Color{0, 0, 0, 255} : Color{255, 255, 255, 255};
-		auto bg = selectedItem == i ? Color{255, 255, 255, 255} : Color{0, 0, 0, 255};
+		auto bg = selectedItem == i ? Color{255, 255, 255, 255} : Color{0, 0, 0, 0};
 
 		auto target = currentItem.sourceRectangle;
 		target.x = margin_x;

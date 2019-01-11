@@ -17,7 +17,7 @@ class SelectionMenu : public Menu {
   public:
 	SelectionMenu(std::string title, std::vector<RawMenuItem> items,
 	              std::optional<std::reference_wrapper<const sdl::Music>> music = std::nullopt,
-	              std::function<void()> escapeCallback = []() {});
+	              std::function<void()> escapeCallback = []() {}, int opacity = 255);
 	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
 	            const sdl::RenderOptions &options) override;
 	void dispatch() override;
@@ -33,6 +33,7 @@ class SelectionMenu : public Menu {
 
 	const sdl::Text title;
 	const std::optional<std::reference_wrapper<const sdl::Music>> music;
+	const int opacity;
 	std::vector<MenuItem> items;
 	unsigned long selectedItem = 0;
 };

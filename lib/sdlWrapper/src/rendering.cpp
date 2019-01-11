@@ -99,7 +99,6 @@ void sdl::Renderer::render(const Text &text, const Rectangle targetRect, Color c
 	newTarget.y -= cameraPosition.y;
 	SDL_SetTextureColorMod(text.texture->rawTexture, color.r, color.g, color.b);
 	SDL_RenderCopy(rawRenderer, text.texture->rawTexture, &text.sourceRectangle, &newTarget);
-
 }
 
 SDL_Renderer *sdl::Renderer::getRawRenderer() const
@@ -115,4 +114,9 @@ void sdl::Renderer::swapBuffers() const
 void sdl::Renderer::setCameraPosition(Point point) const
 {
 	cameraPosition = point;
+}
+
+void sdl::Renderer::resetCamera() const
+{
+	cameraPosition = {0, 0};
 }

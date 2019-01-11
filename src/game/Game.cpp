@@ -182,6 +182,13 @@ void Game::runMainLoop()
 			// Menus
 			gameClock.pause();
 
+			// render game
+			renderer.setCameraPosition(calcCameraPosition(*player, *currentRoom, renderer));
+			renderer.render(*currentRoom, gameFrameDelta, renderOpts);
+			renderer.render(*player, gameFrameDelta, renderOpts);
+
+			// render menu
+			renderer.resetCamera();
 			auto menu = menuStack.top();
 			menu->dispatch();
 			renderer.render(*menu, GameClock::duration(0), renderOpts);
@@ -212,7 +219,7 @@ void Game::registerGameEvents()
 			                                            mainMenu->playMusic();
 		                                            }}};
 		menuStack.push(
-		    std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems, std::nullopt, [&]() { menuStack.pop(); }));
+		    std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems, std::nullopt, [&]() { menuStack.pop(); }, 128));
 	});
 	// debug overlay
 	gameEvents.onKeyDown(SDLK_c, [this](const KeyboardEvent &) {

@@ -20,7 +20,7 @@ struct RenderOptions {
 	bool renderCollisionMap = false;
 	bool renderHitBoxes = false;
 	bool renderEntityDrawRectangles = false;
-  bool renderHealthBars = false;
+	bool renderHealthBars = false;
 };
 
 class Renderable {
@@ -55,6 +55,7 @@ class Renderer {
 	{
 		renderable.render(*this, frameDelta, options);
 	};
+	void resetCamera() const;
 	void setCameraPosition(Point point) const;
 	void render(const Texture &texture, Flip = Flip::None) const;
 	void render(const Texture &texture, const Rectangle targetRect, Flip = Flip::None) const;
