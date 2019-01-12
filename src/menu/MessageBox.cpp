@@ -47,7 +47,7 @@ void MessageBox::render(const sdl::Renderer &renderer, sdl::GameClock::duration,
 
 	if (lineCount >= 3) {
 		y += padding_y + lineheight;
-		y += padding_y;
+		auto target = line3.sourceRectangle;
 		target.x = margin_x;
 		target.y = y;
 		renderer.render(line3, target);

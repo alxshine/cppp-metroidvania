@@ -20,7 +20,10 @@ SelectionMenu::SelectionMenu(std::string title, std::vector<RawMenuItem> items,
 		if (selectedItem > 0)
 			--selectedItem;
 	});
-	eventHandler.onKeyDown(SDLK_RETURN, [&](const KeyboardEvent &) { this->items[selectedItem].second(); });
+	eventHandler.onKeyDown(SDLK_RETURN, [&](const KeyboardEvent &) {
+		if (selectedItem < this->items.size())
+			this->items[selectedItem].second();
+	});
 	eventHandler.onKeyDown(SDLK_ESCAPE, [=](const KeyboardEvent &) { escapeCallback(); });
 }
 

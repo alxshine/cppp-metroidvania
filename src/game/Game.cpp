@@ -38,7 +38,8 @@ void Game::resetState()
 	loadState(defaultState);
 
 	menuStack.push(std::make_shared<menu::MessageBox>([&]() { menuStack.pop(); }, "Welcome to our Metroidvania-like!",
-	                                                  "Use WASD+SPACE for Movement and K"));
+	                                                  "Use WASD&SPACE for Movement",
+	                                                  "and K&E for attack and interact"));
 }
 
 void Game::saveState()
@@ -219,11 +220,6 @@ void Game::registerGameEvents()
 		std::vector<RawMenuItem> pauseMenuItems = {{"Stats", [&]() { /* TODO stats menu */ }},
 		                                           {"Inventory", [&]() { /* TODO inventory menu */ }},
 		                                           {"Resume", [&]() { menuStack.pop(); }},
-		                                           {"Save",
-		                                            [&]() {
-			                                            saveState();
-			                                            menuStack.pop();
-		                                            }},
 		                                           {"Main Menu", [&]() {
 			                                            menuStack.pop();
 			                                            menuStack.push(mainMenu);
