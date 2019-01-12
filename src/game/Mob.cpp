@@ -62,7 +62,7 @@ void game::Mob::render(const sdl::Renderer &renderer, sdl::GameClock::duration f
 		renderer.render(idleAnimation->updateAnimation(frameDelta), destRect, flip);
 
 	// draw debug info
-	if (options.renderHealthBars)
+	if (options.renderHealthBars || attackable.hp < attackable.maxHp)
 		renderer.drawRectangle(
 		    {hitbox.x, hitbox.y - 5, static_cast<int>(hitbox.w * ((float)attackable.hp / attackable.maxHp)), 2},
 		    {255, 0, 0, 255}, true);
