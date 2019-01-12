@@ -51,6 +51,8 @@ void Game::saveState()
 	std::ofstream fout(std::string("Savegame.save") + std::to_string(SerializedState::compatibleVersion));
 	if (!fout.is_open())
 		std::cerr << "could not open save file" << std::endl;
+	else
+		menuStack.push(std::make_shared<menu::MessageBox>([&]() { menuStack.pop(); }, "Game Saved!"));
 	fout << state;
 }
 
@@ -69,7 +71,11 @@ void Game::interact()
 	// Find item to interact with
 	for (auto &i : currentRoom->items) {
 		if (intersects(playerHitbox, i.calcPositionedHitbox())) {
-			std::cout << "Player interacted with " << i.name << std::endl;
+			if (i.name == "Savepoint") {
+				saveState();
+				player->attackable.hp = player->attackable.maxHp;
+			} else
+				std::cout << "Player interacted with " << i.name << std::endl;
 			return;
 		}
 	}
