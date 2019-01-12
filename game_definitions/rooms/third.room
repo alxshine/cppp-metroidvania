@@ -6,8 +6,8 @@ Location: 9001 9001
 Tileset: awesome.png
 Tiles:
     . empty     0 0 0 0 None
-    s solid     176 16 16 16 Full
-    l lava      192 32 16 16 None
+    s solid     177 17 14 15 Full
+    l lava      193 32 14 15 None
     m moss      16 256 15 15 None
     p platform  48 32 15 15 TopOnly
 EndTiles
@@ -37,5 +37,6 @@ EndLayout
 
 Entities:
     Door: 0 170 Entrance = TestDoor (Left) -> RegionTravel in Second
+    Item: 30 170 Savepoint
 
 EndEntities

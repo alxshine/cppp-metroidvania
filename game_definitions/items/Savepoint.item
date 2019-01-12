@@ -1,0 +1,10 @@
+Name: Savepoint
+Behaviour: FFSIDONTWANTTHIS
+Hitbox: 0 0 10 10
+DrawSize: 0 0 10 10
+
+Animation:
+    Spritesheet: awesome.png
+    Time: 1
+    Frame: 81 177 14 15
+EndAnimation

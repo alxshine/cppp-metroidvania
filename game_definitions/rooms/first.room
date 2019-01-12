@@ -5,16 +5,16 @@ Location: 9001 9001
 
 Tileset: awesome.png
 Tiles:
-    . empty     0 0 0 0 None
-    s solid     166 2 1 1 Full
-    b mossBottom 16 256 15 15 None
-    l mossLeft 0 240 15 15 None
-    r mossRight 32 240 15 15 None
-    c mossBottomRight 32 256 15 15 None
-    d mossTopRight  48 240 15 15 Full
-    e mossTopLeft  64 240 15 15 Full
-    f mossBottomLeft 0 256 15 15 None
-    p platform  48 224 15 15 TopOnly
+    . empty           0   0   0  0  None
+    s solid           166 2   1  1  Full
+    b mossBottom      17  256 14 14 None
+    l mossLeft        1   240 14 15 None
+    r mossRight       33  240 14 15 None
+    c mossBottomRight 33  257 14 14 None
+    d mossTopRight    49  241 14 14 Full
+    e mossTopLeft     64  241 14 14 Full
+    f mossBottomLeft  1   257 14 14 None
+    p platform        49  224 14 15 TopOnly
 EndTiles
 
 Layout:
