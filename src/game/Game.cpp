@@ -196,8 +196,8 @@ void Game::runMainLoop()
 
 			// render game
 			renderer.setCameraPosition(calcCameraPosition(*player, *currentRoom, renderer));
-			renderer.render(*currentRoom, gameFrameDelta, renderOpts);
-			renderer.render(*player, gameFrameDelta, renderOpts);
+			renderer.render(*currentRoom, GameClock::duration(0), renderOpts);
+			renderer.render(*player, GameClock::duration(0), renderOpts);
 
 			// render menu
 			renderer.resetCamera();
