@@ -18,12 +18,16 @@ void Attackable::attack(int attackIndex)
 	movable.canMove = false;
 };
 
-Rectangle Attackable::getHitbox(Position position, bool flip)
+Rectangle Attackable::getHitbox(Position position, bool flip){
+  return getHitbox(position, currentAttack, flip);
+}
+
+Rectangle Attackable::getHitbox(Position position, int attackIndex, bool flip)
 {
-	if (!isAttacking())
+	if (attackIndex < 0)
 		return {0, 0, 0, 0};
 
-	auto currentHitbox = attacks[currentAttack].hitBox;
+	auto currentHitbox = attacks[attackIndex].hitBox;
 	if (flip)
 		return {position.x - currentHitbox.x - currentHitbox.w, position.y + currentHitbox.y, currentHitbox.w,
 		        currentHitbox.h};

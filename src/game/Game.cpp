@@ -181,7 +181,7 @@ void Game::runMainLoop()
 				// TODO
 
 				// combat
-				// TODO
+				m.attackable.update(gameFrameDelta);
 			}
 
 			// ******************* RENDERING *****************

@@ -74,6 +74,7 @@ class ResourceManager final {
 
 	// AI
 	std::shared_ptr<AI> idleAI;
+  std::shared_ptr<AI> standingAI;
 };
 } // namespace game
 

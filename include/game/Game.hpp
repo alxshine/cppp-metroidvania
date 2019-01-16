@@ -8,6 +8,7 @@
 #include "SDL.hpp"
 #include "game/ResourceManager.hpp"
 #include "game/physics.hpp"
+#include "game/room_helpers.hpp"
 #include "menu/SelectionMenu.hpp"
 #include "state/LoadMenu.hpp"
 

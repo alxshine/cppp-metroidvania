@@ -36,20 +36,16 @@ EndAnimation
 Attack: Bite
     Type: Melee
     SoundEffect: hey.wav 1
-    HitBox: 0 0 0 0
+    HitBox: -11 -10 5 10
     Damage: 3
 
     Animation:
         Spritesheet: slime.png
         Time: 150
         Frame: 0 25 32 25
-        Frame: 25 25 32 25
-        Frame: 50 25 32 25
-        Frame: 75 25 32 25
-        Frame: 100 25 32 25
-        Frame: 125 25 32 25
-        Frame: 150 25 32 25
-        Frame: 175 25 32 25
+        Frame: 32 25 32 25
+        Frame: 64 25 32 25
+        Frame: 96 25 32 25
     EndAnimation
 
 EndMob

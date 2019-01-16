@@ -16,7 +16,6 @@ class Attackable {
 
 	Attackable(int maxHp, const std::vector<Attack> attacks, Movable &movable);
 	std::vector<Attack> attacks;
-	int getSuitableAttackIndex(CollisionMap &collisionMap, Rectangle targetHitbox, Position currentPosition);
 	inline bool isDead()
 	{
 		return hp == 0;
@@ -24,6 +23,7 @@ class Attackable {
 	void attack(int attackIndex);
 
 	Rectangle getHitbox(Position position, bool flip = false);
+  Rectangle getHitbox(Position position, int attackIndex, bool flip = false);
 	void hit(Attackable &other);
 	void update(sdl::GameClock::duration frameDelta);
 	inline bool isAttacking()

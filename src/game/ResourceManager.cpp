@@ -80,9 +80,15 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 
 	// TODO handle behaviour, attacks
 	std::vector<game::Attack> attacks{};
+  for(auto &adef : mobdef.attacks){
+    const auto &texture = getTexture(adef.animation.spritesheet);
+    sdl::Animation animation{texture, adef.animation.frames, adef.animation.timePerFrame};
+    
+    attacks.emplace_back(adef.hitbox, animation, adef.damage);
+  }
 
 	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize,
-	                             walkingAnimation, deathAnimation, std::move(idleAnimation), attacks, idleAI)
+	                             walkingAnimation, deathAnimation, std::move(idleAnimation), attacks, standingAI)
     ;
 }
 
@@ -133,19 +139,6 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 		}
 		layout.emplace_back(newLayer);
 	}
-
-	// Room::CollisionMap collisionMap;
-	// for (auto row = 0ul; row < layout[0].size(); row++) {
-	// std::vector<Collision> colRow;
-	// for (auto tile = 0ul; tile < layout[0][0].size(); tile++) {
-	// Collision max =
-	// std::max_element(roomDef.layout.cbegin(), roomDef.layout.cend(), [&](auto &layer1, auto &layer2) {
-	// return layer1[row][tile].collision < layer2[row][tile].collision;
-	//})->at(row).at(tile).collision;
-	// colRow.emplace_back(max);
-	//}
-	// collisionMap.emplace_back(colRow);
-	//}
 
 	// Add mobs
 	std::vector<game::Mob> mobs;
@@ -236,7 +229,7 @@ void ResourceManager::parseDefinition(fs::path f)
 }
 
 ResourceManager::ResourceManager(const std::string &path_to_definitions, const std::string &path_to_assets)
-    : sdl(sdl::SDL::getInstance()), idleAI(std::make_shared<IdleAI>())
+  : sdl(sdl::SDL::getInstance()), idleAI(std::make_shared<IdleAI>()), standingAI(std::make_shared<StandingAI>())
 {
 
 	for (auto &f : fs::recursive_directory_iterator(path_to_assets)) {

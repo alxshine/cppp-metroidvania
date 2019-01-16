@@ -15,10 +15,13 @@ using Line = sdl::Line;
 using OptionalAnimation = std::unique_ptr<sdl::Animation>;
 
 struct Attack {
-	Attack(Rectangle hitBox, const sdl::Animation animation, int damage) : hitBox(hitBox), animation(animation), damage(damage) {}
+	Attack(Rectangle hitBox, const sdl::Animation animation, int damage)
+	    : hitBox(hitBox), animation(animation), damage(damage)
+	{
+	}
 	Rectangle hitBox;
 	sdl::Animation animation;
-  int damage;
+	int damage;
 };
 
 constexpr Rectangle tileSize{0, 0, 10, 10};
