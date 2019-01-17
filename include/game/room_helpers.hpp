@@ -17,7 +17,7 @@ bool collidesBottom(Rectangle playerHitBox, Room &currentRoom, Collision testCol
 
 bool isStanding(Rectangle playerHitBox, Room &currentRoom);
 
-void resolveRoomCollision(Player &player, Room &currentRoom); // TODO make this take a Movable
+void resolveRoomCollision(Movable &movable, Room &currentRoom);
 
 inline int getTileRow(Rectangle playerHitBox)
 {

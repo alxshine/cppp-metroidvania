@@ -154,7 +154,7 @@ void Game::runMainLoop()
 
 			// Updates and collision
 			player->movable.update(gameFrameDelta);
-			resolveRoomCollision(*player, *currentRoom);
+			resolveRoomCollision(player->movable, *currentRoom);
 
 			// combat
 			player->updateCombat(gameFrameDelta);
@@ -174,11 +174,18 @@ void Game::runMainLoop()
 				if (!m.isNeededOnScreen())
 					continue;
 
+        //reset mob velocity
+        m.movable.mainLoopReset();
+
 				// AI
 				m.performAiStep(currentRoom->collisionMap, player->calcPositionedHitbox());
 
 				// gravity
-				// TODO
+				m.movable.applyGravity(gameFrameDelta);
+
+        // Updates and collision
+        m.movable.update(gameFrameDelta);
+        resolveRoomCollision(m.movable, *currentRoom);
 
 				// combat
 				m.attackable.update(gameFrameDelta);

@@ -24,8 +24,12 @@ class Movable {
 	const OptionalAnimation airUpAnimation;
 	const OptionalAnimation airDownAnimation;
 
+  inline Rectangle hitboxHelper(Position pos) const{
+    return {pos.x - hitbox.w/2, pos.y - hitbox.h, hitbox.w, hitbox.h};
+  }
+
 	friend class Game;
-	friend void resolveRoomCollision(Player &player, Room &currentRoom);
+	friend void resolveRoomCollision(Movable &movable, Room &currentRoom);
 
   public:
 	Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, sdl::Animation airUpAnimation,
@@ -37,9 +41,10 @@ class Movable {
 	Velocity v;
 	bool canMove = true;
 	bool fallThroughPlatforms = false;
-  const Position initialPosition;
+  Position initialPosition;
 
   Rectangle calcPositionedHitbox() const;
+  Rectangle calcLastPositionedHitbox() const;
 
 	void mainLoopReset();
 	void moveLeft();

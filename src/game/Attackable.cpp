@@ -14,12 +14,13 @@ void Attackable::attack(int attackIndex)
 	currentAttack = attackIndex;
 	currentAttackTime = sdl::GameClock::duration::zero();
 	attacks[currentAttack].animation.reset();
-  alreadyHit.clear();
+	alreadyHit.clear();
 	movable.canMove = false;
 };
 
-Rectangle Attackable::getHitbox(Position position, bool flip){
-  return getHitbox(position, currentAttack, flip);
+Rectangle Attackable::getHitbox(Position position, bool flip)
+{
+	return getHitbox(position, currentAttack, flip);
 }
 
 Rectangle Attackable::getHitbox(Position position, int attackIndex, bool flip)

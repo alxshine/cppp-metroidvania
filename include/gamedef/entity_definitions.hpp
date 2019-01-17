@@ -60,7 +60,7 @@ struct Mob {
 	int speedPerSecond;
 
 	Animation walkingAnimation;
-  Animation deathAnimation;
+	Animation deathAnimation;
 	Animation idleAnimation;
 
 	std::vector<Attack> attacks;

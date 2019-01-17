@@ -78,7 +78,10 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 		return std::make_unique<sdl::Animation>(tex, mobdef.idleAnimation.frames, mobdef.idleAnimation.timePerFrame);
 	}();
 
-	// TODO handle behaviour, attacks
+	// TODO handle behaviour
+  auto ai = patrollingAI;
+
+  //attacks
 	std::vector<game::Attack> attacks{};
   for(auto &adef : mobdef.attacks){
     const auto &texture = getTexture(adef.animation.spritesheet);
@@ -88,7 +91,7 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
   }
 
 	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize,
-	                             walkingAnimation, deathAnimation, std::move(idleAnimation), attacks, patrollingAI)
+	                             walkingAnimation, deathAnimation, std::move(idleAnimation), attacks, ai)
     ;
 }
 

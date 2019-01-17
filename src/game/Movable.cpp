@@ -36,8 +36,14 @@ Movable::Movable(const Movable &rhs)
 {
 }
 
-game::Rectangle Movable::calcPositionedHitbox() const{
-  return {position.x - hitbox.w/2, position.y - hitbox.h, hitbox.w, hitbox.h};
+game::Rectangle Movable::calcPositionedHitbox() const
+{
+	return hitboxHelper(position);
+}
+
+game::Rectangle Movable::calcLastPositionedHitbox() const
+{
+	return hitboxHelper(lastPosition);
 }
 
 void Movable::update(sdl::GameClock::duration frameDelta)
@@ -99,6 +105,7 @@ void Movable::applyGravity(std::chrono::milliseconds frameDelta)
 
 void Movable::reposition(Position newPosition)
 {
+	initialPosition = position;
 	lastPosition = position;
 	position = newPosition;
 }
