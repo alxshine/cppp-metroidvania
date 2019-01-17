@@ -2,62 +2,78 @@
 
 namespace game {
 
-//game::Speed operator"" _ups(unsigned long long n)
+// game::Speed operator"" _ups(unsigned long long n)
 //{
-	//return game::Speed{(int)n};
+// return game::Speed{(int)n};
 //}
 
-//game::Speed &game::Speed::operator+=(const game::Speed &rhs)
+// game::Speed &game::Speed::operator+=(const game::Speed &rhs)
 //{
-	//s += rhs.s;
-	//return *this;
+// s += rhs.s;
+// return *this;
 //}
 
-//game::Speed &game::Speed::operator-=(const game::Speed &rhs)
+// game::Speed &game::Speed::operator-=(const game::Speed &rhs)
 //{
-	//s -= rhs.s;
-	//return *this;
+// s -= rhs.s;
+// return *this;
 //}
 
-//game::Speed &game::Speed::operator*=(const game::Speed &rhs)
+// game::Speed &game::Speed::operator*=(const game::Speed &rhs)
 //{
-	//s *= rhs.s;
-	//return *this;
+// s *= rhs.s;
+// return *this;
 //}
 
-//game::Speed operator+(game::Speed lhs, const game::Speed &rhs)
+// game::Speed operator+(game::Speed lhs, const game::Speed &rhs)
 //{
-	//lhs += rhs;
-	//return lhs;
+// lhs += rhs;
+// return lhs;
 //}
 
-//game::Speed operator-(game::Speed lhs, const game::Speed &rhs)
+// game::Speed operator-(game::Speed lhs, const game::Speed &rhs)
 //{
-	//lhs -= rhs;
-	//return lhs;
+// lhs -= rhs;
+// return lhs;
 //}
 
-//game::Speed operator*(game::Speed lhs, const game::Speed &rhs)
+// game::Speed operator*(game::Speed lhs, const game::Speed &rhs)
 //{
-	//lhs *= rhs;
-	//return lhs;
+// lhs *= rhs;
+// return lhs;
 //}
 
-//int operator*(const game::Speed &lhs, const std::chrono::milliseconds &rhs)
+// int operator*(const game::Speed &lhs, const std::chrono::milliseconds &rhs)
 //{
-	//return lhs.s * rhs.count() / 1000;
+// return lhs.s * rhs.count() / 1000;
 //}
 
-//bool operator<(const game::Speed &lhs, const game::Speed &rhs)
+// bool operator<(const game::Speed &lhs, const game::Speed &rhs)
 //{
-	//return lhs.s < rhs.s;
+// return lhs.s < rhs.s;
 //}
 
-//bool operator>(const game::Speed &lhs, const game::Speed &rhs)
+// bool operator>(const game::Speed &lhs, const game::Speed &rhs)
 //{
-	//return lhs.s > rhs.s;
+// return lhs.s > rhs.s;
 //}
 
+game::PrecisePosition &game::PrecisePosition::operator+=(const PrecisePosition &rhs)
+{
+	x += rhs.x;
+	y += rhs.y;
+	return *this;
+};
+
+bool game::PrecisePosition::operator==(const PrecisePosition &rhs) const
+{
+	return x == rhs.x && y == rhs.y;
+}
+
+bool game::PrecisePosition::operator!=(const PrecisePosition &rhs) const
+{
+	return x != rhs.x || y != rhs.y;
+}
 game::Velocity &game::Velocity::operator+=(const game::Velocity &rhs)
 {
 	x += rhs.x;
@@ -71,10 +87,10 @@ game::Velocity operator+(game::Velocity lhs, const game::Velocity &rhs)
 	return lhs;
 }
 
-game::Position operator*(const game::Velocity &lhs, std::chrono::milliseconds rhs)
+game::PrecisePosition operator*(const game::Velocity &lhs, std::chrono::milliseconds rhs)
 {
-	int x = lhs.x * rhs.count() / 1000;
-	int y = lhs.y * rhs.count() / 1000;
+	float x = static_cast<float>(lhs.x) * rhs.count() / 1000;
+	float y = static_cast<float>(lhs.y) * rhs.count() / 1000;
 	return {x, y};
 }
 

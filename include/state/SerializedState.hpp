@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "game/constants.hpp"
+#include "game/movement.hpp"
 
 namespace game {
 
@@ -18,7 +19,7 @@ struct SerializedState final {
 	std::string currentRoomName;
 
 	struct PlayerState {
-		Position position;
+		PrecisePosition position;
 	} playerState;
 };
 

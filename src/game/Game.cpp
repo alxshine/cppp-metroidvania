@@ -61,7 +61,7 @@ void Game::loadState(SerializedState state)
 {
 	currentRoom = std::make_unique<Room>(res.getRoom(state.currentRoomName));
 	play_fade_in(currentRoom->music, repeat_forever, 500ms);
-	player->movable.reposition(state.playerState.position);
+	player->movable.reposition(state.playerState.position.toLowerPrecision());
 	unlockedAreas = state.unlockedAreas;
 }
 

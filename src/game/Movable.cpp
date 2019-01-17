@@ -52,6 +52,8 @@ void Movable::update(sdl::GameClock::duration frameDelta)
 		return;
 	lastPosition = position;
 	position += v * frameDelta;
+  
+  printf("%f\n", position.x);
 
 	if (lastPosition != position) {
 		direction.x = (v.x > 0) - (v.x < 0);
@@ -105,9 +107,10 @@ void Movable::applyGravity(std::chrono::milliseconds frameDelta)
 
 void Movable::reposition(Position newPosition)
 {
-	initialPosition = position;
-	lastPosition = position;
-	position = newPosition;
+  PrecisePosition np{newPosition};
+	initialPosition = np;
+	lastPosition = np;
+	position = np;
 }
 
 bool Movable::getMoved() const
@@ -132,11 +135,11 @@ void Movable::setDirection(Direction d)
 
 Position Movable::getPosition() const
 {
-	return position;
+	return position.toLowerPrecision();
 }
 Position Movable::getLastPosition() const
 {
-	return lastPosition;
+	return lastPosition.toLowerPrecision();
 }
 
 void Movable::startMoving()
