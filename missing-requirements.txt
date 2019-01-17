@@ -1,6 +1,9 @@
 1 or more advanced movement mechanics
-    eg double jump, wall jump, sliding
-    needs to be unlocked
+DONE    double jump
+    sliding
+    needs to be unlocked (link to an item?)
+
+
 
 main combat
 DONE    melee and/or ranged
