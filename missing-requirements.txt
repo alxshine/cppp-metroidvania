@@ -3,8 +3,8 @@
     needs to be unlocked
 
 main combat
-    melee and/or ranged
-    hitting enemies
+DONE    melee and/or ranged
+DONE    hitting enemies
     getting hit by enemies
 
 1 secondary combat mechanic
@@ -15,8 +15,8 @@ player character
     can equip found items to further increase stats
 
 enemies
-    attack the player character as it gets in range
-    variants with melee attacks
+DONE    attack the player character as it gets in range
+DONE    variants with melee attacks
     variants with ranged attacks
     bosses are capable of using different attacks
 
@@ -30,9 +30,9 @@ game over
     player defeats final boss
 
 main menu
-    new game
-    load game
-    exit
+DONE    new game
+DONE    load game
+DONE    exit
 
 pause menu
     shows player stats

@@ -2,25 +2,26 @@
 
 using namespace game;
 
-Movable::Movable(Speed maxSpeed, sdl::Animation runningAnimation, sdl::Animation airUpAnimation,
+Movable::Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, sdl::Animation airUpAnimation,
                  sdl::Animation airDownAnimation, Position pos)
     : position(pos), lastPosition(pos), maxSpeed(maxSpeed),
       runningAnimation(std::make_unique<sdl::Animation>(runningAnimation)),
       airUpAnimation(std::make_unique<sdl::Animation>(airUpAnimation)),
-      airDownAnimation(std::make_unique<sdl::Animation>(airDownAnimation)), v({0, 0})
+      airDownAnimation(std::make_unique<sdl::Animation>(airDownAnimation)), hitbox(hitbox),
+      v({0, 0}), initialPosition{pos}
 {
 }
 
-Movable::Movable(Speed maxSpeed, sdl::Animation runningAnimation, Position pos)
+Movable::Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, Position pos)
     : position(pos), lastPosition(pos), maxSpeed(maxSpeed),
       runningAnimation(std::make_unique<sdl::Animation>(runningAnimation)), airUpAnimation(nullptr),
-      airDownAnimation(nullptr), v({0, 0})
+      airDownAnimation(nullptr), hitbox(hitbox), v({0, 0}), initialPosition{pos}
 {
 }
 
-Movable::Movable(Speed maxSpeed, Position pos)
+Movable::Movable(Rectangle hitbox, Speed maxSpeed, Position pos)
     : position(pos), lastPosition(pos), maxSpeed(maxSpeed), runningAnimation(nullptr), airUpAnimation(nullptr),
-      airDownAnimation(nullptr)
+      airDownAnimation(nullptr), hitbox(hitbox), initialPosition{pos}
 {
 }
 
@@ -31,8 +32,12 @@ Movable::Movable(const Movable &rhs)
       airUpAnimation(rhs.airUpAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.airUpAnimation) : nullptr),
       airDownAnimation(rhs.airDownAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.airDownAnimation)
                                                        : nullptr),
-      v({0, 0})
+      hitbox(rhs.hitbox), v({0, 0}), initialPosition{rhs.initialPosition}
 {
+}
+
+game::Rectangle Movable::calcPositionedHitbox() const{
+  return {position.x - hitbox.w/2, position.y - hitbox.h, hitbox.w, hitbox.h};
 }
 
 void Movable::update(sdl::GameClock::duration frameDelta)

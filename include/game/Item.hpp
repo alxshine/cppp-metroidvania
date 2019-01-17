@@ -15,7 +15,6 @@ class Item : public sdl::Renderable {
 
 	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
 	            const sdl::RenderOptions &options = {})  override;
-	Rectangle calcPositionedHitbox() const;
 
 	const std::string name;
 	Movable movable;
@@ -24,7 +23,6 @@ class Item : public sdl::Renderable {
   private:
 	Rectangle calcRenderTarget() const;
 
-	const Rectangle hitbox;
 	const Rectangle renderSize;
 	sdl::Animation animation;
 };

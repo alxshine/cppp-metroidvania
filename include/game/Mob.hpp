@@ -21,7 +21,6 @@ class Mob : public sdl::Renderable {
 
 	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
 	            const sdl::RenderOptions &options = {}) override;
-	Rectangle calcPositionedHitbox() const;
   void performAiStep(const CollisionMap &collisionMap , Rectangle playerHitBox);
   bool isNeededOnScreen();
 
@@ -30,7 +29,6 @@ class Mob : public sdl::Renderable {
 	Attackable attackable;
 
   private:
-	const Rectangle hitbox;
 	const Rectangle renderSize;
 	sdl::Animation walkingAnimation;
   sdl::Animation deathAnimation;

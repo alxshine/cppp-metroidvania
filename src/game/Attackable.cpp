@@ -9,7 +9,7 @@ Attackable::Attackable(int maxHp, const std::vector<Attack> attacks, Movable &mo
 
 void Attackable::attack(int attackIndex)
 {
-	if (isAttacking())
+	if (isAttacking() || !movable.canMove)
 		return;
 	currentAttack = attackIndex;
 	currentAttackTime = sdl::GameClock::duration::zero();

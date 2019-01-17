@@ -88,7 +88,7 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
   }
 
 	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize,
-	                             walkingAnimation, deathAnimation, std::move(idleAnimation), attacks, standingAI)
+	                             walkingAnimation, deathAnimation, std::move(idleAnimation), attacks, patrollingAI)
     ;
 }
 
@@ -229,7 +229,7 @@ void ResourceManager::parseDefinition(fs::path f)
 }
 
 ResourceManager::ResourceManager(const std::string &path_to_definitions, const std::string &path_to_assets)
-  : sdl(sdl::SDL::getInstance()), idleAI(std::make_shared<IdleAI>()), standingAI(std::make_shared<StandingAI>())
+  : sdl(sdl::SDL::getInstance()), idleAI(std::make_shared<IdleAI>()), standingAI(std::make_shared<StandingAI>()), patrollingAI(std::make_shared<PatrollingAI>())
 {
 
 	for (auto &f : fs::recursive_directory_iterator(path_to_assets)) {

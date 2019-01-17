@@ -28,14 +28,18 @@ class Movable {
 	friend void resolveRoomCollision(Player &player, Room &currentRoom);
 
   public:
-	Movable(Speed maxSpeed, sdl::Animation runningAnimation, sdl::Animation airUpAnimation,
+	Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, sdl::Animation airUpAnimation,
 	        sdl::Animation airDownAnimation, Position pos = {0, 0});
-	Movable(Speed maxSpeed, sdl::Animation runningAnimation, Position pos = {0, 0});
-	Movable(Speed maxSpeed, Position pos = {0, 0});
+	Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, Position pos = {0, 0});
+	Movable(Rectangle hitbox, Speed maxSpeed, Position pos = {0, 0});
 	Movable(const Movable &rhs);
+  const Rectangle hitbox;
 	Velocity v;
 	bool canMove = true;
 	bool fallThroughPlatforms = false;
+  const Position initialPosition;
+
+  Rectangle calcPositionedHitbox() const;
 
 	void mainLoopReset();
 	void moveLeft();

@@ -5,7 +5,7 @@ using namespace game;
 Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation,
                const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation,
                const std::vector<Attack> attacks)
-    : movable(100, walkingAnimation, airUpAnimation, airDownAnimation), attackable(100, attacks, movable),
+    : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation), attackable(100, attacks, movable),
       idleAnimation(idleAnimation)
 {
 }
@@ -27,7 +27,6 @@ Rectangle Player::calcLastPositionedHitbox() const
 
 Rectangle Player::calcRenderTarget() const
 {
-
 	// Calculate position, centering horizontally and bottom-aligning vertically
 	return {movable.getPosition().x - tileSize.w, movable.getPosition().y - 2 * tileSize.h, tileSize.w * 2,
 	        tileSize.h * 2};
@@ -55,7 +54,7 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	// draw texture box
 	if (options.renderEntityDrawRectangles)
 		renderer.drawRectangle(destRect, {0, 0, 255, 128}, false);
-  
+
 	// draw hit/collision box
 	if (options.renderHitBoxes) {
 		renderer.drawRectangle(calcPositionedHitbox(), {255, 0, 0, 128}, false);

@@ -71,7 +71,7 @@ void Game::interact()
 
 	// Find item to interact with
 	for (auto &i : currentRoom->items) {
-		if (intersects(playerHitbox, i.calcPositionedHitbox())) {
+		if (intersects(playerHitbox, i.movable.calcPositionedHitbox())) {
 			if (i.name == "Savepoint") {
 				saveState();
 				player->attackable.hp = player->attackable.maxHp;
@@ -83,7 +83,7 @@ void Game::interact()
 
 	// Find door to interact with
 	for (auto door : currentRoom->doors) {
-		if (intersects(playerHitbox, door.item.calcPositionedHitbox())) {
+		if (intersects(playerHitbox, door.item.movable.calcPositionedHitbox())) {
 			std::cout << "Player went to " << door.targetRoom << " through " << door.name << std::endl;
 
 			// this conditions allows portals that don't reset room state
@@ -98,7 +98,7 @@ void Game::interact()
 				std::cerr << "No door named " << door.targetDoorName << " in room " << door.targetRoom << std::endl;
 			} else {
 				auto newPosition = newDoorIt->item.movable.getPosition();
-				newPosition.x += player->hitbox.w / 2;
+				newPosition.x += player->movable.hitbox.w / 2;
 				player->movable.reposition(newPosition);
 				player->movable.setDirection(door.direction);
 			}
@@ -161,7 +161,7 @@ void Game::runMainLoop()
 			if (player->attackable.isAttacking()) {
 				auto hitbox = player->getAttackHitbox();
 				for (auto &m : currentRoom->mobs) {
-					if (intersects(hitbox, m.calcPositionedHitbox()))
+					if (intersects(hitbox, m.movable.calcPositionedHitbox()))
 						player->attackable.hit(m.attackable);
 				}
 			}
