@@ -13,10 +13,7 @@ void StandingAI::controlEntity(Movable &movable, Attackable &attackable, const C
 		auto attackHitbox = attackable.getHitbox(movable.getPosition(), i, movable.getDirection().x < 0);
 		if (intersects(attackHitbox, playerHitbox)) {
 			attackable.attack(i);
-			std::cout << "using attack " << i << std::endl;
 			break;
-		} else {
-			std::cout << "attack not in range" << std::endl;
-		}
+		} 
 	}
 }
