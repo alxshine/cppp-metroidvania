@@ -8,44 +8,44 @@ DrawSize: 0 0 13 10
 WalkingAnimation:
     Spritesheet: slime.png
     Time: 100
-    Frame: 128 0 32 25
-    Frame: 160 0 32 25
-    Frame: 192 0 32 25
-    Frame: 224 0 32 25
+    Frame: 96 0 32 25
+    Frame: 64 0 32 25
+    Frame: 32 0 32 25
+    Frame: 0 0 32 25
 EndAnimation
 
 DeathAnimation:
     Spritesheet: slime.png
     Time: 150
-    Frame: 0 50 32 25
-    Frame: 32 50 32 25
-    Frame: 64 50 32 25
-    Frame: 96 50 32 25
+    Frame: 224 50 32 25
+    Frame: 192 50 32 25
+    Frame: 160 50 32 25
+    Frame: 128 50 32 25
 EndAnimation
   
 
 IdleAnimation:
     Spritesheet: slime.png
     Time: 140
-    Frame: 0 0 32 25
-    Frame: 32 0 32 25
-    Frame: 64 0 32 25
-    Frame: 96 0 32 25
+    Frame: 224 0 32 25
+    Frame: 192 0 32 25
+    Frame: 160 0 32 25
+    Frame: 128 0 32 25
 EndAnimation
 
 Attack: Bite
     Type: Melee
     SoundEffect: hey.wav 1
-    HitBox: -11 -10 5 10
+    HitBox: 6 -10 5 10
     Damage: 3
 
     Animation:
         Spritesheet: slime.png
         Time: 150
-        Frame: 0 25 32 25
-        Frame: 32 25 32 25
-        Frame: 64 25 32 25
-        Frame: 96 25 32 25
+        Frame: 224 25 32 25
+        Frame: 192 25 32 25
+        Frame: 160 25 32 25
+        Frame: 128 25 32 25
     EndAnimation
 
 EndMob
