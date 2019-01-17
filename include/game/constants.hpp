@@ -24,6 +24,16 @@ struct Attack {
 	int damage;
 };
 
+inline std::ostream &operator<<(std::ostream &out, const Rectangle &r)
+{
+	return out << "{" << r.x << ", " << r.y << ", " << r.w << ", " << r.h << "}";
+}
+
+inline std::ostream &operator<<(std::ostream &out, const Position &p)
+{
+	return out << "{" << p.x << ", " << p.y << "}";
+}
+
 constexpr Rectangle tileSize{0, 0, 10, 10};
 } // namespace game
 

@@ -5,7 +5,7 @@
 main combat
 DONE    melee and/or ranged
 DONE    hitting enemies
-    getting hit by enemies
+DONE    getting hit by enemies
 
 1 secondary combat mechanic
     like spell slinging, hacking, you name it

@@ -14,7 +14,7 @@ class Attackable {
 	const int maxHp;
 	int hp;
 
-	Attackable(int maxHp, const std::vector<Attack> attacks, Movable &movable);
+	Attackable(int maxHp, const std::vector<Attack> attacks);
 	std::vector<Attack> attacks;
 	inline bool isDead()
 	{
@@ -37,7 +37,6 @@ class Attackable {
 	}
 
   private:
-	Movable &movable;
 	int currentAttack = -1;
 	sdl::GameClock::duration currentAttackTime;
 	std::unordered_set<Attackable *> alreadyHit;

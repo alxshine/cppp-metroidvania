@@ -5,7 +5,7 @@ using namespace game;
 Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation,
                const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation,
                const std::vector<Attack> attacks)
-    : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation), attackable(100, attacks, movable),
+    : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation), attackable(100, attacks),
       idleAnimation(idleAnimation)
 {
 }
@@ -60,6 +60,10 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 		renderer.drawRectangle(calcPositionedHitbox(), {255, 0, 0, 128}, false);
 		renderer.drawRectangle(getAttackHitbox(), {0, 255, 255, 128});
 	}
+  //render healthbar
+  int width = attackable.hp > 0 ? static_cast<int>(hitbox.w * ((float)attackable.hp / attackable.maxHp)) : 0;
+  if(options.renderHealthBars)
+		renderer.drawRectangle({movable.calcPositionedHitbox().x, movable.calcPositionedHitbox().y - 5, width, 2}, {255, 0, 0, 255}, true);
 }
 
 void Player::startMoving()

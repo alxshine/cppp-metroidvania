@@ -9,7 +9,7 @@ game::Mob::Mob(const Mob &rhs)
 game::Mob::Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
                sdl::Animation walkingAnimation, sdl::Animation deathAnimation, OptionalAnimation idleAnimation,
                std::vector<Attack> attacks, std::shared_ptr<AI> ai)
-    : name(name), movable(hitbox, speedPerSecond, walkingAnimation), attackable(health, attacks, movable),
+    : name(name), movable(hitbox, speedPerSecond, walkingAnimation), attackable(health, attacks),
       renderSize(renderSize), walkingAnimation(std::move(walkingAnimation)), deathAnimation(std::move(deathAnimation)),
       idleAnimation(std::move(idleAnimation)), ai(ai)
 {

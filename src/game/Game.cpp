@@ -170,25 +170,33 @@ void Game::runMainLoop()
 			// currentRoom->update()
 
 			// ******************* HANDLE THE MOBS ***************
+			auto playerHitbox = player->movable.calcPositionedHitbox();
 			for (auto &m : currentRoom->mobs) {
 				if (!m.isNeededOnScreen())
 					continue;
 
-        //reset mob velocity
-        m.movable.mainLoopReset();
+				// reset mob velocity
+				m.movable.mainLoopReset();
 
 				// AI
-				m.performAiStep(currentRoom->collisionMap, player->calcPositionedHitbox());
+				m.performAiStep(currentRoom->collisionMap, playerHitbox);
 
 				// gravity
 				m.movable.applyGravity(gameFrameDelta);
 
-        // Updates and collision
-        m.movable.update(gameFrameDelta);
-        resolveRoomCollision(m.movable, *currentRoom);
+				// Updates and collision
+				m.movable.update(gameFrameDelta);
+				resolveRoomCollision(m.movable, *currentRoom);
 
 				// combat
 				m.attackable.update(gameFrameDelta);
+
+				if (m.attackable.isAttacking()) {
+					if (intersects(m.attackable.getHitbox(m.movable.getPosition(), m.movable.getDirection().x < 0),
+					               playerHitbox)) {
+						m.attackable.hit(player->attackable);
+					}
+				}
 			}
 
 			// ******************* RENDERING *****************
