@@ -61,6 +61,8 @@ void Movable::update(sdl::GameClock::duration frameDelta)
 
 void Movable::mainLoopReset()
 {
+  if(!canMove)
+    return;
 	v.x = 0;
 	fallThroughPlatforms = false;
 	moved = false;
@@ -68,18 +70,24 @@ void Movable::mainLoopReset()
 
 void Movable::moveLeft()
 {
+  if(!canMove)
+    return;
 	v.x -= maxSpeed;
 	moved = true;
 }
 
 void Movable::moveRight()
 {
+  if(!canMove)
+    return;
 	v.x += maxSpeed;
 	moved = true;
 }
 
 void Movable::jump()
 {
+  if(!canMove)
+    return;
 	if (grounded) {
 		v.y = -2 * maxSpeed;
 		grounded = false;
@@ -89,6 +97,8 @@ void Movable::jump()
 
 void Movable::fall()
 {
+  if(!canMove)
+    return;
 	fallThroughPlatforms = true;
 	grounded = false;
 	v.y = 2 * maxSpeed;

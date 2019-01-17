@@ -1,6 +1,6 @@
 Name: Slime
 Health: 10
-Speed: 20
+Speed: 63
 Behaviour: Stupid
 Hitbox: 0 0 13 10
 DrawSize: 0 0 13 10
