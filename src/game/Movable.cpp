@@ -3,8 +3,8 @@
 using namespace game;
 
 Movable::Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, sdl::Animation airUpAnimation,
-                 sdl::Animation airDownAnimation, Position pos)
-    : position(pos), lastPosition(pos), maxSpeed(maxSpeed),
+                 sdl::Animation airDownAnimation, Position pos, int maxJumps)
+    : position(pos), lastPosition(pos), maxJumps(maxJumps), maxSpeed(maxSpeed),
       runningAnimation(std::make_unique<sdl::Animation>(runningAnimation)),
       airUpAnimation(std::make_unique<sdl::Animation>(airUpAnimation)),
       airDownAnimation(std::make_unique<sdl::Animation>(airDownAnimation)), hitbox(hitbox),
@@ -12,21 +12,21 @@ Movable::Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimati
 {
 }
 
-Movable::Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, Position pos)
-    : position(pos), lastPosition(pos), maxSpeed(maxSpeed),
+Movable::Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, Position pos, int maxJumps)
+    : position(pos), lastPosition(pos), maxJumps(maxJumps), maxSpeed(maxSpeed),
       runningAnimation(std::make_unique<sdl::Animation>(runningAnimation)), airUpAnimation(nullptr),
       airDownAnimation(nullptr), hitbox(hitbox), v({0, 0}), initialPosition{pos}
 {
 }
 
-Movable::Movable(Rectangle hitbox, Speed maxSpeed, Position pos)
-    : position(pos), lastPosition(pos), maxSpeed(maxSpeed), runningAnimation(nullptr), airUpAnimation(nullptr),
-      airDownAnimation(nullptr), hitbox(hitbox), initialPosition{pos}
+Movable::Movable(Rectangle hitbox, Speed maxSpeed, Position pos, int maxJumps)
+    : position(pos), lastPosition(pos), maxJumps(maxJumps), maxSpeed(maxSpeed), runningAnimation(nullptr),
+      airUpAnimation(nullptr), airDownAnimation(nullptr), hitbox(hitbox), initialPosition{pos}
 {
 }
 
 Movable::Movable(const Movable &rhs)
-    : position(rhs.position), lastPosition(rhs.lastPosition), maxSpeed(rhs.maxSpeed),
+    : position(rhs.position), lastPosition(rhs.lastPosition), maxJumps(rhs.maxJumps), maxSpeed(rhs.maxSpeed),
       runningAnimation(rhs.runningAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.runningAnimation)
                                                        : nullptr),
       airUpAnimation(rhs.airUpAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.airUpAnimation) : nullptr),
@@ -61,8 +61,8 @@ void Movable::update(sdl::GameClock::duration frameDelta)
 
 void Movable::mainLoopReset()
 {
-  if(!canMove)
-    return;
+	if (!canMove)
+		return;
 	v.x = 0;
 	fallThroughPlatforms = false;
 	moved = false;
@@ -70,25 +70,26 @@ void Movable::mainLoopReset()
 
 void Movable::moveLeft()
 {
-  if(!canMove)
-    return;
+	if (!canMove)
+		return;
 	v.x -= maxSpeed;
 	moved = true;
 }
 
 void Movable::moveRight()
 {
-  if(!canMove)
-    return;
+	if (!canMove)
+		return;
 	v.x += maxSpeed;
 	moved = true;
 }
 
 void Movable::jump()
 {
-  if(!canMove)
-    return;
-	if (grounded) {
+	if (!canMove)
+		return;
+	if (jumps > 0){
+    jumps--;
 		v.y = -2 * maxSpeed;
 		grounded = false;
 		moved = true;
@@ -97,8 +98,8 @@ void Movable::jump()
 
 void Movable::fall()
 {
-  if(!canMove)
-    return;
+	if (!canMove)
+		return;
 	fallThroughPlatforms = true;
 	grounded = false;
 	v.y = 2 * maxSpeed;

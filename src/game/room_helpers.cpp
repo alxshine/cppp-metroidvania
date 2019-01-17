@@ -102,7 +102,7 @@ void game::resolveRoomCollision(Movable &movable, Room &currentRoom)
 		// hitBox = player.calcPositionedHitbox();
 
 		while (moveDirection.y > 0 && collidesBottom(hitBox, currentRoom)) {
-			movable.grounded = true;
+			movable.setGrounded();
 			movable.v.y = 0;
 			auto newPosition = movable.getPosition() + Point{0, -1};
 			movable.reposition(newPosition);
@@ -116,11 +116,11 @@ void game::resolveRoomCollision(Movable &movable, Room &currentRoom)
 			hitBox = movable.calcPositionedHitbox();
 		}
 
-    //plaftorms
+		// platforms
 		while (moveDirection.y > 0 && !movable.fallThroughPlatforms &&
 		       !collidesBottom(lastHitBox, currentRoom, Collision::TopOnly) &&
 		       collidesBottom(hitBox, currentRoom, Collision::TopOnly)) {
-			movable.grounded = true;
+			movable.setGrounded();
 			movable.v.y = 0;
 			auto newPosition = movable.getPosition() + Point{0, -1};
 			movable.reposition(newPosition);

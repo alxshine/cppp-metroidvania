@@ -254,7 +254,7 @@ void Game::registerGameEvents()
 	// jump down from platforms
 	gameEvents.whileKeyHeld(SDL_SCANCODE_S, [this]() { player->movable.fall(); });
 	// jump
-	gameEvents.whileKeyHeld(SDL_SCANCODE_SPACE, [this]() { player->movable.jump(); });
+	gameEvents.onKeyDown(SDLK_SPACE, [this](const KeyboardEvent &) { player->movable.jump(); });
 
 	// interaction
 	gameEvents.onKeyDown(SDLK_e, [this](const KeyboardEvent &) { this->interact(); });

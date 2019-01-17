@@ -18,6 +18,12 @@ class Movable {
 	bool moved = false;
   bool isMoving = false;
 	bool grounded = true;
+  int maxJumps;
+  int jumps = maxJumps;
+  inline void setGrounded(){//also a separate function because this will reset the jump count
+    jumps = maxJumps;
+    grounded = true;
+  }
 
 	Speed maxSpeed;
 	const OptionalAnimation runningAnimation;
@@ -33,9 +39,9 @@ class Movable {
 
   public:
 	Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, sdl::Animation airUpAnimation,
-	        sdl::Animation airDownAnimation, Position pos = {0, 0});
-	Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, Position pos = {0, 0});
-	Movable(Rectangle hitbox, Speed maxSpeed, Position pos = {0, 0});
+	        sdl::Animation airDownAnimation, Position pos = {0, 0}, int maxJumps = 0);
+	Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, Position pos = {0, 0}, int maxJumps = 0);
+	Movable(Rectangle hitbox, Speed maxSpeed, Position pos = {0, 0}, int maxJumps = 0);
 	Movable(const Movable &rhs);
   const Rectangle hitbox;
 	Velocity v;
