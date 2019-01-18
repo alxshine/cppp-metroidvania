@@ -40,5 +40,5 @@ DONE    exit
 pause menu
     shows player stats
     inventory management
-    continue
-    go to main menu
+DONE    continue
+DONE    go to main menu
