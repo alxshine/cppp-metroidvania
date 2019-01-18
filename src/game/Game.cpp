@@ -1,5 +1,6 @@
 #include "game/Game.hpp"
 
+#include "menu/InventoryMenu.hpp"
 #include "menu/MessageBox.hpp"
 
 #include <chrono>
@@ -235,14 +236,16 @@ void Game::registerGameEvents()
 	// quit
 	gameEvents.on(SDL_QUIT, [this](const Event &) { state = State::exit; });
 	gameEvents.onKeyDown(SDLK_ESCAPE, [this](const KeyboardEvent &) {
-		std::vector<RawMenuItem> pauseMenuItems = {{"Stats", [&]() { /* TODO stats menu */ }},
-		                                           {"Inventory", [&]() { /* TODO inventory menu */ }},
-		                                           {"Resume", [&]() { menuStack.pop(); }},
-		                                           {"Main Menu", [&]() {
-			                                            menuStack.pop();
-			                                            menuStack.push(mainMenu);
-			                                            mainMenu->playMusic();
-		                                            }}};
+		std::vector<RawMenuItem> pauseMenuItems = {
+		    {"Stats", [&]() { /* TODO stats menu */ }},
+		    {"Inventory",
+		     [&]() { menuStack.push(std::make_shared<InventoryMenu>(player->inventory, [&]() { menuStack.pop(); })); }},
+		    {"Resume", [&]() { menuStack.pop(); }},
+		    {"Main Menu", [&]() {
+			     menuStack.pop();
+			     menuStack.push(mainMenu);
+			     mainMenu->playMusic();
+		     }}};
 		menuStack.push(std::make_shared<menu::SelectionMenu>("Pause", pauseMenuItems, std::nullopt,
 		                                                     [&]() { menuStack.pop(); }, 128));
 	});
