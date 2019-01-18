@@ -71,12 +71,15 @@ void Game::interact()
 
 	// Find item to interact with
 	for (auto &i : currentRoom->items) {
-		if (intersects(playerHitbox, i.movable.calcPositionedHitbox())) {
+		if (intersects(playerHitbox, i.movable.calcPositionedHitbox()) && !i.pickedUp) {
 			if (i.name == "Savepoint") {
 				saveState();
 				player->attackable.hp = player->attackable.maxHp;
-			} else
+			} else {
 				std::cout << "Player interacted with " << i.name << std::endl;
+				player->inventory.insert(i);
+				i.pickedUp = true;
+			}
 			return;
 		}
 	}

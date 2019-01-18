@@ -2,9 +2,11 @@
 #define PLAYER_H
 
 #include <vector>
+#include <set>
 
 #include "Attackable.hpp"
 #include "Movable.hpp"
+#include "Item.hpp"
 #include "SDL.hpp"
 #include "constants.hpp"
 
@@ -33,6 +35,8 @@ class Player : public sdl::Renderable {
 
 	Rectangle calcPositionedHitbox() const;
 	Rectangle calcLastPositionedHitbox() const;
+
+	std::set<Item> inventory;
 
   private:
 	static constexpr Rectangle hitbox{0, 0, tileSize.w, tileSize.h * 2};

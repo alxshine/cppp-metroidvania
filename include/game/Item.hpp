@@ -1,9 +1,9 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "gamedef/entity_definitions.hpp"
-#include "constants.hpp"
 #include "Movable.hpp"
+#include "constants.hpp"
+#include "gamedef/entity_definitions.hpp"
 
 namespace game {
 
@@ -14,11 +14,11 @@ class Item : public sdl::Renderable {
 	virtual ~Item();
 
 	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
-	            const sdl::RenderOptions &options = {})  override;
+	            const sdl::RenderOptions &options = {}) override;
 
 	const std::string name;
 	Movable movable;
-	// TODO behaviour
+	bool pickedUp = false;
 
   private:
 	Rectangle calcRenderTarget() const;
@@ -27,9 +27,15 @@ class Item : public sdl::Renderable {
 	sdl::Animation animation;
 };
 
+inline bool operator<(const Item &a, const Item &b)
+{
+	return a.name < b.name;
+}
+
 class Door {
   public:
-	Door(const std::string name, Item actualDoor, Direction direction, const std::string targetRoom, const std::string targetDoorName);
+	Door(const std::string name, Item actualDoor, Direction direction, const std::string targetRoom,
+	     const std::string targetDoorName);
 	Door(const Door &rhs);
 
 	const std::string name;

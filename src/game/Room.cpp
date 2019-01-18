@@ -72,7 +72,8 @@ void game::Room::render(const sdl::Renderer &renderer, sdl::GameClock::duration 
 		if (i.isNeededOnScreen())
 			renderer.render(i, frameDelta, options);
 	for (auto &i : items)
-		renderer.render(i, frameDelta, options);
+		if (!i.pickedUp)
+			renderer.render(i, frameDelta, options);
 }
 
 game::Room::~Room() {}
