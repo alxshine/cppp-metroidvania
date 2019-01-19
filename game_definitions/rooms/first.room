@@ -65,4 +65,5 @@ EndLayout
 Entities:
     Door: 300 180 OnlyDoor = TestDoor (Right) -> OnlyDoor in Second
     Item: 165 160 Pot
+    Item: 130 180 Key_1
 EndEntities

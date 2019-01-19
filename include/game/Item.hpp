@@ -19,12 +19,11 @@ class Item : public sdl::Renderable {
 	const std::string name;
 	Movable movable;
 	bool pickedUp = false;
+	sdl::Animation animation;
 
   private:
 	Rectangle calcRenderTarget() const;
-
 	const Rectangle renderSize;
-	sdl::Animation animation;
 };
 
 inline bool operator<(const Item &a, const Item &b)

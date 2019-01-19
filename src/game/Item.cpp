@@ -2,11 +2,11 @@
 using namespace game;
 
 Item::Item(const std::string name, Rectangle hitbox, Rectangle renderSize, const sdl::Animation anim)
-    : name(name), movable(hitbox, 0), renderSize(renderSize), animation(anim)
+    : name(name), movable(hitbox, 0), animation(anim), renderSize(renderSize)
 {
 }
 
-Item::Item(const Item &rhs) : name(rhs.name), movable(rhs.movable), renderSize(rhs.renderSize), animation(rhs.animation)
+Item::Item(const Item &rhs) : name(rhs.name), movable(rhs.movable), animation(rhs.animation), renderSize(rhs.renderSize)
 {
 }
 

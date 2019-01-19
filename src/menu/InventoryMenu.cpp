@@ -1,5 +1,7 @@
 #include "menu/InventoryMenu.hpp"
 
+#include <algorithm>
+
 using namespace menu;
 using namespace game;
 using namespace sdl;
@@ -16,11 +18,12 @@ void InventoryMenu::dispatch()
 
 void InventoryMenu::playMusic() {}
 
-void InventoryMenu::render(const Renderer &renderer, GameClock::duration frameDelta, const sdl::RenderOptions &options)
+void InventoryMenu::render(const Renderer &renderer, GameClock::duration frameDelta, const sdl::RenderOptions &)
 {
 	const int margin_x = 30;
+	const int padding_x = 10;
 	const int padding_y = 10;
-	int y = 30;
+	int y = 10;
 
 	// render background
 	renderer.drawRectangle({0, 0, renderer.logicalW, renderer.logicalH},
@@ -33,9 +36,27 @@ void InventoryMenu::render(const Renderer &renderer, GameClock::duration frameDe
 	renderer.render(title, target);
 
 	// render items
-	for (auto &i : items) {
-		// TODO reposition items according to grid
-		// i.render(renderer, frameDelta, options);
-		// renderer.render(i, frameDelta, options);
+	int x = margin_x;
+	for (auto i : items) {
+		const int size_x = 30;
+		const int size_y = 30;
+		Rectangle dest{x, y, size_x, size_y};
+
+		// compute next grid position
+		x += size_x + padding_x;
+		// new line if necessary
+		if (x + size_x + margin_x >= renderer.logicalW) {
+			y += size_y + padding_y + 10; // TODO 10 is guess for text height
+			x = margin_x;
+		}
+
+		renderer.render(i.animation.updateAnimation(frameDelta), dest);
+		auto sanitizedItemName = i.name;
+		std::replace(sanitizedItemName.begin(), sanitizedItemName.end(), '_', ' ');
+		auto text = SDL::getInstance().generateText(*font, sanitizedItemName);
+		dest.y += size_y + 1;
+		dest.w = text.sourceRectangle.w;
+		dest.h = text.sourceRectangle.h;
+		renderer.render(text, dest);
 	}
 }

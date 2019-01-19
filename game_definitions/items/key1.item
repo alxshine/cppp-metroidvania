@@ -1,0 +1,10 @@
+Name: Key_1
+Behaviour: FFSIDONTWANTTHIS
+Hitbox: 0 0 10 10
+DrawSize: 0 0 10 10
+
+Animation:
+    Spritesheet: Key.png
+    Time: 1
+    Frame: 0 0 16 16
+EndAnimation
