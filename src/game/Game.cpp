@@ -92,7 +92,17 @@ void Game::interact()
 
 			// this conditions allows portals that don't reset room state
 			if (currentRoom->name != door.targetRoom) {
-				currentRoom = std::make_unique<Room>(res.getRoom(door.targetRoom));
+				auto newRoom = std::make_unique<Room>(res.getRoom(door.targetRoom));
+				// check if player has required key
+				if (newRoom->gatingArea &&
+				    !player->inventory.count(res.getItem(std::string("Key_") + std::to_string(newRoom->gatingArea)))) {
+					menuStack.push(
+					    std::make_shared<menu::MessageBox>([&]() { menuStack.pop(); }, "The door is locked."));
+					return;
+				}
+				currentRoom = std::move(newRoom);
+				// TODO if bosses already killed, destroy them
+				// --> iterate mobs and kill any if they contain a number that is same as a key in inventory?
 				play(currentRoom->music, repeat_forever);
 			}
 

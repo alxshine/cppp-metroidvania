@@ -115,6 +115,7 @@ struct Room {
 	Position location;
 	std::string tileset;
 	std::vector<TileLayer> layout;
+	int gatingArea;
 
 	std::vector<MobRef> mobs;
 	std::vector<Door> doors;

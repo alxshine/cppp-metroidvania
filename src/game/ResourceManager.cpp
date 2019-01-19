@@ -79,20 +79,19 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	}();
 
 	// TODO handle behaviour
-  auto ai = patrollingAI;
+	auto ai = patrollingAI;
 
-  //attacks
+	// attacks
 	std::vector<game::Attack> attacks{};
-  for(auto &adef : mobdef.attacks){
-    const auto &texture = getTexture(adef.animation.spritesheet);
-    sdl::Animation animation{texture, adef.animation.frames, adef.animation.timePerFrame};
-    
-    attacks.emplace_back(adef.hitbox, animation, adef.damage);
-  }
+	for (auto &adef : mobdef.attacks) {
+		const auto &texture = getTexture(adef.animation.spritesheet);
+		sdl::Animation animation{texture, adef.animation.frames, adef.animation.timePerFrame};
+
+		attacks.emplace_back(adef.hitbox, animation, adef.damage);
+	}
 
 	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize,
-	                             walkingAnimation, deathAnimation, std::move(idleAnimation), attacks, ai)
-    ;
+	                             walkingAnimation, deathAnimation, std::move(idleAnimation), attacks, ai);
 }
 
 std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &itemdef) const
@@ -169,8 +168,8 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 	}
 
 	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
-	                                    roomDef.location, std::move(layout), std::move(collisionMap), std::move(mobs),
-	                                    std::move(items), std::move(doors));
+	                                    roomDef.location, roomDef.gatingArea, std::move(layout),
+	                                    std::move(collisionMap), std::move(mobs), std::move(items), std::move(doors));
 }
 
 void ResourceManager::parseDefinitions(std::string definitionPath)
@@ -232,7 +231,8 @@ void ResourceManager::parseDefinition(fs::path f)
 }
 
 ResourceManager::ResourceManager(const std::string &path_to_definitions, const std::string &path_to_assets)
-  : sdl(sdl::SDL::getInstance()), idleAI(std::make_shared<IdleAI>()), standingAI(std::make_shared<StandingAI>()), patrollingAI(std::make_shared<PatrollingAI>())
+    : sdl(sdl::SDL::getInstance()), idleAI(std::make_shared<IdleAI>()), standingAI(std::make_shared<StandingAI>()),
+      patrollingAI(std::make_shared<PatrollingAI>())
 {
 
 	for (auto &f : fs::recursive_directory_iterator(path_to_assets)) {

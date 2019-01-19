@@ -322,6 +322,10 @@ std::istream &game_definitions::operator>>(std::istream &in, Room &room)
 	in >> room.location;
 
 	in >> keyword;
+	testString("GatingArea:", keyword);
+	in >> room.gatingArea;
+
+	in >> keyword;
 	testString("Tileset:", keyword);
 	in >> room.tileset;
 
