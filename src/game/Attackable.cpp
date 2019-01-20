@@ -34,9 +34,15 @@ Rectangle Attackable::getHitbox(Position position, int attackIndex, bool flip)
 void Attackable::hit(Attackable &other)
 {
 	if (isAttacking() && alreadyHit.find(&other) == alreadyHit.end()) {
-		other.hp -= attacks[currentAttack].damage;
+		// other.hp -= attacks[currentAttack].damage;
+    other.getHit(attacks[currentAttack].damage);
 		alreadyHit.insert(&other);
 	}
+}
+
+void Attackable::getHit(int damage){
+  hp -= damage;
+  //TODO: play hurt animation and take control from the player
 }
 void Attackable::update(sdl::GameClock::duration frameDelta)
 {
@@ -44,6 +50,6 @@ void Attackable::update(sdl::GameClock::duration frameDelta)
 		return;
 	currentAttackTime += frameDelta;
 	attacks[currentAttack].animation.updateAnimation(frameDelta);
-	if (currentAttackTime > attacks[currentAttack].animation.totalDuration())
+	if (currentAttackTime > attacks[currentAttack].animation.totalDuration()) //TODO: use animation.loopcount
 		currentAttack = -1;
 }

@@ -2,12 +2,12 @@
 game::Mob::Mob(const Mob &rhs)
     : name(rhs.name), movable(rhs.movable), attackable(rhs.attackable), renderSize(rhs.renderSize),
       walkingAnimation(rhs.walkingAnimation), deathAnimation(rhs.deathAnimation),
-      idleAnimation(std::make_unique<sdl::Animation>(*rhs.idleAnimation)), ai(rhs.ai)
+      idleAnimation(rhs.idleAnimation), ai(rhs.ai)
 {
 }
 
 game::Mob::Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-               sdl::Animation walkingAnimation, sdl::Animation deathAnimation, OptionalAnimation idleAnimation,
+               sdl::Animation walkingAnimation, sdl::Animation deathAnimation, sdl::Animation idleAnimation,
                std::vector<Attack> attacks, std::shared_ptr<AI> ai)
     : name(name), movable(hitbox, speedPerSecond, walkingAnimation), attackable(health, attacks),
       renderSize(renderSize), walkingAnimation(std::move(walkingAnimation)), deathAnimation(std::move(deathAnimation)),
@@ -52,10 +52,10 @@ void game::Mob::render(const sdl::Renderer &renderer, sdl::GameClock::duration f
 		renderer.render(deathAnimation.updateAnimation(frameDelta), destRect, flip);
 	else if (attackable.isAttacking())
 		renderer.render(attackable.getCurrentSprite(), destRect, flip);
-	else if (movable.hasPlayableAnimation() || idleAnimation == nullptr)
+	else if (movable.hasPlayableAnimation())
 		renderer.render(walkingAnimation.updateAnimation(frameDelta), destRect, flip);
 	else
-		renderer.render(idleAnimation->updateAnimation(frameDelta), destRect, flip);
+		renderer.render(idleAnimation.updateAnimation(frameDelta), destRect, flip);
 
 	// draw debug info
 	int width = attackable.hp > 0 ? static_cast<int>(hitbox.w * ((float)attackable.hp / attackable.maxHp)) : 0;

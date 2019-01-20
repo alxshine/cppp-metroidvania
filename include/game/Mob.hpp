@@ -12,7 +12,7 @@ namespace game {
 class Mob : public sdl::Renderable {
   public:
 	Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-	    sdl::Animation walkingAnimation, sdl::Animation deathAnimation, OptionalAnimation idleAnimation, std::vector<Attack> attacks,
+	    sdl::Animation walkingAnimation, sdl::Animation deathAnimation, sdl::Animation idleAnimation, std::vector<Attack> attacks,
 	    std::shared_ptr<AI> ai);
 	Mob(const Mob &rhs);
 
@@ -32,7 +32,7 @@ class Mob : public sdl::Renderable {
 	const Rectangle renderSize;
 	sdl::Animation walkingAnimation;
   sdl::Animation deathAnimation;
-	const OptionalAnimation idleAnimation;
+  sdl::Animation idleAnimation;
 	std::shared_ptr<AI> ai;
 
 	Rectangle calcRenderTarget() const;

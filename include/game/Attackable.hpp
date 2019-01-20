@@ -25,6 +25,7 @@ class Attackable {
 	Rectangle getHitbox(Position position, bool flip = false);
   Rectangle getHitbox(Position position, int attackIndex, bool flip = false);
 	void hit(Attackable &other);
+  void getHit(int damage);
 	void update(sdl::GameClock::duration frameDelta);
 	inline bool isAttacking()
 	{

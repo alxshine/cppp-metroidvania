@@ -67,19 +67,29 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	const sdl::Texture &walkingAnimationTexture = getTexture(mobdef.walkingAnimation.spritesheet);
 	const sdl::Animation walkingAnimation{walkingAnimationTexture, mobdef.walkingAnimation.frames,
 	                                      mobdef.walkingAnimation.timePerFrame};
+
+	// death animation
 	const sdl::Texture &deathAnimationTexture = getTexture(mobdef.deathAnimation.spritesheet);
 	const sdl::Animation deathAnimation{deathAnimationTexture, mobdef.deathAnimation.frames,
 	                                    mobdef.deathAnimation.timePerFrame};
+
+	// hurt animation
+	const sdl::Texture &hurtAnimationTexture = getTexture(mobdef.hurtAnimation.spritesheet);
+	const sdl::Animation hurtAnimation{hurtAnimationTexture, mobdef.hurtAnimation.frames, mobdef.hurtAnimation.timePerFrame};
+
 	// idle animation
-	OptionalAnimation idleAnimation = [&]() {
-		if (mobdef.idleAnimation.spritesheet == "")
-			return OptionalAnimation{};
-		const sdl::Texture &tex = getTexture(mobdef.idleAnimation.spritesheet);
-		return std::make_unique<sdl::Animation>(tex, mobdef.idleAnimation.frames, mobdef.idleAnimation.timePerFrame);
-	}();
+	const sdl::Texture &idleAnimationTexture = getTexture(mobdef.walkingAnimation.spritesheet);
+	const sdl::Animation idleAnimation = {idleAnimationTexture, mobdef.idleAnimation.frames,
+	                                      mobdef.idleAnimation.timePerFrame};
 
 	// TODO handle behaviour
-	auto ai = patrollingAI;
+  std::shared_ptr<AI> ai;
+  if(mobdef.behaviour ==  "patrolling")
+    ai = patrollingAI;
+  else if (mobdef.behaviour ==  "standing")
+    ai = standingAI;
+  else
+    ai = idleAI;
 
 	// attacks
 	std::vector<game::Attack> attacks{};

@@ -1,7 +1,7 @@
 Name: Slime
 Health: 10
 Speed: 63
-Behaviour: Stupid
+Behaviour: patrolling
 Hitbox: 0 0 13 10
 DrawSize: 0 0 13 10
 
@@ -23,6 +23,14 @@ DeathAnimation:
     Frame: 128 50 32 25
 EndAnimation
   
+HurtAnimation:
+    Spritesheet: slime.png
+    Time: 140
+    Frame: 96 25 32 25
+    Frame: 64 25 32 25
+    Frame: 32 25 32 25
+    Frame: 00 25 32 25
+EndAnimation
 
 IdleAnimation:
     Spritesheet: slime.png

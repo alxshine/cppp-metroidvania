@@ -61,6 +61,7 @@ struct Mob {
 
 	Animation walkingAnimation;
 	Animation deathAnimation;
+  Animation hurtAnimation;
 	Animation idleAnimation;
 
 	std::vector<Attack> attacks;

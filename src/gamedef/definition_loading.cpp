@@ -209,11 +209,13 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
   testString("DeathAnimation:", keyword);
   in >> mob.deathAnimation;
 
+  in >> keyword;
+  testString("HurtAnimation:", keyword);
+  in >> mob.hurtAnimation;
+
 	in >> keyword;
-	if (keyword == "IdleAnimation:")
-		in >> mob.idleAnimation;
-	else if (keyword != "NoIdleAnimation")
-		throw new ParseException("Idle Animation not defined or declared empty");
+  testString("IdleAnimation:", keyword);
+	in >> mob.idleAnimation;
 
 	// Parse all attacks until EndMob
 	while (true) {
