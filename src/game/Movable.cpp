@@ -36,6 +36,29 @@ Movable::Movable(const Movable &rhs)
 {
 }
 
+Movable &Movable::operator=(const Movable &rhs){
+  position = rhs.position;
+  lastPosition = rhs.lastPosition;
+  direction = rhs.direction;
+  moved = rhs.moved;
+  isMoving = rhs.isMoving;
+  grounded = rhs.grounded;
+  maxJumps = rhs.maxJumps;
+  jumps = rhs.jumps;
+  maxSpeed = rhs.maxSpeed;
+  runningAnimation = rhs.runningAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.runningAnimation) : nullptr;
+  airUpAnimation = rhs.airUpAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.airUpAnimation) : nullptr;
+  airDownAnimation = rhs.airDownAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.airDownAnimation) : nullptr;
+
+  hitbox = rhs.hitbox;
+  v = rhs.v;
+  canMove =rhs.canMove;
+  fallThroughPlatforms = rhs.fallThroughPlatforms;
+  initialPosition = rhs.initialPosition;
+
+  return *this;
+};
+
 game::Rectangle Movable::calcPositionedHitbox() const
 {
 	return hitboxHelper(position);

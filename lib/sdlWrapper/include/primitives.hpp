@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <algorithm>
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -31,7 +32,7 @@ struct Texture final {
 
 struct Sprite final {
   public:
-	const Texture &texture;
+	std::reference_wrapper<const Texture> texture;
 	Rectangle sourceRectangle;
 };
 
@@ -43,7 +44,7 @@ struct Text final {
 
 class Animation {
   private:
-	const Texture &texture;
+	std::reference_wrapper<const Texture> texture;
 	std::vector<Rectangle> frames;
 	GameClock::duration timePerFrame;
 	GameClock::duration runDuration = GameClock::duration::zero();

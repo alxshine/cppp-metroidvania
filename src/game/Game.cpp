@@ -151,6 +151,9 @@ void Game::runMainLoop()
 			auto now = gameClock.now();
 			gameFrameDelta = now - lastGameFrameTime;
 
+      // **************** SET ALIAS VARIABLES
+      auto &mobs = currentRoom->mobs;
+
 			// **************** HANDLE THE PLAYER ****************
 			// reset player velocity
 			player->movable.mainLoopReset();
@@ -174,7 +177,7 @@ void Game::runMainLoop()
 			player->updateCombat(gameFrameDelta);
 			if (player->attackable.isAttacking()) {
 				auto hitbox = player->getAttackHitbox();
-				for (auto &m : currentRoom->mobs) {
+				for (auto &m : mobs) {
 					if (intersects(hitbox, m.movable.calcPositionedHitbox()))
 						player->attackable.hit(m.attackable);
 				}
@@ -185,7 +188,7 @@ void Game::runMainLoop()
 
 			// ******************* HANDLE THE MOBS ***************
 			auto playerHitbox = player->movable.calcPositionedHitbox();
-			for (auto &m : currentRoom->mobs) {
+			for (auto &m : mobs) {
 				if (!m.isNeededOnScreen())
 					continue;
 
@@ -212,6 +215,9 @@ void Game::runMainLoop()
 					}
 				}
 			}
+
+      // ******************* REMOVE UNNEEDED ***********
+      mobs.erase(remove_if(mobs.begin(),mobs.end(), [](Mob &m){return !m.isNeededOnScreen();}), mobs.end());
 
 			// ******************* RENDERING *****************
 			renderer.render(*currentRoom, gameFrameDelta, renderOpts);

@@ -71,7 +71,7 @@ void sdl::Renderer::render(const Texture &texture, const Rectangle targetRect, F
 
 void sdl::Renderer::render(const Sprite &sprite, Flip flip) const
 {
-	SDL_RenderCopyEx(rawRenderer, sprite.texture.rawTexture, &sprite.sourceRectangle, nullptr, 0, nullptr,
+	SDL_RenderCopyEx(rawRenderer, sprite.texture.get().rawTexture, &sprite.sourceRectangle, nullptr, 0, nullptr,
 	                 static_cast<SDL_RendererFlip>(flip));
 }
 
@@ -80,7 +80,7 @@ void sdl::Renderer::render(const Sprite &sprite, Rectangle targetRect, Flip flip
 	Rectangle newTarget = targetRect;
 	newTarget.x -= cameraPosition.x;
 	newTarget.y -= cameraPosition.y;
-	SDL_RenderCopyEx(rawRenderer, sprite.texture.rawTexture, &sprite.sourceRectangle, &newTarget, 0, nullptr,
+	SDL_RenderCopyEx(rawRenderer, sprite.texture.get().rawTexture, &sprite.sourceRectangle, &newTarget, 0, nullptr,
 	                 static_cast<SDL_RendererFlip>(flip));
 }
 
