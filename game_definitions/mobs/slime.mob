@@ -1,7 +1,8 @@
 Name: Slime
 Health: 10
+Poise: 0
 Speed: 63
-Behaviour: patrolling
+Behaviour: idle
 Hitbox: 0 0 13 10
 DrawSize: 0 0 13 10
 

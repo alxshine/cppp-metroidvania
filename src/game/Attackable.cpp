@@ -2,7 +2,12 @@
 
 using namespace game;
 
-Attackable::Attackable(int maxHp, const std::vector<Attack> attacks) : maxHp(maxHp), hp(maxHp), attacks(attacks) {}
+Attackable::Attackable(int maxHp, int poise, const std::vector<Attack> attacks, sdl::Animation deathAnimation,
+                       sdl::Animation hurtAnimation)
+    : maxHp(maxHp), hp(maxHp), poise(poise), attacks(attacks), deathAnimation(std::move(deathAnimation)),
+      hurtAnimation(std::move(hurtAnimation))
+{
+}
 
 void Attackable::attack(int attackIndex)
 {
@@ -34,22 +39,42 @@ Rectangle Attackable::getHitbox(Position position, int attackIndex, bool flip)
 void Attackable::hit(Attackable &other)
 {
 	if (isAttacking() && alreadyHit.find(&other) == alreadyHit.end()) {
-		// other.hp -= attacks[currentAttack].damage;
-    other.getHit(attacks[currentAttack].damage);
+		other.getHit(attacks[currentAttack].damage);
 		alreadyHit.insert(&other);
 	}
 }
 
-void Attackable::getHit(int damage){
-  hp -= damage;
-  //TODO: play hurt animation and take control from the player
+void Attackable::getHit(int damage)
+{
+	if (hp <= 0)
+		return;
+
+	hp -= damage;
+	currentAttack = -1;
+	hurtAnimation.reset();
 }
+
+bool Attackable::hasPlayableAnimation() const
+{
+	return isAttacking() || (hp <= 0 && deathAnimation.getLoopCount() < 1) || hurtAnimation.getLoopCount() == 0;
+}
+
+sdl::Sprite Attackable::updateAnimation(sdl::GameClock::duration frameDelta)
+{
+	if (currentAttack >= 0)
+		return attacks[currentAttack].animation.updateAnimation(frameDelta);
+	if (hp <= 0)
+		return deathAnimation.updateAnimation(frameDelta);
+	else
+		return hurtAnimation.updateAnimation(frameDelta);
+}
+
 void Attackable::update(sdl::GameClock::duration frameDelta)
 {
 	if (!isAttacking())
 		return;
 	currentAttackTime += frameDelta;
 	attacks[currentAttack].animation.updateAnimation(frameDelta);
-	if (currentAttackTime > attacks[currentAttack].animation.totalDuration()) //TODO: use animation.loopcount
+	if (currentAttackTime > attacks[currentAttack].animation.totalDuration()) // TODO: use animation.loopcount
 		currentAttack = -1;
 }

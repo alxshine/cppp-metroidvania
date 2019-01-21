@@ -186,6 +186,10 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 	in >> mob.health;
 
 	in >> keyword;
+	testString("Poise:", keyword);
+	in >> mob.poise;
+
+	in >> keyword;
 	testString("Speed:", keyword);
 	in >> mob.speedPerSecond;
 

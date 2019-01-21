@@ -66,7 +66,7 @@ class Animation {
 	Sprite updateAnimation(GameClock::duration frameDelta);
 	Sprite getCurrentFrame();
 	Sprite getSprite(int index) const;
-	inline int getLoopCount()
+	inline int getLoopCount() const
 	{
 		return loopCount;
 	}

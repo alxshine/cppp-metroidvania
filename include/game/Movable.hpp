@@ -45,7 +45,7 @@ class Movable {
 	Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, Position pos = {0, 0}, int maxJumps = 0);
 	Movable(Rectangle hitbox, Speed maxSpeed, Position pos = {0, 0}, int maxJumps = 0);
 	Movable(const Movable &rhs);
-  Movable &operator=(const Movable &rhs);
+	Movable &operator=(const Movable &rhs);
 	Rectangle hitbox;
 	Velocity v;
 	bool canMove = true;

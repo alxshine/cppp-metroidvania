@@ -2,10 +2,10 @@
 
 using namespace game;
 
-Player::Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation,
-               const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation,
-               const std::vector<Attack> attacks)
-    : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation, {0, 0}, 2), attackable(100, attacks),
+Player::Player(sdl::Animation idleAnimation, sdl::Animation walkingAnimation, sdl::Animation airUpAnimation,
+               sdl::Animation airDownAnimation, sdl::Animation deathAnimation, sdl::Animation hurtAnimation,
+               std::vector<Attack> attacks)
+  : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation, {0, 0}, 2), attackable(100, 5, attacks, deathAnimation, hurtAnimation),
       idleAnimation(idleAnimation)
 {
 }

@@ -15,6 +15,7 @@ sdl::Texture::Texture(Texture &&rhs) : rawTexture(rhs.rawTexture)
 void sdl::Animation::reset()
 {
 	runDuration = sdl::GameClock::duration::zero();
+  loopCount = 0;
 }
 
 sdl::Sprite sdl::Animation::updateAnimation(sdl::GameClock::duration frameDelta)

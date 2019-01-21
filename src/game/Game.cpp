@@ -189,9 +189,6 @@ void Game::runMainLoop()
 			// ******************* HANDLE THE MOBS ***************
 			auto playerHitbox = player->movable.calcPositionedHitbox();
 			for (auto &m : mobs) {
-				if (!m.isNeededOnScreen())
-					continue;
-
 				// reset mob velocity
 				m.movable.mainLoopReset();
 
@@ -217,7 +214,7 @@ void Game::runMainLoop()
 			}
 
       // ******************* REMOVE UNNEEDED ***********
-      mobs.erase(remove_if(mobs.begin(),mobs.end(), [](Mob &m){return !m.isNeededOnScreen();}), mobs.end());
+      mobs.erase(remove_if(mobs.begin(),mobs.end(), [](Mob &m){return m.attackable.done();}), mobs.end());
 
 			// ******************* RENDERING *****************
 			renderer.render(*currentRoom, gameFrameDelta, renderOpts);

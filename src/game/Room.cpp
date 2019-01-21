@@ -70,10 +70,9 @@ void game::Room::render(const sdl::Renderer &renderer, sdl::GameClock::duration 
 	for (auto i : doors)
 		renderer.render(i.item, frameDelta, options);
 	for (auto &i : mobs)
-		if (i.isNeededOnScreen())
-			renderer.render(i, frameDelta, options);
+		renderer.render(i, frameDelta, options);
 	for (auto &i : items)
-		if (!i.pickedUp)
+		if (!i.pickedUp) //TODO remove from room?
 			renderer.render(i, frameDelta, options);
 }
 

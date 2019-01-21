@@ -1,17 +1,16 @@
 #include "game/Mob.hpp"
 game::Mob::Mob(const Mob &rhs)
     : name(rhs.name), movable(rhs.movable), attackable(rhs.attackable), renderSize(rhs.renderSize),
-      walkingAnimation(rhs.walkingAnimation), deathAnimation(rhs.deathAnimation),
-      idleAnimation(rhs.idleAnimation), ai(rhs.ai)
+      walkingAnimation(rhs.walkingAnimation), idleAnimation(rhs.idleAnimation), ai(rhs.ai)
 {
 }
 
-game::Mob::Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-               sdl::Animation walkingAnimation, sdl::Animation deathAnimation, sdl::Animation idleAnimation,
-               std::vector<Attack> attacks, std::shared_ptr<AI> ai)
-    : name(name), movable(hitbox, speedPerSecond, walkingAnimation), attackable(health, attacks),
-      renderSize(renderSize), walkingAnimation(std::move(walkingAnimation)), deathAnimation(std::move(deathAnimation)),
-      idleAnimation(std::move(idleAnimation)), ai(ai)
+game::Mob::Mob(const std::string name, Health health, int poise, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
+               sdl::Animation walkingAnimation, sdl::Animation deathAnimation, sdl::Animation hurtAnimation,
+               sdl::Animation idleAnimation, std::vector<Attack> attacks, std::shared_ptr<AI> ai)
+    : name(name), movable(hitbox, speedPerSecond, walkingAnimation),
+      attackable(health, poise, attacks, deathAnimation, hurtAnimation), renderSize(renderSize),
+      walkingAnimation(std::move(walkingAnimation)), idleAnimation(std::move(idleAnimation)), ai(ai)
 {
 }
 
@@ -30,11 +29,6 @@ void game::Mob::performAiStep(const CollisionMap &collisionMap, Rectangle player
 		ai->controlEntity(movable, attackable, collisionMap, playerHitBox);
 }
 
-bool game::Mob::isNeededOnScreen()
-{
-	return attackable.hp > 0 || deathAnimation.getLoopCount() == 0;
-}
-
 void game::Mob::render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
                        const sdl::RenderOptions &options)
 {
@@ -48,12 +42,10 @@ void game::Mob::render(const sdl::Renderer &renderer, sdl::GameClock::duration f
 	else
 		flip = sdl::Renderer::Flip::None;
 
-	if (attackable.hp <= 0)
-		renderer.render(deathAnimation.updateAnimation(frameDelta), destRect, flip);
-	else if (attackable.isAttacking())
-		renderer.render(attackable.getCurrentSprite(), destRect, flip);
+	if (attackable.hasPlayableAnimation())
+		renderer.render(attackable.updateAnimation(frameDelta), destRect, flip);
 	else if (movable.hasPlayableAnimation())
-		renderer.render(walkingAnimation.updateAnimation(frameDelta), destRect, flip);
+		renderer.render(movable.updateAnimation(frameDelta), destRect, flip);
 	else
 		renderer.render(idleAnimation.updateAnimation(frameDelta), destRect, flip);
 

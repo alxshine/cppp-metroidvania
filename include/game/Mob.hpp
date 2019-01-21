@@ -11,8 +11,8 @@
 namespace game {
 class Mob : public sdl::Renderable {
   public:
-	Mob(const std::string name, Health health, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-	    sdl::Animation walkingAnimation, sdl::Animation deathAnimation, sdl::Animation idleAnimation,
+	Mob(const std::string name, Health health, int poise, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
+	    sdl::Animation walkingAnimation, sdl::Animation deathAnimation, sdl::Animation hurtAnimation, sdl::Animation idleAnimation,
 	    std::vector<Attack> attacks, std::shared_ptr<AI> ai);
 	Mob(const Mob &rhs);
 
@@ -30,7 +30,6 @@ class Mob : public sdl::Renderable {
   private:
 	Rectangle renderSize;
 	sdl::Animation walkingAnimation;
-	sdl::Animation deathAnimation;
 	sdl::Animation idleAnimation;
 	std::shared_ptr<AI> ai;
 

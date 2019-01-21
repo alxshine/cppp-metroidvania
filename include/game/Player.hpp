@@ -1,12 +1,12 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <vector>
 #include <set>
+#include <vector>
 
 #include "Attackable.hpp"
-#include "Movable.hpp"
 #include "Item.hpp"
+#include "Movable.hpp"
 #include "SDL.hpp"
 #include "constants.hpp"
 
@@ -14,8 +14,8 @@ namespace game {
 class Player : public sdl::Renderable {
   public:
 	Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation,
-	       const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation,
-	       const std::vector<Attack> attacks);
+	       const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation, sdl::Animation deathAnimation,
+	       sdl::Animation hurtAnimation, const std::vector<Attack> attacks);
 
 	Player &operator=(const Player &rhs) = delete;
 	Player(const Player &rhs) = delete;
