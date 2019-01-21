@@ -6,3 +6,6 @@ cmake-build-debug
 **/.cquery_cached_index/*
 *~
 **/~
+*.srctrlbm
+*.srctrldb
+*.srctrlprj
