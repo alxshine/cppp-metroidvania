@@ -3,6 +3,7 @@
 
 #include <set>
 #include <vector>
+#include <chrono>
 
 #include "Attackable.hpp"
 #include "Item.hpp"
@@ -13,9 +14,9 @@
 namespace game {
 class Player : public sdl::Renderable {
   public:
-	Player(const sdl::Animation idleAnimation, const sdl::Animation walkingAnimation,
-	       const sdl::Animation airUpAnimation, const sdl::Animation airDownAnimation, sdl::Animation deathAnimation,
-	       sdl::Animation hurtAnimation, const std::vector<Attack> attacks);
+	Player(sdl::Animation idleAnimation, sdl::Animation walkingAnimation, sdl::Animation airUpAnimation,
+	       sdl::Animation airDownAnimation, sdl::Animation deathAnimation, sdl::Animation hurtAnimation,
+	       std::vector<Attack> attacks);
 
 	Player &operator=(const Player &rhs) = delete;
 	Player(const Player &rhs) = delete;
@@ -25,6 +26,11 @@ class Player : public sdl::Renderable {
 
 	void startMoving();
 	void stopMoving();
+
+	void moveLeft();
+	void moveRight();
+	void jump();
+	void fall();
 
 	void attack();
 	void updateCombat(sdl::GameClock::duration frameDelta);
@@ -45,6 +51,10 @@ class Player : public sdl::Renderable {
 	int comboCount = 0;
 	sdl::GameClock::duration timeSinceLastAttack = sdl::GameClock::duration::zero();
 	const sdl::GameClock::duration comboTimer = sdl::GameClock::duration(50);
+	inline bool hasControl()
+	{
+		return movable.canMove && !attackable.isHurting() && !attackable.isAttacking();
+	}
 };
 } // namespace game
 

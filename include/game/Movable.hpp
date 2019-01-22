@@ -17,7 +17,7 @@ class Movable {
 	Direction direction = {0, 0};
 	bool moved = false;
 	bool isMoving = false;
-	bool grounded = true;
+	bool grounded = false;
 	int maxJumps;
 	int jumps = maxJumps;
 	inline void setGrounded()

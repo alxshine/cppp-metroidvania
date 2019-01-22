@@ -13,10 +13,11 @@ class Attackable {
   public:
 	int maxHp;
 	int hp;
-  int poise;
+	int poise;
 
-	Attackable(int maxHp, int poise, const std::vector<Attack> attacks, sdl::Animation deathAnimation,
-	           sdl::Animation hurtAnimation);
+	Attackable(int maxHp, int poise, std::vector<Attack> attacks, sdl::Animation deathAnimation,
+	           sdl::Animation hurtAnimation,
+	           sdl::GameClock::duration invulnerabilityWindow = sdl::GameClock::duration::zero());
 	std::vector<Attack> attacks;
 	inline bool isDead()
 	{
@@ -27,11 +28,15 @@ class Attackable {
 	Rectangle getHitbox(Position position, bool flip = false);
 	Rectangle getHitbox(Position position, int attackIndex, bool flip = false);
 	void hit(Attackable &other);
-	void getHit(int damage);
+	void hurt(int damage);
 	void update(sdl::GameClock::duration frameDelta);
 	inline bool isAttacking() const
 	{
 		return currentAttack >= 0;
+	}
+	inline bool isHurting() const
+	{
+		return hurting;
 	}
 
 	inline sdl::Sprite getCurrentSprite()
@@ -43,16 +48,19 @@ class Attackable {
 	{
 		return hp <= 0 && deathAnimation.getLoopCount() > 0;
 	}
-  
+
 	bool hasPlayableAnimation() const;
-  sdl::Sprite updateAnimation(sdl::GameClock::duration frameDelta);
+	sdl::Sprite updateAnimation(sdl::GameClock::duration frameDelta);
 
   private:
 	int currentAttack = -1;
+	bool hurting = false;
 	sdl::GameClock::duration currentAttackTime;
 	std::unordered_set<Attackable *> alreadyHit;
 	sdl::Animation deathAnimation;
 	sdl::Animation hurtAnimation;
+	sdl::GameClock::duration invulnerabilityWindow;
+  sdl::GameClock::duration lastHitTime = sdl::GameClock::duration::zero();
 };
 } // namespace game
 

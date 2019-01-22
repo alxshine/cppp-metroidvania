@@ -271,9 +271,9 @@ void Game::registerGameEvents()
 	});
 
 	// jump down from platforms
-	gameEvents.whileKeyHeld(SDL_SCANCODE_S, [this]() { player->movable.fall(); });
+	gameEvents.whileKeyHeld(SDL_SCANCODE_S, [this]() { player->fall(); });
 	// jump
-	gameEvents.onKeyDown(SDLK_SPACE, [this](const KeyboardEvent &) { player->movable.jump(); });
+	gameEvents.onKeyDown(SDLK_SPACE, [this](const KeyboardEvent &) { player->jump(); });
 
 	// interaction
 	gameEvents.onKeyDown(SDLK_e, [this](const KeyboardEvent &) { this->interact(); });
@@ -299,11 +299,11 @@ void Game::registerGameEvents()
 
 	// normal movement
 	gameEvents.whileKeyHeld(SDL_SCANCODE_D, [this]() {
-		player->movable.moveRight();
+		player->moveRight();
 		playerHasMoved = true;
 	});
 	gameEvents.whileKeyHeld(SDL_SCANCODE_A, [this]() {
-		player->movable.moveLeft();
+		player->moveLeft();
 		playerHasMoved = true;
 	});
 }

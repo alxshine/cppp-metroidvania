@@ -1,8 +1,9 @@
 Name: Slime
 Health: 10
 Poise: 0
+RecoveryWindow: 100
 Speed: 63
-Behaviour: idle
+Behaviour: patrolling
 Hitbox: 0 0 13 10
 DrawSize: 0 0 13 10
 

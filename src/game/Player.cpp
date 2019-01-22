@@ -5,7 +5,7 @@ using namespace game;
 Player::Player(sdl::Animation idleAnimation, sdl::Animation walkingAnimation, sdl::Animation airUpAnimation,
                sdl::Animation airDownAnimation, sdl::Animation deathAnimation, sdl::Animation hurtAnimation,
                std::vector<Attack> attacks)
-  : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation, {0, 0}, 2), attackable(100, 5, attacks, deathAnimation, hurtAnimation),
+  : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation, {0, 0}, 2), attackable(100, 0, attacks, deathAnimation, hurtAnimation, std::chrono::milliseconds(1000)),
       idleAnimation(idleAnimation)
 {
 }
@@ -44,8 +44,8 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	else
 		flip = sdl::Renderer::Flip::None;
 
-	if (attackable.isAttacking())
-		renderer.render(attackable.getCurrentSprite(), destRect, flip);
+	if (attackable.hasPlayableAnimation())
+		renderer.render(attackable.updateAnimation(frameDelta), destRect, flip);
 	else if (movable.hasPlayableAnimation())
 		renderer.render(movable.updateAnimation(frameDelta), destRect, flip);
 	else
@@ -80,9 +80,26 @@ void Player::stopMoving()
 	}
 }
 
+void Player::moveLeft(){
+  if(hasControl())
+    movable.moveLeft();
+}
+void Player::moveRight(){
+  if(hasControl())
+    movable.moveRight();
+}
+void Player::jump(){
+  if(hasControl())
+    movable.jump();
+}
+void Player::fall(){
+  if(hasControl())
+    movable.fall();
+}
+
 void Player::attack()
 {
-	if (attackable.isAttacking())
+	if (!hasControl())
 		return;
 
 	if (timeSinceLastAttack < comboTimer)
@@ -95,13 +112,14 @@ void Player::attack()
 
 void Player::updateCombat(sdl::GameClock::duration frameDelta)
 {
+  bool wasAttacking = true;
 	if (!attackable.isAttacking()) {
 		timeSinceLastAttack += frameDelta;
-		return;
+		wasAttacking = false;
 	}
 
 	attackable.update(frameDelta);
-	if (!attackable.isAttacking()) {
+	if (!attackable.isAttacking() && !wasAttacking) {
 		timeSinceLastAttack = sdl::GameClock::duration::zero();
 	}
 }

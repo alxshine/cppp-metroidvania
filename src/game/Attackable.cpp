@@ -2,10 +2,10 @@
 
 using namespace game;
 
-Attackable::Attackable(int maxHp, int poise, const std::vector<Attack> attacks, sdl::Animation deathAnimation,
-                       sdl::Animation hurtAnimation)
-    : maxHp(maxHp), hp(maxHp), poise(poise), attacks(attacks), deathAnimation(std::move(deathAnimation)),
-      hurtAnimation(std::move(hurtAnimation))
+Attackable::Attackable(int maxHp, int poise, std::vector<Attack> attacks, sdl::Animation deathAnimation,
+                       sdl::Animation hurtAnimation, sdl::GameClock::duration invulnerabilityWindow)
+    : maxHp(maxHp), hp(maxHp), poise(poise), attacks(std::move(attacks)), deathAnimation(std::move(deathAnimation)),
+      hurtAnimation(std::move(hurtAnimation)), invulnerabilityWindow(invulnerabilityWindow)
 {
 }
 
@@ -39,24 +39,29 @@ Rectangle Attackable::getHitbox(Position position, int attackIndex, bool flip)
 void Attackable::hit(Attackable &other)
 {
 	if (isAttacking() && alreadyHit.find(&other) == alreadyHit.end()) {
-		other.getHit(attacks[currentAttack].damage);
+		other.hurt(attacks[currentAttack].damage);
 		alreadyHit.insert(&other);
 	}
 }
 
-void Attackable::getHit(int damage)
+void Attackable::hurt(int damage)
 {
-	if (hp <= 0)
+	if (hp <= 0 || lastHitTime < invulnerabilityWindow)
 		return;
 
 	hp -= damage;
-	currentAttack = -1;
-	hurtAnimation.reset();
+	if (damage > poise) {
+		currentAttack = -1;
+		hurtAnimation.reset();
+		hurting = true;
+		lastHitTime = sdl::GameClock::duration::zero();
+	}
 }
 
 bool Attackable::hasPlayableAnimation() const
 {
-	return isAttacking() || (hp <= 0 && deathAnimation.getLoopCount() < 1) || hurtAnimation.getLoopCount() == 0;
+	return isAttacking() || (hp <= 0 && deathAnimation.getLoopCount() == 0) ||
+	       (hurting && hurtAnimation.getLoopCount() == 0);
 }
 
 sdl::Sprite Attackable::updateAnimation(sdl::GameClock::duration frameDelta)
@@ -71,10 +76,14 @@ sdl::Sprite Attackable::updateAnimation(sdl::GameClock::duration frameDelta)
 
 void Attackable::update(sdl::GameClock::duration frameDelta)
 {
-	if (!isAttacking())
-		return;
-	currentAttackTime += frameDelta;
-	attacks[currentAttack].animation.updateAnimation(frameDelta);
-	if (currentAttackTime > attacks[currentAttack].animation.totalDuration()) // TODO: use animation.loopcount
-		currentAttack = -1;
+	lastHitTime += frameDelta;
+
+	if (hurting && hurtAnimation.getLoopCount() > 0)
+		hurting = false;
+
+	if (isAttacking()) {
+		currentAttackTime += frameDelta;
+		if (currentAttackTime > attacks[currentAttack].animation.totalDuration())
+			currentAttack = -1;
+	}
 }

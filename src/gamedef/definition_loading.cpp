@@ -190,6 +190,10 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 	in >> mob.poise;
 
 	in >> keyword;
+	testString("RecoveryWindow:", keyword);
+	in >> mob.recoveryWindow;
+    
+	in >> keyword;
 	testString("Speed:", keyword);
 	in >> mob.speedPerSecond;
 

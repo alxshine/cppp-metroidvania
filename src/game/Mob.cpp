@@ -5,11 +5,12 @@ game::Mob::Mob(const Mob &rhs)
 {
 }
 
-game::Mob::Mob(const std::string name, Health health, int poise, int speedPerSecond, Rectangle hitbox, Rectangle renderSize,
-               sdl::Animation walkingAnimation, sdl::Animation deathAnimation, sdl::Animation hurtAnimation,
-               sdl::Animation idleAnimation, std::vector<Attack> attacks, std::shared_ptr<AI> ai)
+game::Mob::Mob(const std::string name, Health health, int poise, sdl::GameClock::duration invulnerabilityWindow,
+               int speedPerSecond, Rectangle hitbox, Rectangle renderSize, sdl::Animation walkingAnimation,
+               sdl::Animation deathAnimation, sdl::Animation hurtAnimation, sdl::Animation idleAnimation,
+               std::vector<Attack> attacks, std::shared_ptr<AI> ai)
     : name(name), movable(hitbox, speedPerSecond, walkingAnimation),
-      attackable(health, poise, attacks, deathAnimation, hurtAnimation), renderSize(renderSize),
+      attackable(health, poise, attacks, deathAnimation, hurtAnimation, invulnerabilityWindow), renderSize(renderSize),
       walkingAnimation(std::move(walkingAnimation)), idleAnimation(std::move(idleAnimation)), ai(ai)
 {
 }

@@ -56,6 +56,7 @@ struct Mob {
 	std::string behaviour;
 	Health health;
   int poise;
+  int recoveryWindow;
 	Rectangle hitbox;
 	Rectangle drawSize;
 	int speedPerSecond;

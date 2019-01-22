@@ -32,7 +32,7 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	const sdl::Animation airUpAnimation{spritesheet, {{100, 74, 50, 36}, {150, 74, 50, 36}, {200, 74, 50, 36}}, 100ms};
 	const sdl::Animation airDownAnimation{spritesheet, {{50, 111, 50, 36}, {100, 111, 50, 36}}, 100ms};
 
-	const sdl::Animation hurtAnimation{spritesheet, {{150, 296, 50, 36}, {200, 296, 50, 36}, {250, 296, 50, 36}}, 50ms};
+	const sdl::Animation hurtAnimation{spritesheet, {{150, 296, 50, 36}, {200, 296, 50, 36}, {250, 296, 50, 36}}, 100ms};
 	const sdl::Animation deathAnimation{spritesheet,
 	                                    {{300, 296, 50, 36},
 	                                     {0, 333, 50, 36},
@@ -113,7 +113,7 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 		attacks.emplace_back(adef.hitbox, animation, adef.damage);
 	}
 
-	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.poise, mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize,
+	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.poise, std::chrono::milliseconds(mobdef.recoveryWindow), mobdef.speedPerSecond, mobdef.hitbox, mobdef.drawSize,
 	                             walkingAnimation, deathAnimation, hurtAnimation, idleAnimation, attacks, ai);
 }
 
