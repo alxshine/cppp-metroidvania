@@ -38,7 +38,7 @@ Rectangle Attackable::getHitbox(Position position, int attackIndex, bool flip)
 }
 void Attackable::hit(Attackable &other)
 {
-	if (isAttacking() && alreadyHit.find(&other) == alreadyHit.end()) {
+	if (isAttacking() && alreadyHit.find(&other) == alreadyHit.end() && dealsDamage) {
 		other.hurt(attacks[currentAttack].damage);
 		alreadyHit.insert(&other);
 	}
@@ -82,8 +82,21 @@ void Attackable::update(sdl::GameClock::duration frameDelta)
 		hurting = false;
 
 	if (isAttacking()) {
+		auto &attack = attacks[currentAttack];
+
+    //update currentAttackTime
+		int oldIndex = currentAttackTime / attack.animation.getTimePerFrame();
 		currentAttackTime += frameDelta;
-		if (currentAttackTime > attacks[currentAttack].animation.totalDuration())
+		int currentIndex = currentAttackTime / attack.animation.getTimePerFrame();
+
+    //check if we have just passed a damage frame -> we deal damage currently
+    dealsDamage = false;
+		for (auto i : attack.damageFrames)
+			if (oldIndex < i && currentIndex >= i)
+				dealsDamage = true;
+
+    //check if the current attack is done
+		if (currentAttackTime > attack.animation.totalDuration())
 			currentAttack = -1;
 	}
 }

@@ -53,6 +53,7 @@ Attack: Shadeblast
     SoundEffect: hey.wav 1
     HitBox: 6 -20 100 20
     Damage: 0
+    DamageFrames: 4 EndFrames 
 
     Animation:
         Spritesheet: shade.png
@@ -65,5 +66,4 @@ Attack: Shadeblast
         Frame: 236 100 59 50
         Frame: 177 100 59 50
     EndAnimation
-
 EndMob

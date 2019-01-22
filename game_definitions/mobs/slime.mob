@@ -28,7 +28,6 @@ EndAnimation
 HurtAnimation:
     Spritesheet: slime.png
     Time: 140
-    Frame: 96 25 32 25
     Frame: 64 25 32 25
     Frame: 32 25 32 25
     Frame: 00 25 32 25
@@ -48,6 +47,7 @@ Attack: Bite
     SoundEffect: hey.wav 1
     HitBox: 6 -10 5 10
     Damage: 3
+    DamageFrames: 3 EndFrames
 
     Animation:
         Spritesheet: slime.png
@@ -56,6 +56,7 @@ Attack: Bite
         Frame: 192 25 32 25
         Frame: 160 25 32 25
         Frame: 128 25 32 25
+        Frame: 96 25 32 25
     EndAnimation
 
 EndMob

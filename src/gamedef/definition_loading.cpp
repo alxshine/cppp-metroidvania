@@ -150,6 +150,16 @@ std::istream &game_definitions::operator>>(std::istream &in, Attack &attack)
 	testString("Damage:", keyword);
 	in >> attack.damage;
 
+  in >> keyword;
+  testString("DamageFrames:", keyword);
+  while(true){
+    in >> keyword;
+    if(keyword == "EndFrames")
+      break;
+
+    attack.damageFrames.emplace_back(std::stoi(keyword));
+  }
+
 	in >> keyword;
 	testString("Animation:", keyword);
 	in >> attack.animation;

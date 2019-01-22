@@ -62,6 +62,9 @@ class Animation {
 	{
 		return frames.size() * timePerFrame;
 	}
+  inline GameClock::duration getTimePerFrame() const{
+    return timePerFrame;
+  }
 	void reset();
 	Sprite updateAnimation(GameClock::duration frameDelta);
 	Sprite getCurrentFrame();

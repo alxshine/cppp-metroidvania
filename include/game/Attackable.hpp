@@ -55,6 +55,7 @@ class Attackable {
   private:
 	int currentAttack = -1;
 	bool hurting = false;
+  bool dealsDamage = false;
 	sdl::GameClock::duration currentAttackTime;
 	std::unordered_set<Attackable *> alreadyHit;
 	sdl::Animation deathAnimation;

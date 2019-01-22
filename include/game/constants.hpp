@@ -15,13 +15,14 @@ using Line = sdl::Line;
 using OptionalAnimation = std::unique_ptr<sdl::Animation>;
 
 struct Attack {
-	Attack(Rectangle hitBox, const sdl::Animation animation, int damage)
-	    : hitBox(hitBox), animation(animation), damage(damage)
+	Attack(Rectangle hitBox, sdl::Animation animation, int damage, std::vector<int> damageFrames)
+	    : hitBox(hitBox), animation(std::move(animation)), damage(damage), damageFrames(std::move(damageFrames))
 	{
 	}
 	Rectangle hitBox;
 	sdl::Animation animation;
 	int damage;
+	std::vector<int> damageFrames;
 };
 
 inline std::ostream &operator<<(std::ostream &out, const Rectangle &r)

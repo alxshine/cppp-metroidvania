@@ -44,6 +44,7 @@ struct Attack {
 	SoundEffect soundEffect;
 	Rectangle hitbox;
 	Damage damage;
+  std::vector<int> damageFrames;
 
 	Animation animation;
 	Projectile projectile;
