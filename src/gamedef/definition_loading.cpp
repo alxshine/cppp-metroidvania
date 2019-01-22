@@ -102,10 +102,6 @@ std::istream &game_definitions::operator>>(std::istream &in, Projectile &proj)
 	in >> proj.travelSpeed;
 
 	in >> keyword;
-	testString("ImpactSound:", keyword);
-	in >> proj.impactSound;
-
-	in >> keyword;
 	testString("NoClip:", keyword);
 	std::string noclipValue;
 	in >> noclipValue;
@@ -114,10 +110,6 @@ std::istream &game_definitions::operator>>(std::istream &in, Projectile &proj)
 	in >> keyword;
 	testString("TravelAnimation:", keyword);
 	in >> proj.travelAnimation;
-
-	in >> keyword;
-	testString("ImpactAnimation:", keyword);
-	in >> proj.impactAnimation;
 
 	return in;
 }

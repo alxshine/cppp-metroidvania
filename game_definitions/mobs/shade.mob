@@ -1,0 +1,69 @@
+Name: Shade
+Health: 20
+Poise: 2
+RecoveryWindow: 150
+Speed: 63
+Behaviour: patrolling
+Hitbox: 0 0 18 20
+DrawSize: 0 0 30 25
+
+WalkingAnimation:
+    Spritesheet: shade.png
+    Time: 100
+    Frame: 59 0 59 50
+    Frame: 0 0 59 50
+    Frame: 295 50 59 50
+    Frame: 236 50 59 50
+EndAnimation
+
+DeathAnimation:
+    Spritesheet: shade.png
+    Time: 140
+    Frame: 295 150 59 50
+    Frame: 236 150 59 50
+    Frame: 177 150 59 50
+    Frame: 118 150 59 50
+    Frame: 59 150 59 50
+    Frame: 0 150 59 50
+    Frame: 295 200 59 50
+    Frame: 236 200 59 50
+    Frame: 177 200 59 50
+    Frame: 118 200 59 50
+EndAnimation
+  
+HurtAnimation:
+    Spritesheet: shade.png
+    Time: 110
+    Frame: 118 100 59 50
+    Frame: 59 100 59 50
+    Frame: 0 100 59 50
+EndAnimation
+
+IdleAnimation:
+    Spritesheet: shade.png
+    Time: 100
+    Frame: 295 0 59 50
+    Frame: 236 0 59 50
+    Frame: 177 0 59 50
+    Frame: 118 0 59 50
+EndAnimation
+
+Attack: Shadeblast
+    Type: Melee
+    SoundEffect: hey.wav 1
+    HitBox: 6 -20 100 20
+    Damage: 0
+
+    Animation:
+        Spritesheet: shade.png
+        Time: 110
+        Frame: 177 50 59 50
+        Frame: 118 50 59 50
+        Frame: 59 50 59 50
+        Frame: 0 50 59 50
+        Frame: 295 100 59 50
+        Frame: 236 100 59 50
+        Frame: 177 100 59 50
+    EndAnimation
+
+EndMob

@@ -33,11 +33,9 @@ struct Animation {
 
 struct Projectile {
 	int travelSpeed;
-	SoundEffect impactSound;
 	bool noclip;
 
 	Animation travelAnimation;
-	Animation impactAnimation;
 };
 
 struct Attack {
@@ -156,10 +154,8 @@ inline std::ostream &operator<<(std::ostream &out, const Animation &anim)
 inline std::ostream &operator<<(std::ostream &out, const Projectile &proj)
 {
 	out << "Projectile { TravelSpeed: " << proj.travelSpeed << "\n";
-	out << "ImpactSound: " << proj.impactSound;
 	out << "NoClip: " << proj.noclip << "\n";
 	out << "TravelAnimation: " << proj.travelAnimation;
-	out << "ImpactAnimation: " << proj.impactAnimation;
 
 	return out << "}\n";
 }
