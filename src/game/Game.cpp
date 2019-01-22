@@ -171,8 +171,8 @@ void Game::runMainLoop()
 
 			// Updates and collision
 			player->movable.update(gameFrameDelta);
-			resolveRoomCollision(player->movable, *currentRoom);
-
+			resolveRoomCollision(player->movable, currentRoom->collisionMap);
+      
 			// combat
 			player->updateCombat(gameFrameDelta);
 			if (player->attackable.isAttacking()) {
@@ -200,10 +200,11 @@ void Game::runMainLoop()
 
 				// Updates and collision
 				m.movable.update(gameFrameDelta);
-				resolveRoomCollision(m.movable, *currentRoom);
+				resolveRoomCollision(m.movable, currentRoom->collisionMap);
 
 				// combat
 				m.attackable.update(gameFrameDelta);
+        m.attackable.updateProjectiles(gameFrameDelta, playerHitbox, player->attackable, currentRoom->collisionMap);
         m.attackable.launchProjectiles(m.movable.getPosition(), m.movable.getDirection());
 
 				if (m.attackable.isAttacking()) {

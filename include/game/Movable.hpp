@@ -37,7 +37,7 @@ class Movable {
 	}
 
 	friend class Game;
-	friend void resolveRoomCollision(Movable &movable, Room &currentRoom);
+	friend void resolveRoomCollision(Movable &movable, const CollisionMap &collisionMap);
 
   public:
 	Movable(Rectangle hitbox, Speed maxSpeed, sdl::Animation runningAnimation, sdl::Animation airUpAnimation,

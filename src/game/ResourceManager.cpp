@@ -111,12 +111,15 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 		const auto &texture = getTexture(adef.animation.spritesheet);
 		sdl::Animation animation{texture, adef.animation.frames, adef.animation.timePerFrame};
 
-    //add projectile blueprint for ranged attacks (non-melee)
+		// add projectile blueprint for ranged attacks (non-melee)
 		if (adef.type == Attack::Type::Melee)
 			attacks.emplace_back(adef.hitbox, animation, adef.damage, adef.damageFrames);
 		else {
 			auto &proj = adef.projectile;
-			ProjectileBlueprint blueprint{proj.hitBox, proj.damage, proj.noClip, proj.maxSpeed, proj.startPosition};
+			const auto &projTexture = getTexture(proj.animation.spritesheet);
+			sdl::Animation projAnimation{projTexture, proj.animation.frames, proj.animation.timePerFrame};
+			ProjectileBlueprint blueprint{proj.hitBox,   proj.damage,        proj.noClip,
+			                              proj.maxSpeed, proj.startPosition, projAnimation};
 			attacks.emplace_back(adef.hitbox, animation, adef.damage, adef.damageFrames, blueprint);
 		}
 	}
@@ -201,8 +204,7 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 	}
 
 	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
-	                                    roomDef.location, roomDef.gatingArea, std::move(layout),
-	                                    std::move(collisionMap), std::move(mobs), std::move(items), std::move(doors));
+	                                    roomDef.location, roomDef.gatingArea, layout, collisionMap, mobs, items, doors);
 }
 
 void ResourceManager::parseDefinitions(std::string definitionPath)

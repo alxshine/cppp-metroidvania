@@ -21,9 +21,9 @@ struct Room : public sdl::Renderable {
 	using Layer = std::vector<Row>;
 	using Layout = std::vector<Layer>;
 
-	Room(const std::string name, const sdl::Texture &background, const sdl::Music &music, const Position &location,
-	     int gatingArea, const Layout layout, const CollisionMap collisionMap, const std::vector<Mob> mobs,
-	     const std::vector<Item> items, const std::vector<Door> doors);
+	Room(std::string name, const sdl::Texture &background, const sdl::Music &music, Position location, int gatingArea,
+	     Layout layout, CollisionMap collisionMap, std::vector<Mob> mobs, std::vector<Item> items,
+	     std::vector<Door> doors);
 	Room(const Room &rhs) noexcept;
 	virtual ~Room();
 
@@ -42,11 +42,6 @@ struct Room : public sdl::Renderable {
 	std::vector<Item> items;
 	std::vector<Door> doors;
 };
-
-inline Rectangle tileRectangle(int row, int column)
-{
-	return {column * tileSize.w, row * tileSize.h, tileSize.w, tileSize.h};
-}
 
 } // namespace game
 

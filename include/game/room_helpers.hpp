@@ -2,36 +2,35 @@
 #define PHYSICS_H
 
 #include "game/constants.hpp"
-#include "game/Room.hpp"
-#include "game/Player.hpp"
+#include "game/Movable.hpp"
 
 namespace game {
 
-bool collidesLeft(Rectangle playerHitBox, Room &currentRoom);
+bool collidesLeft(Rectangle hitbox, const CollisionMap &currentRoom);
 
-bool collidesRight(Rectangle playerHitBox, Room &currentRoom);
+bool collidesRight(Rectangle hitbox, const CollisionMap &currentRoom);
 
-bool collidesTop(Rectangle playerHitBox, Room &currentRoom);
+bool collidesTop(Rectangle hitbox, const CollisionMap &currentRoom);
 
-bool collidesBottom(Rectangle playerHitBox, Room &currentRoom, Collision testCollision = Collision::Full);
+bool collidesBottom(Rectangle hitbox, const CollisionMap &currentRoom, Collision testCollision = Collision::Full);
 
-bool isStanding(Rectangle playerHitBox, Room &currentRoom);
+bool isStanding(Rectangle hitbox, const CollisionMap &currentRoom);
 
-void resolveRoomCollision(Movable &movable, Room &currentRoom);
+void resolveRoomCollision(Movable &movable, const CollisionMap &currentRoom);
 
-inline int getTileRow(Rectangle playerHitBox)
+inline int getTileRow(Rectangle hitbox)
 {
-	return (playerHitBox.y + playerHitBox.h) / tileSize.h;
+	return (hitbox.y + hitbox.h) / tileSize.h;
 }
 
-inline int getLowestTileColumn(Rectangle playerHitBox)
+inline int getLowestTileColumn(Rectangle hitbox)
 {
-	return playerHitBox.x / tileSize.w;
+	return hitbox.x / tileSize.w;
 }
 
-inline int getHighestTileColumn(Rectangle playerHitBox)
+inline int getHighestTileColumn(Rectangle hitbox)
 {
-	return (playerHitBox.x + 2 * playerHitBox.w) / tileSize.w;
+	return (hitbox.x + 2 * hitbox.w) / tileSize.w;
 }
 
 } // namespace game

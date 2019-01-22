@@ -3,105 +3,105 @@
 using namespace game;
 using namespace sdl;
 
-bool game::collidesLeft(Rectangle playerHitBox, Room &currentRoom)
+bool game::collidesLeft(Rectangle hitbox, const CollisionMap &collisionMap)
 {
-	auto j = playerHitBox.x / tileSize.w;
-	auto lowestRowIndex = playerHitBox.y / tileSize.h;
-	auto highestRowIndex = (playerHitBox.y + playerHitBox.h) / tileSize.h;
+	auto j = hitbox.x / tileSize.w;
+	auto lowestRowIndex = hitbox.y / tileSize.h;
+	auto highestRowIndex = (hitbox.y + hitbox.h) / tileSize.h;
 	for (int i = lowestRowIndex; i < highestRowIndex; ++i) {
-		if (currentRoom.collisionMap[i][j] == Collision::Full &&
-		    sdl::intersects_left(playerHitBox, tileRectangle(i, j)))
+		if (collisionMap[i][j] == Collision::Full &&
+		    sdl::intersects_left(hitbox, tileRectangle(i, j)))
 			return true;
 	}
 	// Check against left border
-	if (playerHitBox.x < 0)
+	if (hitbox.x < 0)
 		return true;
 	return false;
 }
 
-bool game::collidesRight(Rectangle playerHitBox, Room &currentRoom)
+bool game::collidesRight(Rectangle hitbox, const CollisionMap &collisionMap)
 {
-	auto j = (playerHitBox.x + playerHitBox.w) / tileSize.w;
-	auto lowestRowIndex = playerHitBox.y / tileSize.h;
-	auto highestRowIndex = (playerHitBox.y + playerHitBox.h) / tileSize.h;
+	auto j = (hitbox.x + hitbox.w) / tileSize.w;
+	auto lowestRowIndex = hitbox.y / tileSize.h;
+	auto highestRowIndex = (hitbox.y + hitbox.h) / tileSize.h;
 	for (int i = lowestRowIndex; i < highestRowIndex; ++i) {
-		if (currentRoom.collisionMap[i][j] == Collision::Full &&
-		    sdl::intersects_right(playerHitBox, tileRectangle(i, j)))
+		if (collisionMap[i][j] == Collision::Full &&
+		    sdl::intersects_right(hitbox, tileRectangle(i, j)))
 			return true;
 	}
 	// Check against right border
-	if (playerHitBox.x + playerHitBox.w > currentRoom.sizeInPixels.w)
+	if (hitbox.x + hitbox.w > (int) collisionMap[0].size() * game::tileSize.w)
 		return true;
 	return false;
 }
 
-bool game::collidesTop(Rectangle playerHitBox, Room &currentRoom)
+bool game::collidesTop(Rectangle hitbox, const CollisionMap &collisionMap)
 {
-	auto i = getTileRow(playerHitBox);
-	auto lowestColumnIndex = getLowestTileColumn(playerHitBox);
-	auto highestColumnIndex = getHighestTileColumn(playerHitBox);
+	auto i = getTileRow(hitbox);
+	auto lowestColumnIndex = getLowestTileColumn(hitbox);
+	auto highestColumnIndex = getHighestTileColumn(hitbox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
-		if (currentRoom.collisionMap[i][j] == Collision::Full && sdl::intersects_top(playerHitBox, tileRectangle(i, j)))
+		if (collisionMap[i][j] == Collision::Full && sdl::intersects_top(hitbox, tileRectangle(i, j)))
 			return true;
 	}
 	return false;
 }
 
-bool game::collidesBottom(Rectangle playerHitBox, Room &currentRoom, Collision testCollision)
+bool game::collidesBottom(Rectangle hitbox, const CollisionMap &collisionMap, Collision testCollision)
 {
-	auto i = getTileRow(playerHitBox);
-	auto lowestColumnIndex = getLowestTileColumn(playerHitBox);
-	auto highestColumnIndex = getHighestTileColumn(playerHitBox);
+	auto i = getTileRow(hitbox);
+	auto lowestColumnIndex = getLowestTileColumn(hitbox);
+	auto highestColumnIndex = getHighestTileColumn(hitbox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
-		if (currentRoom.collisionMap[i][j] == testCollision &&
-		    sdl::intersects_bottom(playerHitBox, tileRectangle(i, j)))
+		if (collisionMap[i][j] == testCollision &&
+		    sdl::intersects_bottom(hitbox, tileRectangle(i, j)))
 			return true;
 	}
 	return false;
 }
 
-bool game::isStanding(Rectangle playerHitBox, Room &currentRoom)
+bool game::isStanding(Rectangle hitbox, const CollisionMap &collisionMap)
 {
-	auto i = getTileRow(playerHitBox);
-	auto lowestColumnIndex = getLowestTileColumn(playerHitBox);
-	auto highestColumnIndex = getHighestTileColumn(playerHitBox);
+	auto i = getTileRow(hitbox);
+	auto lowestColumnIndex = getLowestTileColumn(hitbox);
+	auto highestColumnIndex = getHighestTileColumn(hitbox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
-		if (currentRoom.collisionMap[i][j] > Collision::None && touches_bottom(playerHitBox, tileRectangle(i, j)))
+		if (collisionMap[i][j] > Collision::None && touches_bottom(hitbox, tileRectangle(i, j)))
 			return true;
 	}
 	return false;
 }
 
-void game::resolveRoomCollision(Movable &movable, Room &currentRoom)
+void game::resolveRoomCollision(Movable &movable, const CollisionMap &collisionMap)
 {
 	// first resolve collisions with the room
 	auto hitBox = movable.calcPositionedHitbox();
 	auto lastHitBox = movable.calcLastPositionedHitbox();
 	auto moveDirection = movable.getDirection();
 
-	if (!isStanding(hitBox, currentRoom))
+	if (!isStanding(hitBox, collisionMap))
 		movable.grounded = false;
 
-	if ((collidesLeft(hitBox, currentRoom) && collidesRight(hitBox, currentRoom)) ||
-	    (collidesTop(hitBox, currentRoom) && collidesBottom(hitBox, currentRoom)))
+	if ((collidesLeft(hitBox, collisionMap) && collidesRight(hitBox, collisionMap)) ||
+	    (collidesTop(hitBox, collisionMap) && collidesBottom(hitBox, collisionMap)))
 		movable.canMove = false;
 
 	if (movable.canMove && movable.getMoved()) {
-		while (collidesLeft(hitBox, currentRoom)) {
+		while (collidesLeft(hitBox, collisionMap)) {
 			auto newPosition = movable.getPosition() + Point{1, 0};
 			movable.reposition(newPosition);
 			hitBox = movable.calcPositionedHitbox();
 		}
 		// hitBox = player.calcPositionedHitbox();
 
-		while (collidesRight(hitBox, currentRoom)) {
+		while (collidesRight(hitBox, collisionMap)) {
 			auto newPosition = movable.getPosition() + Point{-1, 0};
 			movable.reposition(newPosition);
 			hitBox = movable.calcPositionedHitbox();
 		}
 		// hitBox = player.calcPositionedHitbox();
 
-		while (moveDirection.y > 0 && collidesBottom(hitBox, currentRoom)) {
+		while (moveDirection.y > 0 && collidesBottom(hitBox, collisionMap)) {
 			movable.setGrounded();
 			movable.v.y = 0;
 			auto newPosition = movable.getPosition() + Point{0, -1};
@@ -110,7 +110,7 @@ void game::resolveRoomCollision(Movable &movable, Room &currentRoom)
 		}
 		// hitBox = player.calcPositionedHitbox();
 
-		while (collidesTop(hitBox, currentRoom)) {
+		while (collidesTop(hitBox, collisionMap)) {
 			auto newPosition = movable.getPosition() + Point{0, 1};
 			movable.reposition(newPosition);
 			hitBox = movable.calcPositionedHitbox();
@@ -118,8 +118,8 @@ void game::resolveRoomCollision(Movable &movable, Room &currentRoom)
 
 		// platforms
 		while (moveDirection.y > 0 && !movable.fallThroughPlatforms &&
-		       !collidesBottom(lastHitBox, currentRoom, Collision::TopOnly) &&
-		       collidesBottom(hitBox, currentRoom, Collision::TopOnly)) {
+		       !collidesBottom(lastHitBox, collisionMap, Collision::TopOnly) &&
+		       collidesBottom(hitBox, collisionMap, Collision::TopOnly)) {
 			movable.setGrounded();
 			movable.v.y = 0;
 			auto newPosition = movable.getPosition() + Point{0, -1};

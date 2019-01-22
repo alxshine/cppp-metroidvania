@@ -38,7 +38,7 @@ struct Projectile {
   int maxSpeed;
   Position startPosition;
 
-	Animation travelAnimation;
+	Animation animation;
 };
 
 struct Attack {
@@ -162,7 +162,7 @@ inline std::ostream &operator<<(std::ostream &out, const Projectile &proj)
 	out << "NoClip: " << proj.noClip << "\n";
   out << "MaxSpeed: " << proj.maxSpeed << "\n";
   out << "StartPosition: " << proj.startPosition << "\n";
-	out << "TravelAnimation: " << proj.travelAnimation;
+	out << "TravelAnimation: " << proj.animation;
 
 	return out << "}\n";
 }

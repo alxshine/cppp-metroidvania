@@ -30,7 +30,9 @@ class Attackable {
 	void hit(Attackable &other);
 	void hurt(int damage);
 	void update(sdl::GameClock::duration frameDelta);
-  void launchProjectiles(Position currentPosition, Direction currentDirection);
+	void updateProjectiles(sdl::GameClock::duration, Rectangle playerHitbox, Attackable &other,
+	                       const CollisionMap &collisionMap);
+	void launchProjectiles(Position currentPosition, Direction currentDirection);
 	inline bool isAttacking() const
 	{
 		return currentAttack >= 0;
@@ -50,20 +52,21 @@ class Attackable {
 		return hp <= 0 && deathAnimation.getLoopCount() > 0;
 	}
 
+	std::vector<Projectile> projectiles{};
+
 	bool hasPlayableAnimation() const;
 	sdl::Sprite updateAnimation(sdl::GameClock::duration frameDelta);
 
   private:
 	int currentAttack = -1;
 	bool hurting = false;
-  bool dealsDamage = false;
+	bool dealsDamage = false;
 	sdl::GameClock::duration currentAttackTime;
 	std::unordered_set<Attackable *> alreadyHit;
 	sdl::Animation deathAnimation;
 	sdl::Animation hurtAnimation;
 	sdl::GameClock::duration invulnerabilityWindow;
-  sdl::GameClock::duration lastHitTime = sdl::GameClock::duration::zero();
-  std::vector<Projectile> projectiles{};
+	sdl::GameClock::duration lastHitTime = sdl::GameClock::duration::zero();
 };
 } // namespace game
 

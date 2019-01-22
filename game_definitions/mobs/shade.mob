@@ -72,8 +72,8 @@ Attack: Shadeblast
       Damage: 5
       NoClip: False
       MaxSpeed: 70
-      StartPosition: 10 -10
-      TravelAnimation:
+      StartPosition: -10 -16
+      Animation:
         Spritesheet: shade-projectile.png
         Time: 50
         Frame: 0 0 32 20

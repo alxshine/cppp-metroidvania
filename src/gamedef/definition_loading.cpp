@@ -120,8 +120,8 @@ std::istream &game_definitions::operator>>(std::istream &in, Projectile &proj)
   in >> proj.startPosition;
   
 	in >> keyword;
-	testString("TravelAnimation:", keyword);
-	in >> proj.travelAnimation;
+	testString("Animation:", keyword);
+	in >> proj.animation;
 
 	return in;
 }

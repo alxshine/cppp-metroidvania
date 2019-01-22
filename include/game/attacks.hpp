@@ -1,18 +1,29 @@
+#include <optional>
+
 #include "game/constants.hpp"
 #include "game/movement.hpp"
+#include "game/physics.hpp"
+#include "game/room_helpers.hpp"
 
 namespace game {
 struct Projectile {
-	Projectile(Position p, Rectangle h, int d, bool noClip, Velocity v)
-	    : position(p), hitBox(h), damage(d), noClip(noClip), v(v)
+	Projectile(Position p, Rectangle h, int d, bool noClip, Velocity v, sdl::Animation animation)
+	    : position(p), hitbox(h), damage(d), noClip(noClip), v(v), animation(std::move(animation))
 	{
 	}
 
+	Rectangle calcPositionedHitbox();
+	bool update(sdl::GameClock::duration frameDelta, Rectangle playerHitbox, const CollisionMap &collisionMap);
+	sdl::Sprite updateAnimation(sdl::GameClock::duration frameDelta);
+
 	Position position;
-	Rectangle hitBox;
+	Rectangle hitbox;
 	int damage;
 	bool noClip;
 	Velocity v;
+	bool done = false;
+
+	sdl::Animation animation;
 };
 
 struct ProjectileBlueprint {
@@ -21,6 +32,8 @@ struct ProjectileBlueprint {
 	bool noClip;
 	Speed maxSpeed;
 	Position startPosition;
+
+  sdl::Animation animation;
 };
 
 struct Attack {
@@ -44,6 +57,6 @@ struct Attack {
 	int damage;
 	std::vector<int> damageFrames;
 	Type type;
-	ProjectileBlueprint projectileBlueprint;
+  std::optional<ProjectileBlueprint> projectileBlueprint;
 };
 } // namespace game

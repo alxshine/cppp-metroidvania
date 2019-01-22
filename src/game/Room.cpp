@@ -7,14 +7,13 @@ game::Rectangle game::Room::Tile::render(const sdl::Renderer &renderer, const ga
 	return targetRect;
 }
 
-game::Room::Room(const std::string name, const sdl::Texture &background, const sdl::Music &music,
-                 const Position &location, int gatingArea, const game::Room::Layout layout,
-                 const game::CollisionMap collisionMap, const std::vector<game::Mob> mobs,
-                 const std::vector<game::Item> items, const std::vector<game::Door> doors)
+game::Room::Room(std::string name, const sdl::Texture &background, const sdl::Music &music, Position location,
+                 int gatingArea, game::Room::Layout layout, game::CollisionMap collisionMap,
+                 std::vector<game::Mob> mobs, std::vector<game::Item> items, std::vector<game::Door> doors)
     : name(name), background(background), music(music), location(location), gatingArea(gatingArea), layout(layout),
       sizeInPixels({0, 0, static_cast<int>(layout[0][0].size()) * game::tileSize.w,
                     static_cast<int>(layout[0].size()) * game::tileSize.h}),
-      collisionMap(collisionMap), mobs(mobs), items(items), doors(doors)
+      collisionMap(collisionMap), mobs(mobs), items(items), doors((doors))
 {
 }
 
@@ -72,7 +71,7 @@ void game::Room::render(const sdl::Renderer &renderer, sdl::GameClock::duration 
 	for (auto &i : mobs)
 		renderer.render(i, frameDelta, options);
 	for (auto &i : items)
-		if (!i.pickedUp) //TODO remove from room?
+		if (!i.pickedUp) // TODO remove from room?
 			renderer.render(i, frameDelta, options);
 }
 
