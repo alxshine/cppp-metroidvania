@@ -84,19 +84,34 @@ void Attackable::update(sdl::GameClock::duration frameDelta)
 	if (isAttacking()) {
 		auto &attack = attacks[currentAttack];
 
-    //update currentAttackTime
+		// update currentAttackTime
 		int oldIndex = currentAttackTime / attack.animation.getTimePerFrame();
 		currentAttackTime += frameDelta;
 		int currentIndex = currentAttackTime / attack.animation.getTimePerFrame();
 
-    //check if we have just passed a damage frame -> we deal damage currently
-    dealsDamage = false;
+		// check if we have just passed a damage frame -> we deal damage currently
+		dealsDamage = false;
 		for (auto i : attack.damageFrames)
 			if (oldIndex < i && currentIndex >= i)
 				dealsDamage = true;
 
-    //check if the current attack is done
+		// check if the current attack is done
 		if (currentAttackTime > attack.animation.totalDuration())
 			currentAttack = -1;
 	}
+}
+
+void Attackable::launchProjectiles(Position currentPosition, Direction currentDirection)
+{
+	if (!isAttacking() || !dealsDamage || attacks[currentAttack].type != Attack::Type::Ranged)
+		return;
+
+	// spawn a projectile
+	auto &bluePrint = attacks[currentAttack].projectileBlueprint;
+	auto startPosition = currentPosition + bluePrint.startPosition;
+  Velocity v{bluePrint.maxSpeed, 0};
+  if(currentDirection.x < 0)
+    v.x = -v.x;
+  projectiles.emplace_back(startPosition, bluePrint.hitBox, bluePrint.damage, bluePrint.noClip, v);
+  std::cout << projectiles.size() << std::endl;
 }

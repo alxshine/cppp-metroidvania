@@ -5,7 +5,8 @@ using namespace game;
 Player::Player(sdl::Animation idleAnimation, sdl::Animation walkingAnimation, sdl::Animation airUpAnimation,
                sdl::Animation airDownAnimation, sdl::Animation deathAnimation, sdl::Animation hurtAnimation,
                std::vector<Attack> attacks)
-  : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation, {0, 0}, 2), attackable(100, 0, attacks, deathAnimation, hurtAnimation, std::chrono::milliseconds(1000)),
+    : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation, {0, 0}, 2),
+      attackable(100, 0, attacks, deathAnimation, hurtAnimation, std::chrono::milliseconds(1000)),
       idleAnimation(idleAnimation)
 {
 }
@@ -80,21 +81,25 @@ void Player::stopMoving()
 	}
 }
 
-void Player::moveLeft(){
-  if(hasControl())
-    movable.moveLeft();
+void Player::moveLeft()
+{
+	if (hasControl())
+		movable.moveLeft();
 }
-void Player::moveRight(){
-  if(hasControl())
-    movable.moveRight();
+void Player::moveRight()
+{
+	if (hasControl())
+		movable.moveRight();
 }
-void Player::jump(){
-  if(hasControl())
-    movable.jump();
+void Player::jump()
+{
+	if (hasControl())
+		movable.jump();
 }
-void Player::fall(){
-  if(hasControl())
-    movable.fall();
+void Player::fall()
+{
+	if (hasControl())
+		movable.fall();
 }
 
 void Player::attack()
@@ -112,7 +117,7 @@ void Player::attack()
 
 void Player::updateCombat(sdl::GameClock::duration frameDelta)
 {
-  bool wasAttacking = true;
+	bool wasAttacking = true;
 	if (!attackable.isAttacking()) {
 		timeSinceLastAttack += frameDelta;
 		wasAttacking = false;
@@ -122,6 +127,7 @@ void Player::updateCombat(sdl::GameClock::duration frameDelta)
 	if (!attackable.isAttacking() && !wasAttacking) {
 		timeSinceLastAttack = sdl::GameClock::duration::zero();
 	}
+	// attackable.launchProjectiles(movable.getPosition(), movable.getDirection());
 }
 
 Rectangle Player::getAttackHitbox()

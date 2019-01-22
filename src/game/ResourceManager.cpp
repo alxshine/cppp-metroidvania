@@ -111,7 +111,14 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 		const auto &texture = getTexture(adef.animation.spritesheet);
 		sdl::Animation animation{texture, adef.animation.frames, adef.animation.timePerFrame};
 
-		attacks.emplace_back(adef.hitbox, animation, adef.damage, adef.damageFrames);
+    //add projectile blueprint for ranged attacks (non-melee)
+		if (adef.type == Attack::Type::Melee)
+			attacks.emplace_back(adef.hitbox, animation, adef.damage, adef.damageFrames);
+		else {
+			auto &proj = adef.projectile;
+			ProjectileBlueprint blueprint{proj.hitBox, proj.damage, proj.noClip, proj.maxSpeed, proj.startPosition};
+			attacks.emplace_back(adef.hitbox, animation, adef.damage, adef.damageFrames, blueprint);
+		}
 	}
 
 	return std::make_unique<Mob>(mobdef.name, mobdef.health, mobdef.poise,

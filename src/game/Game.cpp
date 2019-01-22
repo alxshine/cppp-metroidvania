@@ -204,6 +204,7 @@ void Game::runMainLoop()
 
 				// combat
 				m.attackable.update(gameFrameDelta);
+        m.attackable.launchProjectiles(m.movable.getPosition(), m.movable.getDirection());
 
 				if (m.attackable.isAttacking()) {
 					if (intersects(m.attackable.getHitbox(m.movable.getPosition(), m.movable.getDirection().x < 0),

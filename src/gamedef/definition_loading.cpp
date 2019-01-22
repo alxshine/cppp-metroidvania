@@ -97,16 +97,28 @@ std::istream &game_definitions::operator>>(std::istream &in, Projectile &proj)
 {
 	std::string keyword;
 
-	in >> keyword;
-	testString("TravelSpeed:", keyword);
-	in >> proj.travelSpeed;
+  in >> keyword;
+  testString("Hitbox:", keyword);
+  in >> proj.hitBox;
 
+  in >> keyword;
+  testString("Damage:", keyword);
+  in >> proj.damage;
+  
 	in >> keyword;
 	testString("NoClip:", keyword);
 	std::string noclipValue;
 	in >> noclipValue;
-	proj.noclip = noclipValue == "True" ? true : false;
+	proj.noClip = noclipValue == "True" ? true : false;
 
+  in >> keyword;
+  testString("MaxSpeed:", keyword);
+  in>> proj.maxSpeed;
+
+  in >> keyword;
+  testString("StartPosition:", keyword);
+  in >> proj.startPosition;
+  
 	in >> keyword;
 	testString("TravelAnimation:", keyword);
 	in >> proj.travelAnimation;

@@ -32,8 +32,11 @@ struct Animation {
 };
 
 struct Projectile {
-	int travelSpeed;
-	bool noclip;
+  Rectangle hitBox;
+  int damage;
+  bool noClip;
+  int maxSpeed;
+  Position startPosition;
 
 	Animation travelAnimation;
 };
@@ -154,8 +157,11 @@ inline std::ostream &operator<<(std::ostream &out, const Animation &anim)
 
 inline std::ostream &operator<<(std::ostream &out, const Projectile &proj)
 {
-	out << "Projectile { TravelSpeed: " << proj.travelSpeed << "\n";
-	out << "NoClip: " << proj.noclip << "\n";
+	out << "Projectile { Hitbox: " << proj.hitBox << "\n";
+  out << "Damage: " << proj.damage << "\n";
+	out << "NoClip: " << proj.noClip << "\n";
+  out << "MaxSpeed: " << proj.maxSpeed << "\n";
+  out << "StartPosition: " << proj.startPosition << "\n";
 	out << "TravelAnimation: " << proj.travelAnimation;
 
 	return out << "}\n";

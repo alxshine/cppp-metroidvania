@@ -49,7 +49,7 @@ IdleAnimation:
 EndAnimation
 
 Attack: Shadeblast
-    Type: Melee
+    Type: Ranged
     SoundEffect: hey.wav 1
     HitBox: 6 -20 100 20
     Damage: 0
@@ -66,4 +66,20 @@ Attack: Shadeblast
         Frame: 236 100 59 50
         Frame: 177 100 59 50
     EndAnimation
+
+    Projectile:
+      Hitbox: -4 -4 8 8
+      Damage: 5
+      NoClip: False
+      MaxSpeed: 70
+      StartPosition: 10 -10
+      TravelAnimation:
+        Spritesheet: shade-projectile.png
+        Time: 50
+        Frame: 0 0 32 20
+        Frame: 32 0 32 20
+        Frame: 64 0 32 20
+        Frame: 96 0 32 20
+      EndAnimation
+      
 EndMob

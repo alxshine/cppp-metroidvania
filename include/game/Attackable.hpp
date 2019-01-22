@@ -6,7 +6,7 @@
 
 #include "GameClock.hpp"
 #include "game/Movable.hpp"
-#include "game/constants.hpp"
+#include "game/attacks.hpp"
 
 namespace game {
 class Attackable {
@@ -30,6 +30,7 @@ class Attackable {
 	void hit(Attackable &other);
 	void hurt(int damage);
 	void update(sdl::GameClock::duration frameDelta);
+  void launchProjectiles(Position currentPosition, Direction currentDirection);
 	inline bool isAttacking() const
 	{
 		return currentAttack >= 0;
@@ -62,6 +63,7 @@ class Attackable {
 	sdl::Animation hurtAnimation;
 	sdl::GameClock::duration invulnerabilityWindow;
   sdl::GameClock::duration lastHitTime = sdl::GameClock::duration::zero();
+  std::vector<Projectile> projectiles{};
 };
 } // namespace game
 
