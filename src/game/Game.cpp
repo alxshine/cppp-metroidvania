@@ -256,9 +256,17 @@ void Game::registerGameEvents()
 		    {"Stats", [&]() { /* TODO stats menu */ }},
 		    {"Inventory",
 		     [&]() {
-			 // TODO: @alex track killed mobs as well as player inventory
-			     menuStack.push(std::make_shared<InventoryMenu>(player->inventory, std::set{res.getMob("Shade")},
-			                                                    [&]() { menuStack.pop(); }));
+			     // TODO: @alex track killed mobs as well as player inventory
+			     menuStack.push(std::make_shared<InventoryMenu>(
+			         // player->inventory,
+			         std::vector{res.getItem("Key_1"), res.getItem("Key_1"), res.getItem("Key_1"), res.getItem("Key_1"),
+			                     res.getItem("Key_1"), res.getItem("Key_1"), res.getItem("Key_1"), res.getItem("Key_1"),
+			                     res.getItem("Key_1"), res.getItem("Key_1"), res.getItem("Key_1"),
+			                     res.getItem("Key_1")},
+			         std::vector{res.getMob("Shade"), res.getMob("Shade"), res.getMob("Shade"), res.getMob("Shade"),
+			                     res.getMob("Shade"), res.getMob("Shade"), res.getMob("Shade"), res.getMob("Shade"),
+			                     res.getMob("Shade"), res.getMob("Shade"), res.getMob("Shade"), res.getMob("Shade")},
+			         [&]() { menuStack.pop(); }));
 		     }},
 		    {"Resume", [&]() { menuStack.pop(); }},
 		    {"Main Menu", [&]() {
