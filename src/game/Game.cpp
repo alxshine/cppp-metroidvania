@@ -151,8 +151,8 @@ void Game::runMainLoop()
 			auto now = gameClock.now();
 			gameFrameDelta = now - lastGameFrameTime;
 
-      // **************** SET ALIAS VARIABLES
-      auto &mobs = currentRoom->mobs;
+			// **************** SET ALIAS VARIABLES
+			auto &mobs = currentRoom->mobs;
 
 			// **************** HANDLE THE PLAYER ****************
 			// reset player velocity
@@ -172,7 +172,7 @@ void Game::runMainLoop()
 			// Updates and collision
 			player->movable.update(gameFrameDelta);
 			resolveRoomCollision(player->movable, currentRoom->collisionMap);
-      
+
 			// combat
 			player->updateCombat(gameFrameDelta);
 			if (player->attackable.isAttacking()) {
@@ -204,8 +204,9 @@ void Game::runMainLoop()
 
 				// combat
 				m.attackable.update(gameFrameDelta);
-        m.attackable.updateProjectiles(gameFrameDelta, playerHitbox, player->attackable, currentRoom->collisionMap);
-        m.attackable.launchProjectiles(m.movable.getPosition(), m.movable.getDirection());
+				m.attackable.updateProjectiles(gameFrameDelta, playerHitbox, player->attackable,
+				                               currentRoom->collisionMap);
+				m.attackable.launchProjectiles(m.movable.getPosition(), m.movable.getDirection());
 
 				if (m.attackable.isAttacking()) {
 					if (intersects(m.attackable.getHitbox(m.movable.getPosition(), m.movable.getDirection().x < 0),
@@ -215,8 +216,8 @@ void Game::runMainLoop()
 				}
 			}
 
-      // ******************* REMOVE UNNEEDED ***********
-      mobs.erase(remove_if(mobs.begin(),mobs.end(), [](Mob &m){return m.attackable.done();}), mobs.end());
+			// ******************* REMOVE UNNEEDED ***********
+			mobs.erase(remove_if(mobs.begin(), mobs.end(), [](Mob &m) { return m.attackable.done(); }), mobs.end());
 
 			// ******************* RENDERING *****************
 			renderer.render(*currentRoom, gameFrameDelta, renderOpts);
@@ -254,7 +255,11 @@ void Game::registerGameEvents()
 		std::vector<RawMenuItem> pauseMenuItems = {
 		    {"Stats", [&]() { /* TODO stats menu */ }},
 		    {"Inventory",
-		     [&]() { menuStack.push(std::make_shared<InventoryMenu>(player->inventory, [&]() { menuStack.pop(); })); }},
+		     [&]() {
+			 // TODO: @alex track killed mobs as well as player inventory
+			     menuStack.push(std::make_shared<InventoryMenu>(player->inventory, std::set{res.getMob("Shade")},
+			                                                    [&]() { menuStack.pop(); }));
+		     }},
 		    {"Resume", [&]() { menuStack.pop(); }},
 		    {"Main Menu", [&]() {
 			     menuStack.pop();

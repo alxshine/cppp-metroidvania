@@ -27,14 +27,20 @@ class Mob : public sdl::Renderable {
 	Movable movable;
 	Attackable attackable;
 
+	sdl::Animation idleAnimation;
+
   private:
 	Rectangle renderSize;
 	sdl::Animation walkingAnimation;
-	sdl::Animation idleAnimation;
 	std::shared_ptr<AI> ai;
 
 	Rectangle calcRenderTarget() const;
 };
+
+inline bool operator<(const Mob &a, const Mob&b)
+{
+	return a.name < b.name;
+}
 
 } // namespace game
 

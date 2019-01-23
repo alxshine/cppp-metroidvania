@@ -6,7 +6,8 @@ using namespace menu;
 using namespace game;
 using namespace sdl;
 
-InventoryMenu::InventoryMenu(std::set<Item> inventory, std::function<void()> escapeCallback) : items(inventory)
+InventoryMenu::InventoryMenu(std::set<Item> inventory, std::set<Mob> mobKills, std::function<void()> escapeCallback)
+    : items(inventory), mobs(mobKills)
 {
 	eventHandler.onKeyDown(SDLK_ESCAPE, [=](const KeyboardEvent &) { escapeCallback(); });
 }
@@ -35,13 +36,31 @@ void InventoryMenu::render(const Renderer &renderer, GameClock::duration frameDe
 	y += title.sourceRectangle.h + padding_y;
 	renderer.render(title, target);
 
-	// render items
+	const int size_x = 30;
+	const int size_y = 30;
 	int x = margin_x;
-	for (auto i : items) {
-		const int size_x = 30;
-		const int size_y = 30;
-		Rectangle dest{x, y, size_x, size_y};
 
+	// render mobs
+	for (auto i : mobs) {
+		Rectangle dest{x, y, size_x, size_y};
+		// compute next grid position
+		x += size_x + padding_x;
+		// new line if necessary
+		if (x + size_x + margin_x >= renderer.logicalW) {
+			y += size_y + padding_y + 10; // TODO 10 is guess for text height
+			x = margin_x;
+		}
+		renderer.render(i.idleAnimation.updateAnimation(frameDelta), dest);
+		auto text = SDL::getInstance().generateText(*font, i.name);
+		dest.y += size_y + 1;
+		dest.w = text.sourceRectangle.w;
+		dest.h = text.sourceRectangle.h;
+		renderer.render(text, dest);
+	}
+
+	// render items
+	for (auto i : items) {
+		Rectangle dest{x, y, size_x, size_y};
 		// compute next grid position
 		x += size_x + padding_x;
 		// new line if necessary
