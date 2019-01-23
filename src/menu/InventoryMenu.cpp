@@ -6,7 +6,7 @@ using namespace menu;
 using namespace game;
 using namespace sdl;
 
-InventoryMenu::InventoryMenu(std::vector<Item> inventory, std::vector<Mob> mobKills,
+InventoryMenu::InventoryMenu(std::set<Item> inventory, std::set<Mob> mobKills,
                              std::function<void()> escapeCallback)
     : items(inventory), mobs(mobKills)
 {

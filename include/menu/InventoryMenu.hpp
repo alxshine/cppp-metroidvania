@@ -10,7 +10,7 @@ namespace game {
 
 class InventoryMenu : public menu::Menu {
   public:
-	InventoryMenu(std::vector<Item> inventory, std::vector<Mob> mobKills, std::function<void()> escapeCallback);
+	InventoryMenu(std::set<Item> inventory, std::set<Mob> mobKills, std::function<void()> escapeCallback);
 
 	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
 	            const sdl::RenderOptions &options) override;
@@ -26,8 +26,8 @@ class InventoryMenu : public menu::Menu {
 
 	const sdl::Text title = sdl::SDL::getInstance().generateText(*titleFont, "Inventory");
 	const int opacity = 125;
-	std::vector<Item> items;
-	std::vector<Mob> mobs;
+	std::set<Item> items;
+	std::set<Mob> mobs;
 };
 
 } // namespace game
