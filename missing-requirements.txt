@@ -21,7 +21,7 @@ enemies
 DONE    attack the player character as it gets in range
 DONE    variants with melee attacks
 DONE    variants with ranged attacks
-    bosses are capable of using different attacks
+DONE    bosses are capable of using different attacks
     (optional) gating for enemies (would make backtracking more interesting if harder mobs spawned)
 
 map

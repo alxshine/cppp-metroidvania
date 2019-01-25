@@ -69,7 +69,7 @@ Attack: Shadeblast
 
     Projectile:
       Hitbox: -4 -4 8 8
-      Damage: 5
+      Damage: 50
       NoClip: False
       MaxSpeed: 70
       StartPosition: -10 -16
