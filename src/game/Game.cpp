@@ -216,8 +216,9 @@ void Game::runMainLoop()
 				}
 			}
 
-			// ******************* REMOVE UNNEEDED ***********
-			mobs.erase(remove_if(mobs.begin(), mobs.end(), [](Mob &m) { return m.attackable.done(); }), mobs.end());
+      // ******************* REMOVE UNNEEDED ***********
+      mobs.erase(remove_if(mobs.begin(),mobs.end(), [](Mob &m){return m.attackable.done();}), mobs.end()); //TODO: xp, spawn items, unlock moves
+      //spawn key items only if the mob list is empty
 
 			// ******************* RENDERING *****************
 			renderer.render(*currentRoom, gameFrameDelta, renderOpts);
