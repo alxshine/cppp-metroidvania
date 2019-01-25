@@ -45,10 +45,10 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	else
 		flip = sdl::Renderer::Flip::None;
 
-	if (attackable.hasPlayableAnimation())
-		renderer.render(attackable.updateAnimation(frameDelta), destRect, flip);
-	else if (isSliding)
+	if (isSliding)
 		renderer.render(slideAnimation.updateAnimation(frameDelta), destRect, flip);
+	else if (attackable.hasPlayableAnimation())
+		renderer.render(attackable.updateAnimation(frameDelta), destRect, flip);
 	else if (movable.hasPlayableAnimation())
 		renderer.render(movable.updateAnimation(frameDelta), destRect, flip);
 	else
