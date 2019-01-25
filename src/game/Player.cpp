@@ -65,9 +65,8 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	}
 	// render healthbar
 	int width = attackable.hp > 0 ? static_cast<int>(hitbox.w * ((float)attackable.hp / attackable.maxHp)) : 0;
-	if (options.renderHealthBars)
-		renderer.drawRectangle({movable.calcPositionedHitbox().x, movable.calcPositionedHitbox().y - 5, width, 2},
-		                       {255, 0, 0, 255}, true);
+	renderer.drawRectangle({movable.calcPositionedHitbox().x, movable.calcPositionedHitbox().y - 2, width, 2},
+	                       {255, 0, 0, 255}, true);
 }
 
 void Player::startMoving()
