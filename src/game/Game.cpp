@@ -170,11 +170,10 @@ void Game::runMainLoop()
 			player->movable.applyGravity(gameFrameDelta);
 
 			// Updates and collision
-			player->movable.update(gameFrameDelta);
+			player->update(gameFrameDelta);
 			resolveRoomCollision(player->movable, currentRoom->collisionMap);
 
 			// combat
-			player->updateCombat(gameFrameDelta);
 			if (player->attackable.isAttacking()) {
 				auto hitbox = player->getAttackHitbox();
 				for (auto &m : mobs) {
@@ -216,11 +215,12 @@ void Game::runMainLoop()
 				}
 			}
 
-      // ******************* REMOVE UNNEEDED ***********
-      mobs.erase(remove_if(mobs.begin(),mobs.end(), [](Mob &m){return m.attackable.done();}), mobs.end()); //TODO: xp, spawn items, unlock moves
-      //spawn key items only if the mob list is empty
-      if(player->attackable.done())
-        std::cout << "You are dead" << std::endl; //TODO: handle actual player death
+			// ******************* REMOVE UNNEEDED ***********
+			mobs.erase(remove_if(mobs.begin(), mobs.end(), [](Mob &m) { return m.attackable.done(); }),
+			           mobs.end()); // TODO: xp, spawn items, unlock moves
+			// spawn key items only if the mob list is empty
+			if (player->attackable.done())
+				std::cout << "You are dead" << std::endl; // TODO: handle actual player death
 
 			// ******************* RENDERING *****************
 			renderer.render(*currentRoom, gameFrameDelta, renderOpts);
@@ -290,6 +290,9 @@ void Game::registerGameEvents()
 
 	// attack
 	gameEvents.whileKeyHeld(SDL_SCANCODE_K, [this]() { player->attack(); });
+
+	// slide
+	gameEvents.onKeyDown(SDLK_l, [this](const KeyboardEvent &) { player->slide(); });
 
 	// blink
 	gameEvents.onKeyDown(SDLK_j, [this](const KeyboardEvent &) {

@@ -70,8 +70,15 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	Attack attack2{{5, -20, 10, 20}, attackAnim2, 2, {1}};
 	Attack attack3{{5, -20, 10, 20}, attackAnim3, 3, {2}};
 	const std::vector<Attack> attacks{attack1, attack2, attack3};
+
+	// sliding
+	const sdl::Animation slideAnimation{
+	    spritesheet,
+	    {{150, 108, 50, 36}, {200, 108, 50, 36}, {250, 108, 50, 36}, {300, 108, 50, 36}, {0, 144, 50, 36}},
+	    100ms};
+
 	return std::make_unique<Player>(idleAnimation, walkingAnimation, airUpAnimation, airDownAnimation, deathAnimation,
-	                                hurtAnimation, attacks);
+	                                hurtAnimation, slideAnimation, attacks);
 }
 
 std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobdef) const

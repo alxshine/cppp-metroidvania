@@ -4,10 +4,10 @@ using namespace game;
 
 Player::Player(sdl::Animation idleAnimation, sdl::Animation walkingAnimation, sdl::Animation airUpAnimation,
                sdl::Animation airDownAnimation, sdl::Animation deathAnimation, sdl::Animation hurtAnimation,
-               std::vector<Attack> attacks)
+               sdl::Animation slideAnimation, std::vector<Attack> attacks)
     : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation, {0, 0}, 2),
       attackable(100, 0, attacks, deathAnimation, hurtAnimation, std::chrono::milliseconds(1000)),
-      idleAnimation(idleAnimation)
+      idleAnimation(idleAnimation), slideAnimation(slideAnimation)
 {
 }
 
@@ -47,6 +47,8 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 
 	if (attackable.hasPlayableAnimation())
 		renderer.render(attackable.updateAnimation(frameDelta), destRect, flip);
+	else if (isSliding)
+		renderer.render(slideAnimation.updateAnimation(frameDelta), destRect, flip);
 	else if (movable.hasPlayableAnimation())
 		renderer.render(movable.updateAnimation(frameDelta), destRect, flip);
 	else
@@ -102,6 +104,15 @@ void Player::fall()
 		movable.fall();
 }
 
+void Player::slide()
+{
+	if (!hasControl() || !movable.grounded)
+		return;
+
+	slideAnimation.reset();
+	isSliding = true;
+}
+
 void Player::attack()
 {
 	if (!hasControl())
@@ -115,15 +126,28 @@ void Player::attack()
 	attackable.attack(comboCount);
 }
 
-void Player::updateCombat(sdl::GameClock::duration frameDelta)
+void Player::update(sdl::GameClock::duration gameFrameDelta)
 {
+	if (slideAnimation.getLoopCount() > 0)
+		isSliding = false;
+
+  int slideSpeed = 1.5*movable.maxSpeed;
+	if (isSliding) {
+		if (movable.getDirection().x < 0)
+			movable.v.x = -slideSpeed;
+		else
+			movable.v.x = slideSpeed;
+	}
+
+	movable.update(gameFrameDelta);
+
 	bool wasAttacking = true;
 	if (!attackable.isAttacking()) {
-		timeSinceLastAttack += frameDelta;
+		timeSinceLastAttack += gameFrameDelta;
 		wasAttacking = false;
 	}
 
-	attackable.update(frameDelta);
+	attackable.update(gameFrameDelta);
 	if (!attackable.isAttacking() && !wasAttacking) {
 		timeSinceLastAttack = sdl::GameClock::duration::zero();
 	}

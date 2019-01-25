@@ -1,9 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <chrono>
 #include <set>
 #include <vector>
-#include <chrono>
 
 #include "Attackable.hpp"
 #include "Item.hpp"
@@ -16,7 +16,7 @@ class Player : public sdl::Renderable {
   public:
 	Player(sdl::Animation idleAnimation, sdl::Animation walkingAnimation, sdl::Animation airUpAnimation,
 	       sdl::Animation airDownAnimation, sdl::Animation deathAnimation, sdl::Animation hurtAnimation,
-	       std::vector<Attack> attacks);
+	       sdl::Animation slideAnimation, std::vector<Attack> attacks);
 
 	Player &operator=(const Player &rhs) = delete;
 	Player(const Player &rhs) = delete;
@@ -31,6 +31,9 @@ class Player : public sdl::Renderable {
 	void moveRight();
 	void jump();
 	void fall();
+	void slide();
+
+	void update(sdl::GameClock::duration gameFrameDelta);
 
 	void attack();
 	void updateCombat(sdl::GameClock::duration frameDelta);
@@ -48,12 +51,14 @@ class Player : public sdl::Renderable {
 	static constexpr Rectangle hitbox{0, 0, tileSize.w, tileSize.h * 2};
 	Rectangle calcRenderTarget() const;
 	sdl::Animation idleAnimation;
+	sdl::Animation slideAnimation;
+	bool isSliding = false;
 	int comboCount = 0;
 	sdl::GameClock::duration timeSinceLastAttack = sdl::GameClock::duration::zero();
 	const sdl::GameClock::duration comboTimer = sdl::GameClock::duration(50);
 	inline bool hasControl()
 	{
-		return movable.canMove && !attackable.isHurting() && !attackable.isAttacking();
+		return !isSliding && movable.canMove && !attackable.isHurting() && !attackable.isAttacking();
 	}
 };
 } // namespace game
