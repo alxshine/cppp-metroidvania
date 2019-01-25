@@ -41,3 +41,5 @@ Entities:
     Item: 30 170 Savepoint
 
 EndEntities
+OnClearEntities:
+EndEntities

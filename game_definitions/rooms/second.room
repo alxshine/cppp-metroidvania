@@ -62,3 +62,5 @@ Entities:
     Door: 280 170 RegionTravel = TestDoor (Right) -> Entrance in Third
     Mob: 200 171 Shade
 EndEntities
+OnClearEntities:
+EndEntities
