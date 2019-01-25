@@ -9,11 +9,12 @@ game::Rectangle game::Room::Tile::render(const sdl::Renderer &renderer, const ga
 
 game::Room::Room(std::string name, const sdl::Texture &background, const sdl::Music &music, Position location,
                  int gatingArea, game::Room::Layout layout, game::CollisionMap collisionMap,
-                 std::vector<game::Mob> mobs, std::vector<game::Item> items, std::vector<game::Door> doors)
+                 std::vector<game::Mob> mobs, std::vector<game::Item> items, std::vector<game::Item> onClearItems,
+                 std::vector<game::Door> doors)
     : name(name), background(background), music(music), location(location), gatingArea(gatingArea), layout(layout),
       sizeInPixels({0, 0, static_cast<int>(layout[0][0].size()) * game::tileSize.w,
                     static_cast<int>(layout[0].size()) * game::tileSize.h}),
-      collisionMap(collisionMap), mobs(mobs), items(items), doors((doors))
+      collisionMap(collisionMap), mobs(mobs), items(items), onClearItems(onClearItems), doors((doors))
 {
 }
 

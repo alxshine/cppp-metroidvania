@@ -32,11 +32,11 @@ struct Animation {
 };
 
 struct Projectile {
-  Rectangle hitBox;
-  int damage;
-  bool noClip;
-  int maxSpeed;
-  Position startPosition;
+	Rectangle hitBox;
+	int damage;
+	bool noClip;
+	int maxSpeed;
+	Position startPosition;
 
 	Animation animation;
 };
@@ -47,7 +47,7 @@ struct Attack {
 	SoundEffect soundEffect;
 	Rectangle hitbox;
 	Damage damage;
-  std::vector<int> damageFrames;
+	std::vector<int> damageFrames;
 
 	Animation animation;
 	Projectile projectile;
@@ -57,15 +57,15 @@ struct Mob {
 	std::string name;
 	std::string behaviour;
 	Health health;
-  int poise;
-  int recoveryWindow;
+	int poise;
+	int recoveryWindow;
 	Rectangle hitbox;
 	Rectangle drawSize;
 	int speedPerSecond;
 
 	Animation walkingAnimation;
 	Animation deathAnimation;
-  Animation hurtAnimation;
+	Animation hurtAnimation;
 	Animation idleAnimation;
 
 	std::vector<Attack> attacks;
@@ -125,6 +125,7 @@ struct Room {
 	std::vector<MobRef> mobs;
 	std::vector<Door> doors;
 	std::vector<ItemRef> items;
+	std::vector<ItemRef> onClearItems;
 };
 
 /*********************
@@ -158,10 +159,10 @@ inline std::ostream &operator<<(std::ostream &out, const Animation &anim)
 inline std::ostream &operator<<(std::ostream &out, const Projectile &proj)
 {
 	out << "Projectile { Hitbox: " << proj.hitBox << "\n";
-  out << "Damage: " << proj.damage << "\n";
+	out << "Damage: " << proj.damage << "\n";
 	out << "NoClip: " << proj.noClip << "\n";
-  out << "MaxSpeed: " << proj.maxSpeed << "\n";
-  out << "StartPosition: " << proj.startPosition << "\n";
+	out << "MaxSpeed: " << proj.maxSpeed << "\n";
+	out << "StartPosition: " << proj.startPosition << "\n";
 	out << "TravelAnimation: " << proj.animation;
 
 	return out << "}\n";

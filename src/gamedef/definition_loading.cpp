@@ -43,16 +43,17 @@ std::istream &game_definitions::operator>>(std::istream &in, Rectangle &rect)
 	return in;
 }
 
-std::istream &game_definitions::operator>>(std::istream &in, Collision &coll){
+std::istream &game_definitions::operator>>(std::istream &in, Collision &coll)
+{
 	std::string rawValue;
 	in >> rawValue;
-	if(rawValue == "None"){
+	if (rawValue == "None") {
 		coll = Collision::None;
-	}else if(rawValue == "TopOnly"){
+	} else if (rawValue == "TopOnly") {
 		coll = Collision::TopOnly;
-	}else if(rawValue == "Full"){
+	} else if (rawValue == "Full") {
 		coll = Collision::Full;
-	}else{
+	} else {
 		throw "Invalid Collision type " + rawValue;
 	}
 	return in;
@@ -97,28 +98,28 @@ std::istream &game_definitions::operator>>(std::istream &in, Projectile &proj)
 {
 	std::string keyword;
 
-  in >> keyword;
-  testString("Hitbox:", keyword);
-  in >> proj.hitBox;
+	in >> keyword;
+	testString("Hitbox:", keyword);
+	in >> proj.hitBox;
 
-  in >> keyword;
-  testString("Damage:", keyword);
-  in >> proj.damage;
-  
+	in >> keyword;
+	testString("Damage:", keyword);
+	in >> proj.damage;
+
 	in >> keyword;
 	testString("NoClip:", keyword);
 	std::string noclipValue;
 	in >> noclipValue;
 	proj.noClip = noclipValue == "True" ? true : false;
 
-  in >> keyword;
-  testString("MaxSpeed:", keyword);
-  in>> proj.maxSpeed;
+	in >> keyword;
+	testString("MaxSpeed:", keyword);
+	in >> proj.maxSpeed;
 
-  in >> keyword;
-  testString("StartPosition:", keyword);
-  in >> proj.startPosition;
-  
+	in >> keyword;
+	testString("StartPosition:", keyword);
+	in >> proj.startPosition;
+
 	in >> keyword;
 	testString("Animation:", keyword);
 	in >> proj.animation;
@@ -162,15 +163,15 @@ std::istream &game_definitions::operator>>(std::istream &in, Attack &attack)
 	testString("Damage:", keyword);
 	in >> attack.damage;
 
-  in >> keyword;
-  testString("DamageFrames:", keyword);
-  while(true){
-    in >> keyword;
-    if(keyword == "EndFrames")
-      break;
+	in >> keyword;
+	testString("DamageFrames:", keyword);
+	while (true) {
+		in >> keyword;
+		if (keyword == "EndFrames")
+			break;
 
-    attack.damageFrames.emplace_back(std::stoi(keyword));
-  }
+		attack.damageFrames.emplace_back(std::stoi(keyword));
+	}
 
 	in >> keyword;
 	testString("Animation:", keyword);
@@ -206,7 +207,7 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 	in >> keyword;
 	testString("RecoveryWindow:", keyword);
 	in >> mob.recoveryWindow;
-    
+
 	in >> keyword;
 	testString("Speed:", keyword);
 	in >> mob.speedPerSecond;
@@ -227,16 +228,16 @@ std::istream &game_definitions::operator>>(std::istream &in, Mob &mob)
 	testString("WalkingAnimation:", keyword);
 	in >> mob.walkingAnimation;
 
-  in >> keyword;
-  testString("DeathAnimation:", keyword);
-  in >> mob.deathAnimation;
-
-  in >> keyword;
-  testString("HurtAnimation:", keyword);
-  in >> mob.hurtAnimation;
+	in >> keyword;
+	testString("DeathAnimation:", keyword);
+	in >> mob.deathAnimation;
 
 	in >> keyword;
-  testString("IdleAnimation:", keyword);
+	testString("HurtAnimation:", keyword);
+	in >> mob.hurtAnimation;
+
+	in >> keyword;
+	testString("IdleAnimation:", keyword);
 	in >> mob.idleAnimation;
 
 	// Parse all attacks until EndMob
@@ -265,13 +266,13 @@ std::istream &game_definitions::operator>>(std::istream &in, Door &door)
 	std::string dir;
 	in >> dir;
 	if (dir == "(Left)")
-		door.direction = {-1,0};
+		door.direction = {-1, 0};
 	else if (dir == "(Down)")
-		door.direction = {0,1};
+		door.direction = {0, 1};
 	else if (dir == "(Right)")
-		door.direction = {1,0};
+		door.direction = {1, 0};
 	else if (dir == "(Up)")
-		door.direction = {0,-1};
+		door.direction = {0, -1};
 	else
 		throw ParseException("Unkown direction " + dir);
 
@@ -421,6 +422,20 @@ std::istream &game_definitions::operator>>(std::istream &in, Room &room)
 			break;
 		else
 			throw ParseException("Unterminated Room");
+	}
+
+	in >> keyword;
+	testString("OnClearEntities:", keyword);
+	while (true) {
+		keyword = "";
+		in >> keyword;
+		if (keyword == "EndEntities")
+			break;
+		
+		testString("Item:", keyword);
+		ItemRef itemRef;
+		in >> itemRef;
+		room.onClearItems.push_back(itemRef);
 	}
 
 	return in;

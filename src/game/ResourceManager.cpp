@@ -145,7 +145,6 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 	auto all_equal_size = [](auto vec) {
 		return std::all_of(vec.cbegin(), vec.cend(), [&](auto el) { return el.size() == vec.cbegin()->size(); });
 	};
-
 	if (!all_equal_size(roomDef.layout))
 		throw std::runtime_error("Unequal layers in room: " + roomDef.name);
 
@@ -193,6 +192,12 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 		item.movable.reposition(i.position);
 		items.emplace_back(item);
 	}
+	std::vector<game::Item> onClearItems;
+	for (auto i : roomDef.onClearItems) {
+		game::Item item = getItem(i.id);
+		item.movable.reposition(i.position);
+		onClearItems.emplace_back(item);
+	}
 
 	// Add doors
 	std::vector<game::Door> doors;
@@ -204,7 +209,8 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 	}
 
 	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
-	                                    roomDef.location, roomDef.gatingArea, layout, collisionMap, mobs, items, doors);
+	                                    roomDef.location, roomDef.gatingArea, layout, collisionMap, mobs, items,
+	                                    onClearItems, doors);
 }
 
 void ResourceManager::parseDefinitions(std::string definitionPath)
