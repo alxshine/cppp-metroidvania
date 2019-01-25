@@ -170,11 +170,10 @@ void Game::runMainLoop()
 			player->movable.applyGravity(gameFrameDelta);
 
 			// Updates and collision
-			player->movable.update(gameFrameDelta);
+			player->update(gameFrameDelta);
 			resolveRoomCollision(player->movable, currentRoom->collisionMap);
 
 			// combat
-			player->updateCombat(gameFrameDelta);
 			if (player->attackable.isAttacking()) {
 				auto hitbox = player->getAttackHitbox();
 				for (auto &m : mobs) {
@@ -296,6 +295,9 @@ void Game::registerGameEvents()
 
 	// attack
 	gameEvents.whileKeyHeld(SDL_SCANCODE_K, [this]() { player->attack(); });
+
+	// slide
+	gameEvents.onKeyDown(SDLK_l, [this](const KeyboardEvent &) { player->slide(); });
 
 	// blink
 	gameEvents.onKeyDown(SDLK_j, [this](const KeyboardEvent &) {

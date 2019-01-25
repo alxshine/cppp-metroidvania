@@ -37,6 +37,7 @@ class Movable {
 	}
 
 	friend class Game;
+  friend class Player;
 	friend void resolveRoomCollision(Movable &movable, const CollisionMap &collisionMap);
 
   public:
