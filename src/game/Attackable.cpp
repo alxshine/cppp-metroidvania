@@ -74,6 +74,12 @@ sdl::Sprite Attackable::updateAnimation(sdl::GameClock::duration frameDelta)
 		return hurtAnimation.updateAnimation(frameDelta);
 }
 
+void Attackable::reset()
+{
+	hp = maxHp;
+	deathAnimation.reset();
+}
+
 void Attackable::update(sdl::GameClock::duration frameDelta)
 {
 	lastHitTime += frameDelta;

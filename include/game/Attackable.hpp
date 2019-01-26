@@ -55,6 +55,7 @@ class Attackable {
 	std::vector<Projectile> projectiles{};
 
 	bool hasPlayableAnimation() const;
+	void reset();
 	sdl::Sprite updateAnimation(sdl::GameClock::duration frameDelta);
 
   private:

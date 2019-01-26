@@ -63,7 +63,10 @@ void Game::loadState(SerializedState state)
 	currentRoom = std::make_unique<Room>(res.getRoom(state.currentRoomName));
 	play_fade_in(currentRoom->music, repeat_forever, 500ms);
 	player->movable.reposition(state.playerState.position);
-	player->attackable.hp = player->attackable.maxHp; // TODO include in state
+	player->attackable.reset();
+	// TODO include attackable values in state
+	// TODO include stats in state
+	// TODO include inventory in state
 }
 
 void Game::interact()
