@@ -1,7 +1,7 @@
 #include "game/Mob.hpp"
 game::Mob::Mob(const Mob &rhs)
-    : name(rhs.name), movable(rhs.movable), attackable(rhs.attackable), renderSize(rhs.renderSize),
-      walkingAnimation(rhs.walkingAnimation), idleAnimation(rhs.idleAnimation), ai(rhs.ai)
+    : name(rhs.name), movable(rhs.movable), attackable(rhs.attackable), idleAnimation(rhs.idleAnimation),
+      renderSize(rhs.renderSize), walkingAnimation(rhs.walkingAnimation), ai(rhs.ai)
 {
 }
 
@@ -10,8 +10,9 @@ game::Mob::Mob(const std::string name, Health health, int poise, sdl::GameClock:
                sdl::Animation deathAnimation, sdl::Animation hurtAnimation, sdl::Animation idleAnimation,
                std::vector<Attack> attacks, std::shared_ptr<AI> ai)
     : name(name), movable(hitbox, speedPerSecond, walkingAnimation),
-      attackable(health, poise, attacks, deathAnimation, hurtAnimation, invulnerabilityWindow), renderSize(renderSize),
-      walkingAnimation(std::move(walkingAnimation)), idleAnimation(std::move(idleAnimation)), ai(ai)
+      attackable(health, poise, attacks, deathAnimation, hurtAnimation, invulnerabilityWindow),
+      idleAnimation(std::move(idleAnimation)), renderSize(renderSize), walkingAnimation(std::move(walkingAnimation)),
+      ai(ai)
 {
 }
 
