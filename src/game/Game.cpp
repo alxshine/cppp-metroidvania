@@ -224,10 +224,14 @@ void Game::runMainLoop()
 			// spawn key items only if the mob list is empty
 			if (player->attackable.done()) {
 				std::vector<RawMenuItem> gameOverMenuItems = {
-				    {"Main Menu", [&]() { menuStack.push(mainMenu); }},
+				    {"Main Menu",
+				     [&]() {
+					     menuStack.pop();
+					     menuStack.push(mainMenu);
+				     }},
 				};
-				menuStack.push(std::make_shared<SelectionMenu>("Game Over!", gameOverMenuItems, std::nullopt,
-				                                               [&]() { menuStack.pop(); }));
+				menuStack.push(
+				    std::make_shared<SelectionMenu>("Game Over!", gameOverMenuItems, std::nullopt, [&]() {}));
 			}
 
 			// ******************* RENDERING *****************
