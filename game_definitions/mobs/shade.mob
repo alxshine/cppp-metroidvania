@@ -76,7 +76,7 @@ Attack: Shadeblast
       Hitbox: -4 -4 8 8
       Damage: 5
       NoClip: False
-      MaxSpeed: 70
+      MaxSpeed: 120
       StartPosition: -10 -16
       Animation:
         Spritesheet: shade-projectile.png
