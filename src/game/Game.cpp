@@ -228,8 +228,10 @@ void Game::runMainLoop()
 				     [&]() {
 					     menuStack.pop();
 					     menuStack.push(mainMenu);
+					     mainMenu->playMusic();
 				     }},
 				};
+				// TODO play game over music? ... depending on win or loss?
 				menuStack.push(
 				    std::make_shared<SelectionMenu>("Game Over!", gameOverMenuItems, std::nullopt, [&]() {}));
 			}
