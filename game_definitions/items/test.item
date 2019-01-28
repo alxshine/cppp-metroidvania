@@ -6,5 +6,6 @@ DrawSize: 0 0 10 10
 Animation:
     Spritesheet: awesome.png
     Time: 1
-    Frame: 240 368 16 16
+    SpriteSize: 16 16
+    Frame: 15 23
 EndAnimation

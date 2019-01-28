@@ -10,36 +10,41 @@ DrawSize: 0 0 13 10
 WalkingAnimation:
     Spritesheet: slime.png
     Time: 100
-    Frame: 96 0 32 25
-    Frame: 64 0 32 25
-    Frame: 32 0 32 25
-    Frame: 0 0 32 25
+    SpriteSize: 32 25
+    Frame: 3 0
+    Frame: 2 0
+    Frame: 1 0
+    Frame: 0 0
 EndAnimation
 
 DeathAnimation:
     Spritesheet: slime.png
     Time: 150
-    Frame: 224 50 32 25
-    Frame: 192 50 32 25
-    Frame: 160 50 32 25
-    Frame: 128 50 32 25
+    SpriteSize: 32 25
+    Frame: 7 2
+    Frame: 6 2
+    Frame: 5 2
+    Frame: 4 2
+    Frame: 3 2
 EndAnimation
-  
+
 HurtAnimation:
     Spritesheet: slime.png
     Time: 140
-    Frame: 64 25 32 25
-    Frame: 32 25 32 25
-    Frame: 00 25 32 25
+    SpriteSize: 32 25
+    Frame: 2 1
+    Frame: 1 1
+    Frame: 0 1
 EndAnimation
 
 IdleAnimation:
     Spritesheet: slime.png
     Time: 140
-    Frame: 224 0 32 25
-    Frame: 192 0 32 25
-    Frame: 160 0 32 25
-    Frame: 128 0 32 25
+    SpriteSize: 32 25
+    Frame: 7 0
+    Frame: 6 0
+    Frame: 5 0
+    Frame: 4 0
 EndAnimation
 
 Attack: Bite
@@ -52,11 +57,12 @@ Attack: Bite
     Animation:
         Spritesheet: slime.png
         Time: 150
-        Frame: 224 25 32 25
-        Frame: 192 25 32 25
-        Frame: 160 25 32 25
-        Frame: 128 25 32 25
-        Frame: 96 25 32 25
+        SpriteSize: 32 25
+        Frame: 7 1
+        Frame: 6 1
+        Frame: 5 1
+        Frame: 4 1
+        Frame: 3 1
     EndAnimation
 
 EndMob

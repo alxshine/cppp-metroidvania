@@ -10,42 +10,46 @@ DrawSize: 0 0 30 25
 WalkingAnimation:
     Spritesheet: shade.png
     Time: 100
-    Frame: 59 0 59 50
-    Frame: 0 0 59 50
-    Frame: 295 50 59 50
-    Frame: 236 50 59 50
+    SpriteSize: 59 50
+    Frame: 1 0
+    Frame: 0 0
+    Frame: 5 1
+    Frame: 4 1
 EndAnimation
 
 DeathAnimation:
     Spritesheet: shade.png
     Time: 140
-    Frame: 295 150 59 50
-    Frame: 236 150 59 50
-    Frame: 177 150 59 50
-    Frame: 118 150 59 50
-    Frame: 59 150 59 50
-    Frame: 0 150 59 50
-    Frame: 295 200 59 50
-    Frame: 236 200 59 50
-    Frame: 177 200 59 50
-    Frame: 118 200 59 50
+    SpriteSize: 59 50
+    Frame: 5 3
+    Frame: 4 3
+    Frame: 3 3
+    Frame: 2 3
+    Frame: 1 3
+    Frame: 0 3
+    Frame: 5 4
+    Frame: 4 4
+    Frame: 3 4
+    Frame: 2 4
 EndAnimation
-  
+
 HurtAnimation:
     Spritesheet: shade.png
     Time: 110
-    Frame: 118 100 59 50
-    Frame: 59 100 59 50
-    Frame: 0 100 59 50
+    SpriteSize: 59 50
+    Frame: 2 2
+    Frame: 1 2
+    Frame: 0 2
 EndAnimation
 
 IdleAnimation:
     Spritesheet: shade.png
     Time: 100
-    Frame: 295 0 59 50
-    Frame: 236 0 59 50
-    Frame: 177 0 59 50
-    Frame: 118 0 59 50
+    SpriteSize: 59 50
+    Frame: 5 0
+    Frame: 4 0
+    Frame: 3 0
+    Frame: 2 0
 EndAnimation
 
 Attack: Shadeblast
@@ -53,18 +57,19 @@ Attack: Shadeblast
     SoundEffect: hey.wav 1
     HitBox: 6 -20 100 20
     Damage: 0
-    DamageFrames: 4 EndFrames 
+    DamageFrames: 4 EndFrames
 
     Animation:
         Spritesheet: shade.png
         Time: 110
-        Frame: 177 50 59 50
-        Frame: 118 50 59 50
-        Frame: 59 50 59 50
-        Frame: 0 50 59 50
-        Frame: 295 100 59 50
-        Frame: 236 100 59 50
-        Frame: 177 100 59 50
+        SpriteSize: 59 50
+        Frame: 3 1
+        Frame: 2 1
+        Frame: 1 1
+        Frame: 0 1
+        Frame: 5 2
+        Frame: 4 2
+        Frame: 3 2
     EndAnimation
 
     Projectile:
@@ -76,10 +81,11 @@ Attack: Shadeblast
       Animation:
         Spritesheet: shade-projectile.png
         Time: 50
-        Frame: 0 0 32 20
-        Frame: 32 0 32 20
-        Frame: 64 0 32 20
-        Frame: 96 0 32 20
+        SpriteSize: 32 20
+        Frame: 0 0
+        Frame: 1 0
+        Frame: 2 0
+        Frame: 3 0
       EndAnimation
-      
+
 EndMob

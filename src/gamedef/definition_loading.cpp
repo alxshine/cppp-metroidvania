@@ -78,12 +78,20 @@ std::istream &game_definitions::operator>>(std::istream &in, Animation &anim)
 	in >> ms;
 	anim.timePerFrame = std::chrono::milliseconds(ms);
 
+	in >> keyword;
+	testString("SpriteSize:", keyword);
+	int spriteWidth, spriteHeight;
+	in >> spriteWidth;
+	in >> spriteHeight;
+
 	// Parse all frames until EndAnimation
 	while (true) {
 		in >> keyword;
 		if (keyword == "Frame:") {
-			Rectangle rect;
-			in >> rect;
+			int x, y;
+			in >> x;
+			in >> y;
+			Rectangle rect{x*spriteWidth, y*spriteHeight, spriteWidth, spriteHeight};
 			anim.frames.push_back(rect);
 		} else if (keyword == "EndAnimation")
 			break;
@@ -431,7 +439,7 @@ std::istream &game_definitions::operator>>(std::istream &in, Room &room)
 		in >> keyword;
 		if (keyword == "EndEntities")
 			break;
-		
+
 		testString("Item:", keyword);
 		ItemRef itemRef;
 		in >> itemRef;
