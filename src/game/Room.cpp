@@ -21,7 +21,7 @@ game::Room::Room(std::string name, const sdl::Texture &background, const sdl::Mu
 game::Room::Room(const Room &rhs) noexcept
     : name(rhs.name), background(rhs.background), music(rhs.music), location(rhs.location), gatingArea(rhs.gatingArea),
       layout(rhs.layout), sizeInPixels(rhs.sizeInPixels), collisionMap(rhs.collisionMap), mobs(rhs.mobs),
-      items(rhs.items), doors(rhs.doors)
+      items(rhs.items), onClearItems(rhs.onClearItems), doors(rhs.doors)
 {
 }
 

@@ -16,14 +16,14 @@ class Item : public sdl::Renderable {
 	void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
 	            const sdl::RenderOptions &options = {}) override;
 
-	const std::string name;
+	std::string name;
 	Movable movable;
 	bool pickedUp = false;
 	sdl::Animation animation;
 
   private:
 	Rectangle calcRenderTarget() const;
-	const Rectangle renderSize;
+	Rectangle renderSize;
 };
 
 inline bool operator<(const Item &a, const Item &b)
