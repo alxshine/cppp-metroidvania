@@ -1,4 +1,4 @@
-Name: Second
+Name: Fifth
 Background: mountain.png
 Music: area1.ogg
 Location: 9001 9001
@@ -56,9 +56,11 @@ Layout:
 EndLayout
 
 Entities:
-    Door: 20 170 OnlyDoor = TestDoor (Left) -> OnlyDoor in First
-    Door: 280 170 Exit = TestDoor (Right) -> Entrance in Third
-    Mob: 200 171 Mandrake
+    Door: 20 170 Entrance = TestDoor (Left) -> Exit in Second
+
+    Mob: 190 171 Shade
+    Door: 300 170 Exit = TestDoor (Left) -> Entrance in Hub
 EndEntities
 OnClearEntities:
+Item: 190 10 Key_1
 EndEntities

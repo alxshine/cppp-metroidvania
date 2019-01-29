@@ -3,7 +3,7 @@ Health: 7
 Poise: 0
 RecoveryWindow: 100
 Speed: 63
-Behaviour: patrolling
+Behaviour: standing
 Hitbox: 0 0 16 18
 DrawSize: 0 0 24 18
 
@@ -49,7 +49,6 @@ IdleAnimation:
     Time: 140
     SpriteSize: 57 38
     Frame: 0 0
-    Frame: 6 1
     Frame: 5 1
     Frame: 4 1
     Frame: 3 1

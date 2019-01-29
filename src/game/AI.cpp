@@ -12,7 +12,7 @@ bool attackIfHits(Movable &movable, Attackable &attackable, Rectangle playerHitb
 			return true;
 		}
 	}
-  return false;
+	return false;
 }
 
 void IdleAI::controlEntity(Movable &movable, Attackable &, const CollisionMap &, Rectangle)
@@ -22,30 +22,33 @@ void IdleAI::controlEntity(Movable &movable, Attackable &, const CollisionMap &,
 void StandingAI::controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &, Rectangle playerHitbox)
 {
 	movable.stopMoving();
-  attackIfHits(movable, attackable, playerHitbox);
+	if (playerHitbox.x > movable.getPosition().x)
+		movable.setDirection({1, 0});
+	else
+		movable.setDirection({-1, 0});
+
+	attackIfHits(movable, attackable, playerHitbox);
 }
 
-void PatrollingAI::controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &,
-                                 Rectangle playerHitbox)
+void PatrollingAI::controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &, Rectangle playerHitbox)
 {
-  const int patrolDistance = 3*tileSize.w; //just a benchmark
+	const int patrolDistance = 3 * tileSize.w; // just a benchmark
 
-  if(attackIfHits(movable, attackable, playerHitbox))
-    return;
+	if (attackIfHits(movable, attackable, playerHitbox))
+		return;
 
-  auto xDiff = movable.getPosition().x - movable.initialPosition.x;
-  if(xDiff > patrolDistance){
-    //we are at the right end of the patrol area
-    movable.moveLeft();
-  }else if(xDiff < -patrolDistance){
-    //left end
-    movable.moveRight();
-  }else{
-    //otherwise continue moving
-    if(movable.getDirection().x >= 0)
-      movable.moveRight();
-    else
-      movable.moveLeft();
-  }
-
+	auto xDiff = movable.getPosition().x - movable.initialPosition.x;
+	if (xDiff > patrolDistance) {
+		// we are at the right end of the patrol area
+		movable.moveLeft();
+	} else if (xDiff < -patrolDistance) {
+		// left end
+		movable.moveRight();
+	} else {
+		// otherwise continue moving
+		if (movable.getDirection().x >= 0)
+			movable.moveRight();
+		else
+			movable.moveLeft();
+	}
 }
