@@ -75,7 +75,7 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	const sdl::Animation slideAnimation{
 	    spritesheet,
 	    {{150, 108, 50, 36}, {200, 108, 50, 36}, {250, 108, 50, 36}, {300, 108, 50, 36}, {0, 144, 50, 36}},
-	    100ms};
+	    80ms};
 
 	return std::make_unique<Player>(idleAnimation, walkingAnimation, airUpAnimation, airDownAnimation, deathAnimation,
 	                                hurtAnimation, slideAnimation, attacks);
