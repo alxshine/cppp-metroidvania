@@ -1,0 +1,50 @@
+Name: Dungeon-1
+Background: black.png
+Music: waterflame-final-battle.ogg
+Location: 9001 9001
+GatingArea: 0
+
+Tileset: awesome.png
+Tiles:
+    . empty     0 0 0 0 None
+    b bottom    16 64 16 16 Full
+    l left      0  48 16 16 Full
+    r right     32 48 16 16 Full
+    t top       16 32 16 16 Full
+    d bl        0  64 16 16 Full
+    k br        32 64 16 16 Full
+    D tl        0  32 16 16 Full
+    K tr        32 32 16 16 Full
+    * torch     96 32 16 16 None
+EndTiles
+
+Layout:
+    Layer:
+        DttttttttttttttttttttttttttttttK
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l..............................r
+        l........*.............*.......r
+        l..............................r
+        l..............................r
+        dbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbk
+    EndLayer
+EndLayout
+
+Entities:
+    Door: 15 190 Entrance = DungeonDoor (Left) -> Exit in Third
+EndEntities
+OnClearEntities:
+EndEntities
