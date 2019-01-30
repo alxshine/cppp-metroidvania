@@ -1,6 +1,7 @@
 #include "game/Game.hpp"
 
 #include "menu/InventoryMenu.hpp"
+#include "menu/MapMenu.hpp"
 #include "menu/MessageBox.hpp"
 
 #include <chrono>
@@ -104,6 +105,7 @@ void Game::interact()
 					return;
 				}
 				currentRoom = std::move(newRoom);
+				player->visitedRooms.insert(currentRoom->name);
 				// TODO if bosses already killed, destroy them
 				// --> iterate mobs and kill any if they contain a number that is same as a key in inventory?
 				play(currentRoom->music, repeat_forever);
@@ -276,6 +278,7 @@ void Game::registerGameEvents()
 	gameEvents.on(SDL_QUIT, [this](const Event &) { state = State::exit; });
 	gameEvents.onKeyDown(SDLK_ESCAPE, [this](const KeyboardEvent &) {
 		std::vector<RawMenuItem> pauseMenuItems = {
+		    {"Map", [&]() { menuStack.push(std::make_shared<MapMenu>(*player, res, [&]() { menuStack.pop(); })); }},
 		    {"Stats", [&]() { /* TODO stats menu */ }},
 		    {"Inventory",
 		     [&]() {

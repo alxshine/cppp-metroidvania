@@ -24,9 +24,10 @@ inline std::ostream &operator<<(std::ostream &out, const Position &p)
 	return out << "{" << p.x << ", " << p.y << "}";
 }
 
+constexpr Rectangle mapTileSize{0, 0, 2, 2};
+
 constexpr Rectangle tileSize{0, 0, 10, 10};
 
-  
 inline Rectangle tileRectangle(int row, int column)
 {
 	return {column * tileSize.w, row * tileSize.h, tileSize.w, tileSize.h};

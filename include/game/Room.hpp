@@ -2,6 +2,7 @@
 #define ROOM_H
 
 #include <algorithm>
+#include <set>
 #include <vector>
 
 #include "Item.hpp"
@@ -10,6 +11,21 @@
 #include "constants.hpp"
 
 namespace game {
+
+struct MapRoom : public sdl::Renderable {
+	Rectangle drawBox;
+	std::string name;
+	std::set<std::string> connectedRooms;
+	bool hasSavepoint;
+
+	MapRoom(Rectangle drawBox, std::string name, std::set<std::string> connectedRooms, bool hasSavepoint);
+	MapRoom(const MapRoom &rhs) = default;
+	MapRoom(MapRoom &&rhs) = default;
+
+	~MapRoom() noexcept = default;
+	void render(const sdl::Renderer &renderer, sdl::GameClock::duration,
+	            const sdl::RenderOptions &options = {}) override;
+};
 
 struct Room : public sdl::Renderable {
 	struct Tile {
@@ -22,8 +38,8 @@ struct Room : public sdl::Renderable {
 	using Layout = std::vector<Layer>;
 
 	Room(std::string name, const sdl::Texture &background, const sdl::Music &music, Position location, int gatingArea,
-	     Layout layout, CollisionMap collisionMap, std::vector<Mob> mobs, std::vector<Item> items, std::vector<Item> onClearItems,
-	     std::vector<Door> doors);
+	     Layout layout, CollisionMap collisionMap, std::vector<Mob> mobs, std::vector<Item> items,
+	     std::vector<Item> onClearItems, std::vector<Door> doors);
 	Room(const Room &rhs) noexcept;
 	virtual ~Room();
 
@@ -42,6 +58,14 @@ struct Room : public sdl::Renderable {
 	std::vector<Item> items;
 	std::vector<Item> onClearItems;
 	std::vector<Door> doors;
+
+	inline MapRoom getMapVersion() const
+	{
+		return mapVersion;
+	};
+
+  private:
+	const MapRoom mapVersion;
 };
 
 } // namespace game

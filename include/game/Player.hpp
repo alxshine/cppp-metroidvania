@@ -41,6 +41,7 @@ class Player : public sdl::Renderable {
 
 	Movable movable;
 	Attackable attackable;
+	std::set<std::string> visitedRooms = {"First"};
 
 	Rectangle calcPositionedHitbox() const;
 	Rectangle calcLastPositionedHitbox() const;

@@ -4,6 +4,7 @@ add_library(gamelib
     menu/InventoryMenu.cpp
     menu/MessageBox.cpp
     menu/SelectionMenu.cpp
+    menu/MapMenu.cpp
     state/SerializedState.cpp
     game/Game.cpp
     game/Item.cpp

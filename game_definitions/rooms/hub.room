@@ -57,6 +57,7 @@ EndLayout
 
 Entities:
     Door: 20 170 Entrance = TestDoor (Left) -> Exit in Fourth
+    Item: 170 171 Savepoint
 EndEntities
 OnClearEntities:
 EndEntities
