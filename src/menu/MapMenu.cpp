@@ -5,14 +5,13 @@ using namespace game;
 using namespace sdl;
 using namespace std;
 
-MapMenu::MapMenu(const Player &player, const ResourceManager &resourceManager, function<void()> escapeCallback)
+MapMenu::MapMenu(string currentRoom, const Player &player, const ResourceManager &resourceManager,
+                 function<void()> escapeCallback)
+    : currentRoom(move(currentRoom))
 {
 	eventHandler.onKeyDown(SDLK_ESCAPE, [=](const KeyboardEvent &) { escapeCallback(); });
 
 	toRender = resourceManager.getMapRooms(player.visitedRooms);
-	for (auto &pair : toRender) {
-		cout << pair.second.boundingBox << endl;
-	}
 
 	auto start = toRender.cbegin();
 	auto end = toRender.cend();
@@ -33,7 +32,6 @@ MapMenu::MapMenu(const Player &player, const ResourceManager &resourceManager, f
 	maxX = rightest->second.boundingBox.x + rightest->second.boundingBox.w;
 	minY = highest->second.boundingBox.y;
 	maxY = lowest->second.boundingBox.y + lowest->second.boundingBox.h;
-	cout << "minX: " << minX << ", maxX: " << maxX << ", minY: " << minY << ", maxY: " << maxY << endl;
 }
 
 inline Point getCenter(Rectangle r)
@@ -99,7 +97,9 @@ void MapMenu::render(const Renderer &renderer, GameClock::duration, const Render
 	// draw rooms
 	for (const auto &pair : scaledMapRooms) {
 		const auto &mr = pair.second;
-		if (mr.hasSavepoint)
+		if (mr.name == currentRoom)
+			renderer.drawRectangle(mr.boundingBox, {0, 255, 0, 255});
+		else if (mr.hasSavepoint)
 			renderer.drawRectangle(mr.boundingBox, {255, 255, 255, 255});
 		else
 			renderer.drawRectangle(mr.boundingBox, {255, 0, 0, 255});

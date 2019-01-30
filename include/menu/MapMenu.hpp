@@ -10,7 +10,7 @@
 namespace game {
 class MapMenu : public menu::Menu {
   public:
-	MapMenu(const Player &player, const ResourceManager& resourceManager, std::function<void()> escapeCallback);
+	MapMenu(std::string currentRoom, const Player &player, const ResourceManager& resourceManager, std::function<void()> escapeCallback);
 
 	virtual void render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
 	                    const sdl::RenderOptions &options = {}) override;
@@ -27,6 +27,7 @@ class MapMenu : public menu::Menu {
 	const sdl::Text title = sdl::SDL::getInstance().generateText(*titleFont, "Map");
 	const int opacity = 125;
 
+	std::string currentRoom;
 	std::map<std::string, MapRoom> toRender;
 	int minX, maxX, minY, maxY;
 };
