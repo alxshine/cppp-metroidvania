@@ -4,16 +4,8 @@ using namespace game;
 using namespace std;
 
 MapRoom::MapRoom(Rectangle drawBox, string name, set<string> connectedRooms, bool hasSavepoint)
-    : drawBox(move(drawBox)), name(move(name)), connectedRooms(move(connectedRooms)), hasSavepoint(hasSavepoint)
+    : boundingBox(move(drawBox)), name(move(name)), connectedRooms(move(connectedRooms)), hasSavepoint(hasSavepoint)
 {
-}
-
-void MapRoom::render(const sdl::Renderer &renderer, sdl::GameClock::duration, const sdl::RenderOptions &)
-{
-	if (hasSavepoint)
-		renderer.drawRectangle(drawBox, {255, 255, 255, 128});
-	else
-		renderer.drawRectangle(drawBox, {0, 0, 255, 128});
 }
 
 Rectangle Room::Tile::render(const sdl::Renderer &renderer, const Position targetPosition) const
@@ -25,9 +17,7 @@ Rectangle Room::Tile::render(const sdl::Renderer &renderer, const Position targe
 
 inline Rectangle getMapSize(Position location, const CollisionMap &collisionMap)
 {
-	return {location.x * mapTileSize.w / tileSize.w, location.y * mapTileSize.h / tileSize.h,
-	        static_cast<int>(collisionMap[0].size()) * mapTileSize.w,
-	        static_cast<int>(collisionMap.size()) * mapTileSize.h};
+	return {location.x, location.y, static_cast<int>(collisionMap[0].size()), static_cast<int>(collisionMap.size())};
 }
 
 inline set<string> getConnectedNames(const vector<Door> &doors)

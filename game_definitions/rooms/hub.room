@@ -1,7 +1,7 @@
 Name: Hub
 Background: mountain.png
 Music: area1.ogg
-Location: 9001 9001
+Location: 180 0
 GatingArea: 1
 
 Tileset: awesome.png

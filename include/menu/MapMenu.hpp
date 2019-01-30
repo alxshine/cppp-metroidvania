@@ -1,6 +1,8 @@
 #ifndef MAPMENU_H
 #define MAPMENU_H
 
+#include <algorithm>
+
 #include "game/Player.hpp"
 #include "game/ResourceManager.hpp"
 #include "menu/Menu.hpp"
@@ -26,6 +28,7 @@ class MapMenu : public menu::Menu {
 	const int opacity = 125;
 
 	std::map<std::string, MapRoom> toRender;
+	int minX, maxX, minY, maxY;
 };
 } // namespace game
 

@@ -12,8 +12,8 @@
 
 namespace game {
 
-struct MapRoom : public sdl::Renderable {
-	Rectangle drawBox;
+struct MapRoom {
+	Rectangle boundingBox;
 	std::string name;
 	std::set<std::string> connectedRooms;
 	bool hasSavepoint;
@@ -24,7 +24,7 @@ struct MapRoom : public sdl::Renderable {
 
 	~MapRoom() noexcept = default;
 	void render(const sdl::Renderer &renderer, sdl::GameClock::duration,
-	            const sdl::RenderOptions &options = {}) override;
+	            const sdl::RenderOptions &options = {});
 };
 
 struct Room : public sdl::Renderable {

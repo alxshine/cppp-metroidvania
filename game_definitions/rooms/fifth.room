@@ -1,7 +1,7 @@
 Name: Fifth
 Background: mountain.png
 Music: area1.ogg
-Location: 9001 9001
+Location: 140 0
 GatingArea: 0
 
 Tileset: awesome.png
