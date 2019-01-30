@@ -1,7 +1,7 @@
 Name: Fourth
 Background: mountain.png
 Music: area1.ogg
-Location: 9001 9001
+Location: -100 0
 GatingArea: 0
 
 Tileset: awesome.png

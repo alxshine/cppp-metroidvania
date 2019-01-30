@@ -26,6 +26,7 @@ sdl::SDL::SDL()
 	constexpr int chunksize = 1024;
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, stereo, chunksize))
 		throw SdlException("Could not open audio device!");
+	sdl::music::set_volume<0>();
 }
 
 sdl::SDL::~SDL()

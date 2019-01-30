@@ -32,6 +32,7 @@ class ResourceManager final {
 	Mob getMob(const std::string &name) const;
 	Item getItem(const std::string &name) const;
 	Room getRoom(const std::string &name) const;
+	std::map<std::string, MapRoom> getMapRooms(const std::set<std::string> &visitedRooms) const;
 	std::unique_ptr<Player> makePlayer() const;
 	const sdl::SoundEffect &getSound(const std::string &name) const;
 	const sdl::Music &getMusic(const std::string &name) const;
@@ -74,8 +75,8 @@ class ResourceManager final {
 
 	// AI
 	std::shared_ptr<AI> idleAI;
-  std::shared_ptr<AI> standingAI;
-  std::shared_ptr<AI> patrollingAI;
+	std::shared_ptr<AI> standingAI;
+	std::shared_ptr<AI> patrollingAI;
 };
 } // namespace game
 

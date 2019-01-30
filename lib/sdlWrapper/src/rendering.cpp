@@ -39,6 +39,12 @@ void sdl::Renderer::drawRectangle(Rectangle rect, Color color, bool fill) const
 	SDL_SetRenderDrawColor(rawRenderer, defaultColor.r, defaultColor.g, defaultColor.b, defaultColor.a);
 }
 
+void sdl::Renderer::drawLine(Point a, Point b, Color color) const{
+	SDL_SetRenderDrawColor(rawRenderer, color.r, color.g, color.b, color.a);
+	SDL_RenderDrawLine(rawRenderer, a.x, a.y, b.x, b.y);
+	SDL_SetRenderDrawColor(rawRenderer, defaultColor.r, defaultColor.g, defaultColor.b, defaultColor.a);
+}
+
 void sdl::Renderer::clear(Color color) const
 {
 	SDL_SetRenderDrawColor(rawRenderer, color.r, color.g, color.b, color.a);

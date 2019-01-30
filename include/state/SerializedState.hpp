@@ -2,6 +2,7 @@
 #define SERIALIZED_STATE_H
 
 #include <string>
+#include <set>
 #include <iostream>
 
 #include "game/constants.hpp"
@@ -16,6 +17,7 @@ struct SerializedState final {
 	// Allow travel through doors only if next room is in area <= unlockedArea
 	unsigned int unlockedAreas = 0;
 	std::string currentRoomName;
+	std::set<std::string> visitedRooms;
 
 	struct PlayerState {
 		Position position;

@@ -1,32 +1,60 @@
 #include "game/Room.hpp"
 
-game::Rectangle game::Room::Tile::render(const sdl::Renderer &renderer, const game::Position targetPosition) const
+using namespace game;
+using namespace std;
+
+MapRoom::MapRoom(Rectangle drawBox, string name, set<string> connectedRooms, bool hasSavepoint)
+    : boundingBox(move(drawBox)), name(move(name)), connectedRooms(move(connectedRooms)), hasSavepoint(hasSavepoint)
 {
-	game::Rectangle targetRect{targetPosition.x, targetPosition.y, tileSize.w, tileSize.h};
+}
+
+Rectangle Room::Tile::render(const sdl::Renderer &renderer, const Position targetPosition) const
+{
+	Rectangle targetRect{targetPosition.x, targetPosition.y, tileSize.w, tileSize.h};
 	renderer.render(sprite, targetRect);
 	return targetRect;
 }
 
-game::Room::Room(std::string name, const sdl::Texture &background, const sdl::Music &music, Position location,
-                 int gatingArea, game::Room::Layout layout, game::CollisionMap collisionMap,
-                 std::vector<game::Mob> mobs, std::vector<game::Item> items, std::vector<game::Item> onClearItems,
-                 std::vector<game::Door> doors)
+inline Rectangle getMapSize(Position location, const CollisionMap &collisionMap)
+{
+	return {location.x, location.y, static_cast<int>(collisionMap[0].size()), static_cast<int>(collisionMap.size())};
+}
+
+inline set<string> getConnectedNames(const vector<Door> &doors)
+{
+	set<string> ret;
+	for (auto &d : doors)
+		ret.insert(d.targetRoom);
+	return ret;
+}
+
+inline bool hasSavePoint(const vector<Item> &items)
+{
+	for (auto &i : items)
+		if (i.name == "Savepoint")
+			return true;
+	return false;
+}
+
+Room::Room(string name, const sdl::Texture &background, const sdl::Music &music, Position location, int gatingArea,
+           Room::Layout layout, CollisionMap collisionMap, vector<Mob> mobs, vector<Item> items,
+           vector<Item> onClearItems, vector<Door> doors)
     : name(name), background(background), music(music), location(location), gatingArea(gatingArea), layout(layout),
-      sizeInPixels({0, 0, static_cast<int>(layout[0][0].size()) * game::tileSize.w,
-                    static_cast<int>(layout[0].size()) * game::tileSize.h}),
-      collisionMap(collisionMap), mobs(mobs), items(items), onClearItems(onClearItems), doors((doors))
+      sizeInPixels(
+          {0, 0, static_cast<int>(layout[0][0].size()) * tileSize.w, static_cast<int>(layout[0].size()) * tileSize.h}),
+      collisionMap(collisionMap), mobs(mobs), items(items), onClearItems(onClearItems), doors((doors)),
+      mapVersion(getMapSize(location, collisionMap), name, getConnectedNames(doors), hasSavePoint(items))
 {
 }
 
-game::Room::Room(const Room &rhs) noexcept
+Room::Room(const Room &rhs) noexcept
     : name(rhs.name), background(rhs.background), music(rhs.music), location(rhs.location), gatingArea(rhs.gatingArea),
-      layout(rhs.layout), sizeInPixels(rhs.sizeInPixels), collisionMap(rhs.collisionMap), mobs(rhs.mobs),
-      items(rhs.items), onClearItems(rhs.onClearItems), doors(rhs.doors)
+      layout(rhs.layout), sizeInPixels(rhs.sizeInPixels), collisionMap(rhs.collisionMap), mapVersion(rhs.mapVersion),
+      mobs(rhs.mobs), items(rhs.items), onClearItems(rhs.onClearItems), doors(rhs.doors)
 {
 }
 
-void game::Room::render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta,
-                        const sdl::RenderOptions &options)
+void Room::render(const sdl::Renderer &renderer, sdl::GameClock::duration frameDelta, const sdl::RenderOptions &options)
 {
 	// TODO: parallax
 	renderer.render(background);
@@ -48,7 +76,7 @@ void game::Room::render(const sdl::Renderer &renderer, sdl::GameClock::duration 
 		for (auto &row : collisionMap) {
 			auto locationX = 0;
 			for (auto &tile : row) {
-				game::Rectangle targetRect{locationX, locationY, game::tileSize.w, game::tileSize.h};
+				Rectangle targetRect{locationX, locationY, tileSize.w, tileSize.h};
 				sdl::Color color{0, 0, 0, 100};
 				switch (tile) {
 				case Collision::TopOnly:
@@ -76,4 +104,4 @@ void game::Room::render(const sdl::Renderer &renderer, sdl::GameClock::duration 
 			renderer.render(i, frameDelta, options);
 }
 
-game::Room::~Room() {}
+Room::~Room() {}

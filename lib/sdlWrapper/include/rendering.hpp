@@ -67,6 +67,7 @@ class Renderer {
 	void render(const Text &text, const Rectangle targetRect, Color color) const;
 
 	void drawRectangle(const Rectangle rect, const Color color = defaultColor, bool fill = true) const;
+	void drawLine(Point a, Point b, Color color = defaultColor) const;
 	void clear(Color color = defaultColor) const;
 	void swapBuffers() const;
 

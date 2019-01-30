@@ -309,7 +309,6 @@ Mob ResourceManager::getMob(const std::string &name) const
 {
 	if (mobs.count(name))
 		return *mobs.at(name);
-	// TODO return default mob -- should we really, instead of throwing?
 	throw ResourceNotFoundException("Could not load mob " + name + "\n");
 }
 
@@ -317,7 +316,6 @@ Room ResourceManager::getRoom(const std::string &name) const
 {
 	if (rooms.count(name))
 		return *rooms.at(name);
-	// TODO return default room -- should we really, instead of throwing?
 	throw ResourceNotFoundException("Could not load room " + name + "\n");
 }
 
@@ -325,8 +323,23 @@ Item ResourceManager::getItem(const std::string &name) const
 {
 	if (items.count(name))
 		return *items.at(name);
-	// TODO return default item -- should we really, instead of throwing?
 	throw ResourceNotFoundException("Could not load item " + name + "\n");
+}
+
+std::map<std::string, MapRoom> ResourceManager::getMapRooms(const std::set<std::string> &visitedRooms) const
+{
+	std::map<std::string, MapRoom> ret;
+	for (auto s : visitedRooms) {
+		auto mr = rooms.at(s)->getMapVersion();
+		for (auto it = mr.connectedRooms.begin(); it != mr.connectedRooms.end();) {
+			if (!visitedRooms.count(*it))
+				mr.connectedRooms.erase(*it++); // Note the subtlety here
+			else
+				++it;
+		}
+		ret.emplace(s, mr);
+	}
+	return ret;
 }
 
 const sdl::Texture &ResourceManager::getTexture(const std::string &id) const
