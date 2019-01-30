@@ -1,7 +1,7 @@
 Name: Second
 Background: mountain.png
 Music: area1.ogg
-Location: 40 0
+Location: -200 0
 GatingArea: 0
 
 Tileset: awesome.png

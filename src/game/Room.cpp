@@ -24,7 +24,7 @@ inline set<string> getConnectedNames(const vector<Door> &doors)
 {
 	set<string> ret;
 	for (auto &d : doors)
-		ret.insert(d.name);
+		ret.insert(d.targetRoom);
 	return ret;
 }
 
@@ -42,9 +42,8 @@ Room::Room(string name, const sdl::Texture &background, const sdl::Music &music,
     : name(name), background(background), music(music), location(location), gatingArea(gatingArea), layout(layout),
       sizeInPixels(
           {0, 0, static_cast<int>(layout[0][0].size()) * tileSize.w, static_cast<int>(layout[0].size()) * tileSize.h}),
-      collisionMap(collisionMap),
-      mapVersion(getMapSize(location, collisionMap), name, getConnectedNames(doors), hasSavePoint(items)), mobs(mobs),
-      items(items), onClearItems(onClearItems), doors((doors))
+      collisionMap(collisionMap), mobs(mobs), items(items), onClearItems(onClearItems), doors((doors)),
+      mapVersion(getMapSize(location, collisionMap), name, getConnectedNames(doors), hasSavePoint(items))
 {
 }
 

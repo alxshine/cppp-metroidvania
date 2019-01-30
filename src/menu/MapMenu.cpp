@@ -36,10 +36,14 @@ MapMenu::MapMenu(const Player &player, const ResourceManager &resourceManager, f
 	cout << "minX: " << minX << ", maxX: " << maxX << ", minY: " << minY << ", maxY: " << maxY << endl;
 }
 
-void MapMenu::render(const Renderer &renderer, GameClock::duration frameDelta, const RenderOptions &options)
+inline Point getCenter(Rectangle r)
+{
+	return {r.x + r.w / 2, r.y + r.h / 2};
+}
+
+void MapMenu::render(const Renderer &renderer, GameClock::duration, const RenderOptions &)
 {
 	const int margin_x = 30;
-	const int padding_x = 10;
 	const int padding_y = 10;
 	int y = 10;
 
@@ -61,7 +65,9 @@ void MapMenu::render(const Renderer &renderer, GameClock::duration frameDelta, c
 	auto distX = maxX - minX;
 	auto distY = maxY - minY;
 
-	// render map versions of rooms
+	map<string, MapRoom> scaledMapRooms;
+
+	// scale rooms
 	for (const auto &pair : toRender) {
 		const auto &mr = pair.second;
 
@@ -78,10 +84,25 @@ void MapMenu::render(const Renderer &renderer, GameClock::duration frameDelta, c
 		boundingBox.x += margin_x;
 		boundingBox.y += y_after_title;
 
+		scaledMapRooms.emplace(mr.name, MapRoom{boundingBox, mr.name, mr.connectedRooms, mr.hasSavepoint});
+	}
+
+	// draw connections via doors
+	for (const auto &pair : scaledMapRooms) {
+		const auto &mr = pair.second;
+		for (auto s : mr.connectedRooms) {
+			const auto &other = scaledMapRooms.at(s);
+			renderer.drawLine(getCenter(mr.boundingBox), getCenter(other.boundingBox), {255, 255, 0, 255});
+		}
+	}
+
+	// draw rooms
+	for (const auto &pair : scaledMapRooms) {
+		const auto &mr = pair.second;
 		if (mr.hasSavepoint)
-			renderer.drawRectangle(boundingBox, {255, 255, 255, 128});
+			renderer.drawRectangle(mr.boundingBox, {255, 255, 255, 255});
 		else
-			renderer.drawRectangle(boundingBox, {0, 0, 255, 128});
+			renderer.drawRectangle(mr.boundingBox, {255, 0, 0, 255});
 	}
 }
 
