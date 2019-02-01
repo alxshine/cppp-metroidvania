@@ -60,6 +60,7 @@ class Attackable {
 
   private:
 	int currentAttack = -1;
+	bool vulnerable = true;
 	bool hurting = false;
 	bool dealsDamage = false;
 	sdl::GameClock::duration currentAttackTime;

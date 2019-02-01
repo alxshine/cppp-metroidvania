@@ -57,6 +57,7 @@ class Player : public sdl::Renderable {
 	int comboCount = 0;
 	sdl::GameClock::duration timeSinceLastAttack = sdl::GameClock::duration::zero();
 	const sdl::GameClock::duration comboTimer = sdl::GameClock::duration(50);
+
 	inline bool hasControl()
 	{
 		return !isSliding && movable.canMove && !attackable.isHurting() && !attackable.isAttacking();
