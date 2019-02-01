@@ -1,8 +1,8 @@
 Name: Dungeon-1
 Background: black.png
-Music: waterflame-final-battle.ogg
-Location: 9001 9001
-GatingArea: 0
+Music: dark-dungeon-chiptune.ogg
+Location: 0 30
+GatingArea: 1
 
 Tileset: awesome.png
 Tiles:
@@ -15,36 +15,43 @@ Tiles:
     k br        32 64 16 16 Full
     D tl        0  32 16 16 Full
     K tr        32 32 16 16 Full
+    O trup      64 48 16 16 Full
+    ^ ore       16 48 16 16 None
+    # skull     96 64 16 16 None
+    G gem       80 272 16 16 None
     * torch     96 32 16 16 None
 EndTiles
 
 Layout:
     Layer:
-        DttttttttttttttttttttttttttttttK
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l..............................r
-        l........*.............*.......r
-        l..............................r
-        l..............................r
-        dbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbk
+        DtttttttttttttttttttttttttttttttttttK
+        l...................................r
+        l....*..............................r
+        l...................................r
+        dbbbbbbbbbO.........................r
+        ..........l.........................r
+        ..........l...*.....................r
+        ..........l.........................r
+        ..........dbbbbbbO..................r
+        .................l..................r
+        .................l...*..............r
+        ......DtK........l..................r
+        ......l^r........dbbbbbO............r
+        ......dbk..............l............r
+        .......................l....*.......r
+        .......................l............r
+        .......................dbbbbbbO.....r
+        ................DtK...........l.....r
+        ................lGr...........l.....r
+        ................dbk...........l.....r
+        ..............................dbbbbbk
     EndLayer
 EndLayout
 
 Entities:
-    Door: 15 190 Entrance = DungeonDoor (Left) -> Exit in Third
+    Door: 15 40 Entrance = DungeonDoor (Left) -> DungeonEntrance in Hub
+    Door: 350 200 Exit = DungeonDoor (Right) -> Entrance in Dungeon-2
+    Item: 30 40 Savepoint
 EndEntities
 OnClearEntities:
 EndEntities
