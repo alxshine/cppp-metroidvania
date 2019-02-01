@@ -36,7 +36,7 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 
 void Game::resetState()
 {
-	static SerializedState defaultState{0, firstRoom, {"First"}, {initialPosition}};
+	static SerializedState defaultState{0, firstRoom, {"First"}, {}, {initialPosition}};
 	loadState(defaultState);
 
 	menuStack.push(std::make_shared<menu::MessageBox>([&]() { menuStack.pop(); }, "Welcome to our Metroidvania-like!",
@@ -46,7 +46,10 @@ void Game::resetState()
 
 void Game::saveState()
 {
-	SerializedState state{unlockedAreas, currentRoom->name, player->visitedRooms, {player->movable.position}};
+	std::set<std::string> inventory;
+	for (auto &i : player->inventory)
+		inventory.insert(i.name);
+	SerializedState state{unlockedAreas, currentRoom->name, player->visitedRooms, inventory, {player->movable.position}};
 
 	// std::time_t now = time(nullptr);
 	// char nowstr[100];
@@ -61,8 +64,13 @@ void Game::saveState()
 
 void Game::loadState(SerializedState state)
 {
+	std::set<Item> inventory;
+	for (auto &i : state.inventory)
+		inventory.insert(res.getItem(i));
+
 	currentRoom = std::make_unique<Room>(res.getRoom(state.currentRoomName));
 	player->visitedRooms = std::move(state.visitedRooms);
+	player->inventory = inventory;
 	play_fade_in(currentRoom->music, repeat_forever, 500ms);
 	player->movable.reposition(state.playerState.position);
 	player->attackable.reset();

@@ -13,6 +13,11 @@ std::ostream &game::operator<<(std::ostream &out, SerializedState &state)
 	}
 	out << "endlist" << std::endl;
 
+	for (auto s : state.inventory) {
+		out << s << " ";
+	}
+	out << "endlist" << std::endl;
+
 	return out << state.playerState.position.x << " " << state.playerState.position.y << std::endl;
 }
 std::istream &game::operator>>(std::istream &in, SerializedState &state)
@@ -26,6 +31,14 @@ std::istream &game::operator>>(std::istream &in, SerializedState &state)
 			break;
 
 		state.visitedRooms.insert(nextKeyword);
+	}
+	while (true) {
+		std::string nextKeyword;
+		in >> nextKeyword;
+		if (nextKeyword == "endlist")
+			break;
+
+		state.inventory.insert(nextKeyword);
 	}
 	in >> state.playerState.position.x >> state.playerState.position.y;
 

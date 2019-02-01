@@ -18,6 +18,7 @@ struct SerializedState final {
 	unsigned int unlockedAreas = 0;
 	std::string currentRoomName;
 	std::set<std::string> visitedRooms;
+	std::set<std::string> inventory;
 
 	struct PlayerState {
 		Position position;
