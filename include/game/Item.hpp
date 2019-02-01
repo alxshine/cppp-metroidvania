@@ -40,9 +40,9 @@ class Door {
 	const std::string name;
 	Item item;
 
-	const Direction direction;
-	const std::string targetRoom;
-	const std::string targetDoorName;
+	Direction direction;
+	std::string targetRoom;
+	std::string targetDoorName;
 };
 
 } // namespace game

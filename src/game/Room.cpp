@@ -38,11 +38,11 @@ inline bool hasSavePoint(const vector<Item> &items)
 
 Room::Room(string name, const sdl::Texture &background, const sdl::Music &music, Position location, int gatingArea,
            Room::Layout layout, CollisionMap collisionMap, vector<Mob> mobs, vector<Item> items,
-           vector<Item> onClearItems, vector<Door> doors)
+           vector<Item> onClearItems, vector<Door> doors, vector<Door> onClearDoors)
     : name(name), background(background), music(music), location(location), gatingArea(gatingArea), layout(layout),
       sizeInPixels(
           {0, 0, static_cast<int>(layout[0][0].size()) * tileSize.w, static_cast<int>(layout[0].size()) * tileSize.h}),
-      collisionMap(collisionMap), mobs(mobs), items(items), onClearItems(onClearItems), doors((doors)),
+      collisionMap(collisionMap), mobs(mobs), items(items), onClearItems(onClearItems), doors(doors), onClearDoors(onClearDoors),
       mapVersion(getMapSize(location, collisionMap), name, getConnectedNames(doors), hasSavePoint(items))
 {
 }
@@ -50,7 +50,7 @@ Room::Room(string name, const sdl::Texture &background, const sdl::Music &music,
 Room::Room(const Room &rhs) noexcept
     : name(rhs.name), background(rhs.background), music(rhs.music), location(rhs.location), gatingArea(rhs.gatingArea),
       layout(rhs.layout), sizeInPixels(rhs.sizeInPixels), collisionMap(rhs.collisionMap), mobs(rhs.mobs),
-      items(rhs.items), onClearItems(rhs.onClearItems), doors(rhs.doors), mapVersion(rhs.mapVersion)
+      items(rhs.items), onClearItems(rhs.onClearItems), doors(rhs.doors), onClearDoors(rhs.onClearDoors), mapVersion(rhs.mapVersion)
 {
 }
 

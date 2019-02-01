@@ -214,10 +214,17 @@ std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &ro
 		game::Door door{i.name, item, i.direction, i.targetRoom, i.targetDoorName};
 		doors.emplace_back(door);
 	}
+	std::vector<game::Door> onClearDoors;
+	for (auto i : roomDef.onClearDoors) {
+		game::Item item = getItem(i.itemId);
+		item.movable.reposition(i.position);
+		game::Door door{i.name, item, i.direction, i.targetRoom, i.targetDoorName};
+		onClearDoors.emplace_back(door);
+	}
 
 	return std::make_unique<game::Room>(roomDef.name, getTexture(roomDef.background), getMusic(roomDef.music),
 	                                    roomDef.location, roomDef.gatingArea, layout, collisionMap, mobs, items,
-	                                    onClearItems, doors);
+	                                    onClearItems, doors, onClearDoors);
 }
 
 void ResourceManager::parseDefinitions(std::string definitionPath)

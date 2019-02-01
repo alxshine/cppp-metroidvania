@@ -91,7 +91,7 @@ std::istream &game_definitions::operator>>(std::istream &in, Animation &anim)
 			int x, y;
 			in >> x;
 			in >> y;
-			Rectangle rect{x*spriteWidth, y*spriteHeight, spriteWidth, spriteHeight};
+			Rectangle rect{x * spriteWidth, y * spriteHeight, spriteWidth, spriteHeight};
 			anim.frames.push_back(rect);
 		} else if (keyword == "EndAnimation")
 			break;
@@ -440,10 +440,16 @@ std::istream &game_definitions::operator>>(std::istream &in, Room &room)
 		if (keyword == "EndEntities")
 			break;
 
-		testString("Item:", keyword);
-		ItemRef itemRef;
-		in >> itemRef;
-		room.onClearItems.push_back(itemRef);
+		if (keyword == "Item:") {
+			ItemRef itemRef;
+			in >> itemRef;
+			room.onClearItems.push_back(itemRef);
+		} else if (keyword == "Door:") {
+			Door door;
+			in >> door;
+			room.onClearDoors.push_back(door);
+		} else
+			throw ParseException("Unterminated Room");
 	}
 
 	return in;

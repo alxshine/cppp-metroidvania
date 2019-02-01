@@ -124,6 +124,7 @@ struct Room {
 
 	std::vector<MobRef> mobs;
 	std::vector<Door> doors;
+	std::vector<Door> onClearDoors;
 	std::vector<ItemRef> items;
 	std::vector<ItemRef> onClearItems;
 };

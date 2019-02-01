@@ -49,7 +49,8 @@ void Game::saveState()
 	std::set<std::string> inventory;
 	for (auto &i : player->inventory)
 		inventory.insert(i.name);
-	SerializedState state{unlockedAreas, currentRoom->name, player->visitedRooms, inventory, {player->movable.position}};
+	SerializedState state{
+	    unlockedAreas, currentRoom->name, player->visitedRooms, inventory, {player->movable.position}};
 
 	// std::time_t now = time(nullptr);
 	// char nowstr[100];
@@ -235,9 +236,13 @@ void Game::runMainLoop()
 			           mobs.end()); // TODO: xp, spawn items, unlock moves
 			// spawn key items only if the mob list is empty
 
-			if (!emptyBefore && mobs.empty())
+			if (!emptyBefore && mobs.empty()) {
 				currentRoom->items.insert(currentRoom->items.end(), currentRoom->onClearItems.begin(),
 				                          currentRoom->onClearItems.end());
+				// currentRoom->doors.insert(currentRoom->doors.end(), currentRoom->onClearDoors.begin(),
+				//                           currentRoom->onClearDoors.end());
+				// TODO @alex fix Door::operator=
+			}
 
 			if (player->attackable.done()) {
 				std::vector<RawMenuItem> gameOverMenuItems = {

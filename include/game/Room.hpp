@@ -39,7 +39,7 @@ struct Room : public sdl::Renderable {
 
 	Room(std::string name, const sdl::Texture &background, const sdl::Music &music, Position location, int gatingArea,
 	     Layout layout, CollisionMap collisionMap, std::vector<Mob> mobs, std::vector<Item> items,
-	     std::vector<Item> onClearItems, std::vector<Door> doors);
+	     std::vector<Item> onClearItems, std::vector<Door> doors, std::vector<Door> onClearDoors);
 	Room(const Room &rhs) noexcept;
 	virtual ~Room();
 
@@ -58,6 +58,7 @@ struct Room : public sdl::Renderable {
 	std::vector<Item> items;
 	std::vector<Item> onClearItems;
 	std::vector<Door> doors;
+	std::vector<Door> onClearDoors;
 
 	inline MapRoom getMapVersion() const
 	{
