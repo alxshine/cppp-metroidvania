@@ -20,12 +20,12 @@ void Attackable::attack(int attackIndex)
 	timeSinceLastAttack = sdl::GameClock::duration::zero();
 };
 
-Rectangle Attackable::getHitbox(Position position, bool flip)
+Rectangle Attackable::getHitbox(Position position, bool flip) const
 {
 	return getHitbox(position, currentAttack, flip);
 }
 
-Rectangle Attackable::getHitbox(Position position, int attackIndex, bool flip)
+Rectangle Attackable::getHitbox(Position position, int attackIndex, bool flip) const
 {
 	if (attackIndex < 0)
 		return {0, 0, 0, 0};

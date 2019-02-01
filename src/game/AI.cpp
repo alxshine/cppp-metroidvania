@@ -3,17 +3,19 @@
 using namespace game;
 using namespace std::literals::chrono_literals;
 
-bool attackIfHits(Movable &movable, Attackable &attackable, Rectangle playerHitbox)
+std::vector<int> getHittingAttacks(const Movable &movable, const Attackable &attackable, Rectangle playerHitbox)
 {
+	std::vector<int> ret;
+
 	// find attacks in range
 	for (unsigned i = 0; i < attackable.attacks.size(); ++i) {
 		auto attackHitbox = attackable.getHitbox(movable.getPosition(), i, movable.getDirection().x < 0);
 		if (intersects(attackHitbox, playerHitbox)) {
-			attackable.attack(i);
-			return true;
+			ret.push_back(i);
 		}
 	}
-	return false;
+
+	return ret;
 }
 
 void IdleAI::controlEntity(Movable &movable, Attackable &, const CollisionMap &, Rectangle)
@@ -28,8 +30,11 @@ void StandingAI::controlEntity(Movable &movable, Attackable &attackable, const C
 	else
 		movable.setDirection({-1, 0});
 
-	if (attackable.getTimeSinceLastAttack() > 500ms)
-		attackIfHits(movable, attackable, playerHitbox);
+	if (attackable.getTimeSinceLastAttack() > 500ms) {
+		auto hittingAttacks = getHittingAttacks(movable, attackable, playerHitbox);
+		if (!hittingAttacks.empty())
+			attackable.attack(hittingAttacks[0]);
+	}
 }
 
 void PatrollingAI::controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &, Rectangle playerHitbox)
@@ -39,8 +44,13 @@ void PatrollingAI::controlEntity(Movable &movable, Attackable &attackable, const
 	if (attackable.isAttacking())
 		return;
 
-	if (attackable.getTimeSinceLastAttack() > 100ms && attackIfHits(movable, attackable, playerHitbox))
+	auto hittingAttacks = getHittingAttacks(movable, attackable, playerHitbox);
+
+	if (!hittingAttacks.empty()) {
+		if (attackable.getTimeSinceLastAttack() > 100ms)
+			attackable.attack(hittingAttacks[0]);
 		return;
+	}
 
 	auto xDiff = movable.getPosition().x - movable.initialPosition.x;
 	if (xDiff > patrolDistance) {

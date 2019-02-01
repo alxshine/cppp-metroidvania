@@ -25,8 +25,8 @@ class Attackable {
 	};
 	void attack(int attackIndex);
 
-	Rectangle getHitbox(Position position, bool flip = false);
-	Rectangle getHitbox(Position position, int attackIndex, bool flip = false);
+	Rectangle getHitbox(Position position, bool flip = false) const;
+	Rectangle getHitbox(Position position, int attackIndex, bool flip = false) const;
 	void hit(Attackable &other);
 	void hurt(int damage);
 	void update(sdl::GameClock::duration frameDelta);
