@@ -19,13 +19,18 @@ int main(int, char **argv)
 	// allow reloading assets
 	EventHandler events;
 	bool run = true;
+	bool error = false;
 	events.on(SDL_QUIT, [&run](const Event &) { run = false; });
-	events.onKeyDown(SDLK_r, [&res](const KeyboardEvent &) {
+	events.onKeyDown(SDLK_r, [&res, &error](const KeyboardEvent &) {
 		try {
+			error = true;
 			res = {"../game_definitions", "../assets"};
+			error = false;
 		} catch (SdlException &e) {
 			cerr << e.what() << endl;
 		} catch (GameException &e) {
+			cerr << e.what() << endl;
+		} catch (std::runtime_error &e) {
 			cerr << e.what() << endl;
 		} catch (const string &e) {
 			cerr << e << endl;
@@ -45,8 +50,10 @@ int main(int, char **argv)
 		renderer.setCameraPosition(cam);
 		events.dispatch();
 
-		Room room(res.getRoom(roomName));
-		renderer.render(room, GameClock::duration(0));
+		if (!error) {
+			Room room(res.getRoom(roomName));
+			renderer.render(room, GameClock::duration(0));
+		}
 
 		renderer.swapBuffers();
 	}
