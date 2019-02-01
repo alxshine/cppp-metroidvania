@@ -52,6 +52,18 @@ class Attackable {
 		return hp <= 0 && deathAnimation.getLoopCount() > 0;
 	}
 
+	inline void setInvulnerable()
+	{
+		vulnerable = false;
+		vulnerabilityOverride = true;
+	}
+
+	inline void resetInvulnerable()
+	{
+		vulnerable = true;
+		vulnerabilityOverride = false;
+	}
+
 	std::vector<Projectile> projectiles{};
 
 	bool hasPlayableAnimation() const;
@@ -61,6 +73,7 @@ class Attackable {
   private:
 	int currentAttack = -1;
 	bool vulnerable = true;
+	bool vulnerabilityOverride = false;
 	bool hurting = false;
 	bool dealsDamage = false;
 	sdl::GameClock::duration currentAttackTime;

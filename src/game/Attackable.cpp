@@ -54,7 +54,8 @@ void Attackable::hurt(int damage)
 		currentAttack = -1;
 		hurtAnimation.reset();
 		hurting = true;
-		vulnerable = false;
+		if (!vulnerabilityOverride)
+			vulnerable = false;
 		lastHitTime = sdl::GameClock::duration::zero();
 	}
 }
@@ -88,7 +89,7 @@ void Attackable::update(sdl::GameClock::duration frameDelta)
 	if (hurting && hurtAnimation.getLoopCount() > 0)
 		hurting = false;
 
-	if (lastHitTime > invulnerabilityWindow)
+	if (!vulnerabilityOverride && lastHitTime > invulnerabilityWindow)
 		vulnerable = true;
 
 	if (isAttacking()) {

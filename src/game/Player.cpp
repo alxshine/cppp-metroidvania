@@ -109,6 +109,7 @@ void Player::slide()
 		return;
 
 	slideAnimation.reset();
+	attackable.setInvulnerable();
 	isSliding = true;
 }
 
@@ -127,10 +128,12 @@ void Player::attack()
 
 void Player::update(sdl::GameClock::duration gameFrameDelta)
 {
-	if (slideAnimation.getLoopCount() > 0)
+	if (isSliding && slideAnimation.getLoopCount() > 0) {
 		isSliding = false;
+		attackable.resetInvulnerable();
+	}
 
-  int slideSpeed = 1.5*movable.maxSpeed;
+	int slideSpeed = 1.5 * movable.maxSpeed;
 	if (isSliding) {
 		if (movable.getDirection().x < 0)
 			movable.v.x = -slideSpeed;
