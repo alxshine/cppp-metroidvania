@@ -1,6 +1,7 @@
 #include "game/AI.hpp"
 
 using namespace game;
+using namespace std::literals::chrono_literals;
 
 bool attackIfHits(Movable &movable, Attackable &attackable, Rectangle playerHitbox)
 {
@@ -27,14 +28,18 @@ void StandingAI::controlEntity(Movable &movable, Attackable &attackable, const C
 	else
 		movable.setDirection({-1, 0});
 
-	attackIfHits(movable, attackable, playerHitbox);
+	if (attackable.getTimeSinceLastAttack() > 500ms)
+		attackIfHits(movable, attackable, playerHitbox);
 }
 
 void PatrollingAI::controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &, Rectangle playerHitbox)
 {
 	const int patrolDistance = 3 * tileSize.w; // just a benchmark
 
-	if (attackIfHits(movable, attackable, playerHitbox))
+	if (attackable.isAttacking())
+		return;
+
+	if (attackable.getTimeSinceLastAttack() > 100ms && attackIfHits(movable, attackable, playerHitbox))
 		return;
 
 	auto xDiff = movable.getPosition().x - movable.initialPosition.x;

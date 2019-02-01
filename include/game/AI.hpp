@@ -1,6 +1,8 @@
 #ifndef _AI_H_
 #define _AI_H_
 
+#include <chrono>
+
 #include "game/Attackable.hpp"
 #include "game/Movable.hpp"
 #include "game/constants.hpp"
