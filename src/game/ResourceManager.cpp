@@ -367,7 +367,7 @@ const sdl::Music &ResourceManager::getMusic(const std::string &id) const
 void ResourceManager::loadTexture(const std::string &id, const std::string &path)
 {
 	try {
-		textures.emplace(id, sdl.loadTexture(path));
+		textures.emplace(id, sdl.get().loadTexture(path));
 	} catch (SdlException &e) {
 		std::cerr << e.what() << std::endl;
 	}
@@ -376,7 +376,7 @@ void ResourceManager::loadTexture(const std::string &id, const std::string &path
 void ResourceManager::loadSound(const std::string &id, const std::string &path)
 {
 	try {
-		sounds.emplace(id, sdl.loadSound(path));
+		sounds.emplace(id, sdl.get().loadSound(path));
 	} catch (SdlException &e) {
 		std::cerr << e.what() << std::endl;
 	}
@@ -385,7 +385,7 @@ void ResourceManager::loadSound(const std::string &id, const std::string &path)
 void ResourceManager::loadMusic(const std::string &id, const std::string &path)
 {
 	try {
-		music.emplace(id, sdl.loadMusic(path));
+		music.emplace(id, sdl.get().loadMusic(path));
 	} catch (SdlException &e) {
 		std::cerr << e.what() << std::endl;
 	}

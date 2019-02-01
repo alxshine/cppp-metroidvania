@@ -65,7 +65,7 @@ class ResourceManager final {
 	void parseDefinitions(std::string definitionPath);
 
 	// Members
-	const sdl::SDL &sdl;
+	std::reference_wrapper<const sdl::SDL> sdl;
 	std::unordered_map<std::string, std::unique_ptr<Mob>> mobs;
 	std::unordered_map<std::string, std::unique_ptr<Item>> items;
 	std::unordered_map<std::string, std::unique_ptr<Room>> rooms;

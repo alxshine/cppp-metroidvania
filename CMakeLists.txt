@@ -20,3 +20,6 @@ file(COPY game_definitions DESTINATION ${CMAKE_BINARY_DIR})
 # game
 add_executable(game main.cpp)
 target_link_libraries(game gamelib)
+
+add_executable(map_viewer map_viewer.cpp)
+target_link_libraries(map_viewer gamelib)

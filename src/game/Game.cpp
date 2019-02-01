@@ -27,7 +27,7 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 		                                           menuStack.pop();
 		                                           resetState();
 	                                           }},
-	                                          {"Loa Game", [&]() { menuStack.push(createLoadMenu(*this, ".")); }},
+	                                          {"Load Game", [&]() { menuStack.push(createLoadMenu(*this, ".")); }},
 	                                          {"Exit", [&]() { state = State::exit; }}};
 	mainMenu = std::make_shared<menu::SelectionMenu>("Main Menu", mainMenuItems,
 	                                                 std::ref(res.getMusic("waterflame-hexagon-force.ogg")));
