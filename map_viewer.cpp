@@ -52,7 +52,7 @@ int main(int, char **argv)
 
 		if (!error) {
 			Room room(res.getRoom(roomName));
-			renderer.render(room, GameClock::duration(0));
+			renderer.render(room, GameClock::duration(0), {true, false, false});
 		}
 
 		renderer.swapBuffers();
