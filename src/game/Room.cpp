@@ -49,8 +49,8 @@ Room::Room(string name, const sdl::Texture &background, const sdl::Music &music,
 
 Room::Room(const Room &rhs) noexcept
     : name(rhs.name), background(rhs.background), music(rhs.music), location(rhs.location), gatingArea(rhs.gatingArea),
-      layout(rhs.layout), sizeInPixels(rhs.sizeInPixels), collisionMap(rhs.collisionMap), mapVersion(rhs.mapVersion),
-      mobs(rhs.mobs), items(rhs.items), onClearItems(rhs.onClearItems), doors(rhs.doors)
+      layout(rhs.layout), sizeInPixels(rhs.sizeInPixels), collisionMap(rhs.collisionMap), mobs(rhs.mobs),
+      items(rhs.items), onClearItems(rhs.onClearItems), doors(rhs.doors), mapVersion(rhs.mapVersion)
 {
 }
 

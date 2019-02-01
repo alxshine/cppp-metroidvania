@@ -11,7 +11,7 @@ Attackable::Attackable(int maxHp, int poise, std::vector<Attack> attacks, sdl::A
 
 void Attackable::attack(int attackIndex)
 {
-	if (isAttacking())
+	if (isAttacking() || (hurting && hurtAnimation.getLoopCount() == 0))
 		return;
 	currentAttack = attackIndex;
 	currentAttackTime = sdl::GameClock::duration::zero();
