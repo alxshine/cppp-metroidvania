@@ -62,5 +62,5 @@ Entities:
     Door: 300 170 Exit = TestDoor (Left) -> Entrance in Hub
 EndEntities
 OnClearEntities:
-Item: 190 170 Key_1
+    Item: 190 170 Key_1
 EndEntities
