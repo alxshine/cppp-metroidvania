@@ -118,7 +118,7 @@ void Player::attack()
 	if (!hasControl())
 		return;
 
-	if (timeSinceLastAttack < comboTimer)
+	if (attackable.getTimeSinceLastAttack() < comboTimer)
 		comboCount++;
 	else
 		comboCount = 0;
@@ -143,16 +143,7 @@ void Player::update(sdl::GameClock::duration gameFrameDelta)
 
 	movable.update(gameFrameDelta);
 
-	bool wasAttacking = true;
-	if (!attackable.isAttacking()) {
-		timeSinceLastAttack += gameFrameDelta;
-		wasAttacking = false;
-	}
-
 	attackable.update(gameFrameDelta);
-	if (!attackable.isAttacking() && !wasAttacking) {
-		timeSinceLastAttack = sdl::GameClock::duration::zero();
-	}
 	// attackable.launchProjectiles(movable.getPosition(), movable.getDirection());
 }
 

@@ -17,6 +17,7 @@ void Attackable::attack(int attackIndex)
 	currentAttackTime = sdl::GameClock::duration::zero();
 	attacks[currentAttack].animation.reset();
 	alreadyHit.clear();
+	timeSinceLastAttack = sdl::GameClock::duration::zero();
 };
 
 Rectangle Attackable::getHitbox(Position position, bool flip)
@@ -109,6 +110,8 @@ void Attackable::update(sdl::GameClock::duration frameDelta)
 		// check if the current attack is done
 		if (currentAttackTime > attack.animation.totalDuration())
 			currentAttack = -1;
+	} else {
+		timeSinceLastAttack += frameDelta;
 	}
 }
 

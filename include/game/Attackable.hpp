@@ -70,6 +70,11 @@ class Attackable {
 	void reset();
 	sdl::Sprite updateAnimation(sdl::GameClock::duration frameDelta);
 
+	inline sdl::GameClock::duration getTimeSinceLastAttack()
+	{
+		return timeSinceLastAttack;
+	}
+
   private:
 	int currentAttack = -1;
 	bool vulnerable = true;
@@ -82,6 +87,7 @@ class Attackable {
 	sdl::Animation hurtAnimation;
 	sdl::GameClock::duration invulnerabilityWindow;
 	sdl::GameClock::duration lastHitTime = sdl::GameClock::duration::zero();
+	sdl::GameClock::duration timeSinceLastAttack = sdl::GameClock::duration::zero();
 };
 } // namespace game
 
