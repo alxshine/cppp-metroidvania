@@ -31,11 +31,12 @@ int main(int, char **argv)
 			cerr << e << endl;
 		}
 	});
-	Position cam{0,0};
+	Position cam{0, 0};
 	events.whileKeyHeld(SDL_SCANCODE_W, [&cam]() { cam.y -= 5; });
 	events.whileKeyHeld(SDL_SCANCODE_A, [&cam]() { cam.x -= 5; });
 	events.whileKeyHeld(SDL_SCANCODE_S, [&cam]() { cam.y += 5; });
 	events.whileKeyHeld(SDL_SCANCODE_D, [&cam]() { cam.x += 5; });
+	events.onKeyDown(SDLK_SPACE, [&cam](const KeyboardEvent &) { cam = {0, 0}; });
 
 	auto renderer(SDL::getInstance().getRenderer());
 
