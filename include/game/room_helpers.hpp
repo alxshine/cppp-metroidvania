@@ -1,8 +1,8 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
-#include "game/constants.hpp"
 #include "game/Movable.hpp"
+#include "game/constants.hpp"
 
 namespace game {
 
@@ -17,6 +17,11 @@ bool collidesBottom(Rectangle hitbox, const CollisionMap &currentRoom, Collision
 bool isStanding(Rectangle hitbox, const CollisionMap &currentRoom);
 
 void resolveRoomCollision(Movable &movable, const CollisionMap &currentRoom);
+
+inline int getTopTileRow(Rectangle hitbox)
+{
+	return hitbox.y / tileSize.h;
+}
 
 inline int getTileRow(Rectangle hitbox)
 {
