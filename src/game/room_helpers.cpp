@@ -84,10 +84,12 @@ void game::resolveRoomCollision(Movable &movable, const CollisionMap &collisionM
 	// 	movable.canMove = false;
 
 	if (movable.canMove && movable.getMoved()) {
-		while (collidesTop(hitBox, collisionMap)) {
-			auto newPosition = movable.getPosition() + Point{0, 1};
-			movable.reposition(newPosition);
-			hitBox = movable.calcPositionedHitbox();
+		if (collidesLeft(hitBox, collisionMap) && collidesRight(hitBox, collisionMap)) {
+			while (collidesTop(hitBox, collisionMap)) {
+				auto newPosition = movable.getPosition() + Point{0, 1};
+				movable.reposition(newPosition);
+				hitBox = movable.calcPositionedHitbox();
+			}
 		}
 
 		while (collidesLeft(hitBox, collisionMap)) {
