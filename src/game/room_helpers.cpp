@@ -84,12 +84,13 @@ void game::resolveRoomCollision(Movable &movable, const CollisionMap &collisionM
 	// 	movable.canMove = false;
 
 	if (movable.canMove && movable.getMoved()) {
-		if (collidesLeft(hitBox, collisionMap) && collidesRight(hitBox, collisionMap)) {
-			while (collidesTop(hitBox, collisionMap)) {
-				auto newPosition = movable.getPosition() + Point{0, 1};
-				movable.reposition(newPosition);
-				hitBox = movable.calcPositionedHitbox();
-			}
+		std::cout << collidesLeft(hitBox, collisionMap) << collidesRight(hitBox, collisionMap)
+		          << collidesTop(hitBox, collisionMap) << collidesBottom(hitBox, collisionMap) << std::endl;
+
+		while (collidesTop(hitBox, collisionMap)) {
+			auto newPosition = movable.getPosition() + Point{0, 1};
+			movable.reposition(newPosition);
+			hitBox = movable.calcPositionedHitbox();
 		}
 
 		while (collidesLeft(hitBox, collisionMap)) {
@@ -97,14 +98,12 @@ void game::resolveRoomCollision(Movable &movable, const CollisionMap &collisionM
 			movable.reposition(newPosition);
 			hitBox = movable.calcPositionedHitbox();
 		}
-		// hitBox = player.calcPositionedHitbox();
 
 		while (collidesRight(hitBox, collisionMap)) {
 			auto newPosition = movable.getPosition() + Point{-1, 0};
 			movable.reposition(newPosition);
 			hitBox = movable.calcPositionedHitbox();
 		}
-		// hitBox = player.calcPositionedHitbox();
 
 		while (moveDirection.y > 0 && collidesBottom(hitBox, collisionMap)) {
 			movable.setGrounded();
@@ -113,7 +112,6 @@ void game::resolveRoomCollision(Movable &movable, const CollisionMap &collisionM
 			movable.reposition(newPosition);
 			hitBox = movable.calcPositionedHitbox();
 		}
-		// hitBox = player.calcPositionedHitbox();
 
 		// platforms
 		while (moveDirection.y > 0 && !movable.fallThroughPlatforms &&
