@@ -37,7 +37,7 @@ class Door {
 	     const std::string targetDoorName);
 	Door(const Door &rhs);
 
-	const std::string name;
+	std::string name;
 	Item item;
 
 	Direction direction;

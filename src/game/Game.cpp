@@ -239,9 +239,8 @@ void Game::runMainLoop()
 			if (!emptyBefore && mobs.empty()) {
 				currentRoom->items.insert(currentRoom->items.end(), currentRoom->onClearItems.begin(),
 				                          currentRoom->onClearItems.end());
-				// currentRoom->doors.insert(currentRoom->doors.end(), currentRoom->onClearDoors.begin(),
-				//                           currentRoom->onClearDoors.end());
-				// TODO @alex fix Door::operator=
+				currentRoom->doors.insert(currentRoom->doors.end(), currentRoom->onClearDoors.begin(),
+				                          currentRoom->onClearDoors.end());
 			}
 
 			if (player->attackable.done()) {
