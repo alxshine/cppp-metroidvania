@@ -39,10 +39,10 @@ bool game::collidesTop(Rectangle hitbox, const CollisionMap &collisionMap)
 	auto lowestColumnIndex = getLowestTileColumn(hitbox);
 	auto highestColumnIndex = getHighestTileColumn(hitbox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
-		if (collisionMap[i][j] == Collision::Full && sdl::intersects_top(hitbox, tileRectangle(i, j)))
-			return true;
+		if (collisionMap[i][j] != Collision::Full || !sdl::intersects_top(hitbox, tileRectangle(i, j)))
+			return false;
 	}
-	return false;
+	return true;
 }
 
 bool game::collidesBottom(Rectangle hitbox, const CollisionMap &collisionMap, Collision testCollision)
@@ -87,11 +87,17 @@ void game::resolveRoomCollision(Movable &movable, const CollisionMap &collisionM
 		std::cout << collidesLeft(hitBox, collisionMap) << collidesRight(hitBox, collisionMap)
 		          << collidesTop(hitBox, collisionMap) << collidesBottom(hitBox, collisionMap) << std::endl;
 
+		bool collidedTop = false;
 		while (collidesTop(hitBox, collisionMap)) {
 			auto newPosition = movable.getPosition() + Point{0, 1};
 			movable.reposition(newPosition);
 			hitBox = movable.calcPositionedHitbox();
+			collidedTop = true;
 		}
+		// if (collidedTop) {
+		// 	movable.v.y = 0;
+		// 	return;
+		// }
 
 		while (collidesLeft(hitBox, collisionMap)) {
 			auto newPosition = movable.getPosition() + Point{1, 0};
