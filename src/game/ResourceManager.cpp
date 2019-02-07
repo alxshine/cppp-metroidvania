@@ -103,14 +103,17 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	const sdl::Animation idleAnimation = {idleAnimationTexture, mobdef.idleAnimation.frames,
 	                                      mobdef.idleAnimation.timePerFrame};
 
-	// TODO handle behaviour
 	std::shared_ptr<AI> ai;
 	if (mobdef.behaviour == "patrolling")
 		ai = patrollingAI;
 	else if (mobdef.behaviour == "standing")
 		ai = standingAI;
-	else
+	else if (mobdef.behaviour == "two-phase-boss")
+		ai = twoPhaseBossAI;
+	else {
+		std::cerr << "*** WARNING: unknown behaviour " << mobdef.behaviour << " ***" << std::endl;
 		ai = idleAI;
+	}
 
 	// attacks
 	std::vector<game::Attack> attacks{};
@@ -287,7 +290,7 @@ void ResourceManager::parseDefinition(fs::path f)
 
 ResourceManager::ResourceManager(const std::string &path_to_definitions, const std::string &path_to_assets)
     : sdl(sdl::SDL::getInstance()), idleAI(std::make_shared<IdleAI>()), standingAI(std::make_shared<StandingAI>()),
-      patrollingAI(std::make_shared<PatrollingAI>())
+      patrollingAI(std::make_shared<PatrollingAI>()), twoPhaseBossAI(std::make_shared<TwoPhaseBossAI>())
 {
 
 	for (auto &f : fs::recursive_directory_iterator(path_to_assets)) {

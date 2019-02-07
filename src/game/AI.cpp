@@ -46,12 +46,52 @@ void PatrollingAI::controlEntity(Movable &movable, Attackable &attackable, const
 
 	auto hittingAttacks = getHittingAttacks(movable, attackable, playerHitbox);
 
+	// Attack
 	if (!hittingAttacks.empty()) {
 		if (attackable.getTimeSinceLastAttack() > 100ms)
 			attackable.attack(hittingAttacks[0]);
 		return;
 	}
 
+	// Patrol
+	auto xDiff = movable.getPosition().x - movable.initialPosition.x;
+	if (xDiff > patrolDistance) {
+		// we are at the right end of the patrol area
+		movable.moveLeft();
+	} else if (xDiff < -patrolDistance) {
+		// left end
+		movable.moveRight();
+	} else {
+		// otherwise continue moving
+		if (movable.getDirection().x >= 0)
+			movable.moveRight();
+		else
+			movable.moveLeft();
+	}
+}
+
+void TwoPhaseBossAI::controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &collisionMap,
+                                   Rectangle playerHitbox)
+{
+	const int patrolDistance = 3 * tileSize.w; // just a benchmark
+
+	if (attackable.isAttacking())
+		return;
+
+	// Attack
+	auto hittingAttacks = getHittingAttacks(movable, attackable, playerHitbox);
+
+	if (!hittingAttacks.empty()) {
+		if (attackable.getTimeSinceLastAttack() > 1.5s) {
+			if (attackable.hp >= attackable.maxHp / 2)
+				attackable.attack(hittingAttacks[0]);
+			else
+				attackable.attack(hittingAttacks[1]);
+		}
+		return;
+	}
+
+	// Patrol
 	auto xDiff = movable.getPosition().x - movable.initialPosition.x;
 	if (xDiff > patrolDistance) {
 		// we are at the right end of the patrol area

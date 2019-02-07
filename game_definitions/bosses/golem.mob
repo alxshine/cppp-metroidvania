@@ -3,7 +3,7 @@ Health: 40
 Poise: 3
 RecoveryWindow: 100
 Speed: 59
-Behaviour: patrolling
+Behaviour: two-phase-boss
 Hitbox: 0 0 50 38
 DrawSize: 0 0 50 38
 
@@ -57,7 +57,7 @@ Attack: SingleSlam
     Type: Melee
     SoundEffect: hey.wav 1
     HitBox: 6 -18 5 18
-    Damage: 8
+    Damage: 15
     DamageFrames: 4 EndFrames
 
     Animation:
@@ -77,7 +77,7 @@ Attack: DoubleSlam
     Type: Melee
     SoundEffect: hey.wav 1
     HitBox: 6 -18 5 18
-    Damage: 8
+    Damage: 30
     DamageFrames: 4 8 EndFrames
 
     Animation:

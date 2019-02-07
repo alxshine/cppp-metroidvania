@@ -29,6 +29,11 @@ struct PatrollingAI : AI {
 	virtual void controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &collisionMap,
 	                           Rectangle playerHitbox) override;
 };
+
+struct TwoPhaseBossAI : AI {
+	virtual void controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &collisionMap,
+	                           Rectangle playerHitbox) override;
+};
 } // namespace game
 
 #endif /* _AI_H_ */
