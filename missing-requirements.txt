@@ -1,6 +1,6 @@
 1 or more advanced movement mechanics
 DONE    double jump
-    sliding
+DONE    sliding
     needs to be unlocked (link to an item?)
 
 
@@ -25,9 +25,9 @@ DONE    bosses are capable of using different attacks
     (optional) gating for enemies (would make backtracking more interesting if harder mobs spawned)
 
 map
-    shows discovered rooms and their doorways
-    shows discovered save points
-    shows where the player is currently located
+DONE    shows discovered rooms and their doorways
+DONE    shows discovered save points
+DONE    shows where the player is currently located
 
 game over
 DONE    player dies
