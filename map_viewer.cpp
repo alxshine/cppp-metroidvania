@@ -28,6 +28,11 @@ int main(int, char **argv)
 
 	auto renderer(SDL::getInstance().getRenderer());
 
+	RenderOptions options;
+	events.onKeyDown(SDLK_c, [&](const KeyboardEvent &) {
+		options = options.renderHitBoxes ? options = {false, false, false, false} : options = {true, true, true, true};
+	});
+
 	bool error = false;
 	int i = 0;
 	while (run) {
@@ -54,7 +59,7 @@ int main(int, char **argv)
 
 		if (!error) {
 			Room room(res.getRoom(roomName));
-			renderer.render(room, GameClock::duration(0), {true, false, false});
+			renderer.render(room, GameClock::duration(0), options);
 		}
 
 		renderer.swapBuffers();
