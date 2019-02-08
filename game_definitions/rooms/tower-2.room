@@ -88,6 +88,10 @@ Entities:
     Door: 230 280 Entrance = TowerDoor (Right) -> TowerEntrance in Hub
     Door: 90 40 Exit = TowerDoor (Right) -> Entrance in Tower-Boss
     Item: 190 280 Savepoint
+    Mob: 90 240 Ogre
+    Mob: 200 200 Ogre
+    Mob: 80 90 Ogre
+    Mob: 230 50 Ogre
 EndEntities
 OnClearEntities:
 EndEntities

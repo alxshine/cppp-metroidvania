@@ -87,6 +87,10 @@ EndLayout
 Entities:
     Door: 230 280 Entrance = TowerDoor (Right) -> TowerEntrance in Hub
     Door: 240 30 Exit = TowerDoor (Right) -> Entrance in Tower-2
+    Mob: 85 260 Ogre
+    Mob: 240 210 Ogre
+    Mob: 110 130 Ogre
+    Mob: 190 50 Ogre
 EndEntities
 OnClearEntities:
 EndEntities

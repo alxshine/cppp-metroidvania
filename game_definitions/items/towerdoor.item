@@ -1,7 +1,7 @@
 Name: TowerDoor
 Behaviour: FFSIDONTWANTTHIS
-Hitbox: 0 0 10 20
-DrawSize: 0 0 10 10
+Hitbox: 0 0 10 15
+DrawSize: 0 0 10 15
 
 Animation:
     Spritesheet: awesome.png
