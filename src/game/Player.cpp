@@ -144,6 +144,15 @@ void Player::shadeBlast()
 	attackable.attack(3);
 }
 
+void Player::doubleSlam()
+{
+	if (!hasControl())
+		return;
+
+	comboCount = 0;
+	attackable.attack(4);
+}
+
 void Player::update(sdl::GameClock::duration gameFrameDelta)
 {
 	if (isSliding && slideAnimation.getLoopCount() > 0) {

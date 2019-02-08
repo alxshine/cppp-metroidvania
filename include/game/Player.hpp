@@ -37,6 +37,7 @@ class Player : public sdl::Renderable {
 
 	void attack();
 	void shadeBlast();
+	void doubleSlam();
 	void updateCombat(sdl::GameClock::duration frameDelta);
 	Rectangle getAttackHitbox();
 
