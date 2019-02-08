@@ -1,5 +1,6 @@
 # Small fixes
 TODO replace OptionalAnimation type with std::optional<std::reference_wrapper<Animation>>?
+TODO improve verticall scrolling to use the *top* of the hitbox.
 
 # Optional features for later
 TODO offset background rendering by the height of the highest row that is completely solid in the collision map (consecutive from the bottom, again calculate at makeRoom time)
