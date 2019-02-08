@@ -8,4 +8,6 @@ runescape-medieval.ogg: youtube-dl https://www.youtube.com/watch\?v\=PDl6j3fAU5I
 
 dark-dungeon-chiptune: https://www.youtube.com/watch?v=64R-10xNfmk
 
+shantanae-half-genie-hero: https://www.youtube.com/watch?v=xEDjjl2A2MA
+
 summer-of-the-troll: https://www.youtube.com/watch?v=KSf8CJSICfE
