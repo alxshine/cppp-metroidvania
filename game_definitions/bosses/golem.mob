@@ -9,7 +9,7 @@ DrawSize: 0 0 50 38
 
 WalkingAnimation:
     Spritesheet: Golem.png
-    Time: 180
+    Time: 140
     SpriteSize: 74 57
     Frame: 0 0
     Frame: 5 1
@@ -21,7 +21,7 @@ EndAnimation
 
 DeathAnimation:
     Spritesheet: Golem.png
-    Time: 300
+    Time: 180
     SpriteSize: 74 57
     Frame: 2 5
     Frame: 1 5
@@ -35,7 +35,7 @@ EndAnimation
 
 HurtAnimation:
     Spritesheet: Golem.png
-    Time: 140
+    Time: 100
     SpriteSize: 74 57
     Frame: 5 5
     Frame: 4 5
@@ -44,7 +44,7 @@ EndAnimation
 
 IdleAnimation:
     Spritesheet: Golem.png
-    Time: 140
+    Time: 100
     SpriteSize: 74 57
     Frame: 5 0
     Frame: 4 0
@@ -56,13 +56,13 @@ EndAnimation
 Attack: SingleSlam
     Type: Melee
     SoundEffect: hey.wav 1
-    HitBox: 6 -18 5 18
+    HitBox: 6 -38 15 38
     Damage: 15
     DamageFrames: 4 EndFrames
 
     Animation:
         Spritesheet: Golem.png
-        Time: 150
+        Time: 110
         SpriteSize: 74 57
         Frame: 0 1
         Frame: 5 2
@@ -76,13 +76,13 @@ Attack: SingleSlam
 Attack: DoubleSlam
     Type: Melee
     SoundEffect: hey.wav 1
-    HitBox: 6 -18 5 18
+    HitBox: 6 -38 15 38
     Damage: 30
     DamageFrames: 4 8 EndFrames
 
     Animation:
         Spritesheet: Golem.png
-        Time: 300
+        Time: 180
         SpriteSize: 74 57
         Frame: 5 3
         Frame: 4 3
