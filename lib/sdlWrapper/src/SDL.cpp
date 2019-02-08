@@ -19,14 +19,13 @@ sdl::SDL::SDL()
 		throw SdlException("SDL_ttf could not initialize!");
 
 	int mixFlags = MIX_INIT_OGG | MIX_INIT_MOD | MIX_INIT_MP3;
-	if (!(Mix_Init(mixFlags) & mixFlags))
-		throw SdlException("SDL_mix could not initialize!");
+	if ((Mix_Init(mixFlags) & mixFlags) != mixFlags)
+		throw SdlException(std::string("SDL_mix could not initialize! ") + Mix_GetError());
 
 	constexpr int stereo = 2;
 	constexpr int chunksize = 1024;
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, stereo, chunksize))
 		throw SdlException("Could not open audio device!");
-	sdl::music::set_volume<0>();
 }
 
 sdl::SDL::~SDL()

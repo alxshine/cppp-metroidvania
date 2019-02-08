@@ -84,15 +84,15 @@ void game::resolveRoomCollision(Movable &movable, const CollisionMap &collisionM
 	// 	movable.canMove = false;
 
 	if (movable.canMove && movable.getMoved()) {
-		std::cout << collidesLeft(hitBox, collisionMap) << collidesRight(hitBox, collisionMap)
-		          << collidesTop(hitBox, collisionMap) << collidesBottom(hitBox, collisionMap) << std::endl;
+		// std::cout << collidesLeft(hitBox, collisionMap) << collidesRight(hitBox, collisionMap)
+		//           << collidesTop(hitBox, collisionMap) << collidesBottom(hitBox, collisionMap) << std::endl;
 
-		bool collidedTop = false;
+		// bool collidedTop = false;
 		while (collidesTop(hitBox, collisionMap)) {
 			auto newPosition = movable.getPosition() + Point{0, 1};
 			movable.reposition(newPosition);
 			hitBox = movable.calcPositionedHitbox();
-			collidedTop = true;
+			// collidedTop = true;
 		}
 		// if (collidedTop) {
 		// 	movable.v.y = 0;
