@@ -1,7 +1,7 @@
 Name: Tower-1
 Background: sky.png
 Music: area1.ogg
-Location: 50 50
+Location: 30 -50
 GatingArea: 2
 
 Tileset: awesome.png

@@ -1,7 +1,7 @@
 Name: Tower-2
 Background: sky.png
 Music: area1.ogg
-Location: 50 -150
+Location: 20 -100
 GatingArea: 2
 
 Tileset: awesome.png
@@ -85,7 +85,7 @@ Layout:
 EndLayout
 
 Entities:
-    Door: 230 280 Entrance = TowerDoor (Right) -> TowerEntrance in Hub
+    Door: 230 280 Entrance = TowerDoor (Left) -> Exit in Tower-1
     Door: 90 40 Exit = TowerDoor (Right) -> Entrance in Tower-Boss
     Item: 190 280 Savepoint
     Mob: 90 240 Ogre

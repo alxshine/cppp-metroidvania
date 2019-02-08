@@ -1,7 +1,7 @@
 Name: Tower-Boss
 Background: sky.png
 Music: area1.ogg
-Location: 50 -150
+Location: 40 -130
 GatingArea: 2
 
 Tileset: awesome.png
