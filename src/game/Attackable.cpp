@@ -115,12 +115,26 @@ void Attackable::update(sdl::GameClock::duration frameDelta)
 	}
 }
 
-void Attackable::updateProjectiles(sdl::GameClock::duration gameFrameDelta, Rectangle playerHitbox, Attackable &other,
+void Attackable::updateProjectiles(sdl::GameClock::duration gameFrameDelta, Rectangle hitbox, Attackable &attackable,
                                    const CollisionMap &collisionMap)
 {
 	for (auto &p : projectiles)
-		if (p.update(gameFrameDelta, playerHitbox, collisionMap))
-			other.hurt(p.damage);
+		if (p.update(gameFrameDelta, {hitbox}, collisionMap) >= 0)
+			attackable.hurt(p.damage);
+
+	projectiles.erase(std::remove_if(projectiles.begin(), projectiles.end(), [](auto p) { return p.done; }),
+	                  projectiles.end());
+}
+
+void Attackable::updateProjectiles(sdl::GameClock::duration gameFrameDelta, const std::vector<Rectangle> &hitboxes,
+                                   std::vector<Attackable *> &attackables, const CollisionMap &collisionMap)
+{
+	for (auto &p : projectiles) {
+		int toHurt = p.update(gameFrameDelta, hitboxes, collisionMap);
+		if (toHurt >= 0) {
+			attackables[toHurt]->hurt(p.damage);
+		}
+	}
 
 	projectiles.erase(std::remove_if(projectiles.begin(), projectiles.end(), [](auto p) { return p.done; }),
 	                  projectiles.end());

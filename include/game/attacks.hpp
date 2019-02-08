@@ -1,4 +1,8 @@
+#ifndef ATTACKS_H
+#define ATTACKS_H
+
 #include <optional>
+#include <vector>
 
 #include "game/constants.hpp"
 #include "game/movement.hpp"
@@ -13,7 +17,13 @@ struct Projectile {
 	}
 
 	Rectangle calcPositionedHitbox();
-	bool update(sdl::GameClock::duration frameDelta, Rectangle playerHitbox, const CollisionMap &collisionMap);
+
+	/**
+	 * @brief update the projectile and set it to be done if it collides with something
+	 *
+	 * @return the index of the hitboxes that was hit (-1 if none were hit)
+	 **/
+	int update(sdl::GameClock::duration frameDelta, std::vector<Rectangle> hitboxes, const CollisionMap &collisionMap);
 	sdl::Sprite updateAnimation(sdl::GameClock::duration frameDelta);
 
 	Position position;
@@ -33,7 +43,7 @@ struct ProjectileBlueprint {
 	Speed maxSpeed;
 	Position startPosition;
 
-  sdl::Animation animation;
+	sdl::Animation animation;
 };
 
 struct Attack {
@@ -57,6 +67,8 @@ struct Attack {
 	int damage;
 	std::vector<int> damageFrames;
 	Type type;
-  std::optional<ProjectileBlueprint> projectileBlueprint;
+	std::optional<ProjectileBlueprint> projectileBlueprint;
 };
 } // namespace game
+
+#endif /* ATTACKS_H */

@@ -30,8 +30,10 @@ class Attackable {
 	void hit(Attackable &other);
 	void hurt(int damage);
 	void update(sdl::GameClock::duration frameDelta);
-	void updateProjectiles(sdl::GameClock::duration, Rectangle playerHitbox, Attackable &other,
+	void updateProjectiles(sdl::GameClock::duration, Rectangle hitboxes, Attackable &attackable,
 	                       const CollisionMap &collisionMap);
+	void updateProjectiles(sdl::GameClock::duration, const std::vector<Rectangle> &hitboxes,
+	                       std::vector<Attackable *> &attackables, const CollisionMap &collisionMap);
 	void launchProjectiles(Position currentPosition, Direction currentDirection);
 	inline bool isAttacking() const
 	{

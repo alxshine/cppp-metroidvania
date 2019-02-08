@@ -126,6 +126,14 @@ void Player::attack()
 	attackable.attack(comboCount);
 }
 
+void Player::shadeBlast(){
+	if(!hasControl())
+		return;
+
+	comboCount = 0;
+	attackable.attack(3);
+}
+
 void Player::update(sdl::GameClock::duration gameFrameDelta)
 {
 	if (isSliding && slideAnimation.getLoopCount() > 0) {

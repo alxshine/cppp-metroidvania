@@ -330,6 +330,8 @@ void Game::registerGameEvents()
 	// attack
 	gameEvents.whileKeyHeld(SDL_SCANCODE_K, [this]() { player->attack(); });
 
+	gameEvents.onKeyDown(SDLK_i, [this](const KeyboardEvent &) { player->shadeBlast(); });
+
 	// slide
 	gameEvents.onKeyDown(SDLK_l, [this](const KeyboardEvent &) { player->slide(); });
 

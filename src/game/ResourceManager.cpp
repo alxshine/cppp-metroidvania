@@ -69,7 +69,9 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	Attack attack1{{5, -20, 10, 20}, attackAnim1, 1, {2}};
 	Attack attack2{{5, -20, 10, 20}, attackAnim2, 2, {1}};
 	Attack attack3{{5, -20, 10, 20}, attackAnim3, 3, {2}};
-	const std::vector<Attack> attacks{attack1, attack2, attack3};
+
+	Attack shadeBlast = getMob("Shade").attackable.attacks[0];
+	const std::vector<Attack> attacks{attack1, attack2, attack3, shadeBlast};
 
 	// sliding
 	const sdl::Animation slideAnimation{

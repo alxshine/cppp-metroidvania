@@ -70,7 +70,7 @@ void PatrollingAI::controlEntity(Movable &movable, Attackable &attackable, const
 	}
 }
 
-void TwoPhaseBossAI::controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &collisionMap,
+void TwoPhaseBossAI::controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &,
                                    Rectangle playerHitbox)
 {
 	const int patrolDistance = 3 * tileSize.w; // just a benchmark

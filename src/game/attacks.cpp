@@ -7,12 +7,8 @@ Rectangle Projectile::calcPositionedHitbox()
 	return {position.x + hitbox.w / 2, position.y + hitbox.h / 2, hitbox.w, hitbox.h};
 }
 
-/**
- * @brief update the projectile and set it to be done if it collides with something
- *
- * @return true if the player was hit
- **/
-bool Projectile::update(sdl::GameClock::duration frameDelta, Rectangle playerHitbox, const CollisionMap &collisionMap)
+int Projectile::update(sdl::GameClock::duration frameDelta, std::vector<Rectangle> hitboxes,
+                       const CollisionMap &collisionMap)
 {
 	position += v * frameDelta;
 	auto phb = calcPositionedHitbox();
@@ -21,13 +17,18 @@ bool Projectile::update(sdl::GameClock::duration frameDelta, Rectangle playerHit
 	else
 		done = collidesLeft(phb, collisionMap);
 
-	if (intersects(phb, playerHitbox)) {
-		done = true;
-		return true;
+	for (unsigned i = 0; i < hitboxes.size(); ++i) {
+		const auto &hitbox = hitboxes[i];
+		if (intersects(phb, hitbox)) {
+			done = true;
+			return i;
+		}
 	}
-	return false;
+
+	return -1;
 }
 
-sdl::Sprite Projectile::updateAnimation(sdl::GameClock::duration frameDelta){
-  return animation.updateAnimation(frameDelta);
+sdl::Sprite Projectile::updateAnimation(sdl::GameClock::duration frameDelta)
+{
+	return animation.updateAnimation(frameDelta);
 }
