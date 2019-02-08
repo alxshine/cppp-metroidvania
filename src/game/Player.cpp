@@ -144,13 +144,22 @@ void Player::shadeBlast()
 	attackable.attack(3);
 }
 
-void Player::doubleSlam()
+void Player::singleSlam()
 {
 	if (!hasControl())
 		return;
 
 	comboCount = 0;
 	attackable.attack(4);
+}
+
+void Player::doubleSlam()
+{
+	if (!hasControl())
+		return;
+
+	comboCount = 0;
+	attackable.attack(5);
 }
 
 void Player::update(sdl::GameClock::duration gameFrameDelta)
@@ -171,7 +180,6 @@ void Player::update(sdl::GameClock::duration gameFrameDelta)
 	movable.update(gameFrameDelta);
 
 	attackable.update(gameFrameDelta);
-	// attackable.launchProjectiles(movable.getPosition(), movable.getDirection());
 }
 
 Rectangle Player::getAttackHitbox()

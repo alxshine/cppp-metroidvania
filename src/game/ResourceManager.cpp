@@ -71,8 +71,9 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	Attack attack3{{5, -20, 10, 20}, attackAnim3, 3, {2}};
 
 	Attack shadeBlast = getMob("Shade").attackable.attacks[0];
-	Attack doubleSlam = getMob("Golem").attackable.attacks[1];
-	const std::vector<Attack> attacks{attack1, attack2, attack3, shadeBlast, doubleSlam};
+	Attack singleSlam = getMob("Golem").attackable.attacks[0];
+	Attack doubleSlam = getMob("Yeti").attackable.attacks[1];
+	const std::vector<Attack> attacks{attack1, attack2, attack3, shadeBlast, singleSlam, doubleSlam};
 
 	// sliding
 	const sdl::Animation slideAnimation{

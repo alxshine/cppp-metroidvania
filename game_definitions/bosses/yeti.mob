@@ -4,8 +4,8 @@ Poise: 5
 RecoveryWindow: 100
 Speed: 100
 Behaviour: two-phase-boss
-Hitbox: 0 0 73 57
-DrawSize: 0 0 73 57
+Hitbox: 0 0 30 28
+DrawSize: 0 0 36 28
 
 WalkingAnimation:
     Spritesheet: Yeti.png
@@ -57,7 +57,7 @@ Attack: SingleSlam
     Type: Melee
     SoundEffect: hey.wav 1
     HitBox: 6 -38 15 38
-    Damage: 15
+    Damage: 10
     DamageFrames: 3 EndFrames
 
     Animation:
@@ -75,12 +75,12 @@ Attack: DoubleSlam
     Type: Melee
     SoundEffect: hey.wav 1
     HitBox: 6 -38 15 38
-    Damage: 30
+    Damage: 20
     DamageFrames: 4 5 EndFrames
 
     Animation:
         Spritesheet: Yeti.png
-        Time: 180
+        Time: 110
         SpriteSize: 73 57
         Frame: 4 3
         Frame: 3 3
