@@ -1,7 +1,7 @@
 Name: Dungeon-Boss
 Background: black.png
 Music: dark-dungeon-chiptune.ogg
-Location: 50 30
+Location: 50 60
 GatingArea: 1
 
 Tileset: awesome.png

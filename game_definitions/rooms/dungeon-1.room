@@ -51,7 +51,6 @@ EndLayout
 Entities:
     Door: 15 40 Entrance = DungeonDoor (Left) -> DungeonEntrance in Hub
     Door: 350 200 Exit = DungeonDoor (Right) -> Entrance in Dungeon-2
-    Item: 30 40 Savepoint
 EndEntities
 OnClearEntities:
 EndEntities

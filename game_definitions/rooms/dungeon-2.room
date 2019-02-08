@@ -53,11 +53,15 @@ EndLayout
 Entities:
     Door: 15 200 Entrance = DungeonDoor (Left) -> Exit in Dungeon-1
     Door: 350 200 Exit = DungeonDoor (Right) -> Entrance in Dungeon-Boss
-    Mob: 170 160 Rat
+    Mob: 170 160 Shade
     Mob: 140 200 Rat
+    Mob: 145 200 Rat
     Mob: 150 200 Rat
+    Mob: 155 200 Rat
     Mob: 170 200 Rat
+    Mob: 175 200 Rat
     Mob: 210 200 Rat
+    Item: 320 200 Savepoint
 EndEntities
 OnClearEntities:
 EndEntities
