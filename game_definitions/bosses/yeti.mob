@@ -1,0 +1,94 @@
+Name: Yeti
+Health: 45
+Poise: 5
+RecoveryWindow: 100
+Speed: 100
+Behaviour: two-phase-boss
+Hitbox: 0 0 73 57
+DrawSize: 0 0 73 57
+
+WalkingAnimation:
+    Spritesheet: Yeti.png
+    Time: 140
+    SpriteSize: 73 57
+    Frame: 0 0
+    Frame: 4 1
+    Frame: 3 1
+    Frame: 2 1
+    Frame: 1 1
+    Frame: 0 1
+EndAnimation
+
+DeathAnimation:
+    Spritesheet: Yeti.png
+    Time: 180
+    SpriteSize: 73 57
+    Frame: 3 5
+    Frame: 2 5
+    Frame: 1 5
+    Frame: 0 5
+    Frame: 4 6
+    Frame: 3 6
+    Frame: 2 6
+    Frame: 1 6
+    Frame: 0 6
+EndAnimation
+
+HurtAnimation:
+    Spritesheet: Yeti.png
+    Time: 60
+    SpriteSize: 73 57
+    Frame: 1 4
+    Frame: 0 4
+    Frame: 5 5
+EndAnimation
+
+IdleAnimation:
+    Spritesheet: Yeti.png
+    Time: 100
+    SpriteSize: 73 57
+    Frame: 4 0
+    Frame: 3 0
+    Frame: 2 0
+    Frame: 1 0
+EndAnimation
+
+Attack: SingleSlam
+    Type: Melee
+    SoundEffect: hey.wav 1
+    HitBox: 6 -38 15 38
+    Damage: 15
+    DamageFrames: 3 EndFrames
+
+    Animation:
+        Spritesheet: Yeti.png
+        Time: 90
+        SpriteSize: 73 57
+        Frame: 4 2
+        Frame: 3 2
+        Frame: 2 2
+        Frame: 1 2
+        Frame: 0 2
+    EndAnimation
+
+Attack: DoubleSlam
+    Type: Melee
+    SoundEffect: hey.wav 1
+    HitBox: 6 -38 15 38
+    Damage: 30
+    DamageFrames: 4 5 EndFrames
+
+    Animation:
+        Spritesheet: Yeti.png
+        Time: 180
+        SpriteSize: 73 57
+        Frame: 4 3
+        Frame: 3 3
+        Frame: 2 3
+        Frame: 1 3
+        Frame: 0 3
+        Frame: 4 4
+        Frame: 3 4
+        Frame: 2 4
+    EndAnimation
+EndMob
