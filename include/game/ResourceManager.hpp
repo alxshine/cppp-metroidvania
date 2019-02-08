@@ -76,6 +76,7 @@ class ResourceManager final {
 	// AI
 	std::shared_ptr<AI> idleAI;
 	std::shared_ptr<AI> standingAI;
+	std::shared_ptr<AI> confinedPatrollingAI;
 	std::shared_ptr<AI> patrollingAI;
 	std::shared_ptr<AI> twoPhaseBossAI;
 };

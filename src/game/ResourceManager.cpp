@@ -107,7 +107,9 @@ std::unique_ptr<Mob> ResourceManager::makeMob(const game_definitions::Mob &mobde
 	                                      mobdef.idleAnimation.timePerFrame};
 
 	std::shared_ptr<AI> ai;
-	if (mobdef.behaviour == "patrolling")
+	if (mobdef.behaviour == "confined")
+		ai = confinedPatrollingAI;
+	else if (mobdef.behaviour == "patrolling")
 		ai = patrollingAI;
 	else if (mobdef.behaviour == "standing")
 		ai = standingAI;
@@ -293,7 +295,8 @@ void ResourceManager::parseDefinition(fs::path f)
 
 ResourceManager::ResourceManager(const std::string &path_to_definitions, const std::string &path_to_assets)
     : sdl(sdl::SDL::getInstance()), idleAI(std::make_shared<IdleAI>()), standingAI(std::make_shared<StandingAI>()),
-      patrollingAI(std::make_shared<PatrollingAI>()), twoPhaseBossAI(std::make_shared<TwoPhaseBossAI>())
+      confinedPatrollingAI(std::make_shared<ConfinedPatrollingAI>()), patrollingAI(std::make_shared<PatrollingAI>()),
+      twoPhaseBossAI(std::make_shared<TwoPhaseBossAI>())
 {
 
 	for (auto &f : fs::recursive_directory_iterator(path_to_assets)) {
@@ -346,7 +349,7 @@ std::map<std::string, MapRoom> ResourceManager::getMapRooms(const std::set<std::
 		auto mr = rooms.at(s)->getMapVersion();
 		for (auto it = mr.connectedRooms.begin(); it != mr.connectedRooms.end();) {
 			if (!visitedRooms.count(*it))
-				mr.connectedRooms.erase(*it++); // Note the subtlety here
+				mr.connectedRooms.erase(*it++);
 			else
 				++it;
 		}

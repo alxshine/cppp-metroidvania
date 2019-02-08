@@ -25,6 +25,11 @@ struct StandingAI : AI {
 	                           Rectangle playerHitbox) override;
 };
 
+struct ConfinedPatrollingAI : AI {
+	virtual void controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &collisionMap,
+	                           Rectangle playerHitbox) override;
+};
+
 struct PatrollingAI : AI {
 	virtual void controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &collisionMap,
 	                           Rectangle playerHitbox) override;

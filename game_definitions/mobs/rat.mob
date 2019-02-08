@@ -3,7 +3,7 @@ Health: 7
 Poise: 0
 RecoveryWindow: 100
 Speed: 63
-Behaviour: patrolling
+Behaviour: confined
 Hitbox: 0 0 21 11
 DrawSize: 0 0 21 11
 
