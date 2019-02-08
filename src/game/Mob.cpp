@@ -53,9 +53,12 @@ void game::Mob::render(const sdl::Renderer &renderer, sdl::GameClock::duration f
 
 	// render projectiles
 	for (auto &projectile : attackable.projectiles) {
+		sdl::Renderer::Flip f = sdl::Renderer::Flip::None;
+		if (projectile.v.x < 0)
+			f = sdl::Renderer::Flip::None;
+
 		renderer.render(projectile.updateAnimation(frameDelta), projectile.calcPositionedHitbox());
 	}
-
 	// draw debug info
 	int width = attackable.hp > 0 ? static_cast<int>(hitbox.w * ((float)attackable.hp / attackable.maxHp)) : 0;
 	if (options.renderHealthBars || attackable.hp < attackable.maxHp)

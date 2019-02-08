@@ -142,8 +142,9 @@ void Attackable::updateProjectiles(sdl::GameClock::duration gameFrameDelta, cons
 
 void Attackable::launchProjectiles(Position currentPosition, Direction currentDirection)
 {
-	if (!isAttacking() || !dealsDamage || attacks[currentAttack].type != Attack::Type::Ranged)
+	if (!isAttacking() || !dealsDamage || attacks[currentAttack].type != Attack::Type::Ranged) {
 		return;
+	}
 
 	// spawn a projectile
 	auto &bluePrint = attacks[currentAttack].projectileBlueprint;

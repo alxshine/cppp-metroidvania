@@ -168,6 +168,12 @@ void Game::runMainLoop()
 
 			// **************** SET ALIAS VARIABLES
 			auto &mobs = currentRoom->mobs;
+			std::vector<Rectangle> mobHitboxes;
+			std::vector<Attackable *> mobAttackables;
+			for (auto &mob : mobs) {
+				mobHitboxes.push_back(mob.movable.calcPositionedHitbox());
+				mobAttackables.push_back(&mob.attackable);
+			}
 
 			// **************** HANDLE THE PLAYER ****************
 			// reset player velocity
@@ -189,6 +195,10 @@ void Game::runMainLoop()
 			resolveRoomCollision(player->movable, currentRoom->collisionMap);
 
 			// combat
+			player->attackable.updateProjectiles(gameFrameDelta, mobHitboxes, mobAttackables,
+			                                     currentRoom->collisionMap);
+			player->attackable.launchProjectiles(player->movable.getPosition(), player->movable.getDirection());
+
 			if (player->attackable.isAttacking()) {
 				auto hitbox = player->getAttackHitbox();
 				for (auto &m : mobs) {

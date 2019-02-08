@@ -54,6 +54,15 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 	else
 		renderer.render(idleAnimation.updateAnimation(frameDelta), destRect, flip);
 
+	// render projectiles
+	for (auto &projectile : attackable.projectiles) {
+		sdl::Renderer::Flip f = sdl::Renderer::Flip::None;
+		if (projectile.v.x < 0)
+			f = sdl::Renderer::Flip::None;
+
+		renderer.render(projectile.updateAnimation(frameDelta), projectile.calcPositionedHitbox());
+	}
+
 	// draw texture box
 	if (options.renderEntityDrawRectangles)
 		renderer.drawRectangle(destRect, {0, 0, 255, 128}, false);
@@ -126,8 +135,9 @@ void Player::attack()
 	attackable.attack(comboCount);
 }
 
-void Player::shadeBlast(){
-	if(!hasControl())
+void Player::shadeBlast()
+{
+	if (!hasControl())
 		return;
 
 	comboCount = 0;
