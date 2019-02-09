@@ -71,4 +71,5 @@ EndEntities
 OnClearEntities:
     Door: 115 170 Exit = TowerDoor (Left) -> DungeonEntrance in Hub
     Item: 150 169 Key_3
+    Item: 170 169 YetiPotion
 EndEntities

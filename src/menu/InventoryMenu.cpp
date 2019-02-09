@@ -35,7 +35,7 @@ void InventoryMenu::render(const Renderer &renderer, GameClock::duration frameDe
 	target.x = margin_x;
 	target.y = y;
 	y += title.sourceRectangle.h + padding_y;
-	int y_after_title = y;
+	// int y_after_title = y;
 	renderer.render(title, target);
 
 	// render items
@@ -64,25 +64,25 @@ void InventoryMenu::render(const Renderer &renderer, GameClock::duration frameDe
 	}
 
 	// render mobs
-	const int margin = 4 * margin_x;
-	x = margin;
-	y = y_after_title;
-	for (auto i : mobs) {
-		const int size_x = 30;
-		const int size_y = 30;
-		Rectangle dest{x, y, size_x, size_y};
-		// compute next grid position
-		x += size_x + padding_x;
-		// new line if necessary
-		if (x + size_x + margin_x >= renderer.logicalW) {
-			y += size_y + padding_y + 10; // 10 is guess for text height
-			x = margin;
-		}
-		renderer.render(i.idleAnimation.updateAnimation(frameDelta), dest);
-		auto text = SDL::getInstance().generateText(*font, i.name);
-		dest.y += size_y + 1;
-		dest.w = text.sourceRectangle.w;
-		dest.h = text.sourceRectangle.h;
-		renderer.render(text, dest);
-	}
+	// const int margin = 4 * margin_x;
+	// x = margin;
+	// y = y_after_title;
+	// for (auto i : mobs) {
+	// 	const int size_x = 30;
+	// 	const int size_y = 30;
+	// 	Rectangle dest{x, y, size_x, size_y};
+	// 	// compute next grid position
+	// 	x += size_x + padding_x;
+	// 	// new line if necessary
+	// 	if (x + size_x + margin_x >= renderer.logicalW) {
+	// 		y += size_y + padding_y + 10; // 10 is guess for text height
+	// 		x = margin;
+	// 	}
+	// 	renderer.render(i.idleAnimation.updateAnimation(frameDelta), dest);
+	// 	auto text = SDL::getInstance().generateText(*font, i.name);
+	// 	dest.y += size_y + 1;
+	// 	dest.w = text.sourceRectangle.w;
+	// 	dest.h = text.sourceRectangle.h;
+	// 	renderer.render(text, dest);
+	// }
 }

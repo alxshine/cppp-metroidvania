@@ -140,6 +140,9 @@ void Player::shadeBlast()
 	if (!hasControl())
 		return;
 
+	if (std::none_of(inventory.cbegin(), inventory.cend(), [](const Item &i) { return i.name == "ShadePotion"; }))
+		return;
+
 	comboCount = 0;
 	attackable.attack(3);
 }
@@ -149,6 +152,9 @@ void Player::singleSlam()
 	if (!hasControl())
 		return;
 
+	if (std::none_of(inventory.cbegin(), inventory.cend(), [](const Item &i) { return i.name == "GolemPotion"; }))
+		return;
+
 	comboCount = 0;
 	attackable.attack(4);
 }
@@ -156,6 +162,9 @@ void Player::singleSlam()
 void Player::doubleSlam()
 {
 	if (!hasControl())
+		return;
+
+	if (std::none_of(inventory.cbegin(), inventory.cend(), [](const Item &i) { return i.name == "YetiPotion"; }))
 		return;
 
 	comboCount = 0;
