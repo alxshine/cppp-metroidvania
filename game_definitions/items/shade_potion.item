@@ -1,0 +1,11 @@
+Name: ShadePotion
+Behaviour: FFSIDONTWANTTHIS
+Hitbox: 0 0 10 10
+DrawSize: 0 0 10 10
+
+Animation:
+    Spritesheet: shade_potion.png
+    Time: 1
+    SpriteSize: 64 64
+    Frame: 0 0
+EndAnimation
