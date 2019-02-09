@@ -91,6 +91,7 @@ struct MobRef {
 
 struct Item {
 	std::string name;
+	std::string description;
 	Rectangle hitbox;
 	Rectangle drawSize;
 	Animation animation;

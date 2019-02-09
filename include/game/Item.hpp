@@ -9,7 +9,7 @@ namespace game {
 
 class Item : public sdl::Renderable {
   public:
-	Item(const std::string name, Rectangle hitbox, Rectangle renderSize, const sdl::Animation animation);
+	Item(std::string name, std::string description, Rectangle hitbox, Rectangle renderSize, sdl::Animation animation);
 	Item(const Item &rhs);
 	virtual ~Item();
 
@@ -17,6 +17,7 @@ class Item : public sdl::Renderable {
 	            const sdl::RenderOptions &options = {}) override;
 
 	std::string name;
+	std::string description;
 	Movable movable;
 	bool pickedUp = false;
 	sdl::Animation animation;

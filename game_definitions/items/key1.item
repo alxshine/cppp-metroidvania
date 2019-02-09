@@ -1,4 +1,5 @@
 Name: Key_1
+Description: Opens the door to the Hub and the Dungeon EndDescription
 Behaviour: FFSIDONTWANTTHIS
 Hitbox: 0 0 10 10
 DrawSize: 0 0 10 10

@@ -91,9 +91,10 @@ void Game::interact()
 				saveState();
 				player->attackable.hp = player->attackable.maxHp;
 			} else {
-				std::cout << "Player interacted with " << i.name << std::endl;
+				// std::cout << "Player interacted with " << i.name << std::endl;
 				player->inventory.insert(i);
 				i.pickedUp = true;
+				menuStack.push(std::make_unique<MessageBox>([&]() { menuStack.pop(); }, i.description));
 			}
 			return;
 		}

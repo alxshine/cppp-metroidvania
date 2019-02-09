@@ -1,12 +1,15 @@
 #include "game/Item.hpp"
 using namespace game;
 
-Item::Item(const std::string name, Rectangle hitbox, Rectangle renderSize, const sdl::Animation anim)
-    : name(name), movable(hitbox, 0), animation(anim), renderSize(renderSize)
+Item::Item(std::string name, std::string description, Rectangle hitbox, Rectangle renderSize, const sdl::Animation anim)
+    : name(std::move(name)), description(std::move(description)), movable(hitbox, 0), animation(anim),
+      renderSize(renderSize)
 {
 }
 
-Item::Item(const Item &rhs) : name(rhs.name), movable(rhs.movable), animation(rhs.animation), renderSize(rhs.renderSize)
+Item::Item(const Item &rhs)
+    : name(rhs.name), description(rhs.description), movable(rhs.movable), animation(rhs.animation),
+      renderSize(rhs.renderSize)
 {
 }
 

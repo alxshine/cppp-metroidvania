@@ -153,7 +153,7 @@ std::unique_ptr<Item> ResourceManager::makeItem(const game_definitions::Item &it
 
 	// TODO behaviour
 
-	return std::make_unique<Item>(itemdef.name, itemdef.hitbox, itemdef.drawSize, anim);
+	return std::make_unique<Item>(itemdef.name, itemdef.description, itemdef.hitbox, itemdef.drawSize, anim);
 }
 
 std::unique_ptr<Room> ResourceManager::makeRoom(const game_definitions::Room &roomDef) const

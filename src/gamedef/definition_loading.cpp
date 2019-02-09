@@ -301,6 +301,17 @@ std::istream &game_definitions::operator>>(std::istream &in, Item &item)
 	in >> item.name;
 
 	in >> keyword;
+	testString("Description:", keyword);
+	std::ostringstream s;
+	while (true) {
+		in >> keyword;
+		if (keyword == "EndDescription")
+			break;
+		s << keyword << " ";
+	}
+	item.description = s.str();
+
+	in >> keyword;
 	testString("Behaviour:", keyword);
 	in >> item.behaviour;
 
