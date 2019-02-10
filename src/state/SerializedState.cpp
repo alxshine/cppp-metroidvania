@@ -18,7 +18,8 @@ std::ostream &game::operator<<(std::ostream &out, SerializedState &state)
 	}
 	out << "endlist" << std::endl;
 
-	return out << state.playerState.position.x << " " << state.playerState.position.y << std::endl;
+	return out << state.playerState.position.x << " " << state.playerState.position.y << " " << state.playerState.level
+	           << " " << state.playerState.xp << std::endl;
 }
 std::istream &game::operator>>(std::istream &in, SerializedState &state)
 {
@@ -40,7 +41,8 @@ std::istream &game::operator>>(std::istream &in, SerializedState &state)
 
 		state.inventory.insert(nextKeyword);
 	}
-	in >> state.playerState.position.x >> state.playerState.position.y;
+	in >> state.playerState.position.x >> state.playerState.position.y >> state.playerState.level >>
+	    state.playerState.xp;
 
 	return in;
 }

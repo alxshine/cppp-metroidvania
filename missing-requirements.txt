@@ -12,8 +12,8 @@ DONE    getting hit by enemies
 DONE    like spell slinging, hacking, you name it
 
 player character
-    gets stronger over the course of the game (XP / level-up)
-    can equip found items to further increase stats
+DONE    gets stronger over the course of the game (XP / level-up)
+DONE    can equip found items to further increase stats (we have the transformation potions, I'm sure that counts)
 
 enemies
 DONE    attack the player character as it gets in range

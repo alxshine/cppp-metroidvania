@@ -11,6 +11,7 @@
 #include "game/room_helpers.hpp"
 #include "menu/SelectionMenu.hpp"
 #include "state/LoadMenu.hpp"
+#include "menu/StatMenu.hpp"
 
 using namespace std::chrono_literals;
 

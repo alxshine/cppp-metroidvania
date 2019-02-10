@@ -199,8 +199,9 @@ Rectangle Player::getAttackHitbox()
 void Player::addXp(int toAdd)
 {
 	xp += toAdd;
-	if (xp > 100) {
-		xp -= 100;
+	if (xp > levelThreshold) {
+		std::cout << "level up" << std::endl;
+		xp -= levelThreshold;
 		level++;
 		attackable.maxHp = 30 + 20 * level;
 		attackable.hp = attackable.maxHp;

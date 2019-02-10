@@ -36,7 +36,7 @@ Game::Game(std::string definitions, std::string assets, std::string first_room, 
 
 void Game::resetState()
 {
-	static SerializedState defaultState{0, firstRoom, {"First"}, {}, {initialPosition}};
+	static SerializedState defaultState{0, firstRoom, {"First"}, {}, {initialPosition, 1, 0}};
 	loadState(defaultState);
 
 	menuStack.push(std::make_shared<menu::MessageBox>([&]() { menuStack.pop(); }, "Welcome to our Metroidvania-like!",
@@ -49,8 +49,11 @@ void Game::saveState()
 	std::set<std::string> inventory;
 	for (auto &i : player->inventory)
 		inventory.insert(i.name);
-	SerializedState state{
-	    unlockedAreas, currentRoom->name, player->visitedRooms, inventory, {player->movable.position}};
+	SerializedState state{unlockedAreas,
+	                      currentRoom->name,
+	                      player->visitedRooms,
+	                      inventory,
+	                      {player->movable.position, player->getLevel(), player->getXp()}};
 
 	// std::time_t now = time(nullptr);
 	// char nowstr[100];
@@ -77,6 +80,7 @@ void Game::loadState(SerializedState state)
 		player->movable.maxJumps = 2;
 	else
 		player->movable.maxJumps = 1;
+	player->setLeveling(state.playerState.level, state.playerState.xp);
 
 	play_fade_in(currentRoom->music, repeat_forever, 500ms);
 	player->movable.reposition(state.playerState.position);
@@ -251,8 +255,11 @@ void Game::runMainLoop()
 
 			// ******************* REMOVE UNNEEDED ***********
 			auto emptyBefore = mobs.empty();
-			mobs.erase(remove_if(mobs.begin(), mobs.end(), [](Mob &m) { return m.attackable.done(); }),
-			           mobs.end()); // TODO: xp, spawn items, unlock moves
+			auto end = remove_if(mobs.begin(), mobs.end(), [](Mob &m) { return m.attackable.done(); });
+			for (auto it = end; it != mobs.end(); ++it)
+				player->addXp(it->attackable.maxHp);
+			mobs.erase(end, mobs.end());
+
 			// spawn key items only if the mob list is empty
 
 			if (!emptyBefore && mobs.empty()) {
@@ -308,18 +315,18 @@ void Game::registerGameEvents()
 {
 	// quit
 	gameEvents.on(SDL_QUIT, [this](const Event &) { state = State::exit; });
+
 	gameEvents.onKeyDown(SDLK_ESCAPE, [this](const KeyboardEvent &) {
 		std::vector<RawMenuItem> pauseMenuItems = {
 		    {"Map",
 		     [&]() {
 			     menuStack.push(std::make_shared<MapMenu>(currentRoom->name, *player, res, [&]() { menuStack.pop(); }));
 		     }},
-		    {"Stats", [&]() { /* TODO stats menu */ }},
+		    {"Stats", [&]() { menuStack.push(std::make_shared<StatMenu>(*player, [&]() { menuStack.pop(); })); }},
 		    {"Inventory",
 		     [&]() {
-			     // TODO: @alex track killed mobs as well as player inventory
 			     menuStack.push(std::make_shared<InventoryMenu>(player->inventory, std::set{res.getMob("Shade")},
-			                                                    [&]() { menuStack.pop(); }));
+			                                               [&]() { menuStack.pop(); }));
 		     }},
 		    {"Resume", [&]() { menuStack.pop(); }},
 		    {"Main Menu", [&]() {

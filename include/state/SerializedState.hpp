@@ -1,9 +1,9 @@
 #ifndef SERIALIZED_STATE_H
 #define SERIALIZED_STATE_H
 
-#include <string>
-#include <set>
 #include <iostream>
+#include <set>
+#include <string>
 
 #include "game/constants.hpp"
 
@@ -22,6 +22,7 @@ struct SerializedState final {
 
 	struct PlayerState {
 		Position position;
+		int level, xp;
 	} playerState;
 };
 
