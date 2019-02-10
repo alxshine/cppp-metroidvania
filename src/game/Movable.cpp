@@ -36,27 +36,30 @@ Movable::Movable(const Movable &rhs)
 {
 }
 
-Movable &Movable::operator=(const Movable &rhs){
-  position = rhs.position;
-  lastPosition = rhs.lastPosition;
-  direction = rhs.direction;
-  moved = rhs.moved;
-  isMoving = rhs.isMoving;
-  grounded = rhs.grounded;
-  maxJumps = rhs.maxJumps;
-  jumps = rhs.jumps;
-  maxSpeed = rhs.maxSpeed;
-  runningAnimation = rhs.runningAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.runningAnimation) : nullptr;
-  airUpAnimation = rhs.airUpAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.airUpAnimation) : nullptr;
-  airDownAnimation = rhs.airDownAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.airDownAnimation) : nullptr;
+Movable &Movable::operator=(const Movable &rhs)
+{
+	position = rhs.position;
+	lastPosition = rhs.lastPosition;
+	direction = rhs.direction;
+	moved = rhs.moved;
+	isMoving = rhs.isMoving;
+	grounded = rhs.grounded;
+	maxJumps = rhs.maxJumps;
+	jumps = rhs.jumps;
+	maxSpeed = rhs.maxSpeed;
+	runningAnimation =
+	    rhs.runningAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.runningAnimation) : nullptr;
+	airUpAnimation = rhs.airUpAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.airUpAnimation) : nullptr;
+	airDownAnimation =
+	    rhs.airDownAnimation != nullptr ? std::make_unique<sdl::Animation>(*rhs.airDownAnimation) : nullptr;
 
-  hitbox = rhs.hitbox;
-  v = rhs.v;
-  canMove =rhs.canMove;
-  fallThroughPlatforms = rhs.fallThroughPlatforms;
-  initialPosition = rhs.initialPosition;
+	hitbox = rhs.hitbox;
+	v = rhs.v;
+	canMove = rhs.canMove;
+	fallThroughPlatforms = rhs.fallThroughPlatforms;
+	initialPosition = rhs.initialPosition;
 
-  return *this;
+	return *this;
 };
 
 game::Rectangle Movable::calcPositionedHitbox() const
@@ -111,8 +114,8 @@ void Movable::jump()
 {
 	if (!canMove)
 		return;
-	if (jumps > 0){
-    jumps--;
+	if (jumps > 0) {
+		jumps--;
 		v.y = -2 * maxSpeed;
 		grounded = false;
 		moved = true;
@@ -139,8 +142,8 @@ void Movable::applyGravity(std::chrono::milliseconds frameDelta)
 
 void Movable::reposition(Position newPosition)
 {
-	initialPosition = position;
-	lastPosition = position;
+	initialPosition = newPosition;
+	lastPosition = newPosition;
 	position = newPosition;
 }
 
