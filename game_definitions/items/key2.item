@@ -1,5 +1,5 @@
 Name: Key_2
-Description: Opens the door to the Tower EndDescription
+Description: Opens the Tower EndDescription
 Behaviour: FFSIDONTWANTTHIS
 Hitbox: 0 0 10 10
 DrawSize: 0 0 10 10

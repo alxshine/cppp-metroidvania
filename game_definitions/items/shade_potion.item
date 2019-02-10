@@ -1,5 +1,5 @@
 Name: ShadePotion
-Description: Allows you to briefly transform into a shade using U EndDescription
+Description: Press U EndDescription
 Behaviour: FFSIDONTWANTTHIS
 Hitbox: 0 0 10 10
 DrawSize: 0 0 10 10

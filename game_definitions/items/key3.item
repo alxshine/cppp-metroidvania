@@ -1,5 +1,5 @@
 Name: Key_3
-Description: Opens the door to the Crypt EndDescription
+Description: Opens the Crypt EndDescription
 Behaviour: FFSIDONTWANTTHIS
 Hitbox: 0 0 10 10
 DrawSize: 0 0 10 10

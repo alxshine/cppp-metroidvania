@@ -1,5 +1,5 @@
 Name: YetiPotion
-Description: Allows you to briefly transform into a Yeti using O EndDescription
+Description: Press O EndDescription
 Behaviour: FFSIDONTWANTTHIS
 Hitbox: 0 0 10 10
 DrawSize: 0 0 10 10

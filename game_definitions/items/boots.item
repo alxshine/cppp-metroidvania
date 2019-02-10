@@ -1,12 +1,12 @@
-Name: Key_1
-Description: Opens Hub and Dungeon EndDescription
+Name: JumpBoots
+Description: Lets you double jump EndDescription
 Behaviour: FFSIDONTWANTTHIS
 Hitbox: 0 0 10 10
 DrawSize: 0 0 10 10
 
 Animation:
-    Spritesheet: Key.png
+    Spritesheet: Items1.png
     Time: 1
     SpriteSize: 16 16
-    Frame: 0 0
+    Frame: 3 6
 EndAnimation

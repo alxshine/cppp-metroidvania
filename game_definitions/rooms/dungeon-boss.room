@@ -62,4 +62,5 @@ OnClearEntities:
     Door: 15 200 Exit = DungeonDoor (Left) -> DungeonEntrance in Hub
     Item: 150 200 Key_2
     Item: 170 200 GolemPotion
+    Item: 190 200 JumpBoots
 EndEntities

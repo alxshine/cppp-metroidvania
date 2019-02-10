@@ -5,7 +5,7 @@ using namespace game;
 Player::Player(sdl::Animation idleAnimation, sdl::Animation walkingAnimation, sdl::Animation airUpAnimation,
                sdl::Animation airDownAnimation, sdl::Animation deathAnimation, sdl::Animation hurtAnimation,
                sdl::Animation slideAnimation, std::vector<Attack> attacks)
-    : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation, {0, 0}, 2),
+    : movable(hitbox, 100, walkingAnimation, airUpAnimation, airDownAnimation, {0, 0}, 1),
       attackable(100, 0, attacks, deathAnimation, hurtAnimation, std::chrono::milliseconds(1000)),
       idleAnimation(idleAnimation), slideAnimation(slideAnimation)
 {

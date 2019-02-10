@@ -72,6 +72,12 @@ void Game::loadState(SerializedState state)
 	currentRoom = std::make_unique<Room>(res.getRoom(state.currentRoomName));
 	player->visitedRooms = std::move(state.visitedRooms);
 	player->inventory = inventory;
+	if (std::any_of(player->inventory.cbegin(), player->inventory.cend(),
+	                [](const Item &i) { return i.name == "JumpBoots"; }))
+		player->movable.maxJumps = 2;
+	else
+		player->movable.maxJumps = 1;
+
 	play_fade_in(currentRoom->music, repeat_forever, 500ms);
 	player->movable.reposition(state.playerState.position);
 	player->attackable.reset();
@@ -94,6 +100,8 @@ void Game::interact()
 				// std::cout << "Player interacted with " << i.name << std::endl;
 				player->inventory.insert(i);
 				i.pickedUp = true;
+				if (i.name == "JumpBoots")
+					player->movable.maxJumps = 2; // TODO: this is ugly, but the fastest way to do it
 				menuStack.push(std::make_unique<MessageBox>([&]() { menuStack.pop(); }, i.description));
 			}
 			return;
@@ -128,6 +136,7 @@ void Game::interact()
 				std::cerr << "No door named " << door.targetDoorName << " in room " << door.targetRoom << std::endl;
 			} else {
 				auto newPosition = newDoorIt->item.movable.getPosition();
+				std::cout << "newPosition" << std::endl;
 				newPosition.x += player->movable.hitbox.w / 2;
 				player->movable.reposition(newPosition);
 				player->movable.setDirection(door.direction);
