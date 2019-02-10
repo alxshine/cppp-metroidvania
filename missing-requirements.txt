@@ -1,9 +1,7 @@
 1 or more advanced movement mechanics
 DONE    double jump
 DONE    sliding
-    needs to be unlocked (link to an item?)
-
-
+DONE    needs to be unlocked (link to an item?)
 
 main combat
 DONE    melee and/or ranged
@@ -11,7 +9,7 @@ DONE    hitting enemies
 DONE    getting hit by enemies
 
 1 secondary combat mechanic
-    like spell slinging, hacking, you name it
+DONE    like spell slinging, hacking, you name it
 
 player character
     gets stronger over the course of the game (XP / level-up)
@@ -22,7 +20,6 @@ DONE    attack the player character as it gets in range
 DONE    variants with melee attacks
 DONE    variants with ranged attacks
 DONE    bosses are capable of using different attacks
-    (optional) gating for enemies (would make backtracking more interesting if harder mobs spawned)
 
 map
 DONE    shows discovered rooms and their doorways
@@ -40,6 +37,6 @@ DONE    exit
 
 pause menu
     shows player stats
-    inventory management
+DONE    inventory management
 DONE    continue
 DONE    go to main menu
