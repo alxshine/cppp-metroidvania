@@ -136,7 +136,6 @@ void Game::interact()
 				std::cerr << "No door named " << door.targetDoorName << " in room " << door.targetRoom << std::endl;
 			} else {
 				auto newPosition = newDoorIt->item.movable.getPosition();
-				std::cout << "newPosition" << std::endl;
 				newPosition.x += player->movable.hitbox.w / 2;
 				player->movable.reposition(newPosition);
 				player->movable.setDirection(door.direction);

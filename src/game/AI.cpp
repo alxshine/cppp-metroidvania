@@ -37,7 +37,8 @@ void StandingAI::controlEntity(Movable &movable, Attackable &attackable, const C
 	}
 }
 
-void ConfinedPatrollingAI::controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &, Rectangle playerHitbox)
+void ConfinedPatrollingAI::controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &,
+                                         Rectangle playerHitbox)
 {
 	const int patrolDistance = tileSize.w; // just a benchmark
 
@@ -105,8 +106,6 @@ void PatrollingAI::controlEntity(Movable &movable, Attackable &attackable, const
 void TwoPhaseBossAI::controlEntity(Movable &movable, Attackable &attackable, const CollisionMap &,
                                    Rectangle playerHitbox)
 {
-	const int patrolDistance = 3 * tileSize.w; // just a benchmark
-
 	if (attackable.isAttacking())
 		return;
 
@@ -123,19 +122,10 @@ void TwoPhaseBossAI::controlEntity(Movable &movable, Attackable &attackable, con
 		return;
 	}
 
-	// Patrol
-	auto xDiff = movable.getPosition().x - movable.initialPosition.x;
-	if (xDiff > patrolDistance) {
-		// we are at the right end of the patrol area
-		movable.moveLeft();
-	} else if (xDiff < -patrolDistance) {
-		// left end
+	// Walk to the player
+	auto xDiff = playerHitbox.x - movable.getPosition().x;
+	if (xDiff > 10)
 		movable.moveRight();
-	} else {
-		// otherwise continue moving
-		if (movable.getDirection().x >= 0)
-			movable.moveRight();
-		else
-			movable.moveLeft();
-	}
+	if (xDiff < -10)
+		movable.moveLeft();
 }
