@@ -52,6 +52,21 @@ class Player : public sdl::Renderable {
 
 	std::set<Item> inventory;
 
+	void addXp(int xp);
+	void setLeveling(int level, int xp);
+	inline int getLevel() const
+	{
+		return level;
+	}
+	inline int getXp() const
+	{
+		return xp;
+	}
+	inline float getDamageMultiplier() const
+	{
+		return 0.5 + 0.5 * level;
+	}
+
   private:
 	static constexpr Rectangle hitbox{0, 0, tileSize.w, tileSize.h * 2};
 	Rectangle calcRenderTarget() const;
@@ -59,6 +74,8 @@ class Player : public sdl::Renderable {
 	sdl::Animation slideAnimation;
 	bool isSliding = false;
 	int comboCount = 0;
+	int level = 1;
+	int xp = 0;
 	const sdl::GameClock::duration comboTimer = sdl::GameClock::duration(50);
 
 	inline bool hasControl()

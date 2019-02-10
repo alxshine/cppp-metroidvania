@@ -37,10 +37,10 @@ Rectangle Attackable::getHitbox(Position position, int attackIndex, bool flip) c
 	else
 		return {position.x + currentHitbox.x, position.y + currentHitbox.y, currentHitbox.w, currentHitbox.h};
 }
-void Attackable::hit(Attackable &other)
+void Attackable::hit(Attackable &other, float damageMultiplier)
 {
 	if (isAttacking() && alreadyHit.find(&other) == alreadyHit.end() && dealsDamage) {
-		other.hurt(attacks[currentAttack].damage);
+		other.hurt(attacks[currentAttack].damage * damageMultiplier);
 		alreadyHit.insert(&other);
 	}
 }
@@ -127,12 +127,13 @@ void Attackable::updateProjectiles(sdl::GameClock::duration gameFrameDelta, Rect
 }
 
 void Attackable::updateProjectiles(sdl::GameClock::duration gameFrameDelta, const std::vector<Rectangle> &hitboxes,
-                                   std::vector<Attackable *> &attackables, const CollisionMap &collisionMap)
+                                   std::vector<Attackable *> &attackables, const CollisionMap &collisionMap,
+                                   float damageMultiplier)
 {
 	for (auto &p : projectiles) {
 		int toHurt = p.update(gameFrameDelta, hitboxes, collisionMap);
 		if (toHurt >= 0) {
-			attackables[toHurt]->hurt(p.damage);
+			attackables[toHurt]->hurt(p.damage * damageMultiplier);
 		}
 	}
 

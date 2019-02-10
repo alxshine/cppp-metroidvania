@@ -195,3 +195,22 @@ Rectangle Player::getAttackHitbox()
 {
 	return attackable.getHitbox(movable.getPosition(), movable.getDirection().x < 0);
 }
+
+void Player::addXp(int toAdd)
+{
+	xp += toAdd;
+	if (xp > 100) {
+		xp -= 100;
+		level++;
+		attackable.maxHp = 30 + 20 * level;
+		attackable.hp = attackable.maxHp;
+	}
+}
+
+void Player::setLeveling(int l, int x)
+{
+	level = l;
+	xp = x;
+	attackable.maxHp = 30 + 20 * level;
+	attackable.hp = attackable.maxHp;
+}

@@ -204,15 +204,15 @@ void Game::runMainLoop()
 			resolveRoomCollision(player->movable, currentRoom->collisionMap);
 
 			// combat
-			player->attackable.updateProjectiles(gameFrameDelta, mobHitboxes, mobAttackables,
-			                                     currentRoom->collisionMap);
+			player->attackable.updateProjectiles(gameFrameDelta, mobHitboxes, mobAttackables, currentRoom->collisionMap,
+			                                     player->getDamageMultiplier());
 			player->attackable.launchProjectiles(player->movable.getPosition(), player->movable.getDirection());
 
 			if (player->attackable.isAttacking()) {
 				auto hitbox = player->getAttackHitbox();
 				for (auto &m : mobs) {
 					if (intersects(hitbox, m.movable.calcPositionedHitbox()))
-						player->attackable.hit(m.attackable);
+						player->attackable.hit(m.attackable, player->getDamageMultiplier());
 				}
 			}
 

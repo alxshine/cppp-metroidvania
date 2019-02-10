@@ -27,13 +27,14 @@ class Attackable {
 
 	Rectangle getHitbox(Position position, bool flip = false) const;
 	Rectangle getHitbox(Position position, int attackIndex, bool flip = false) const;
-	void hit(Attackable &other);
+	void hit(Attackable &other, float damageMultiplier = 1.);
 	void hurt(int damage);
 	void update(sdl::GameClock::duration frameDelta);
 	void updateProjectiles(sdl::GameClock::duration, Rectangle hitboxes, Attackable &attackable,
 	                       const CollisionMap &collisionMap);
 	void updateProjectiles(sdl::GameClock::duration, const std::vector<Rectangle> &hitboxes,
-	                       std::vector<Attackable *> &attackables, const CollisionMap &collisionMap);
+	                       std::vector<Attackable *> &attackables, const CollisionMap &collisionMap,
+	                       float damageMultiplier = 1.);
 	void launchProjectiles(Position currentPosition, Direction currentDirection);
 	inline bool isAttacking() const
 	{
