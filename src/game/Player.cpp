@@ -56,9 +56,9 @@ void Player::render(const sdl::Renderer &renderer, sdl::GameClock::duration fram
 
 	// render projectiles
 	for (auto &projectile : attackable.projectiles) {
-		sdl::Renderer::Flip f = sdl::Renderer::Flip::None;
-		if (projectile.v.x < 0)
-			f = sdl::Renderer::Flip::None;
+		// sdl::Renderer::Flip f = sdl::Renderer::Flip::None;
+		// if (projectile.v.x < 0)
+		// 	f = sdl::Renderer::Flip::None;
 
 		renderer.render(projectile.updateAnimation(frameDelta), projectile.calcPositionedHitbox());
 	}
@@ -196,16 +196,17 @@ Rectangle Player::getAttackHitbox()
 	return attackable.getHitbox(movable.getPosition(), movable.getDirection().x < 0);
 }
 
-void Player::addXp(int toAdd)
+bool Player::addXp(int toAdd)
 {
 	xp += toAdd;
 	if (xp > levelThreshold) {
-		std::cout << "level up" << std::endl;
 		xp -= levelThreshold;
 		level++;
 		attackable.maxHp = 30 + 20 * level;
 		attackable.hp = attackable.maxHp;
+		return true;
 	}
+	return false;
 }
 
 void Player::setLeveling(int l, int x)

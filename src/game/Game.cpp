@@ -257,7 +257,8 @@ void Game::runMainLoop()
 			auto emptyBefore = mobs.empty();
 			auto end = remove_if(mobs.begin(), mobs.end(), [](Mob &m) { return m.attackable.done(); });
 			for (auto it = end; it != mobs.end(); ++it)
-				player->addXp(it->attackable.maxHp);
+				if (player->addXp(it->attackable.maxHp))
+					menuStack.push(std::make_shared<menu::MessageBox>([&]() { menuStack.pop(); }, "Level up!"));
 			mobs.erase(end, mobs.end());
 
 			// spawn key items only if the mob list is empty

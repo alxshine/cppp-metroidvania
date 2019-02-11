@@ -52,7 +52,7 @@ class Player : public sdl::Renderable {
 
 	std::set<Item> inventory;
 
-	void addXp(int xp);
+	bool addXp(int xp);
 	void setLeveling(int level, int xp);
 	inline int getLevel() const
 	{
