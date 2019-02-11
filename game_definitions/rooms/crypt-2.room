@@ -1,7 +1,7 @@
 Name: Crypt-2
 Background: black.png
 Music: dark-dungeon-chiptune.ogg
-Location: 150 60
+Location: 200 60
 GatingArea: 3
 
 Tileset: awesome.png

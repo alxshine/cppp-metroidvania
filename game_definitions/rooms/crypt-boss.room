@@ -1,7 +1,7 @@
 Name: Crypt-Boss
 Background: black.png
 Music: dark-dungeon-chiptune.ogg
-Location: 150 60
+Location: 250 60
 GatingArea: 3
 
 Tileset: awesome.png
@@ -56,7 +56,7 @@ Layout:
 EndLayout
 
 Entities:
-    Door: 15 30 Entrance = CryptDoor (Left) -> Exit in Crypt-2
+    Door: 15 30 Entrance = CryptDoor (Left) -> Entrance in Crypt-2
     Item: 25 30 Savepoint
     Mob: 200 200 Minotaur
 EndEntities
