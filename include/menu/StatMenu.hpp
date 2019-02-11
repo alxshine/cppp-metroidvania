@@ -32,6 +32,14 @@ class StatMenu : public menu::Menu {
 	int hp;
 	int maxHp;
 	int threshold;
+	int multiplier;
+	int dmg1;
+	int dmg2;
+	int dmg3;
+	int dmg4 = 0;
+	int dmg5 = 0;
+	int dmg6 = 0;
+
 };
 
 } // namespace game
