@@ -28,7 +28,7 @@ DONE    shows where the player is currently located
 
 game over
 DONE    player dies
-    player defeats final boss
+DONE    player defeats final boss
 
 main menu
 DONE    new game
@@ -36,7 +36,7 @@ DONE    load game
 DONE    exit
 
 pause menu
-    shows player stats
+DONE    shows player stats
 DONE    inventory management
 DONE    continue
 DONE    go to main menu
