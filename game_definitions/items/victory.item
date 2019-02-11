@@ -1,0 +1,12 @@
+Name: VictoryItem
+Description: For winners! EndDescription
+Behaviour: FFSIDONTWANTTHIS
+Hitbox: 0 0 10 10
+DrawSize: 0 0 10 10
+
+Animation:
+    Spritesheet: Items1.png
+    Time: 1
+    SpriteSize: 16 16
+    Frame: 7 8
+EndAnimation
