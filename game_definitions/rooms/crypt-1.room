@@ -1,0 +1,65 @@
+Name: Crypt-1
+Background: black.png
+Music: dark-dungeon-chiptune.ogg
+Location: 150 60
+GatingArea: 3
+
+Tileset: awesome.png
+Tiles:
+    . empty     0 0 0 0 None
+    b bottom    16 160 16 16 Full
+    l left      0  144 16 16 Full
+    r right     32 144 16 16 Full
+    t top       16 128 16 16 Full
+    d bl        0  160 16 16 Full
+    k br        32 160 16 16 Full
+    D tl        0  128 16 16 Full
+    K tr        32 128 16 16 Full
+    O trup      64 144 16 16 Full
+    ^ ore       16 144 16 16 None
+    # skull     180 160 16 16 None
+    * torch     224 178 16 15 None
+    + bricks    192 176 16 15 None
+    + torch     208 128 16 16 None
+    | column    208 160 16 16 Full
+    = column    224 160 16 16 None
+    @ statue    208 144 16 16 None
+    G gem       80 272 16 16 None
+    _ platform  48 32 16 16 TopOnly
+    - platform  48 32 16 16 None
+    EndTiles
+
+Layout:
+    Layer:
+        DtttttttttttttttttttttttttttttttttttK
+        l...................................r
+        l........*..................*.......r
+        lbb.....................+...........r
+        l...................................r
+        l............+......................r
+        l...................................r
+        l...................................r
+        l...................................r
+        l........*........*.........*.......r
+        l...................+...............r
+        l...................................r
+        l.....+.............................r
+        l.................+.................r
+        l...................................r
+        l...........................+.......r
+        l...................................r
+        l...................................r
+        l...................................r
+        l....#..............#..........#....r
+        dbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbk
+    EndLayer
+EndLayout
+
+Entities:
+    Door: 15 30 Entrance = CryptDoor (Left) -> CryptEntrance in Hub
+    Mob: 80 200 Shade
+    Mob: 200 200 Golem
+EndEntities
+OnClearEntities:
+    Door: 15 200 Exit = CryptDoor (Left) -> Entrance in Crypt-2
+EndEntities

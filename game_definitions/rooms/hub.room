@@ -57,8 +57,9 @@ EndLayout
 
 Entities:
     Door: 20 170 Entrance = TestDoor (Left) -> Exit in Fourth
-    Door: 250 171 DungeonEntrance = TestDoor (Right) -> Entrance in Dungeon-1
-    Door: 140 110 TowerEntrance = TestDoor (Right) -> Entrance in Tower-1
+    Door: 250 170 DungeonEntrance = DungeonDoor (Right) -> Entrance in Dungeon-1
+    Door: 140 110 TowerEntrance = TowerDoor (Right) -> Entrance in Tower-1
+    Door: 270 140 CryptEntrance = CryptDoor (Right) -> Entrance in Crypt-1
     Item: 170 171 Savepoint
 EndEntities
 OnClearEntities:
