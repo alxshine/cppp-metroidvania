@@ -162,8 +162,8 @@ static Position calcCameraPosition(const Player &player, const Room &room, const
 
 	if (p.x >= 0.5 * renderer.logicalW)
 		camera.x = std::min(p.x - renderer.logicalW / 2, rs.w - renderer.logicalW);
-	if (p.y <= 0.5 * renderer.logicalH)
-		camera.y = std::max(p.y - renderer.logicalH / 2, 0);
+	if (p.y - player.movable.hitbox.h <= 0.6 * renderer.logicalH)
+		camera.y = std::max(p.y - player.movable.hitbox.h - renderer.logicalH / 2, 0);
 	return camera;
 }
 
