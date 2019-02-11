@@ -100,6 +100,17 @@ void Game::interact()
 			if (i.name == "Savepoint") {
 				saveState();
 				player->attackable.hp = player->attackable.maxHp;
+			} else if (i.name == "VictoryItem") {
+				std::vector<RawMenuItem> gameOverMenuItems = {
+				    {"Main Menu",
+				     [&]() {
+					     menuStack.pop();
+					     menuStack.push(mainMenu);
+					     mainMenu->playMusic();
+				     }},
+				};
+				menuStack.push(
+				    std::make_shared<SelectionMenu>("You Won!", gameOverMenuItems, res.getMusic("FFIV-victory.ogg"), [&]() {}));
 			} else {
 				// std::cout << "Player interacted with " << i.name << std::endl;
 				player->inventory.insert(i);
@@ -288,7 +299,7 @@ void Game::runMainLoop()
 				};
 				// TODO play game over music? ... depending on win or loss?
 				menuStack.push(
-				    std::make_shared<SelectionMenu>("Game Over!", gameOverMenuItems, std::nullopt, [&]() {}));
+				    std::make_shared<SelectionMenu>("Game Over!", gameOverMenuItems, res.getMusic("game-over.ogg"), [&]() {}));
 			}
 
 			// ******************* RENDERING *****************

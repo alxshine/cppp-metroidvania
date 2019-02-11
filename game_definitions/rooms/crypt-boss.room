@@ -61,4 +61,5 @@ Entities:
     Mob: 200 200 Minotaur
 EndEntities
 OnClearEntities:
+    Item: 200 200 VictoryItem
 EndEntities

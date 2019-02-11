@@ -30,7 +30,7 @@ SelectionMenu::SelectionMenu(std::string title, std::vector<RawMenuItem> items,
 void SelectionMenu::playMusic()
 {
 	if (music)
-		play(*music, repeat_forever);
+		play(*music);
 }
 
 void SelectionMenu::render(const Renderer &renderer, GameClock::duration, const RenderOptions &)
