@@ -162,8 +162,15 @@ static Position calcCameraPosition(const Player &player, const Room &room, const
 
 	if (p.x >= 0.5 * renderer.logicalW)
 		camera.x = std::min(p.x - renderer.logicalW / 2, rs.w - renderer.logicalW);
-	if (p.y <= 0.5 * renderer.logicalH)
-		camera.y = std::max(p.y - renderer.logicalH / 2, 0);
+
+	// center around head
+	camera.y = p.y - player.movable.hitbox.h - 0.5 * renderer.logicalH;
+	// clamp bottom to bottom border
+	if (camera.y + renderer.logicalH > rs.h)
+		camera.y = rs.h - renderer.logicalH;
+	// clamp top to top border
+	camera.y = std::max(camera.y, 0);
+
 	return camera;
 }
 
@@ -327,7 +334,7 @@ void Game::registerGameEvents()
 		    {"Inventory",
 		     [&]() {
 			     menuStack.push(std::make_shared<InventoryMenu>(player->inventory, std::set{res.getMob("Shade")},
-			                                               [&]() { menuStack.pop(); }));
+			                                                    [&]() { menuStack.pop(); }));
 		     }},
 		    {"Resume", [&]() { menuStack.pop(); }},
 		    {"Main Menu", [&]() {
