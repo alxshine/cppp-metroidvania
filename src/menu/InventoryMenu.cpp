@@ -6,8 +6,7 @@ using namespace menu;
 using namespace game;
 using namespace sdl;
 
-InventoryMenu::InventoryMenu(std::set<Item> inventory, std::set<Mob> mobKills,
-                             std::function<void()> escapeCallback)
+InventoryMenu::InventoryMenu(std::set<Item> inventory, std::set<Mob> mobKills, std::function<void()> escapeCallback)
     : items(inventory), mobs(mobKills)
 {
 	eventHandler.onKeyDown(SDLK_ESCAPE, [=](const KeyboardEvent &) { escapeCallback(); });
@@ -23,7 +22,7 @@ void InventoryMenu::playMusic() {}
 void InventoryMenu::render(const Renderer &renderer, GameClock::duration frameDelta, const sdl::RenderOptions &)
 {
 	const int margin_x = 30;
-	const int padding_x = 10;
+	const int padding_x = 15;
 	const int padding_y = 10;
 	int y = 10;
 
@@ -48,7 +47,7 @@ void InventoryMenu::render(const Renderer &renderer, GameClock::duration frameDe
 		// compute next grid position
 		x += size_x + 2 * padding_x;
 		// new line if necessary
-		if (x + size_x + margin_x >= 4 * margin_x) {
+		if (x + size_x + margin_x >= renderer.logicalW - size_x) {
 			y += size_y + padding_y + 10; // TODO 10 is guess for text height
 			x = margin_x;
 		}
