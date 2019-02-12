@@ -80,8 +80,10 @@ void Movable::update(sdl::GameClock::duration frameDelta)
 	position += v * frameDelta;
 
 	if (lastPosition != position) {
-		direction.x = (v.x > 0) - (v.x < 0);
-		direction.y = (v.y > 0) - (v.y < 0);
+		if (v.x != 0)
+			direction.x = (v.x > 0) - (v.x < 0);
+		if (v.y != 0)
+			direction.y = (v.y > 0) - (v.y < 0);
 	}
 }
 
