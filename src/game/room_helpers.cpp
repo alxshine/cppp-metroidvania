@@ -5,7 +5,10 @@ using namespace sdl;
 
 bool game::collidesLeft(Rectangle hitbox, const CollisionMap &collisionMap)
 {
-	auto j = hitbox.x / tileSize.w;
+	unsigned j = hitbox.x / tileSize.w;
+	if (j >= collisionMap[0].size())
+		return false;
+
 	auto lowestRowIndex = hitbox.y / tileSize.h;
 	auto highestRowIndex = (hitbox.y + hitbox.h) / tileSize.h;
 	for (int i = lowestRowIndex; i < highestRowIndex; ++i) {
@@ -20,7 +23,10 @@ bool game::collidesLeft(Rectangle hitbox, const CollisionMap &collisionMap)
 
 bool game::collidesRight(Rectangle hitbox, const CollisionMap &collisionMap)
 {
-	auto j = (hitbox.x + hitbox.w) / tileSize.w;
+	unsigned j = (hitbox.x + hitbox.w) / tileSize.w;
+	if (j >= collisionMap[0].size())
+		return false;
+
 	auto lowestRowIndex = hitbox.y / tileSize.h;
 	auto highestRowIndex = (hitbox.y + hitbox.h) / tileSize.h;
 	for (int i = lowestRowIndex; i < highestRowIndex; ++i) {
@@ -35,7 +41,10 @@ bool game::collidesRight(Rectangle hitbox, const CollisionMap &collisionMap)
 
 bool game::collidesTop(Rectangle hitbox, const CollisionMap &collisionMap)
 {
-	auto i = getTopTileRow(hitbox);
+	unsigned i = getTopTileRow(hitbox);
+	if (i > collisionMap.size())
+		return false;
+
 	auto lowestColumnIndex = getLowestTileColumn(hitbox);
 	auto highestColumnIndex = getHighestTileColumn(hitbox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
@@ -47,7 +56,10 @@ bool game::collidesTop(Rectangle hitbox, const CollisionMap &collisionMap)
 
 bool game::collidesBottom(Rectangle hitbox, const CollisionMap &collisionMap, Collision testCollision)
 {
-	auto i = getTileRow(hitbox);
+	unsigned i = getTileRow(hitbox);
+	if (i >= collisionMap.size())
+		return false;
+
 	auto lowestColumnIndex = getLowestTileColumn(hitbox);
 	auto highestColumnIndex = getHighestTileColumn(hitbox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
@@ -62,6 +74,7 @@ bool game::isStanding(Rectangle hitbox, const CollisionMap &collisionMap)
 	unsigned i = getTileRow(hitbox);
 	if (i > collisionMap.size())
 		return false;
+
 	auto lowestColumnIndex = getLowestTileColumn(hitbox);
 	auto highestColumnIndex = getHighestTileColumn(hitbox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {

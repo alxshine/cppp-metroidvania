@@ -56,7 +56,7 @@ EndAnimation
 Attack: SingleSlam
     Type: Melee
     SoundEffect: hey.wav 1
-    HitBox: 6 -38 15 38
+    HitBox: -2 -38 15 38
     Damage: 10
     DamageFrames: 3 EndFrames
 
@@ -74,7 +74,7 @@ Attack: SingleSlam
 Attack: DoubleSlam
     Type: Melee
     SoundEffect: hey.wav 1
-    HitBox: 6 -38 15 38
+    HitBox: -2 -38 15 38
     Damage: 30
     DamageFrames: 4 5 EndFrames
 

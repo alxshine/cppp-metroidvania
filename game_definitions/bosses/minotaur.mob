@@ -57,7 +57,7 @@ EndAnimation
 Attack: VerticalSlash
     Type: Melee
     SoundEffect: hey.wav 1
-    HitBox: 6 -38 15 38
+    HitBox: -2 -38 15 38
     Damage: 30
     DamageFrames: 4 EndFrames
 
@@ -80,7 +80,7 @@ Attack: VerticalSlash
 Attack: HorizontalSlash
     Type: Melee
     SoundEffect: hey.wav 1
-    HitBox: 6 -38 15 38
+    HitBox: -2 -38 15 38
     Damage: 60
     DamageFrames: 5 EndFrames
 
