@@ -40,7 +40,7 @@ void Game::resetState()
 	loadState(defaultState);
 
 	menuStack.push(std::make_shared<menu::MessageBox>([&]() { menuStack.pop(); }, "Welcome to our Metroidvania-like!",
-	                                                  "Use WASD&SPACE for Movement",
+	                                                  "Use WASD,L&SPACE for Movement",
 	                                                  "and K&E for attack and interact"));
 }
 
