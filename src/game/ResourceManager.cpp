@@ -73,6 +73,8 @@ std::unique_ptr<Player> ResourceManager::makePlayer() const
 	Attack shadeBlast = getMob("Shade").attackable.attacks[0];
 	Attack singleSlam = getMob("Golem").attackable.attacks[0];
 	Attack doubleSlam = getMob("Yeti").attackable.attacks[1];
+	singleSlam.damage /= 2;
+	doubleSlam.damage /= 2;
 	const std::vector<Attack> attacks{attack1, attack2, attack3, shadeBlast, singleSlam, doubleSlam};
 
 	// sliding

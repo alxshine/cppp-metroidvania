@@ -58,7 +58,7 @@ void StatMenu::render(const Renderer &renderer, GameClock::duration, const sdl::
 	y += padding_y;
 	int y_after_title = y;
 	auto levelString = "Level: " + to_string(level);
-	auto xpString = "Xp: " + to_string(xp) + "/" + to_string(threshold);
+	auto xpString = "Xp: " + to_string(xp) + "/" + to_string(level * threshold);
 	auto hpString = "Hp: " + to_string(hp) + "/" + to_string(maxHp);
 	auto &sdl = SDL::getInstance();
 	y += padding_y + renderAt(sdl, renderer, {x, y}, *font, levelString);

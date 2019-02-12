@@ -1,6 +1,6 @@
 Name: Yeti
-Health: 45
-Poise: 5
+Health: 100
+Poise: 30
 RecoveryWindow: 100
 Speed: 100
 Behaviour: two-phase-boss
@@ -75,7 +75,7 @@ Attack: DoubleSlam
     Type: Melee
     SoundEffect: hey.wav 1
     HitBox: 6 -38 15 38
-    Damage: 20
+    Damage: 30
     DamageFrames: 4 5 EndFrames
 
     Animation:

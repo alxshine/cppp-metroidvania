@@ -1,6 +1,6 @@
 Name: Minotaur
-Health: 100
-Poise: 10
+Health: 300
+Poise: 50
 RecoveryWindow: 100
 Speed: 70
 Behaviour: two-phase-boss
@@ -58,7 +58,7 @@ Attack: VerticalSlash
     Type: Melee
     SoundEffect: hey.wav 1
     HitBox: 6 -38 15 38
-    Damage: 25
+    Damage: 30
     DamageFrames: 4 EndFrames
 
     Animation:
@@ -81,7 +81,7 @@ Attack: HorizontalSlash
     Type: Melee
     SoundEffect: hey.wav 1
     HitBox: 6 -38 15 38
-    Damage: 40
+    Damage: 60
     DamageFrames: 5 EndFrames
 
     Animation:

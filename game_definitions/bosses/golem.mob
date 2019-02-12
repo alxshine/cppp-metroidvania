@@ -1,6 +1,6 @@
 Name: Golem
-Health: 40
-Poise: 3
+Health: 60
+Poise: 20
 RecoveryWindow: 100
 Speed: 59
 Behaviour: two-phase-boss
