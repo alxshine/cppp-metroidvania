@@ -11,4 +11,3 @@ TODO somehow set enemies to dead when loading a room that was already cleared --
 
 TODO properly balance end-game -- and scale up level gain?
 TODO write description -- get help from Alex!
-TODO increase x-padding in inventory menu to accomodate long descriptions

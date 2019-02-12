@@ -22,7 +22,7 @@ void InventoryMenu::playMusic() {}
 void InventoryMenu::render(const Renderer &renderer, GameClock::duration frameDelta, const sdl::RenderOptions &)
 {
 	const int margin_x = 30;
-	const int padding_x = 15;
+	const int padding_x = 30;
 	const int padding_y = 10;
 	int y = 10;
 
