@@ -9,5 +9,4 @@ TODO offset background rendering by the height of the highest row that is comple
 TODO somehow set enemies to dead when loading a room that was already cleared -- by checking if an onCleared key is in the inventory??
 ---
 
-TODO properly balance end-game -- and scale up level gain?
 TODO write description -- get help from Alex!
