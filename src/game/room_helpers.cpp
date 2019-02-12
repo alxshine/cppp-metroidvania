@@ -59,7 +59,9 @@ bool game::collidesBottom(Rectangle hitbox, const CollisionMap &collisionMap, Co
 
 bool game::isStanding(Rectangle hitbox, const CollisionMap &collisionMap)
 {
-	auto i = getTileRow(hitbox);
+	unsigned i = getTileRow(hitbox);
+	if (i > collisionMap.size())
+		return false;
 	auto lowestColumnIndex = getLowestTileColumn(hitbox);
 	auto highestColumnIndex = getHighestTileColumn(hitbox);
 	for (int j = lowestColumnIndex; j < highestColumnIndex; ++j) {
