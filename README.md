@@ -7,6 +7,7 @@ In whatever build directory you use, there should be an executable called *game*
 ### Basic Controls
 Use A and D for moving left and right.
 You can jump using Space and slide using L.
+While jumping you can press S to fall at terminal velocity.
 Sliding makes you invulnerable (we didn't have a rolling animation).
 By pressing K you can start attacking.
 After an attack has ended, you have 50ms to start a combo attack with increased damage (you can also just hold the key).
