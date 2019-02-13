@@ -122,6 +122,8 @@ void TwoPhaseBossAI::controlEntity(Movable &movable, Attackable &attackable, con
 		return;
 	}
 
+	if (playerHitbox.y < 80)
+		return;
 	// Walk to the player
 	auto xDiff = playerHitbox.x - movable.getPosition().x;
 	if (xDiff > 10)
