@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(default_build_type "Release")
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 
-INCLUDE(FindPkgConfig)
+#INCLUDE(FindPkgConfig)
 ###############################################
 
 add_subdirectory(src)
