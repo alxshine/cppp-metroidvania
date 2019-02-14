@@ -14,8 +14,10 @@ SelectionMenu::SelectionMenu(std::string title, std::vector<RawMenuItem> items,
 		this->items.emplace_back(SDL::getInstance().generateText(*font, i.first), i.second);
 	}
 
-	eventHandler.onKeyDown(
-	    SDLK_DOWN, [&](const KeyboardEvent &) { selectedItem = std::min(++selectedItem, this->items.size() - 1); });
+	eventHandler.onKeyDown(SDLK_DOWN, [&](const KeyboardEvent &) {
+		if (selectedItem < this->items.size() - 1)
+			selectedItem++;
+	});
 	eventHandler.onKeyDown(SDLK_UP, [&](const KeyboardEvent &) {
 		if (selectedItem > 0)
 			--selectedItem;

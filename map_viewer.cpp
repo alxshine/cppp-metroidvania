@@ -30,7 +30,10 @@ int main(int, char **argv)
 
 	RenderOptions options;
 	events.onKeyDown(SDLK_c, [&](const KeyboardEvent &) {
-		options = options.renderHitBoxes ? options = {false, false, false, false} : options = {true, true, true, true};
+		if (options.renderHitBoxes)
+			options = {false, false, false, false};
+		else
+			options = {true, true, true, true};
 	});
 
 	bool error = false;
