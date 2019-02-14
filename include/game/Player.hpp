@@ -66,7 +66,7 @@ class Player : public sdl::Renderable {
 	{
 		return 0.5 + 0.5 * level;
 	}
-	const int levelThreshold = 50;
+	const int levelThreshold = 80;
 
   private:
 	static constexpr Rectangle hitbox{0, 0, tileSize.w, tileSize.h * 2};

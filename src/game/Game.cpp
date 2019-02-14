@@ -14,6 +14,8 @@ using namespace sdl;
 using namespace std::literals;
 namespace fs = std::filesystem;
 
+const int sword_damage_boost = 1;
+
 Game::Game(std::string definitions, std::string assets, std::string first_room, Position player_position,
            sdl::RenderOptions renderOpts)
     : res(definitions, assets), firstRoom(first_room), initialPosition(player_position),
@@ -38,7 +40,9 @@ void Game::resetState()
 {
 	static SerializedState defaultState{0, firstRoom, {"First"}, {}, {initialPosition, 1, 0}};
 	loadState(defaultState);
-
+	player->attackable.attacks[0].damage = 1;
+	player->attackable.attacks[1].damage = 2;
+	player->attackable.attacks[2].damage = 3;
 	menuStack.push(std::make_shared<menu::MessageBox>([&]() { menuStack.pop(); }, "Welcome to our Metroidvania-like!",
 	                                                  "Use WASD,L&SPACE for Movement",
 	                                                  "and K&E for attack and interact"));
@@ -80,6 +84,12 @@ void Game::loadState(SerializedState state)
 		player->movable.maxJumps = 2;
 	else
 		player->movable.maxJumps = 1;
+	if (std::any_of(player->inventory.cbegin(), player->inventory.cend(),
+	                [](const Item &i) { return i.name == "Sword"; })) {
+		player->attackable.attacks[0].damage += sword_damage_boost;
+		player->attackable.attacks[1].damage += sword_damage_boost;
+		player->attackable.attacks[2].damage += sword_damage_boost;
+	}
 	player->setLeveling(state.playerState.level, state.playerState.xp);
 
 	play_fade_in(currentRoom->music, repeat_forever, 500ms);
@@ -109,14 +119,19 @@ void Game::interact()
 					     mainMenu->playMusic();
 				     }},
 				};
-				menuStack.push(
-				    std::make_shared<SelectionMenu>("You Won!", gameOverMenuItems, res.getMusic("FFIV-victory.ogg"), [&]() {}));
+				menuStack.push(std::make_shared<SelectionMenu>("You Won!", gameOverMenuItems,
+				                                               res.getMusic("FFIV-victory.ogg"), [&]() {}));
 			} else {
 				// std::cout << "Player interacted with " << i.name << std::endl;
 				player->inventory.insert(i);
 				i.pickedUp = true;
 				if (i.name == "JumpBoots")
-					player->movable.maxJumps = 2; // TODO: this is ugly, but the fastest way to do it
+					player->movable.maxJumps = 2; // NOTE: this is ugly, but the fastest way to do it
+				else if (i.name == "Sword") {
+					player->attackable.attacks[0].damage += sword_damage_boost;
+					player->attackable.attacks[1].damage += sword_damage_boost;
+					player->attackable.attacks[2].damage += sword_damage_boost;
+				}
 				menuStack.push(std::make_unique<MessageBox>([&]() { menuStack.pop(); }, i.description));
 			}
 			return;
@@ -299,8 +314,8 @@ void Game::runMainLoop()
 				     }},
 				};
 				// TODO play game over music? ... depending on win or loss?
-				menuStack.push(
-				    std::make_shared<SelectionMenu>("Game Over!", gameOverMenuItems, res.getMusic("game-over.ogg"), [&]() {}));
+				menuStack.push(std::make_shared<SelectionMenu>("Game Over!", gameOverMenuItems,
+				                                               res.getMusic("game-over.ogg"), [&]() {}));
 			}
 
 			// ******************* RENDERING *****************

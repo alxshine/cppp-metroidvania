@@ -64,4 +64,5 @@ EndEntities
 OnClearEntities:
     Item: 190 170 Key_1
     Item: 210 170 ShadePotion
+    Item: 230 170 Sword
 EndEntities
