@@ -23,3 +23,6 @@ On picking up one of the potions, a prompt tells you which button to press.
 There is a brief invulnerability period while a hurt animation plays.
 Enemies have a poise rating: Dealing damage above that will interrupt them.
 Attacks only deal damage on specific animation frames, so slow attacks can be dodged intuitively.
+
+Damage scales as a function of the level, and basic attacks can be improved by getting the sword.
+Saving the game and leveling up are the only ways to heal.
