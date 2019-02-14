@@ -197,6 +197,14 @@ void Game::runMainLoop()
 			auto now = gameClock.now();
 			gameFrameDelta = now - lastGameFrameTime;
 
+			// **************** HANDLE THE PLAYER ****************
+			// reset player velocity
+			player->movable.mainLoopReset();
+
+			// events
+			playerHasMoved = false;
+			gameEvents.dispatch();
+
 			// **************** SET ALIAS VARIABLES
 			auto &mobs = currentRoom->mobs;
 			std::vector<Rectangle> mobHitboxes;
@@ -206,13 +214,6 @@ void Game::runMainLoop()
 				mobAttackables.push_back(&mob.attackable);
 			}
 
-			// **************** HANDLE THE PLAYER ****************
-			// reset player velocity
-			player->movable.mainLoopReset();
-
-			// events
-			playerHasMoved = false;
-			gameEvents.dispatch();
 			if (playerHasMoved)
 				player->startMoving();
 			else

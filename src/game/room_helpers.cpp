@@ -6,8 +6,6 @@ using namespace sdl;
 bool game::collidesLeft(Rectangle hitbox, const CollisionMap &collisionMap)
 {
 	unsigned j = hitbox.x / tileSize.w;
-	if (j >= collisionMap[0].size())
-		return false;
 
 	auto lowestRowIndex = hitbox.y / tileSize.h;
 	auto highestRowIndex = (hitbox.y + hitbox.h) / tileSize.h;
@@ -24,8 +22,6 @@ bool game::collidesLeft(Rectangle hitbox, const CollisionMap &collisionMap)
 bool game::collidesRight(Rectangle hitbox, const CollisionMap &collisionMap)
 {
 	unsigned j = (hitbox.x + hitbox.w) / tileSize.w;
-	if (j >= collisionMap[0].size())
-		return false;
 
 	auto lowestRowIndex = hitbox.y / tileSize.h;
 	auto highestRowIndex = (hitbox.y + hitbox.h) / tileSize.h;
@@ -42,8 +38,6 @@ bool game::collidesRight(Rectangle hitbox, const CollisionMap &collisionMap)
 bool game::collidesTop(Rectangle hitbox, const CollisionMap &collisionMap)
 {
 	unsigned i = getTopTileRow(hitbox);
-	if (i > collisionMap.size())
-		return false;
 
 	auto lowestColumnIndex = getLowestTileColumn(hitbox);
 	auto highestColumnIndex = getHighestTileColumn(hitbox);
@@ -72,8 +66,6 @@ bool game::collidesBottom(Rectangle hitbox, const CollisionMap &collisionMap, Co
 bool game::isStanding(Rectangle hitbox, const CollisionMap &collisionMap)
 {
 	unsigned i = getTileRow(hitbox);
-	if (i > collisionMap.size())
-		return false;
 
 	auto lowestColumnIndex = getLowestTileColumn(hitbox);
 	auto highestColumnIndex = getHighestTileColumn(hitbox);
