@@ -1,0 +1,7 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Bennetts Spiel
+Path=/home/bennett/Github/cppp-metroidvania/build
+Exec=./game
+Type=Application
+Categories=
